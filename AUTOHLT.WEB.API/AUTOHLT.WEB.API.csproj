@@ -159,6 +159,7 @@
       <DependentUpon>AutoHLTDb.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\BSOFTAUTOHLT - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
