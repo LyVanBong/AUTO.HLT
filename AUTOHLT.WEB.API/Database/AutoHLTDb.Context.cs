@@ -14,7 +14,8 @@ namespace AUTOHLT.WEB.API
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using AUTOHLT.WEB.API.Database;
+
     public partial class bsoft_autohltEntities : DbContext
     {
         public bsoft_autohltEntities()
