@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bsoft_autohltModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="AddNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Content" Type="text" Mode="In" />
+          <Parameter Name="Id_send" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Id_receive" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Noti_Type" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Price" Type="int" Mode="In" />
+          <Parameter Name="EndDate" Type="int" Mode="In" />
+          <Parameter Name="Content" Type="text" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddServiceUseHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_ProType" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Content" Type="text" Mode="In" />
+          <Parameter Name="Id_User" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddTransferMoney" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Discount" Type="float" Mode="In" />
+          <Parameter Name="Price" Type="int" Mode="In" />
+          <Parameter Name="Id_send" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Id_receive" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="TransferType" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CheckUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteRegisterProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllHistoryUserSevice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllTransferMoney" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetHistoryService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_user" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetNotificationUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetPriceUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ListRegisterProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="NotificationDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="RegisterProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_product" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Id_User" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="RegistrationAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="NumberPhone" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Sex" Type="int" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="ProducName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Price" Type="int" Mode="In" />
+          <Parameter Name="EndDate" Type="int" Mode="In" />
+          <Parameter Name="Content" Type="text" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateReadNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="UpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="NumberPhone" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Sex" Type="int" Mode="In" />
+          <Parameter Name="Role" Type="int" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Price" Type="int" Mode="In" />
+          <Parameter Name="IdDevice" Type="text" Mode="In" />
+        </Function>
+        <Function Name="UserInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UserTransfers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_Send" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="ID_Receive" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Price" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="bsoft_autohltModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bsoft_autohltModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="bsoft_autohltEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="AddNotification">
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Id_send" Mode="In" Type="Guid" />
+            <Parameter Name="Id_receive" Mode="In" Type="Guid" />
+            <Parameter Name="Noti_Type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddProductType">
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="Price" Mode="In" Type="Int32" />
+            <Parameter Name="EndDate" Mode="In" Type="Int32" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddServiceUseHistory">
+            <Parameter Name="Id_ProType" Mode="In" Type="Guid" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Id_User" Mode="In" Type="Guid" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddTransferMoney">
+            <Parameter Name="Discount" Mode="In" Type="Double" />
+            <Parameter Name="Price" Mode="In" Type="Int32" />
+            <Parameter Name="Id_send" Mode="In" Type="Guid" />
+            <Parameter Name="Id_receive" Mode="In" Type="Guid" />
+            <Parameter Name="TransferType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CheckUserName" ReturnType="Collection(Guid)">
+            <Parameter Name="Username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteProductType">
+            <Parameter Name="Id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteRegisterProduct">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllHistoryUserSevice" ReturnType="Collection(bsoft_autohltModel.GetAllHistoryUserSevice_Result)" />
+          <FunctionImport Name="GetAllProductType" ReturnType="Collection(bsoft_autohltModel.GetAllProductType_Result)" />
+          <FunctionImport Name="GetAllTransferMoney" ReturnType="Collection(bsoft_autohltModel.GetAllTransferMoney_Result)" />
+          <FunctionImport Name="GetAllUser" ReturnType="Collection(bsoft_autohltModel.GetAllUser_Result)" />
+          <FunctionImport Name="GetHistoryService" ReturnType="Collection(bsoft_autohltModel.GetHistoryService_Result)">
+            <Parameter Name="Id_user" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetNotificationUser" ReturnType="Collection(bsoft_autohltModel.GetNotificationUser_Result)">
+            <Parameter Name="Id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetPriceUser" ReturnType="Collection(Int32)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListRegisterProduct" ReturnType="Collection(bsoft_autohltModel.ListRegisterProduct_Result)">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="NotificationDetail" ReturnType="Collection(bsoft_autohltModel.NotificationDetail_Result)">
+            <Parameter Name="Id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="RegisterProduct">
+            <Parameter Name="Id_product" Mode="In" Type="Guid" />
+            <Parameter Name="Id_User" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="RegistrationAccount">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="NumberPhone" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Sex" Mode="In" Type="Int32" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateProductType">
+            <Parameter Name="Id" Mode="In" Type="Guid" />
+            <Parameter Name="ProducName" Mode="In" Type="String" />
+            <Parameter Name="Price" Mode="In" Type="Int32" />
+            <Parameter Name="EndDate" Mode="In" Type="Int32" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateReadNotification">
+            <Parameter Name="Id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="NumberPhone" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Sex" Mode="In" Type="Int32" />
+            <Parameter Name="Role" Mode="In" Type="Int32" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Price" Mode="In" Type="Int32" />
+            <Parameter Name="IdDevice" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UserInformation" ReturnType="Collection(bsoft_autohltModel.UserInformation_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UserTransfers">
+            <Parameter Name="ID_Send" Mode="In" Type="Guid" />
+            <Parameter Name="ID_Receive" Mode="In" Type="Guid" />
+            <Parameter Name="Price" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetAllHistoryUserSevice_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="Guid" Name="ID_ProductType" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UseContent" Nullable="false" MaxLength="Max" />
+          <Property Type="Guid" Name="ID_User" Nullable="false" />
+          <Property Type="Int32" Name="Number" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllProductType_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Price" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="EndDate" Nullable="false" />
+          <Property Type="String" Name="ProductContent" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="Number" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllTransferMoney_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="Double" Name="Discount" Nullable="false" />
+          <Property Type="Int32" Name="Price" Nullable="false" />
+          <Property Type="Guid" Name="ID_Send" Nullable="false" />
+          <Property Type="Guid" Name="ID_Receive" Nullable="false" />
+          <Property Type="Int32" Name="MoneyTransferType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllUser_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="NumberPhone" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Sex" Nullable="false" />
+          <Property Type="Int32" Name="Role" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="IdDevice" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="GetHistoryService_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="Guid" Name="ID_ProductType" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UseContent" Nullable="false" MaxLength="Max" />
+          <Property Type="Guid" Name="ID_User" Nullable="false" />
+          <Property Type="Int32" Name="Number" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetNotificationUser_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="NotificationContent" Nullable="false" MaxLength="Max" />
+          <Property Type="Guid" Name="IDSend" Nullable="false" />
+          <Property Type="Guid" Name="IDReceive" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsRead" Nullable="true" />
+          <Property Type="Int32" Name="NotificationType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ListRegisterProduct_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="Guid" Name="ID_ProductType" Nullable="false" />
+          <Property Type="Guid" Name="ID_User" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="NotificationDetail_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="NotificationContent" Nullable="false" MaxLength="Max" />
+          <Property Type="Guid" Name="IDSend" Nullable="false" />
+          <Property Type="Guid" Name="IDReceive" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsRead" Nullable="true" />
+          <Property Type="Int32" Name="NotificationType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UserInformation_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="NumberPhone" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Sex" Nullable="false" />
+          <Property Type="Int32" Name="Role" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="IdDevice" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bsoft_autohltModelStoreContainer" CdmEntityContainer="bsoft_autohltEntities" >
+          <FunctionImportMapping FunctionImportName="AddNotification" FunctionName="bsoft_autohltModel.Store.AddNotification" />
+          <FunctionImportMapping FunctionImportName="AddProductType" FunctionName="bsoft_autohltModel.Store.AddProductType" />
+          <FunctionImportMapping FunctionImportName="AddServiceUseHistory" FunctionName="bsoft_autohltModel.Store.AddServiceUseHistory" />
+          <FunctionImportMapping FunctionImportName="AddTransferMoney" FunctionName="bsoft_autohltModel.Store.AddTransferMoney" />
+          <FunctionImportMapping FunctionImportName="CheckUserName" FunctionName="bsoft_autohltModel.Store.CheckUserName" />
+          <FunctionImportMapping FunctionImportName="DeleteProductType" FunctionName="bsoft_autohltModel.Store.DeleteProductType" />
+          <FunctionImportMapping FunctionImportName="DeleteRegisterProduct" FunctionName="bsoft_autohltModel.Store.DeleteRegisterProduct" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="bsoft_autohltModel.Store.DeleteUser" />
+          <FunctionImportMapping FunctionImportName="GetAllHistoryUserSevice" FunctionName="bsoft_autohltModel.Store.GetAllHistoryUserSevice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllHistoryUserSevice_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_ProductType" ColumnName="ID_ProductType" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="UseContent" ColumnName="UseContent" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllProductType" FunctionName="bsoft_autohltModel.Store.GetAllProductType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllProductType_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ProductContent" ColumnName="ProductContent" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllTransferMoney" FunctionName="bsoft_autohltModel.Store.GetAllTransferMoney">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllTransferMoney_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ID_Send" ColumnName="ID_Send" />
+                <ScalarProperty Name="ID_Receive" ColumnName="ID_Receive" />
+                <ScalarProperty Name="MoneyTransferType" ColumnName="MoneyTransferType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllUser" FunctionName="bsoft_autohltModel.Store.GetAllUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IdDevice" ColumnName="IdDevice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetHistoryService" FunctionName="bsoft_autohltModel.Store.GetHistoryService">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetHistoryService_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_ProductType" ColumnName="ID_ProductType" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="UseContent" ColumnName="UseContent" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNotificationUser" FunctionName="bsoft_autohltModel.Store.GetNotificationUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetNotificationUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NotificationContent" ColumnName="NotificationContent" />
+                <ScalarProperty Name="IDSend" ColumnName="IDSend" />
+                <ScalarProperty Name="IDReceive" ColumnName="IDReceive" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="NotificationType" ColumnName="NotificationType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPriceUser" FunctionName="bsoft_autohltModel.Store.GetPriceUser" />
+          <FunctionImportMapping FunctionImportName="ListRegisterProduct" FunctionName="bsoft_autohltModel.Store.ListRegisterProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.ListRegisterProduct_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_ProductType" ColumnName="ID_ProductType" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="NotificationDetail" FunctionName="bsoft_autohltModel.Store.NotificationDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.NotificationDetail_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NotificationContent" ColumnName="NotificationContent" />
+                <ScalarProperty Name="IDSend" ColumnName="IDSend" />
+                <ScalarProperty Name="IDReceive" ColumnName="IDReceive" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="NotificationType" ColumnName="NotificationType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RegisterProduct" FunctionName="bsoft_autohltModel.Store.RegisterProduct" />
+          <FunctionImportMapping FunctionImportName="RegistrationAccount" FunctionName="bsoft_autohltModel.Store.RegistrationAccount" />
+          <FunctionImportMapping FunctionImportName="UpdateProductType" FunctionName="bsoft_autohltModel.Store.UpdateProductType" />
+          <FunctionImportMapping FunctionImportName="UpdateReadNotification" FunctionName="bsoft_autohltModel.Store.UpdateReadNotification" />
+          <FunctionImportMapping FunctionImportName="UpdateUser" FunctionName="bsoft_autohltModel.Store.UpdateUser" />
+          <FunctionImportMapping FunctionImportName="UserInformation" FunctionName="bsoft_autohltModel.Store.UserInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.UserInformation_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IdDevice" ColumnName="IdDevice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UserTransfers" FunctionName="bsoft_autohltModel.Store.UserTransfers" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
