@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bsoft_autohltModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bsoft_autohltModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="AddNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Content" Type="text" Mode="In" />
           <Parameter Name="Id_send" Type="uniqueidentifier" Mode="In" />
@@ -74,6 +74,7 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Sex" Type="int" Mode="In" />
           <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="DateCreate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="UpdateProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
@@ -109,8 +110,7 @@
           <Parameter Name="Price" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="bsoft_autohltModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bsoft_autohltModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -142,35 +142,35 @@
             <Parameter Name="TransferType" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CheckUserName" ReturnType="Collection(Guid)">
-            <Parameter Name="Username" Mode="In" Type="String" />
+          <Parameter Name="Username" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteProductType">
-            <Parameter Name="Id" Mode="In" Type="Guid" />
+          <Parameter Name="Id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="DeleteRegisterProduct">
-            <Parameter Name="id" Mode="In" Type="Guid" />
+          <Parameter Name="id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="DeleteUser">
-            <Parameter Name="UserName" Mode="In" Type="String" />
+          <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllHistoryUserSevice" ReturnType="Collection(bsoft_autohltModel.GetAllHistoryUserSevice_Result)" />
           <FunctionImport Name="GetAllProductType" ReturnType="Collection(bsoft_autohltModel.GetAllProductType_Result)" />
           <FunctionImport Name="GetAllTransferMoney" ReturnType="Collection(bsoft_autohltModel.GetAllTransferMoney_Result)" />
           <FunctionImport Name="GetAllUser" ReturnType="Collection(bsoft_autohltModel.GetAllUser_Result)" />
           <FunctionImport Name="GetHistoryService" ReturnType="Collection(bsoft_autohltModel.GetHistoryService_Result)">
-            <Parameter Name="Id_user" Mode="In" Type="Guid" />
+          <Parameter Name="Id_user" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="GetNotificationUser" ReturnType="Collection(bsoft_autohltModel.GetNotificationUser_Result)">
-            <Parameter Name="Id" Mode="In" Type="Guid" />
+          <Parameter Name="Id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="GetPriceUser" ReturnType="Collection(Int32)">
-            <Parameter Name="UserName" Mode="In" Type="String" />
+          <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ListRegisterProduct" ReturnType="Collection(bsoft_autohltModel.ListRegisterProduct_Result)">
-            <Parameter Name="id" Mode="In" Type="Guid" />
+          <Parameter Name="id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="NotificationDetail" ReturnType="Collection(bsoft_autohltModel.NotificationDetail_Result)">
-            <Parameter Name="Id" Mode="In" Type="Guid" />
+          <Parameter Name="Id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="RegisterProduct">
             <Parameter Name="Id_product" Mode="In" Type="Guid" />
@@ -184,6 +184,7 @@
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Sex" Mode="In" Type="Int32" />
             <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="DateCreate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="UpdateProductType">
             <Parameter Name="Id" Mode="In" Type="Guid" />
@@ -194,7 +195,7 @@
             <Parameter Name="Number" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateReadNotification">
-            <Parameter Name="Id" Mode="In" Type="Guid" />
+          <Parameter Name="Id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="UpdateUser">
             <Parameter Name="UserName" Mode="In" Type="String" />

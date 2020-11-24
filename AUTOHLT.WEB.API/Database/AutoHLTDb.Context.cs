@@ -7,15 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AUTOHLT.WEB.API
+namespace AUTOHLT.WEB.API.Database
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using AUTOHLT.WEB.API.Database;
-
+    
     public partial class bsoft_autohltEntities : DbContext
     {
         public bsoft_autohltEntities()
@@ -235,7 +234,7 @@ namespace AUTOHLT.WEB.API
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegisterProduct", id_productParameter, id_UserParameter);
         }
     
-        public virtual int RegistrationAccount(string userName, string password, string name, Nullable<int> numberPhone, string email, Nullable<int> sex, Nullable<int> age)
+        public virtual int RegistrationAccount(string userName, string password, string name, Nullable<int> numberPhone, string email, Nullable<int> sex, Nullable<int> age, Nullable<System.DateTime> dateCreate)
         {
             var userNameParameter = userName != null ?
                 new ObjectParameter("UserName", userName) :
@@ -265,7 +264,11 @@ namespace AUTOHLT.WEB.API
                 new ObjectParameter("Age", age) :
                 new ObjectParameter("Age", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrationAccount", userNameParameter, passwordParameter, nameParameter, numberPhoneParameter, emailParameter, sexParameter, ageParameter);
+            var dateCreateParameter = dateCreate.HasValue ?
+                new ObjectParameter("DateCreate", dateCreate) :
+                new ObjectParameter("DateCreate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrationAccount", userNameParameter, passwordParameter, nameParameter, numberPhoneParameter, emailParameter, sexParameter, ageParameter, dateCreateParameter);
         }
     
         public virtual int UpdateProductType(Nullable<System.Guid> id, string producName, Nullable<int> price, Nullable<int> endDate, string content, Nullable<int> number)
