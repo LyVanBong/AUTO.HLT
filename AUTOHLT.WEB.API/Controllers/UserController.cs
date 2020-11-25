@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using AUTOHLT.WEB.API.Database;
+﻿using AUTOHLT.WEB.API.Database;
 using AUTOHLT.WEB.API.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -16,6 +16,7 @@ namespace AUTOHLT.WEB.API.Controllers
         {
             _entities = new bsoft_autohltEntities();
         }
+
         /// <summary>
         /// kiem tra tai khoan user da ton tai hay chua
         /// </summary>
@@ -79,6 +80,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Message = "Lỗi phát sinh trong qua trình xóa tài khoản"
             });
         }
+
         /// <summary>
         /// api lấy toàn bộ danh sách user
         /// </summary>
@@ -104,6 +106,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Message = "Lỗi không lấy được danh sách user"
             });
         }
+
         /// <summary>
         /// api lay ra so tien hien tai cua user
         /// </summary>
@@ -165,6 +168,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Message = "Lỗi phát sinh trong quá trinh cập nhật lại tài khoản"
             });
         }
+
         /// <summary>
         /// api chuyen tien
         /// </summary>
@@ -222,6 +226,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Message = "Lỗi phát sinh trong quá trình đăng nhập"
             });
         }
+
         /// <summary>
         /// api dung de dang ky tai khoan user
         /// </summary>

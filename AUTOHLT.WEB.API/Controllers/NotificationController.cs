@@ -1,11 +1,9 @@
-﻿using System;
+﻿using AUTOHLT.WEB.API.Database;
+using AUTOHLT.WEB.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Database;
-using AUTOHLT.WEB.API.Models;
 
 namespace AUTOHLT.WEB.API.Controllers
 {
@@ -31,7 +29,7 @@ namespace AUTOHLT.WEB.API.Controllers
             var data = _entities.NotificationDetail(id);
             if (data != null)
             {
-                var transfer = data.FirstOrDefault() ;
+                var transfer = data.FirstOrDefault();
                 if (transfer != null)
                 {
                     return Ok(new ResponseModel<NotificationDetail_Result>
@@ -49,6 +47,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Message = "Lỗi phát sinh trong quá trình xử lý"
             });
         }
+
         /// <summary>
         /// lấy danh sách thông báo cho từng tài khoản
         /// </summary>
@@ -107,6 +106,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Message = "Thêm thông báo thành công"
             });
         }
+
         /// <summary>
         /// Cap lai danh thong bao thanh da doc
         /// </summary>
