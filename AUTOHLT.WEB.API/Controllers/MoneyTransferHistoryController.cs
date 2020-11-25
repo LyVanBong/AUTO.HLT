@@ -1,11 +1,8 @@
-﻿using System;
+﻿using AUTOHLT.WEB.API.Database;
+using AUTOHLT.WEB.API.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Database;
-using AUTOHLT.WEB.API.Models;
 
 namespace AUTOHLT.WEB.API.Controllers
 {
@@ -18,7 +15,6 @@ namespace AUTOHLT.WEB.API.Controllers
         {
             _entities = new bsoft_autohltEntities();
         }
-
 
         /// <summary>
         /// lấy toàn bộ lịch sử chuyển tiền
