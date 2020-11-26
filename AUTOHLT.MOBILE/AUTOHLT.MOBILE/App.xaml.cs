@@ -1,26 +1,33 @@
-﻿using Xamarin.Forms;
+using AUTOHLT.MOBILE.ViewModels;
+using AUTOHLT.MOBILE.Views;
+using Prism;
+using Prism.Ioc;
+using Xamarin.Essentials.Implementation;
+using Xamarin.Essentials.Interfaces;
+using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE
 {
-    public partial class App : Application
+    public partial class App
     {
-        public App()
+        public App(IPlatformInitializer initializer)
+            : base(initializer)
+        {
+        }
+
+        protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
 
-        protected override void OnStart()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-        }
+            containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
         }
     }
 }
