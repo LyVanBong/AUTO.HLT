@@ -1,11 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             x:Class="AUTOHLT.MOBILE.App">
-  <Application.Resources>
+<prism:PrismApplication
+    x:Class="AUTOHLT.MOBILE.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:themes="clr-namespace:AUTOHLT.MOBILE.Themes;assembly=AUTOHLT.MOBILE">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <themes:LightTheme />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <!--  Application resource dictionary  -->
 
-    <!-- Application resource dictionary -->
-
-  </Application.Resources>
+    </Application.Resources>
 </prism:PrismApplication>

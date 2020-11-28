@@ -1,6 +1,10 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.iOS.Graphics;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 
@@ -23,8 +27,16 @@ namespace AUTOHLT.MOBILE.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer()));
-
+            OtherLibraries();
             return base.FinishedLaunching(app, options);
+        }
+
+        private void OtherLibraries()
+        {
+            new SfBusyIndicatorRenderer();
+            SfTextInputLayoutRenderer.Init();
+            SfCheckBoxRenderer.Init();
+            SfGradientViewRenderer.Init();
         }
     }
 
