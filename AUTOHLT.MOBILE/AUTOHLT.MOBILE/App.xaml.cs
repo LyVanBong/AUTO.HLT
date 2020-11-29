@@ -1,5 +1,7 @@
-using AUTOHLT.MOBILE.ViewModels;
-using AUTOHLT.MOBILE.Views;
+using AUTOHLT.MOBILE.ViewModels.Home;
+using AUTOHLT.MOBILE.ViewModels.Login;
+using AUTOHLT.MOBILE.Views.Home;
+using AUTOHLT.MOBILE.Views.Login;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Essentials.Implementation;
@@ -19,15 +21,25 @@ namespace AUTOHLT.MOBILE
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync(nameof(LoginPage));
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #region Register Singleton
+
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
+            #endregion
+
+            #region Register For Navigation
+
+            containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+
+            #endregion
         }
     }
 }
