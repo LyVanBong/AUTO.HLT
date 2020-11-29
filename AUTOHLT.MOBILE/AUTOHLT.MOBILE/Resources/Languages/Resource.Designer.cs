@@ -221,5 +221,158 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000017", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Surplus.
+        /// </summary>
+        internal static string _1000018 {
+            get {
+                return ResourceManager.GetString("1000018", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfers.
+        /// </summary>
+        internal static string _1000019 {
+            get {
+                return ResourceManager.GetString("1000019", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        internal static string _1000020 {
+            get {
+                return ResourceManager.GetString("1000020", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        internal static string _1000021 {
+            get {
+                return ResourceManager.GetString("1000021", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revenue.
+        /// </summary>
+        internal static string _1000022 {
+            get {
+                return ResourceManager.GetString("1000022", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
+        /// </summary>
+        internal static string _1000023 {
+            get {
+                return ResourceManager.GetString("1000023", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top up.
+        /// </summary>
+        internal static string _1000024 {
+            get {
+                return ResourceManager.GetString("1000024", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to service.
+        /// </summary>
+        internal static string _1000025 {
+            get {
+                return ResourceManager.GetString("1000025", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interactive.
+        /// </summary>
+        internal static string _1000026 {
+            get {
+                return ResourceManager.GetString("1000026", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work.
+        /// </summary>
+        internal static string _1000027 {
+            get {
+                return ResourceManager.GetString("1000027", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service management section.
+        /// </summary>
+        internal static string _1000028 {
+            get {
+                return ResourceManager.GetString("1000028", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff Like.
+        /// </summary>
+        internal static string _1000029 {
+            get {
+                return ResourceManager.GetString("1000029", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff View.
+        /// </summary>
+        internal static string _1000030 {
+            get {
+                return ResourceManager.GetString("1000030", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff Share.
+        /// </summary>
+        internal static string _1000031 {
+            get {
+                return ResourceManager.GetString("1000031", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff Comment.
+        /// </summary>
+        internal static string _1000032 {
+            get {
+                return ResourceManager.GetString("1000032", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff Follow.
+        /// </summary>
+        internal static string _1000033 {
+            get {
+                return ResourceManager.GetString("1000033", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service history.
+        /// </summary>
+        internal static string _1000034 {
+            get {
+                return ResourceManager.GetString("1000034", resourceCulture);
+            }
+        }
     }
 }

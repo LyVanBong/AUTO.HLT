@@ -6,11 +6,43 @@
 
   <ItemGroup>
     <None Remove="Resources\Fonts\FontAwesome5Solid.otf" />
+    <None Remove="Resources\Images\icon_account.png" />
+    <None Remove="Resources\Images\icon_change_password.png" />
+    <None Remove="Resources\Images\icon_comments.png" />
+    <None Remove="Resources\Images\icon_follow.png" />
+    <None Remove="Resources\Images\icon_history.png" />
+    <None Remove="Resources\Images\icon_Interactive.png" />
+    <None Remove="Resources\Images\icon_like.png" />
+    <None Remove="Resources\Images\icon_notification.png" />
+    <None Remove="Resources\Images\icon_revenue.png" />
+    <None Remove="Resources\Images\icon_service.png" />
+    <None Remove="Resources\Images\icon_settings.png" />
+    <None Remove="Resources\Images\icon_share.png" />
+    <None Remove="Resources\Images\icon_top_up.png" />
+    <None Remove="Resources\Images\icon_transfer.png" />
+    <None Remove="Resources\Images\icon_view.png" />
+    <None Remove="Resources\Images\icon_work.png" />
     <None Remove="Resources\Images\logo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5Solid.otf" />
+    <EmbeddedResource Include="Resources\Images\icon_account.png" />
+    <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
+    <EmbeddedResource Include="Resources\Images\icon_comments.png" />
+    <EmbeddedResource Include="Resources\Images\icon_follow.png" />
+    <EmbeddedResource Include="Resources\Images\icon_history.png" />
+    <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
+    <EmbeddedResource Include="Resources\Images\icon_like.png" />
+    <EmbeddedResource Include="Resources\Images\icon_notification.png" />
+    <EmbeddedResource Include="Resources\Images\icon_revenue.png" />
+    <EmbeddedResource Include="Resources\Images\icon_service.png" />
+    <EmbeddedResource Include="Resources\Images\icon_settings.png" />
+    <EmbeddedResource Include="Resources\Images\icon_share.png" />
+    <EmbeddedResource Include="Resources\Images\icon_top_up.png" />
+    <EmbeddedResource Include="Resources\Images\icon_transfer.png" />
+    <EmbeddedResource Include="Resources\Images\icon_view.png" />
+    <EmbeddedResource Include="Resources\Images\icon_work.png" />
     <EmbeddedResource Include="Resources\Images\logo.png" />
   </ItemGroup>
 
