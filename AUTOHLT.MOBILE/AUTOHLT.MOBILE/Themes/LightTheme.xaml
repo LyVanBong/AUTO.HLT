@@ -3,7 +3,7 @@
     x:Class="AUTOHLT.MOBILE.Themes.LightTheme"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
+    <Color x:Key="HeaderHome">#7579e7</Color>
     <Color x:Key="BtLogin">#3282b8</Color>
     <Color x:Key="PrimaryColor">#f54e5e</Color>
     <Color x:Key="PrimaryDarkColor">#d0424f</Color>

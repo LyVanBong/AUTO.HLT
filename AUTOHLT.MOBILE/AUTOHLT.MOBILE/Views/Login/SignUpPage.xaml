@@ -103,7 +103,7 @@
                     Padding="0">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{markupExtensions:Translate 1000007}" />
+                            <Span Text="{markupExtensions:Translate 1000009}" />
                             <Span Text=" " />
                             <Span Text="{markupExtensions:Translate 1000000}" TextColor="{StaticResource HyperLink}" />
                         </FormattedString>

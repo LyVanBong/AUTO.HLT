@@ -189,4 +189,72 @@
     <value>Nữ</value>
     <comment>Nữ</comment>
   </data>
+  <data name="1000018" xml:space="preserve">
+    <value>Số dư</value>
+    <comment>Số dư</comment>
+  </data>
+  <data name="1000019" xml:space="preserve">
+    <value>Chuyển tiền</value>
+    <comment>Chuyển tiền</comment>
+  </data>
+  <data name="1000020" xml:space="preserve">
+    <value>Đổi mật khẩu</value>
+    <comment>Đổi mật khẩu</comment>
+  </data>
+  <data name="1000021" xml:space="preserve">
+    <value>Thông báo</value>
+    <comment>Thông báo</comment>
+  </data>
+  <data name="1000022" xml:space="preserve">
+    <value>Doanh thu</value>
+    <comment>Doanh thu</comment>
+  </data>
+  <data name="1000023" xml:space="preserve">
+    <value>Cài đặt</value>
+    <comment>Cài đặt</comment>
+  </data>
+  <data name="1000024" xml:space="preserve">
+    <value>Nạp tiền</value>
+    <comment>Nạp tiền</comment>
+  </data>
+  <data name="1000025" xml:space="preserve">
+    <value>dịch vụ</value>
+    <comment>dịch vụ</comment>
+  </data>
+  <data name="1000026" xml:space="preserve">
+    <value>Tương tác</value>
+    <comment>Tương tác</comment>
+  </data>
+  <data name="1000027" xml:space="preserve">
+    <value>công việc</value>
+    <comment>công việc</comment>
+  </data>
+  <data name="1000028" xml:space="preserve">
+    <value>Phần quản lý dịch vụ</value>
+    <comment>Phần quản lý dịch vụ</comment>
+  </data>
+  <data name="1000029" xml:space="preserve">
+    <value>Buff Like</value>
+    <comment>Buff Like</comment>
+  </data>
+  <data name="1000030" xml:space="preserve">
+    <value>Buff View</value>
+    <comment>Buff View</comment>
+  </data>
+  <data name="1000031" xml:space="preserve">
+    <value>Buff Share</value>
+    <comment>Buff Share</comment>
+  </data>
+  <data name="1000032" xml:space="preserve">
+    <value>Buff Comment</value>
+    <comment>Buff Comment</comment>
+  </data>
+  <data name="1000033" xml:space="preserve">
+    <value>Buff Follow</value>
+    <comment>Buff Follow</comment>
+  </data>
+  <data name="1000034" xml:space="preserve">
+    <value>Lịch sử dịch vụ</value>
+    <comment>Lịch sử dịch vụ</comment>
+  </data>
 </root>
