@@ -61,7 +61,7 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log In.
+        ///   Looks up a localized string similar to LogIn.
         /// </summary>
         internal static string _1000000 {
             get {
@@ -115,7 +115,7 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to password.
+        ///   Looks up a localized string similar to Password.
         /// </summary>
         internal static string _1000006 {
             get {
@@ -138,6 +138,87 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
         internal static string _1000008 {
             get {
                 return ResourceManager.GetString("1000008", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Already have an account?.
+        /// </summary>
+        internal static string _1000009 {
+            get {
+                return ResourceManager.GetString("1000009", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        internal static string _1000010 {
+            get {
+                return ResourceManager.GetString("1000010", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string _1000011 {
+            get {
+                return ResourceManager.GetString("1000011", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age.
+        /// </summary>
+        internal static string _1000012 {
+            get {
+                return ResourceManager.GetString("1000012", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name.
+        /// </summary>
+        internal static string _1000013 {
+            get {
+                return ResourceManager.GetString("1000013", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number.
+        /// </summary>
+        internal static string _1000014 {
+            get {
+                return ResourceManager.GetString("1000014", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sex.
+        /// </summary>
+        internal static string _1000015 {
+            get {
+                return ResourceManager.GetString("1000015", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        internal static string _1000016 {
+            get {
+                return ResourceManager.GetString("1000016", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        internal static string _1000017 {
+            get {
+                return ResourceManager.GetString("1000017", resourceCulture);
             }
         }
     }

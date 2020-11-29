@@ -33,6 +33,7 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries()
         {
+            SfRadioButtonRenderer.Init();
             new SfBusyIndicatorRenderer();
             SfTextInputLayoutRenderer.Init();
             SfCheckBoxRenderer.Init();

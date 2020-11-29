@@ -1,15 +1,9 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Models.Login;
-using Prism.Navigation;
-using Xamarin.Forms;
+﻿using Prism.Mvvm;
 
-namespace AUTOHLT.MOBILE.ViewModels.Login
+namespace AUTOHLT.MOBILE.Models.Login
 {
-    public class SignUpViewModel : ViewModelBase
+    public class SignUpModel : BindableBase
     {
-        private bool _isLoading;
-        private SignUpModel _signUp;
         private bool _isMale;
         private string _age;
         private string _email;
@@ -64,43 +58,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         {
             get => _isMale;
             set => SetProperty(ref _isMale, value);
-        }
-      
-
-        public ICommand SignUpCommand { get; private set; }
-        public ICommand LoginCommand { get; private set; }
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
-        }
-
-        public SignUpViewModel(INavigationService navigationService) : base(navigationService)
-        {
-            SignUpCommand=new Command(SignUpAccount);
-            LoginCommand = new Command(LoginAccount);
-        }
-
-        private void LoginAccount()
-        {
-            if (IsLoading) return;
-            IsLoading = true;
-            var para = new NavigationParameters();
-            para.Add("SignUp","1");
-            para.Add("UserName",UserName);
-            NavigationService.NavigateAsync("/LoginPage",para);
-        }
-
-        private void SignUpAccount()
-        {
-            
-        }
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-
-            IsLoading = false;
         }
     }
 }

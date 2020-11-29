@@ -49,7 +49,14 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
+            if (parameters != null)
+            {
+                if (parameters.ContainsKey("SignUp"))
+                {
+                    if (parameters.ContainsKey("UserName"))
+                        UserName = parameters["UserName"] as string;
+                }
+            }
             IsLoading = false;
         }
 

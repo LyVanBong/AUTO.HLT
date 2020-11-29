@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1000000" xml:space="preserve">
-    <value>Log In</value>
+    <value>LogIn</value>
     <comment>Đăng nhập</comment>
   </data>
   <data name="1000001" xml:space="preserve">
@@ -142,7 +142,7 @@
     <comment>Tài khoản</comment>
   </data>
   <data name="1000006" xml:space="preserve">
-    <value>password</value>
+    <value>Password</value>
     <comment>Mật khẩu</comment>
   </data>
   <data name="1000007" xml:space="preserve">
@@ -152,5 +152,41 @@
   <data name="1000008" xml:space="preserve">
     <value>The system is processing</value>
     <comment>Hệ thống đang xử lý</comment>
+  </data>
+  <data name="1000009" xml:space="preserve">
+    <value>Already have an account?</value>
+    <comment>Đã có tài khoản?</comment>
+  </data>
+  <data name="1000010" xml:space="preserve">
+    <value>Confirm Password</value>
+    <comment>Xác nhận mật khẩu</comment>
+  </data>
+  <data name="1000011" xml:space="preserve">
+    <value>Name</value>
+    <comment>Tên</comment>
+  </data>
+  <data name="1000012" xml:space="preserve">
+    <value>Age</value>
+    <comment>Tuổi</comment>
+  </data>
+  <data name="1000013" xml:space="preserve">
+    <value>User name</value>
+    <comment>Tài khoản</comment>
+  </data>
+  <data name="1000014" xml:space="preserve">
+    <value>Phone number</value>
+    <comment>Số điện thoại</comment>
+  </data>
+  <data name="1000015" xml:space="preserve">
+    <value>Sex</value>
+    <comment>Giới tính</comment>
+  </data>
+  <data name="1000016" xml:space="preserve">
+    <value>Male</value>
+    <comment>Nam</comment>
+  </data>
+  <data name="1000017" xml:space="preserve">
+    <value>Female</value>
+    <comment>Nữ</comment>
   </data>
 </root>

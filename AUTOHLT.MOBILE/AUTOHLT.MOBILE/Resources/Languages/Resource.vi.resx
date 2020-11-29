@@ -153,4 +153,40 @@
     <value>Hệ thống đang xử lý</value>
     <comment>Hệ thống đang xử lý</comment>
   </data>
+  <data name="1000009" xml:space="preserve">
+    <value>Đã có tài khoản?</value>
+    <comment>Đã có tài khoản?</comment>
+  </data>
+  <data name="1000010" xml:space="preserve">
+    <value>Xác nhận mật khẩu</value>
+    <comment>Xác nhận mật khẩu</comment>
+  </data>
+  <data name="1000011" xml:space="preserve">
+    <value>Tên</value>
+    <comment>Tên</comment>
+  </data>
+  <data name="1000012" xml:space="preserve">
+    <value>Tuổi</value>
+    <comment>Tuổi</comment>
+  </data>
+  <data name="1000013" xml:space="preserve">
+    <value>Tài khoản</value>
+    <comment>Tài khoản</comment>
+  </data>
+  <data name="1000014" xml:space="preserve">
+    <value>Số điện thoại</value>
+    <comment>Số điện thoại</comment>
+  </data>
+  <data name="1000015" xml:space="preserve">
+    <value>Giới tính</value>
+    <comment>Giới tính</comment>
+  </data>
+  <data name="1000016" xml:space="preserve">
+    <value>Nam</value>
+    <comment>Nam</comment>
+  </data>
+  <data name="1000017" xml:space="preserve">
+    <value>Nữ</value>
+    <comment>Nữ</comment>
+  </data>
 </root>

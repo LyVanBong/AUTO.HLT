@@ -2,13 +2,121 @@
 <ContentPage
     x:Class="AUTOHLT.MOBILE.Views.Login.SignUpPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms">
     <ContentPage.Content>
-        <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView
+            Margin="0"
+            Padding="0"
+            VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="10,100,80,80,80,80,80,80,80,80,50,20,50" RowSpacing="0">
+                <Grid.Resources>
+                    <Style TargetType="textInputLayout:SfTextInputLayout">
+                        <Setter Property="ContainerType" Value="Outlined" />
+                        <Setter Property="Margin" Value="20,0" />
+                        <Setter Property="OutlineCornerRadius" Value="5" />
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                </Grid.Resources>
+                <Image Grid.Row="1" Source="{markupExtensions:ImageResource logo.png}" />
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="2"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000013}">
+                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding UserName}" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="3"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000011}">
+                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding Name}" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="4"
+                    EnablePasswordVisibilityToggle="True"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000006}">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        IsPassword="True"
+                        Text="{Binding Password}" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="5"
+                    EnablePasswordVisibilityToggle="True"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000010}">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        IsPassword="True"
+                        Text="{Binding ConfirmPassword}" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="6"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000014}">
+                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding PhoneNumber}" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="7"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000001}">
+                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding Email}" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="8"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000012}">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Numeric"
+                        Text="{Binding Age}" />
+                </textInputLayout:SfTextInputLayout>
+                <buttons:SfRadioGroup
+                    Grid.Row="9"
+                    Margin="20,0"
+                    Padding="0"
+                    Orientation="Horizontal">
+                    <buttons:SfRadioButton IsChecked="{Binding IsMale}" Text="{markupExtensions:Translate 1000016}" />
+                    <buttons:SfRadioButton IsChecked="True" Text="{markupExtensions:Translate 1000017}" />
+                </buttons:SfRadioGroup>
+                <Button
+                    Grid.Row="10"
+                    Margin="20,0"
+                    Padding="0"
+                    BackgroundColor="{StaticResource Gray-White}"
+                    BorderColor="{StaticResource BtLogin}"
+                    BorderWidth="1"
+                    Command="{Binding SignUpCommand}"
+                    CornerRadius="10"
+                    FontSize="18"
+                    Text="{markupExtensions:Translate 1000002}" />
+                <Label
+                    Grid.Row="12"
+                    Margin="20,0"
+                    Padding="0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{markupExtensions:Translate 1000007}" />
+                            <Span Text=" " />
+                            <Span Text="{markupExtensions:Translate 1000000}" TextColor="{StaticResource HyperLink}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LoginCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <controls:LoadingView
+                    Grid.Row="0"
+                    Grid.RowSpan="13"
+                    IsVisible="{Binding IsLoading}" />
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
