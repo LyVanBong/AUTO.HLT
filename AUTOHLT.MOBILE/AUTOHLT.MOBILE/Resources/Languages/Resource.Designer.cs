@@ -374,5 +374,23 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000034", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        internal static string _1000035 {
+            get {
+                return ResourceManager.GetString("1000035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors arise during processing.
+        /// </summary>
+        internal static string _1000036 {
+            get {
+                return ResourceManager.GetString("1000036", resourceCulture);
+            }
+        }
     }
 }

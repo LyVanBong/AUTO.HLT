@@ -257,4 +257,12 @@
     <value>Lịch sử dịch vụ</value>
     <comment>Lịch sử dịch vụ</comment>
   </data>
+  <data name="1000035" xml:space="preserve">
+    <value>Thông báo</value>
+    <comment>Thông báo</comment>
+  </data>
+  <data name="1000036" xml:space="preserve">
+    <value>Lỗi phát sinh trong quá trình xử lý</value>
+    <comment>Lỗi phát sinh trong quá trình xử lý</comment>
+  </data>
 </root>

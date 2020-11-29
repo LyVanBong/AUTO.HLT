@@ -18,12 +18,12 @@ namespace AUTOHLT.MOBILE.Droid
             base.OnCreate(savedInstanceState);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            OtherLibraries();
             LoadApplication(new App(new AndroidInitializer()));
         }
 
         private void OtherLibraries()
         {
-
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

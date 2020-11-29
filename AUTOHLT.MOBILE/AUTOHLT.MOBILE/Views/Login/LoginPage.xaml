@@ -29,7 +29,10 @@
                     Grid.Row="2"
                     FocusedColor="{StaticResource BtLogin}"
                     Hint="{markupExtensions:Translate 1000005}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding UserName}" />
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        ReturnType="Next"
+                        Text="{Binding UserName}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
                         <Label FontFamily="FontAwesome5Solid" Text="{x:Static icon:IconFont.User}" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
@@ -42,6 +45,8 @@
                     <Entry
                         ClearButtonVisibility="WhileEditing"
                         IsPassword="True"
+                        ReturnCommand="{Binding LoginCommand}"
+                        ReturnType="Done"
                         Text="{Binding Password}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
                         <Label FontFamily="Awesome" Text="{x:Static icon:IconFont.Key}" />
@@ -66,6 +71,7 @@
                     Command="{Binding LoginCommand}"
                     CornerRadius="10"
                     FontSize="18"
+                    IsEnabled="{Binding IsEnabledLogin}"
                     Text="{markupExtensions:Translate 1000000}" />
                 <Label
                     Grid.Row="7"
