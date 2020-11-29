@@ -59,15 +59,22 @@
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout
                     Grid.Row="6"
+                    ErrorColor="Red"
                     FocusedColor="{StaticResource BtLogin}"
                     Hint="{markupExtensions:Translate 1000014}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding PhoneNumber}" />
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Numeric"
+                        Text="{Binding PhoneNumber}" />
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout
                     Grid.Row="7"
                     FocusedColor="{StaticResource BtLogin}"
                     Hint="{markupExtensions:Translate 1000001}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding Email}" />
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Email"
+                        Text="{Binding Email}" />
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout
                     Grid.Row="8"
@@ -96,6 +103,7 @@
                     Command="{Binding SignUpCommand}"
                     CornerRadius="10"
                     FontSize="18"
+                    IsEnabled="{Binding IsEnableSignUp}"
                     Text="{markupExtensions:Translate 1000002}" />
                 <Label
                     Grid.Row="12"

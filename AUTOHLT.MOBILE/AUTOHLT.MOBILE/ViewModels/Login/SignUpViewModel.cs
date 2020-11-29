@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Models.Login;
+using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Xamarin.Forms;
 
@@ -9,7 +10,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
     public class SignUpViewModel : ViewModelBase
     {
         private bool _isLoading;
-        private SignUpModel _signUp;
         private bool _isMale;
         private string _age;
         private string _email;
@@ -18,46 +18,166 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         private string _password;
         private string _name;
         private string _userName;
+        private bool _isEnableSignUp;
+
+        public bool IsEnableSignUp
+        {
+            get => _isEnableSignUp;
+            set => SetProperty(ref _isEnableSignUp, value);
+        }
+
         public string UserName
         {
             get => _userName;
-            set => SetProperty(ref _userName, value);
+            set
+            {
+                if (SetProperty(ref _userName, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public string Name
         {
             get => _name;
-            set => SetProperty(ref _name, value);
+            set
+            {
+                if (SetProperty(ref _name, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public string Password
         {
             get => _password;
-            set => SetProperty(ref _password, value);
+            set
+            {
+                if (SetProperty(ref _password, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public string ConfirmPassword
         {
             get => _confirmPassword;
-            set => SetProperty(ref _confirmPassword, value);
+            set
+            {
+                if (SetProperty(ref _confirmPassword, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public string PhoneNumber
         {
             get => _phoneNumber;
-            set => SetProperty(ref _phoneNumber, value);
+            set
+            {
+                if (SetProperty(ref _phoneNumber, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public string Email
         {
             get => _email;
-            set => SetProperty(ref _email, value);
+            set
+            {
+                if (SetProperty(ref _email, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public string Age
         {
             get => _age;
-            set => SetProperty(ref _age, value);
+            set
+            {
+                if (SetProperty(ref _age, value))
+                {
+                    if (!string.IsNullOrWhiteSpace(Age) &&
+                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+                    {
+                        IsEnableSignUp = true;
+                    }
+                    else
+                    {
+                        IsEnableSignUp = false;
+                    }
+                }
+            }
         }
 
         public bool IsMale
@@ -65,7 +185,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             get => _isMale;
             set => SetProperty(ref _isMale, value);
         }
-      
 
         public ICommand SignUpCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
@@ -77,7 +196,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         public SignUpViewModel(INavigationService navigationService) : base(navigationService)
         {
-            SignUpCommand=new Command(SignUpAccount);
+            SignUpCommand = new Command(SignUpAccount);
             LoginCommand = new Command(LoginAccount);
         }
 
@@ -86,14 +205,21 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             if (IsLoading) return;
             IsLoading = true;
             var para = new NavigationParameters();
-            para.Add("SignUp","1");
-            para.Add("UserName",UserName);
-            NavigationService.NavigateAsync("/LoginPage",para);
+            para.Add("SignUp", "1");
+            para.Add("UserName", UserName);
+            NavigationService.NavigateAsync("/LoginPage", para);
         }
 
         private void SignUpAccount()
         {
-            
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
