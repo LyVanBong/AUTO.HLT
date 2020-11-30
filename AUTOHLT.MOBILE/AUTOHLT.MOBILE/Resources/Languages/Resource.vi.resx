@@ -265,4 +265,24 @@
     <value>Lỗi phát sinh trong quá trình xử lý</value>
     <comment>Lỗi phát sinh trong quá trình xử lý</comment>
   </data>
+  <data name="1000037" xml:space="preserve">
+    <value>Tài khoản đã tồn tại</value>
+    <comment>Tài khoản đã tồn tại</comment>
+  </data>
+  <data name="1000038" xml:space="preserve">
+    <value>Mật khẩu phải trên 6 ký tự</value>
+    <comment>Mật khẩu phải trên 6 ký tự</comment>
+  </data>
+  <data name="1000039" xml:space="preserve">
+    <value>Mật khẩu không khớp</value>
+    <comment>Mật khẩu không khớp</comment>
+  </data>
+  <data name="1000040" xml:space="preserve">
+    <value>Thành công</value>
+    <comment>Thành công</comment>
+  </data>
+  <data name="1000041" xml:space="preserve">
+    <value>Lỗi</value>
+    <comment>Lỗi</comment>
+  </data>
 </root>

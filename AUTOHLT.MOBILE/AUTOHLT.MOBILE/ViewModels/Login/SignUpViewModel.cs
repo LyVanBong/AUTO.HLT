@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Models.Login;
+using AUTOHLT.MOBILE.Resources.Languages;
+using AUTOHLT.MOBILE.Services.Login;
+using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using Prism.Services;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.Login
@@ -19,7 +23,31 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         private string _name;
         private string _userName;
         private bool _isEnableSignUp;
+        private ILoginService _loginService;
+        private IUserService _userService;
+        private bool _hasErrorEmail;
+        private bool _hasErrorPass;
+        private bool _hasErrorConfirmPass;
+        private IPageDialogService _pageDialogService;
+        public bool HasErrorConfirmPass
+        {
+            get => _hasErrorConfirmPass;
+            set => SetProperty(ref _hasErrorConfirmPass, value);
+        }
 
+        public bool HasErrorPass
+        {
+            get => _hasErrorPass;
+            set => SetProperty(ref _hasErrorPass, value);
+        }
+
+        public bool HasErrorEmail
+        {
+            get => _hasErrorEmail;
+            set => SetProperty(ref _hasErrorEmail, value);
+        }
+
+        public ICommand UnfocusedCommand { get; private set; }
         public bool IsEnableSignUp
         {
             get => _isEnableSignUp;
@@ -33,17 +61,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _userName, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -55,17 +73,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _name, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -77,17 +85,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _password, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -99,17 +97,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _confirmPassword, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -121,17 +109,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _phoneNumber, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -143,17 +121,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _email, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -165,17 +133,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (SetProperty(ref _age, value))
                 {
-                    if (!string.IsNullOrWhiteSpace(Age) &&
-                        !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                        !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
-                        !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
-                    {
-                        IsEnableSignUp = true;
-                    }
-                    else
-                    {
-                        IsEnableSignUp = false;
-                    }
+                    CheckDataEnableSignUp();
                 }
             }
         }
@@ -194,12 +152,84 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             set => SetProperty(ref _isLoading, value);
         }
 
-        public SignUpViewModel(INavigationService navigationService) : base(navigationService)
+        public SignUpViewModel(INavigationService navigationService, ILoginService loginService, IUserService userService, IPageDialogService pageDialogService) : base(navigationService)
         {
+            _pageDialogService = pageDialogService;
+            _userService = userService;
+            _loginService = loginService;
+
+            UnfocusedCommand = new Command<string>(Unfocused);
             SignUpCommand = new Command(SignUpAccount);
             LoginCommand = new Command(LoginAccount);
         }
 
+        private async void Unfocused(string key)
+        {
+            try
+            {
+                var para = int.Parse(key);
+                switch (para)
+                {
+                    case 0:
+                        if (!string.IsNullOrWhiteSpace(UserName))
+                        {
+                            var data = await _userService.CheckExistAccount(userName: UserName);
+                            if (data != null && data.Code < 0)
+                            {
+                                HasErrorEmail = true;
+                            }
+                            else
+                            {
+                                HasErrorEmail = false;
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (!string.IsNullOrWhiteSpace(Password))
+                        {
+                            if (Password.Length < 6)
+                            {
+                                HasErrorPass = true;
+                            }
+                            else
+                            {
+                                HasErrorPass = false;
+                            }
+
+                        }
+                        break;
+                    case 2:
+                        if (!string.IsNullOrWhiteSpace(ConfirmPassword) && Password.Equals(ConfirmPassword))
+                        {
+                            HasErrorConfirmPass = false;
+                        }
+                        else
+                        {
+                            HasErrorConfirmPass = true;
+                        }
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+
+        private void CheckDataEnableSignUp()
+        {
+            if (!string.IsNullOrWhiteSpace(Age) &&
+                !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
+                !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
+            {
+                IsEnableSignUp = true;
+            }
+            else
+            {
+                IsEnableSignUp = false;
+            }
+        }
         private void LoginAccount()
         {
             if (IsLoading) return;
@@ -207,18 +237,34 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             var para = new NavigationParameters();
             para.Add("SignUp", "1");
             para.Add("UserName", UserName);
-            NavigationService.NavigateAsync("/LoginPage", para);
+            NavigationService.NavigateAsync("/LoginPage", para, true, true);
         }
 
-        private void SignUpAccount()
+        private async void SignUpAccount()
         {
             try
             {
-
+                if (IsLoading) return;
+                IsLoading = true;
+                var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, Email, Age, IsMale);
+                if (data != null && data.Code > 0)
+                {
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                    Password = ConfirmPassword = Age = Email = PhoneNumber = "";
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                    Password = ConfirmPassword = null;
+                }
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 

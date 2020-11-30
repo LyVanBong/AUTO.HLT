@@ -1,129 +1,150 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="AUTOHLT.MOBILE.Views.Login.SignUpPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms">
+<ContentPage x:Class="AUTOHLT.MOBILE.Views.Login.SignUpPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             iOsSpecific:Page.UseSafeArea="true"
+             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:behaviors="http://prismlibrary.com"
+             xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
     <ContentPage.Content>
-        <ScrollView
-            Margin="0"
-            Padding="0"
-            VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="10,100,80,80,80,80,80,80,80,80,50,20,50" RowSpacing="0">
+        <ScrollView Margin="0"
+                    Padding="0"
+                    VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="10,100,80,80,80,80,80,80,80,80,50,20,50"
+                  RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
-                        <Setter Property="ContainerType" Value="Outlined" />
-                        <Setter Property="Margin" Value="20,0" />
-                        <Setter Property="OutlineCornerRadius" Value="5" />
+                        <Setter Property="ContainerType"
+                                Value="Outlined" />
+                        <Setter Property="Margin"
+                                Value="20,0" />
+                        <Setter Property="OutlineCornerRadius"
+                                Value="5" />
                     </Style>
                     <Style TargetType="Label">
-                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="FontSize"
+                                Value="16" />
                     </Style>
                 </Grid.Resources>
-                <Image Grid.Row="1" Source="{markupExtensions:ImageResource logo.png}" />
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="2"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000013}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding UserName}" />
+                <Image Grid.Row="1"
+                       Source="{markupExtensions:ImageResource logo.png}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="2"
+                                                   ErrorColor="{StaticResource Red}"
+                                                   HasError="{Binding HasErrorEmail}"
+                                                   ErrorText="{markupExtensions:Translate 1000037}"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000013}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           Text="{Binding UserName}">
+                        <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="Unfocused"
+                                                          Command="{Binding UnfocusedCommand}"
+                                                      CommandParameter="0" />
+                    </Entry.Behaviors>
+                    </Entry>
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="3"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000011}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding Name}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="3"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000011}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="4"
-                    EnablePasswordVisibilityToggle="True"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000006}">
-                    <Entry
-                        ClearButtonVisibility="WhileEditing"
-                        IsPassword="True"
-                        Text="{Binding Password}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="4"
+                                                   ErrorText="{markupExtensions:Translate 1000038}"
+                                                   ErrorColor="{StaticResource Red}"
+                                                   HasError="{Binding HasErrorPass}"
+                                                   EnablePasswordVisibilityToggle="True"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000006}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           IsPassword="True"
+                           Text="{Binding Password}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="Unfocused"
+                                                              Command="{Binding UnfocusedCommand}"
+                                                              CommandParameter="1" />
+                        </Entry.Behaviors>
+                    </Entry>
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="5"
-                    EnablePasswordVisibilityToggle="True"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000010}">
-                    <Entry
-                        ClearButtonVisibility="WhileEditing"
-                        IsPassword="True"
-                        Text="{Binding ConfirmPassword}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="5"
+                                                   ErrorText="{markupExtensions:Translate 1000039}"
+                                                   ErrorColor="{StaticResource Red}"
+                                                   HasError="{Binding HasErrorConfirmPass}"
+                                                   EnablePasswordVisibilityToggle="True"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000010}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           IsPassword="True"
+                           Text="{Binding ConfirmPassword}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="Unfocused"
+                                                              Command="{Binding UnfocusedCommand}"
+                                                              CommandParameter="2" />
+                        </Entry.Behaviors>
+                    </Entry>
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="6"
-                    ErrorColor="Red"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000014}">
-                    <Entry
-                        ClearButtonVisibility="WhileEditing"
-                        Keyboard="Numeric"
-                        Text="{Binding PhoneNumber}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="6"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000014}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           Keyboard="Numeric"
+                           Text="{Binding PhoneNumber}" />
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="7"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000001}">
-                    <Entry
-                        ClearButtonVisibility="WhileEditing"
-                        Keyboard="Email"
-                        Text="{Binding Email}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="7"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000001}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           Keyboard="Email"
+                           Text="{Binding Email}" />
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="8"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000012}">
-                    <Entry
-                        ClearButtonVisibility="WhileEditing"
-                        Keyboard="Numeric"
-                        Text="{Binding Age}" />
+                <textInputLayout:SfTextInputLayout Grid.Row="8"
+                                                   FocusedColor="{StaticResource BtLogin}"
+                                                   Hint="{markupExtensions:Translate 1000012}">
+                    <Entry ClearButtonVisibility="WhileEditing"
+                           Keyboard="Numeric"
+                           Text="{Binding Age}" />
                 </textInputLayout:SfTextInputLayout>
-                <buttons:SfRadioGroup
-                    Grid.Row="9"
-                    Margin="20,0"
-                    Padding="0"
-                    Orientation="Horizontal">
-                    <buttons:SfRadioButton IsChecked="{Binding IsMale}" Text="{markupExtensions:Translate 1000016}" />
-                    <buttons:SfRadioButton IsChecked="True" Text="{markupExtensions:Translate 1000017}" />
+                <buttons:SfRadioGroup Grid.Row="9"
+                                      Margin="20,0"
+                                      Padding="0"
+                                      Orientation="Horizontal">
+                    <buttons:SfRadioButton IsChecked="{Binding IsMale}"
+                                           Text="{markupExtensions:Translate 1000016}" />
+                    <buttons:SfRadioButton IsChecked="True"
+                                           Text="{markupExtensions:Translate 1000017}" />
                 </buttons:SfRadioGroup>
-                <Button
-                    Grid.Row="10"
-                    Margin="20,0"
-                    Padding="0"
-                    BackgroundColor="{StaticResource Gray-White}"
-                    BorderColor="{StaticResource BtLogin}"
-                    BorderWidth="1"
-                    Command="{Binding SignUpCommand}"
-                    CornerRadius="10"
-                    FontSize="18"
-                    IsEnabled="{Binding IsEnableSignUp}"
-                    Text="{markupExtensions:Translate 1000002}" />
-                <Label
-                    Grid.Row="12"
-                    Margin="20,0"
-                    Padding="0">
+                <Button Grid.Row="10"
+                        Margin="20,0"
+                        Padding="0"
+                        BackgroundColor="{StaticResource Gray-White}"
+                        BorderColor="{StaticResource BtLogin}"
+                        BorderWidth="1"
+                        Command="{Binding SignUpCommand}"
+                        CornerRadius="10"
+                        FontSize="18"
+                        IsEnabled="{Binding IsEnableSignUp}"
+                        Text="{markupExtensions:Translate 1000002}" />
+                <Label Grid.Row="12"
+                       Margin="20,0"
+                       Padding="0">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{markupExtensions:Translate 1000009}" />
                             <Span Text=" " />
-                            <Span Text="{markupExtensions:Translate 1000000}" TextColor="{StaticResource HyperLink}" />
+                            <Span Text="{markupExtensions:Translate 1000000}"
+                                  TextColor="{StaticResource HyperLink}" />
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding LoginCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <controls:LoadingView
-                    Grid.Row="0"
-                    Grid.RowSpan="13"
-                    IsVisible="{Binding IsLoading}" />
+                <controls:LoadingView Grid.Row="0"
+                                      Grid.RowSpan="13"
+                                      IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>
     </ContentPage.Content>

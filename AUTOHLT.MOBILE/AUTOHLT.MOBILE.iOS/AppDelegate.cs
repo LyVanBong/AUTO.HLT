@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.XForms.iOS.Buttons;
 using Syncfusion.XForms.iOS.Graphics;
+using Syncfusion.XForms.iOS.MaskedEdit;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
@@ -33,6 +34,7 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries()
         {
+            SfMaskedEditRenderer.Init();
             SfRadioButtonRenderer.Init();
             new SfBusyIndicatorRenderer();
             SfTextInputLayoutRenderer.Init();

@@ -2,6 +2,7 @@ using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Login;
 using AUTOHLT.MOBILE.Services.RequestProvider;
+using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Login;
 using AUTOHLT.MOBILE.Views.Home;
@@ -38,6 +39,7 @@ namespace AUTOHLT.MOBILE
         {
             #region Register Service
 
+            containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<IDatabaseService, DatabaseService>();
             containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IRequestProvider, RequestProvider>();
