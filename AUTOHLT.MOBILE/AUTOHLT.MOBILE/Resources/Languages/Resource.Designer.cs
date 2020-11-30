@@ -374,5 +374,68 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000034", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        internal static string _1000035 {
+            get {
+                return ResourceManager.GetString("1000035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors arise during processing.
+        /// </summary>
+        internal static string _1000036 {
+            get {
+                return ResourceManager.GetString("1000036", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account already exists.
+        /// </summary>
+        internal static string _1000037 {
+            get {
+                return ResourceManager.GetString("1000037", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be over 6 characters.
+        /// </summary>
+        internal static string _1000038 {
+            get {
+                return ResourceManager.GetString("1000038", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password incorrect.
+        /// </summary>
+        internal static string _1000039 {
+            get {
+                return ResourceManager.GetString("1000039", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string _1000040 {
+            get {
+                return ResourceManager.GetString("1000040", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string _1000041 {
+            get {
+                return ResourceManager.GetString("1000041", resourceCulture);
+            }
+        }
     }
 }

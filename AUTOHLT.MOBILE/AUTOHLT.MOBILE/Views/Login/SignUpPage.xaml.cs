@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace AUTOHLT.MOBILE.Views.Login
@@ -15,6 +17,13 @@ namespace AUTOHLT.MOBILE.Views.Login
         public SignUpPage()
         {
             InitializeComponent();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            var safeInsets = On<iOS>().SafeAreaInsets();
+            safeInsets.Left = 20;
+            Padding = safeInsets;
         }
     }
 }

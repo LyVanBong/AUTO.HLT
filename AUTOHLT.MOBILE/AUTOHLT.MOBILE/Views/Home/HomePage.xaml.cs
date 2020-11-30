@@ -16,5 +16,10 @@ namespace AUTOHLT.MOBILE.Views.Home
         {
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
