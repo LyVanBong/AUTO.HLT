@@ -13,7 +13,7 @@
         <ScrollView Margin="0"
                     Padding="0"
                     VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="10,100,80,80,80,80,80,80,80,80,50,20,50"
+            <Grid RowDefinitions="{OnPlatform Android='10,100,70,70,70,70,70,70,70,70,50,20,50',iOS='10,100,60,60,60,60,60,60,60,60,50,20,50'}"
                   RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
@@ -40,10 +40,10 @@
                     <Entry ClearButtonVisibility="WhileEditing"
                            Text="{Binding UserName}">
                         <Entry.Behaviors>
-                        <behaviors:EventToCommandBehavior EventName="Unfocused"
-                                                          Command="{Binding UnfocusedCommand}"
-                                                      CommandParameter="0" />
-                    </Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="Unfocused"
+                                                              Command="{Binding UnfocusedCommand}"
+                                                              CommandParameter="0" />
+                        </Entry.Behaviors>
                     </Entry>
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout Grid.Row="3"

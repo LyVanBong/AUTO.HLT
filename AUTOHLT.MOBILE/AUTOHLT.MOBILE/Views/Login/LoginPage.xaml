@@ -13,7 +13,7 @@
         <ScrollView Margin="0"
                     Padding="0"
                     VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="10,350,100,100,50,50,20,50"
+            <Grid RowDefinitions="{OnPlatform Android='10,350,70,70,50,50,20,50',iOS='10,350,60,60,50,50,20,50'}"
                   RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
