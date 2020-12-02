@@ -13,6 +13,24 @@ namespace AUTOHLT.MOBILE.Services.User
         {
             _requestProvider = requestProvider;
         }
+
+        public async Task<ResponseModel<string>> GetMoneyUser(string userName)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("username",userName),
+                };
+                var data = await _requestProvider.GetAsync<string>("user/getpriceuser", para);
+                return data;
+            }
+            catch (Exception )
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseModel<string>> CheckExistAccount(string userName)
         {
             try

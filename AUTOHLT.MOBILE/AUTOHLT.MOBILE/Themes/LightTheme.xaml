@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary x:Class="AUTOHLT.MOBILE.Themes.LightTheme"
                     xmlns="http://xamarin.com/schemas/2014/forms"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:converters="clr-namespace:AUTOHLT.MOBILE.Converters;assembly=AUTOHLT.MOBILE">
+    <converters:StringToPriceConverter x:Key="StringToPrice" />
     <Style TargetType="Label">
         <Setter Property="TextColor"
                 Value="#000"></Setter>

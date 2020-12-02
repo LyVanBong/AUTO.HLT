@@ -285,4 +285,8 @@
     <value>Lỗi</value>
     <comment>Lỗi</comment>
   </data>
+  <data name="1000042" xml:space="preserve">
+    <value>Bạn muốn đăng xuất khỏi tài khoản của mình !</value>
+    <comment>Bạn muốn đăng xuất khỏi tài khoản của mình !</comment>
+  </data>
 </root>

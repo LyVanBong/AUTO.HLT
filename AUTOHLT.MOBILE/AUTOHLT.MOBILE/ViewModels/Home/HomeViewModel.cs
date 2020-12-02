@@ -1,20 +1,91 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTOHLT.MOBILE.Models.User;
+using AUTOHLT.MOBILE.Resources.Languages;
+using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.User;
+using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using Prism.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.Home
 {
     public class HomeViewModel : ViewModelBase
     {
-        public ICommand LogoutCommand { get; private set; }
-        public HomeViewModel(INavigationService navigationService) : base(navigationService)
+        private UserModel _userModel;
+        private IDatabaseService _databaseService;
+        private IUserService _userService;
+        private string _moneyUser;
+        private IPageDialogService _pageDialogService;
+
+        public string MoneyUser
         {
-            LogoutCommand=new Command(LogoutAccount);
+            get => _moneyUser;
+            set => SetProperty(ref _moneyUser, value);
         }
 
-        private void LogoutAccount()
+        public UserModel UserModel
         {
-            NavigationService.NavigateAsync("/LoginPage");
+            get => _userModel;
+            set => SetProperty(ref _userModel, value);
+        }
+
+        public ICommand LogoutCommand { get; private set; }
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService) : base(navigationService)
+        {
+            _pageDialogService = pageDialogService;
+            _userService = userService;
+            _databaseService = databaseService;
+            LogoutCommand = new Command(LogoutAccount);
+        }
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            await InitializeDataHome();
+        }
+
+        private async Task InitializeDataHome()
+        {
+            try
+            {
+                var data = await _databaseService.GetAccountUser();
+                if (data != null)
+                {
+                    UserModel = data;
+                }
+
+                var money = await _userService.GetMoneyUser(UserModel.UserName);
+                if (money != null)
+                {
+                    if (money.Code > 0)
+                    {
+                        MoneyUser = money.Data;
+                    }
+                    else
+                    {
+                        MoneyUser = "0";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+
+        private async void LogoutAccount()
+        {
+            var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000042, "OK", "Cancel");
+            if (res)
+            {
+                Preferences.Remove("IsCheckSavePassword");
+                await _databaseService.DeleteAccontUser();
+                await NavigationService.NavigateAsync("/LoginPage");
+            }
         }
     }
 }

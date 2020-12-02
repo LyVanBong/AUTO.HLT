@@ -437,5 +437,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000041", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You want to sign out of your account !.
+        /// </summary>
+        internal static string _1000042 {
+            get {
+                return ResourceManager.GetString("1000042", resourceCulture);
+            }
+        }
     }
 }

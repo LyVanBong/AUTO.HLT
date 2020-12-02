@@ -285,4 +285,8 @@
     <value>Error</value>
     <comment>Lỗi</comment>
   </data>
+  <data name="1000042" xml:space="preserve">
+    <value>You want to sign out of your account !</value>
+    <comment>Bạn muốn đăng xuất khỏi tài khoản của mình !</comment>
+  </data>
 </root>
