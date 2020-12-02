@@ -82,7 +82,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000042, "OK", "Cancel");
             if (res)
             {
-                Preferences.Remove("IsCheckSavePassword");
+                Preferences.Clear();
                 await _databaseService.DeleteAccontUser();
                 await NavigationService.NavigateAsync("/LoginPage");
             }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Helpers;
+﻿using AUTOHLT.MOBILE.Helpers;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Login;
@@ -10,7 +7,9 @@ using AUTOHLT.MOBILE.Views.Login;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
-using Prism.Services.Dialogs;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -25,6 +24,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         private IPageDialogService _pageDialogService;
         private bool _isEnabledLogin;
         private IDatabaseService _databaseService;
+        private bool _isCheckSavePassword;
+
+        public bool IsCheckSavePassword
+        {
+            get => _isCheckSavePassword;
+            set => SetProperty(ref _isCheckSavePassword, value);
+        }
 
         public bool IsEnabledLogin
         {
@@ -70,12 +76,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             }
         }
 
-        public bool IsCheckSavePassword
-        {
-            get => Preferences.Get(nameof(IsCheckSavePassword), true);
-            set => Preferences.Set(nameof(IsCheckSavePassword), IsCheckSavePassword);
-        }
-
         public ICommand SignUpCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
         public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
@@ -91,6 +91,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsCheckSavePassword = true;
             if (parameters != null)
             {
                 if (parameters.ContainsKey("SignUp"))
@@ -100,17 +101,29 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                 }
             }
 
-            if (IsCheckSavePassword)
+            await InitializeDataLogin();
+            IsLoading = false;
+        }
+
+        private async Task InitializeDataLogin()
+        {
+            try
             {
-                var data = await _databaseService.GetAccountUser();
-                if (data != null)
+                if (Preferences.Get("IsCheckSavePassword", false))
                 {
-                    UserName = data.UserName;
-                    Password = data.Password;
-                    await DoLogin(Password);
+                    var data = await _databaseService.GetAccountUser();
+                    if (data != null)
+                    {
+                        UserName = data.UserName;
+                        Password = data.Password;
+                        await DoLogin(Password);
+                    }
                 }
             }
-            IsLoading = false;
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private async void LoginAccount()
