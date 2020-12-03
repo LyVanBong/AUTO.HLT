@@ -39,8 +39,8 @@
                            ReturnType="Next"
                            Text="{Binding UserName}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
-                        <Label FontFamily="FontAwesome5Solid"
-                               Text="{x:Static icon:IconFont.User}" />
+                        <Label FontFamily="Awesome5ProSolid"
+                               Text="{x:Static icon:FontAwesome5ProSolid.User}" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout Grid.Row="3"
@@ -54,8 +54,8 @@
                            ReturnType="Done"
                            Text="{Binding Password}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
-                        <Label FontFamily="Awesome"
-                               Text="{x:Static icon:IconFont.Key}" />
+                        <Label FontFamily="Awesome5ProSolid"
+                               Text="{x:Static icon:FontAwesome5ProSolid.Key}" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
                 </textInputLayout:SfTextInputLayout>
                 <buttons:SfCheckBox x:Name="checkBox"

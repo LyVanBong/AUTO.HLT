@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\FontAwesome5BrandsRegular400.otf" />
     <None Remove="Resources\Fonts\FontAwesome5DuotoneSolid900.otf" />
-    <None Remove="Resources\Fonts\FontAwesome5Solid.otf" />
+    <None Remove="Resources\Fonts\FontAwesome5ProLight300.otf" />
+    <None Remove="Resources\Fonts\FontAwesome5ProRegular400.otf" />
+    <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
+    <None Remove="Resources\Fonts\RobotoRegular.ttf" />
     <None Remove="Resources\Images\icon_account.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_comments.png" />
@@ -27,8 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\FontAwesome5BrandsRegular400.otf" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5DuotoneSolid900.otf" />
-    <EmbeddedResource Include="Resources\Fonts\FontAwesome5Solid.otf" />
+    <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProLight300.otf" />
+    <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProRegular400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
+    <EmbeddedResource Include="Resources\Fonts\RobotoRegular.ttf" />
     <EmbeddedResource Include="Resources\Images\icon_account.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />
