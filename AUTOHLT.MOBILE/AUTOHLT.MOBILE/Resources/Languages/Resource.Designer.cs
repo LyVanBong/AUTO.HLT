@@ -446,5 +446,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000042", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfers.
+        /// </summary>
+        internal static string _1000043 {
+            get {
+                return ResourceManager.GetString("1000043", resourceCulture);
+            }
+        }
     }
 }

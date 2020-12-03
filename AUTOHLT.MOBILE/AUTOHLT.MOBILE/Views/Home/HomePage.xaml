@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
              BackgroundColor="{StaticResource HeaderHome}"
+             xmlns:prism="http://prismlibrary.com"
              xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
              xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE">
     <ContentPage.Content>
@@ -155,7 +156,11 @@
                                Source="{markupExtensions:ImageResource icon_account.png}" />
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
-                                 Grid.Column="0" />
+                                 Grid.Column="0">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{prism:NavigateTo 'TransferPage'}"></TapGestureRecognizer>
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
                                  Grid.Column="1" />

@@ -289,4 +289,8 @@
     <value>Bạn muốn đăng xuất khỏi tài khoản của mình !</value>
     <comment>Bạn muốn đăng xuất khỏi tài khoản của mình !</comment>
   </data>
+  <data name="1000043" xml:space="preserve">
+    <value>Chuyển tiền</value>
+    <comment>Chuyển tiền</comment>
+  </data>
 </root>

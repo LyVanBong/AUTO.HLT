@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             BackgroundColor="{StaticResource HeaderHome}"
              x:Class="AUTOHLT.MOBILE.Views.Transfers.TransferPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid BackgroundColor="{StaticResource Gray-White}"
+              RowDefinitions="40,*">
+            <controls:NavigationView Grid.Row="0"
+                                     Text="{markupExtensions:Translate 1000043}" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
