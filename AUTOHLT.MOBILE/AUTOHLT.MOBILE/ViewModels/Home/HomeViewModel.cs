@@ -20,6 +20,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private IUserService _userService;
         private string _moneyUser;
         private IPageDialogService _pageDialogService;
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
 
         public string MoneyUser
         {
@@ -40,12 +47,14 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             _userService = userService;
             _databaseService = databaseService;
             LogoutCommand = new Command(LogoutAccount);
+            IsLoading = true;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             await InitializeDataHome();
+            IsLoading = false;
         }
 
         private async Task InitializeDataHome()
@@ -79,6 +88,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
 
         private async void LogoutAccount()
         {
+            IsLoading = true;
             var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000042, "OK", "Cancel");
             if (res)
             {
@@ -86,6 +96,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 await _databaseService.DeleteAccontUser();
                 await NavigationService.NavigateAsync("/LoginPage");
             }
+
+            IsLoading = false;
         }
     }
 }

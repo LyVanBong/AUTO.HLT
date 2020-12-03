@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
              BackgroundColor="{StaticResource HeaderHome}"
-             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE">
+             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE">
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Gray-White}"
                     Margin="0"
@@ -420,6 +421,9 @@
                         </Grid>
                     </Frame>
                 </Grid>
+                <controls:LoadingView Grid.Row="0"
+                                      Grid.RowSpan="7"
+                                      IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>
     </ContentPage.Content>
