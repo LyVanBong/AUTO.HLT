@@ -10,7 +10,9 @@ namespace AUTOHLT.MOBILE.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
-                return string.Format(new CultureInfo("en-US"), "{0:0,0}", value.ToString());
+            {
+                return string.Format(new CultureInfo("en-US"), "{0:0,0}", double.Parse(value.ToString()));
+            }
             return value;
         }
 
