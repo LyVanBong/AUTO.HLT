@@ -11,13 +11,19 @@ namespace AUTOHLT.MOBILE.Converters
         {
             if (value != null)
             {
-                return string.Format(new CultureInfo("en-US"), "{0:0,0}", double.Parse(value.ToString()));
+                return string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(value.ToString()));
             }
             return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value != null)
+            {
+                var res = value.ToString();
+                res = res.Replace(",", "");
+                return res;
+            }
             return value;
         }
     }

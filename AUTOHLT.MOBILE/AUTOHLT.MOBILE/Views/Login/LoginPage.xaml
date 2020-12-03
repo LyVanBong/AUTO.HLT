@@ -40,6 +40,7 @@
                            Text="{Binding UserName}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
                         <Label FontFamily="Awesome5ProSolid"
+                               VerticalTextAlignment="Center"
                                Text="{x:Static icon:FontAwesome5ProSolid.User}" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
                 </textInputLayout:SfTextInputLayout>
@@ -55,6 +56,7 @@
                            Text="{Binding Password}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
                         <Label FontFamily="Awesome5ProSolid"
+                               VerticalTextAlignment="Center"
                                Text="{x:Static icon:FontAwesome5ProSolid.Key}" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
                 </textInputLayout:SfTextInputLayout>

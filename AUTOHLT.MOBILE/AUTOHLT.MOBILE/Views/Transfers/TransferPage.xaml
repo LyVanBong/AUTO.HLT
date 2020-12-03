@@ -3,13 +3,104 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
              xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:behaviors="http://prismlibrary.com"
              BackgroundColor="{StaticResource HeaderHome}"
              x:Class="AUTOHLT.MOBILE.Views.Transfers.TransferPage">
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource Gray-White}"
-              RowDefinitions="40,*">
+              RowSpacing="0"
+              Padding="0"
+              Margin="0"
+              RowDefinitions="{OnPlatform Android='40,70,70,30,70,*',iOS='40,60,60,30,60,*'}">
+            <Grid.Resources>
+                <Style TargetType="textInputLayout:SfTextInputLayout">
+                    <Setter Property="ContainerType"
+                            Value="Outlined" />
+                    <Setter Property="Margin"
+                            Value="20,0" />
+                    <Setter Property="OutlineCornerRadius"
+                            Value="5" />
+                </Style>
+            </Grid.Resources>
             <controls:NavigationView Grid.Row="0"
                                      Text="{markupExtensions:Translate 1000043}" />
+            <textInputLayout:SfTextInputLayout Grid.Row="1"
+                                               LeadingViewPosition="Inside"
+                                               FocusedColor="{StaticResource BtLogin}"
+                                               Hint="{markupExtensions:Translate 1000005}">
+                <Entry ClearButtonVisibility="WhileEditing"
+                       ReturnType="Next"
+                       Text="{Binding UserName}">
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="Unfocused"
+                                                          Command="{Binding UnfocusedUserNameCommand}"
+                                                          CommandParameter="MyParameter" />
+                    </Entry.Behaviors>
+                </Entry>
+                <textInputLayout:SfTextInputLayout.TrailingView>
+                    <Label FontFamily="Awesome5ProSolid"
+                           VerticalTextAlignment="Center"
+                           FontSize="20"
+                           TextColor="{StaticResource Green}"
+                           Text="{x:Static icon:FontAwesome5ProSolid.PhoneSquare}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ContactsCommand}"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </textInputLayout:SfTextInputLayout.TrailingView>
+                <textInputLayout:SfTextInputLayout.LeadingView>
+                    <Label FontFamily="Awesome5ProSolid"
+                           VerticalTextAlignment="Center"
+                           Text="{x:Static icon:FontAwesome5ProSolid.User}" />
+                </textInputLayout:SfTextInputLayout.LeadingView>
+            </textInputLayout:SfTextInputLayout>
+            <textInputLayout:SfTextInputLayout Grid.Row="2"
+                                               LeadingViewPosition="Inside"
+                                               FocusedColor="{StaticResource BtLogin}"
+                                               Hint="{markupExtensions:Translate 1000044}">
+                <Entry ClearButtonVisibility="WhileEditing"
+                       ReturnType="Done"
+                       ReturnCommand="{Binding TransfersCommand}"
+                       Keyboard="Numeric"
+                       MaxLength="10"
+                       Text="{Binding AmountMoney,Converter={StaticResource StringToPrice}}">
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="Unfocused"
+                                                          Command="{Binding UnfocusedAmountMoneyCommand}"
+                                                          CommandParameter="MyParameter" />
+                    </Entry.Behaviors>
+                </Entry>
+                <textInputLayout:SfTextInputLayout.LeadingView>
+                    <Label FontFamily="Awesome5ProSolid"
+                           VerticalTextAlignment="Center"
+                           Text="{x:Static icon:FontAwesome5ProSolid.DollarSign}" />
+                </textInputLayout:SfTextInputLayout.LeadingView>
+            </textInputLayout:SfTextInputLayout>
+            <buttons:SfCheckBox x:Name="checkBox"
+                                Grid.Row="3"
+                                Margin="20,0"
+                                Padding="0"
+                                CheckedColor="{StaticResource BtLogin}"
+                                FontSize="16"
+                                IsChecked="{Binding IsSaveContacts}"
+                                Text="{markupExtensions:Translate 1000045}" />
+            <Button Grid.Row="4"
+                    Margin="20,5"
+                    Padding="0"
+                    BackgroundColor="{StaticResource Gray-White}"
+                    BorderColor="{StaticResource BtLogin}"
+                    BorderWidth="1"
+                    Command="{Binding TransfersCommand}"
+                    CornerRadius="10"
+                    FontSize="18"
+                    IsEnabled="{Binding IsEnabledTransfers}"
+                    Text="{markupExtensions:Translate 1000043}" />
+            <controls:LoadingView Grid.Row="0"
+                                  Grid.RowSpan="6"
+                                  IsVisible="{Binding IsLoading}"></controls:LoadingView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

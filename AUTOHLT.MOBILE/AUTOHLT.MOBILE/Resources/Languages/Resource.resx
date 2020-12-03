@@ -293,4 +293,24 @@
     <value>Transfers</value>
     <comment>Chuyển tiền</comment>
   </data>
+  <data name="1000044" xml:space="preserve">
+    <value>Amount money</value>
+    <comment>Số tiền</comment>
+  </data>
+  <data name="1000045" xml:space="preserve">
+    <value>Save to contacts</value>
+    <comment>Lưu vào danh bạ</comment>
+  </data>
+  <data name="1000046" xml:space="preserve">
+    <value>Account does not exist</value>
+    <comment>Tài khoản không tồn tại</comment>
+  </data>
+  <data name="1000047" xml:space="preserve">
+    <value>Money transfer is successful</value>
+    <comment>Chuyển tiền thành công</comment>
+  </data>
+  <data name="1000048" xml:space="preserve">
+    <value>The amount of money is greater than the amount you have</value>
+    <comment>Số tiền lớn hơn số tiền bạn có</comment>
+  </data>
 </root>
