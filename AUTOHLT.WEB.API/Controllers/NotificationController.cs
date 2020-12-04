@@ -90,7 +90,7 @@ namespace AUTOHLT.WEB.API.Controllers
             if (addNotificationModel != null)
             {
                 var data = _entities.AddNotification(addNotificationModel.ContentNotification,
-                    addNotificationModel.IdSend, addNotificationModel.IdReceive, addNotificationModel.NotificationType);
+                    addNotificationModel.IdSend, addNotificationModel.IdReceive, addNotificationModel.NotificationType, addNotificationModel.DateCreate);
                 if (data > 0)
                     return Ok(new ResponseModel<int>
                     {

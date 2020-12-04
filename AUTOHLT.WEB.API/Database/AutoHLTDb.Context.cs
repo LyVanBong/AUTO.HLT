@@ -28,7 +28,7 @@ namespace AUTOHLT.WEB.API.Database
         }
     
     
-        public virtual int AddNotification(string content, Nullable<System.Guid> id_send, Nullable<System.Guid> id_receive, Nullable<int> noti_Type)
+        public virtual int AddNotification(string content, Nullable<System.Guid> id_send, Nullable<System.Guid> id_receive, Nullable<int> noti_Type, Nullable<System.DateTime> date)
         {
             var contentParameter = content != null ?
                 new ObjectParameter("Content", content) :
@@ -46,7 +46,11 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("Noti_Type", noti_Type) :
                 new ObjectParameter("Noti_Type", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddNotification", contentParameter, id_sendParameter, id_receiveParameter, noti_TypeParameter);
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddNotification", contentParameter, id_sendParameter, id_receiveParameter, noti_TypeParameter, dateParameter);
         }
     
         public virtual int AddProductType(string productName, Nullable<int> price, Nullable<int> endDate, string content, Nullable<int> number)
@@ -74,7 +78,7 @@ namespace AUTOHLT.WEB.API.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductType", productNameParameter, priceParameter, endDateParameter, contentParameter, numberParameter);
         }
     
-        public virtual int AddServiceUseHistory(Nullable<System.Guid> id_ProType, string content, Nullable<System.Guid> id_User, Nullable<int> number)
+        public virtual int AddServiceUseHistory(Nullable<System.Guid> id_ProType, string content, Nullable<System.Guid> id_User, Nullable<int> number, Nullable<System.DateTime> date)
         {
             var id_ProTypeParameter = id_ProType.HasValue ?
                 new ObjectParameter("Id_ProType", id_ProType) :
@@ -92,7 +96,11 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("Number", number) :
                 new ObjectParameter("Number", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddServiceUseHistory", id_ProTypeParameter, contentParameter, id_UserParameter, numberParameter);
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddServiceUseHistory", id_ProTypeParameter, contentParameter, id_UserParameter, numberParameter, dateParameter);
         }
     
         public virtual int AddTransferMoney(Nullable<double> discount, Nullable<int> price, Nullable<System.Guid> id_send, Nullable<System.Guid> id_receive, Nullable<int> transferType)

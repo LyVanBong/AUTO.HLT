@@ -28,7 +28,7 @@ namespace AUTOHLT.WEB.API.Controllers
         {
             if (serviceUseHistoryModel != null)
             {
-                var data = _entities.AddServiceUseHistory(serviceUseHistoryModel.IdProductType, serviceUseHistoryModel.Content, serviceUseHistoryModel.IdUser, serviceUseHistoryModel.Number);
+                var data = _entities.AddServiceUseHistory(serviceUseHistoryModel.IdProductType, serviceUseHistoryModel.Content, serviceUseHistoryModel.IdUser, serviceUseHistoryModel.Number, serviceUseHistoryModel.DateCreate);
                 if (data > 0)
                 {
                     return Ok(new ResponseModel<int>
