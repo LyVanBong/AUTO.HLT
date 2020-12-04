@@ -4,12 +4,41 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:converters="clr-namespace:AUTOHLT.MOBILE.Converters;assembly=AUTOHLT.MOBILE">
     <converters:StringToPriceConverter x:Key="StringToPrice" />
+
+    <Style x:Key="TitleNavigation"
+           TargetType="Label">
+        <Setter Property="TextColor"
+                Value="#ffffff" />
+        <Setter Property="HorizontalOptions"
+                Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions"
+                Value="CenterAndExpand" />
+        <Setter Property="FontAttributes"
+                Value="Bold" />
+        <Setter Property="FontSize"
+                Value="20" />
+        <Setter Property="FontFamily"
+                Value="RobotoRegular"></Setter>
+        <Setter Property="MaxLines"
+                Value="1" />
+        <Setter Property="BackgroundColor"
+                Value="Transparent" />
+    </Style>
+
     <Style TargetType="Label">
+        <Setter Property="FontFamily"
+                Value="RobotoRegular"></Setter>
+        <Setter Property="FontSize"
+                Value="16"></Setter>
         <Setter Property="TextColor"
                 Value="#000"></Setter>
     </Style>
 
     <Style TargetType="Entry">
+        <Setter Property="FontSize"
+                Value="16"></Setter>
+        <Setter Property="FontFamily"
+                Value="RobotoRegular"></Setter>
         <Setter Property="TextColor"
                 Value="#000"></Setter>
     </Style>

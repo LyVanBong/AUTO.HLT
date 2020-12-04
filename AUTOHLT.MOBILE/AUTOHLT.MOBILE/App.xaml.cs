@@ -5,8 +5,10 @@ using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Login;
+using AUTOHLT.MOBILE.ViewModels.Transfers;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Login;
+using AUTOHLT.MOBILE.Views.Transfers;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -54,6 +56,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<TransferPage, TransferViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();

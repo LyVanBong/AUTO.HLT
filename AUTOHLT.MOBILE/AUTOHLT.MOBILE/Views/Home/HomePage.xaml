@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage x:Class="AUTOHLT.MOBILE.Views.Home.HomePage"
              xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:prism="http://prismlibrary.com"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-             BackgroundColor="{StaticResource HeaderHome}"
+             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
              xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE">
+             xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+             BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Gray-White}"
                     Margin="0"
@@ -37,8 +38,9 @@
                            VerticalOptions="CenterAndExpand">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span FontFamily="Awesome"
-                                      Text="{x:Static icon:IconFont.Home}"
+                                <Span FontFamily="Awesome5ProSolid"
+                                      FontSize="28"
+                                      Text="{x:Static icon:FontAwesome5ProSolid.Home}"
                                       TextColor="#fff" />
                                 <!--<Span Text="{Binding Name}" />-->
                                 <Span Text="  " />
@@ -50,8 +52,9 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Label FontFamily="Awesome"
-                           Text="{x:Static icon:IconFont.SignOutAlt}"
+                    <Label FontFamily="Awesome5ProSolid"
+                           FontSize="20"
+                           Text="{x:Static icon:FontAwesome5ProSolid.PowerOff}"
                            TextColor="#f4f4f2"
                            VerticalOptions="CenterAndExpand">
                         <Label.GestureRecognizers>
@@ -97,8 +100,8 @@
                                VerticalOptions="CenterAndExpand">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="Awesome"
-                                          Text="{x:Static icon:IconFont.MoneyCheckAlt}" />
+                                    <Span FontFamily="Awesome5ProSolid"
+                                          Text="{x:Static icon:FontAwesome5ProSolid.MoneyCheckAlt}" />
                                     <Span Text=" " />
                                     <Span Text="{markupExtensions:Translate 1000018}" />
                                 </FormattedString>
@@ -112,10 +115,10 @@
                                TextColor="{StaticResource Gray-800}">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="{Binding MoneyUser}" />
+                                    <Span Text="{Binding MoneyUser ,Converter={StaticResource StringToPrice}}" />
                                     <Span Text=" " />
-                                    <Span FontFamily="Awesome"
-                                          Text="{x:Static icon:IconFont.DollarSign}" />
+                                    <Span FontFamily="Awesome5ProSolid"
+                                          Text="{x:Static icon:FontAwesome5ProSolid.DollarSign}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -153,7 +156,11 @@
                                Source="{markupExtensions:ImageResource icon_account.png}" />
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
-                                 Grid.Column="0" />
+                                 Grid.Column="0">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{prism:NavigateTo 'TransferPage'}"></TapGestureRecognizer>
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
                                  Grid.Column="1" />
