@@ -27,13 +27,10 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
                 CreateClients(uri);
                 if (parameters != null && parameters.Any())
                 {
-                    foreach (var item in parameters)
-                    {
-                        _request.AddQueryParameter(item.Key, item.Value);
-                    }
+                    AddPrarameter(parameters);
                 }
 
-                var response = await _client.ExecuteAsync<ResponseModel<T>>(_request);
+                var response = await _client.ExecuteAsync(_request);
                 var data = response.StatusCode == HttpStatusCode.OK
                     ? JsonConvert.DeserializeObject<ResponseModel<T>>(response.Content)
                     : default;
@@ -53,7 +50,6 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
                 _client.BaseUrl = new Uri(uri);
                 _client.Timeout = 10000;
                 _request = new RestRequest(method);
-                _request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             }
             catch (Exception)
             {
@@ -67,13 +63,10 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
                 CreateClients(uri, Method.POST);
                 if (parameters != null && parameters.Any())
                 {
-                    foreach (var item in parameters)
-                    {
-                        _request.AddParameter(item.Key, item.Value);
-                    }
+                    AddPrarameter(parameters);
                 }
 
-                var response = await _client.ExecuteAsync<ResponseModel<T>>(_request);
+                var response = await _client.ExecuteAsync(_request);
                 var data = response.StatusCode == HttpStatusCode.OK
                     ? JsonConvert.DeserializeObject<ResponseModel<T>>(response.Content)
                     : default;
@@ -92,13 +85,10 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
                 CreateClients(uri, Method.PUT);
                 if (parameters != null && parameters.Any())
                 {
-                    foreach (var item in parameters)
-                    {
-                        _request.AddQueryParameter(item.Key, item.Value);
-                    }
+                    AddPrarameter(parameters);
                 }
 
-                var response = await _client.ExecuteAsync<ResponseModel<T>>(_request);
+                var response = await _client.ExecuteAsync(_request);
                 var data = response.StatusCode == HttpStatusCode.OK
                     ? JsonConvert.DeserializeObject<ResponseModel<T>>(response.Content)
                     : default;
@@ -110,6 +100,18 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
             }
         }
 
+        /// <summary>
+        /// them tham so vao api
+        /// </summary>
+        /// <param name="parameters"></param>
+        private void AddPrarameter(IReadOnlyCollection<RequestParameter> parameters)
+        {
+            foreach (var item in parameters)
+            {
+                _request.AddParameter(item.Key, item.Value);
+            }
+        }
+
         public async Task<ResponseModel<T>> DeleteAsync<T>(string uri, IReadOnlyCollection<RequestParameter> parameters)
         {
             try
@@ -117,13 +119,10 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
                 CreateClients(uri, Method.DELETE);
                 if (parameters != null && parameters.Any())
                 {
-                    foreach (var item in parameters)
-                    {
-                        _request.AddQueryParameter(item.Key, item.Value);
-                    }
+                    AddPrarameter(parameters);
                 }
 
-                var response = await _client.ExecuteAsync<ResponseModel<T>>(_request);
+                var response = await _client.ExecuteAsync(_request);
                 var data = response.StatusCode == HttpStatusCode.OK
                     ? JsonConvert.DeserializeObject<ResponseModel<T>>(response.Content)
                     : default;

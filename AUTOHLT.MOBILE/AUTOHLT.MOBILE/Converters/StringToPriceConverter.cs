@@ -13,7 +13,7 @@ namespace AUTOHLT.MOBILE.Converters
             {
                 if (value.ToString() == "0")
                     return value;
-                return string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(value.ToString()));
+                return string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(value.ToString()));
             }
             return value;
         }

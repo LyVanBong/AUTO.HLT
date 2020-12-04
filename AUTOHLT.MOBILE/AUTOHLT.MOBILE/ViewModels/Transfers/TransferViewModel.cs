@@ -146,6 +146,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
         {
             try
             {
+                IsLoading = false;
                 if (IsLoading) return;
                 IsLoading = true;
                 var user = _userModel;
@@ -169,6 +170,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
             }
             finally
             {
+                UserName = "";
+                AmountMoney = "";
                 IsLoading = false;
             }
         }
