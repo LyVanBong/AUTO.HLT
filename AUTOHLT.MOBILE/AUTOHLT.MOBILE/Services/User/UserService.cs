@@ -25,7 +25,7 @@ namespace AUTOHLT.MOBILE.Services.User
                     new RequestParameter("IdReceive",idReceive),
                     new RequestParameter("Price",price),
                 };
-                var data = await _requestProvider.GetAsync<string>("user/transfermoney", para);
+                var data = await _requestProvider.PutAsync<string>("user/transfermoney", para);
                 return data;
             }
             catch (Exception)

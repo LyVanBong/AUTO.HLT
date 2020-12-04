@@ -53,6 +53,7 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
                 _client.BaseUrl = new Uri(uri);
                 _client.Timeout = 10000;
                 _request = new RestRequest(method);
+                _request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             }
             catch (Exception)
             {

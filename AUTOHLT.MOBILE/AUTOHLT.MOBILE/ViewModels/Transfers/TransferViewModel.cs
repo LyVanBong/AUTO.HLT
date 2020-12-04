@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.User;
@@ -21,6 +22,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
         private IUserService _userService;
         private IDatabaseService _databaseService;
         private string _idReceive;
+        private UserModel _userModel;
+
         public ICommand UnfocusedAmountMoneyCommand { get; private set; }
         public bool IsLoading
         {
@@ -75,6 +78,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
                 var user = await _databaseService.GetAccountUser();
                 if (user != null)
                 {
+                    _userModel = user;
                     var data = await _userService.GetMoneyUser(user.UserName);
                     if (data != null && data.Code > 0)
                     {
@@ -144,10 +148,11 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var user = await _databaseService.GetAccountUser();
+                var user = _userModel;
                 if (user != null)
                 {
-                    var data = await _userService.TransferMoney(user.ID, _idReceive, AmountMoney);
+                    var id = user.ID;
+                    var data = await _userService.TransferMoney(id, _idReceive, AmountMoney);
                     if (data != null && data.Code > 0 && data.Data == "2")
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000047, "OK");
@@ -164,8 +169,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
             }
             finally
             {
-                UserName = "";
-                AmountMoney = "";
                 IsLoading = false;
             }
         }

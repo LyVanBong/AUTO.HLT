@@ -11,6 +11,8 @@ namespace AUTOHLT.MOBILE.Converters
         {
             if (value != null)
             {
+                if (value.ToString() == "0")
+                    return value;
                 return string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(value.ToString()));
             }
             return value;
