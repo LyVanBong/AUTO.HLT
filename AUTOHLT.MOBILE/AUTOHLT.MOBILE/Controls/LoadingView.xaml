@@ -13,6 +13,7 @@
             Title="{markupExtensions:Translate 1000008}"
             AnimationType="Gear"
             BackgroundColor="Transparent"
+            FontFamily="RobotoRegular"
             TextColor="{StaticResource Loading}"
             TextSize="16"
             ViewBoxHeight="80"

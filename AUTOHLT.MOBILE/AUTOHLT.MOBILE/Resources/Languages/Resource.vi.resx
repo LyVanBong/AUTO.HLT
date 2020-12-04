@@ -218,7 +218,7 @@
     <comment>Nạp tiền</comment>
   </data>
   <data name="1000025" xml:space="preserve">
-    <value>dịch vụ</value>
+    <value>Dịch vụ</value>
     <comment>dịch vụ</comment>
   </data>
   <data name="1000026" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Tương tác</comment>
   </data>
   <data name="1000027" xml:space="preserve">
-    <value>công việc</value>
+    <value>Công việc</value>
     <comment>công việc</comment>
   </data>
   <data name="1000028" xml:space="preserve">
@@ -288,5 +288,29 @@
   <data name="1000042" xml:space="preserve">
     <value>Bạn muốn đăng xuất khỏi tài khoản của mình !</value>
     <comment>Bạn muốn đăng xuất khỏi tài khoản của mình !</comment>
+  </data>
+  <data name="1000043" xml:space="preserve">
+    <value>Chuyển tiền</value>
+    <comment>Chuyển tiền</comment>
+  </data>
+  <data name="1000044" xml:space="preserve">
+    <value>Số tiền</value>
+    <comment>Số tiền</comment>
+  </data>
+  <data name="1000045" xml:space="preserve">
+    <value>Lưu vào danh bạ</value>
+    <comment>Lưu vào danh bạ</comment>
+  </data>
+  <data name="1000046" xml:space="preserve">
+    <value>Tài khoản không tồn tại</value>
+    <comment>Tài khoản không tồn tại</comment>
+  </data>
+  <data name="1000047" xml:space="preserve">
+    <value>Chuyển tiền thành công</value>
+    <comment>Chuyển tiền thành công</comment>
+  </data>
+  <data name="1000048" xml:space="preserve">
+    <value>Số tiền lớn hơn số tiền bạn có</value>
+    <comment>Số tiền lớn hơn số tiền bạn có</comment>
   </data>
 </root>

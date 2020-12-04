@@ -446,5 +446,59 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000042", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfers.
+        /// </summary>
+        internal static string _1000043 {
+            get {
+                return ResourceManager.GetString("1000043", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount money.
+        /// </summary>
+        internal static string _1000044 {
+            get {
+                return ResourceManager.GetString("1000044", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save to contacts.
+        /// </summary>
+        internal static string _1000045 {
+            get {
+                return ResourceManager.GetString("1000045", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account does not exist.
+        /// </summary>
+        internal static string _1000046 {
+            get {
+                return ResourceManager.GetString("1000046", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Money transfer is successful.
+        /// </summary>
+        internal static string _1000047 {
+            get {
+                return ResourceManager.GetString("1000047", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of money is greater than the amount you have.
+        /// </summary>
+        internal static string _1000048 {
+            get {
+                return ResourceManager.GetString("1000048", resourceCulture);
+            }
+        }
     }
 }

@@ -6,6 +6,14 @@ namespace AUTOHLT.MOBILE.Services.User
     public interface IUserService
     {
         /// <summary>
+        /// Chuyển tiền từ user sang user
+        /// </summary>
+        /// <param name="idSend"></param>
+        /// <param name="idReceive"></param>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> TransferMoney(string idSend, string idReceive, string price);
+        /// <summary>
         /// Lấy số dư hiện tại của user
         /// </summary>
         /// <param name="userName"></param>
