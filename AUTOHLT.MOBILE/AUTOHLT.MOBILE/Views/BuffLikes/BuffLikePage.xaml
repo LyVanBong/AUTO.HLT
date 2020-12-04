@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+             BackgroundColor="{StaticResource HeaderHome}"
+             x:Class="AUTOHLT.MOBILE.Views.BuffLikes.BuffLikePage">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource Gray-White}"
+              RowSpacing="0"
+              Padding="0"
+              Margin="0"
+              RowDefinitions="40,500">
+            <Grid.Resources>
+                <Style TargetType="textInputLayout:SfTextInputLayout">
+                    <Setter Property="ContainerType"
+                            Value="Outlined" />
+                    <Setter Property="Margin"
+                            Value="20,0" />
+                    <Setter Property="OutlineCornerRadius"
+                            Value="5" />
+                </Style>
+            </Grid.Resources>
+            <controls:NavigationView Grid.Row="0"
+                                     Text="{markupExtensions:Translate 1000029}" />
+            <Grid Grid.Row="1"
+                  Margin="0"
+                  Padding="0"
+                  RowSpacing="0"
+                  RowDefinitions="*,*"
+                  ColumnDefinitions="*,*">
+                <Frame Grid.Row="0"
+                       Grid.Column="0"
+                       CornerRadius="10"
+                       Padding="3"
+                       Margin="10"
+                       BorderColor="{StaticResource Gray-500}"
+                       HasShadow="True"
+                       BackgroundColor="{StaticResource Gray-White}">
+                    <Grid Margin="0"
+                          Padding="0"
+                          RowDefinitions="90,30,30,60">
+                        <Label Grid.Row="0"
+                               TextColor="{StaticResource ColorBuffLike}"
+                               BackgroundColor="{StaticResource Gray-White}"
+                               FontFamily="Awesome5ProSolid"
+                               FontSize="60"
+                               HorizontalOptions="Center"
+                               Text="{x:Static icon:FontAwesome5ProSolid.HandPointDown}"></Label>
+                        <Label Grid.Row="1">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000049}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Like3001Nam}"></Span>
+                                    <Span Text=" Like"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Grid.Row="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000050}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Date3001Nam}"></Span>
+                                    <Span Text=" "></Span>
+                                    <Span Text="{markupExtensions:Translate 1000051}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Grid.Row="3"
+                                CornerRadius="10"
+                                Margin="10,10"
+                                Text="Su dung"></Button>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="0"
+                       Grid.Column="1"
+                       CornerRadius="10"
+                       Padding="3"
+                       Margin="10"
+                       BorderColor="{StaticResource Gray-500}"
+                       HasShadow="True"
+                       BackgroundColor="{StaticResource Gray-White}">
+                    <Grid Margin="0"
+                          Padding="0"
+                          RowDefinitions="90,30,30,60">
+                        <Label Grid.Row="0"
+                               TextColor="{StaticResource ColorBuffLike}"
+                               BackgroundColor="{StaticResource Gray-White}"
+                               FontFamily="Awesome5ProSolid"
+                               FontSize="60"
+                               HorizontalOptions="Center"
+                               Text="{x:Static icon:FontAwesome5ProSolid.HandPointLeft}"></Label>
+                        <Label Grid.Row="1">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000049}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Like3001Nam}"></Span>
+                                    <Span Text=" Like"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Grid.Row="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000050}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Date3001Nam}"></Span>
+                                    <Span Text=" "></Span>
+                                    <Span Text="{markupExtensions:Translate 1000051}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Grid.Row="3"
+                                CornerRadius="10"
+                                Margin="10,10"
+                                Text="Su dung"></Button>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="1"
+                       Grid.Column="0"
+                       CornerRadius="10"
+                       Padding="3"
+                       Margin="10"
+                       BorderColor="{StaticResource Gray-500}"
+                       HasShadow="True"
+                       BackgroundColor="{StaticResource Gray-White}">
+                    <Grid Margin="0"
+                          Padding="0"
+                          RowDefinitions="90,30,30,60">
+                        <Label Grid.Row="0"
+                               TextColor="{StaticResource ColorBuffLike}"
+                               BackgroundColor="{StaticResource Gray-White}"
+                               FontFamily="Awesome5ProSolid"
+                               FontSize="60"
+                               HorizontalOptions="Center"
+                               Text="{x:Static icon:FontAwesome5ProSolid.HandPointRight}"></Label>
+                        <Label Grid.Row="1">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000049}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Like3001Nam}"></Span>
+                                    <Span Text=" Like"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Grid.Row="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000050}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Date3001Nam}"></Span>
+                                    <Span Text=" "></Span>
+                                    <Span Text="{markupExtensions:Translate 1000051}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Grid.Row="3"
+                                CornerRadius="10"
+                                Margin="10,10"
+                                Text="Su dung"></Button>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="1"
+                       Grid.Column="1"
+                       CornerRadius="10"
+                       Padding="3"
+                       Margin="10"
+                       BorderColor="{StaticResource Gray-500}"
+                       HasShadow="True"
+                       BackgroundColor="{StaticResource Gray-White}">
+                    <Grid Margin="0"
+                          Padding="0"
+                          RowDefinitions="90,30,30,60">
+                        <Label Grid.Row="0"
+                               TextColor="{StaticResource ColorBuffLike}"
+                               BackgroundColor="{StaticResource Gray-White}"
+                               FontFamily="Awesome5ProSolid"
+                               FontSize="60"
+                               HorizontalOptions="Center"
+                               Text="{x:Static icon:FontAwesome5ProSolid.HandPointUp}"></Label>
+                        <Label Grid.Row="1">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000049}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Like3001Nam}"></Span>
+                                    <Span Text=" Like"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Grid.Row="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{markupExtensions:Translate 1000050}"></Span>
+                                    <Span Text=": "></Span>
+                                    <Span Text="{Binding Date3001Nam}"></Span>
+                                    <Span Text=" "></Span>
+                                    <Span Text="{markupExtensions:Translate 1000051}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Button Grid.Row="3"
+                                CornerRadius="10"
+                                Margin="10,10"
+                                Text="Su dung"></Button>
+                    </Grid>
+                </Frame>
+            </Grid>
+
+            <controls:LoadingView Grid.Row="0"
+                                  Grid.RowSpan="2"
+                                  IsVisible="False"></controls:LoadingView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

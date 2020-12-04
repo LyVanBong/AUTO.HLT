@@ -500,5 +500,32 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000048", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service pack.
+        /// </summary>
+        internal static string _1000049 {
+            get {
+                return ResourceManager.GetString("1000049", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string _1000050 {
+            get {
+                return ResourceManager.GetString("1000050", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string _1000051 {
+            get {
+                return ResourceManager.GetString("1000051", resourceCulture);
+            }
+        }
     }
 }

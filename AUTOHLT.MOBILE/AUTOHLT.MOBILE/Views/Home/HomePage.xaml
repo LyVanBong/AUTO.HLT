@@ -209,6 +209,9 @@
                             <Label Grid.Row="1"
                                    Text="{markupExtensions:Translate 1000029}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{prism:NavigateTo 'BuffLikePage'}"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
                     </Frame>
                     <Frame Grid.Row="0"
                            Grid.Column="1"

@@ -313,4 +313,16 @@
     <value>Số tiền lớn hơn số tiền bạn có</value>
     <comment>Số tiền lớn hơn số tiền bạn có</comment>
   </data>
+  <data name="1000049" xml:space="preserve">
+    <value>Gói dịch vụ</value>
+    <comment>Gói dịch vụ</comment>
+  </data>
+  <data name="1000050" xml:space="preserve">
+    <value>Ngày sử dụng</value>
+    <comment>Ngày sử dụng</comment>
+  </data>
+  <data name="1000051" xml:space="preserve">
+    <value>ngày</value>
+    <comment>Ngày</comment>
+  </data>
 </root>

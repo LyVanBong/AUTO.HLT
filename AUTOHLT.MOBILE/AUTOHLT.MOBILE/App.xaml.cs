@@ -3,9 +3,11 @@ using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Login;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.ViewModels.BuffLikes;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Login;
 using AUTOHLT.MOBILE.ViewModels.Transfers;
+using AUTOHLT.MOBILE.Views.BuffLikes;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Login;
 using AUTOHLT.MOBILE.Views.Transfers;
@@ -56,6 +58,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<BuffLikePage, BuffLikeViewModel>();
             containerRegistry.RegisterForNavigation<TransferPage, TransferViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
