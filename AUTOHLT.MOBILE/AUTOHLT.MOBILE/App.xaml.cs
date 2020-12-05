@@ -1,6 +1,7 @@
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Login;
+using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.ViewModels.BuffLikes;
@@ -43,6 +44,7 @@ namespace AUTOHLT.MOBILE
         {
             #region Register Service
 
+            containerRegistry.Register<IProductService, ProductService>();
             containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<IDatabaseService, DatabaseService>();
             containerRegistry.Register<ILoginService, LoginService>();

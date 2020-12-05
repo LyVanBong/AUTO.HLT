@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models;
+﻿using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Services.RequestProvider;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.Product
 {
@@ -14,6 +14,23 @@ namespace AUTOHLT.MOBILE.Services.Product
         public ProductService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;
+        }
+
+        public async Task<ResponseModel<IEnumerable<ListRegisterProductModel>>> GetListRegisterProductForUser(string id)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("ID",id),
+                };
+                var data = await _requestProvider.GetAsync<IEnumerable<ListRegisterProductModel>>("registerproduct/listregisterproduct", para);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<ResponseModel<string>> UpdateProduct(string id, string name, string price, string endDate, string content, string number)

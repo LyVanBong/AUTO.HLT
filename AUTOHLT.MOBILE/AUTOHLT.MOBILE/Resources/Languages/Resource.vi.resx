@@ -325,4 +325,28 @@
     <value>ngày</value>
     <comment>Ngày</comment>
   </data>
+  <data name="1000052" xml:space="preserve">
+    <value>Đăng ký dịch vụ</value>
+    <comment>Đăng ký dịch vụ</comment>
+  </data>
+  <data name="1000053" xml:space="preserve">
+    <value>Sử dụng dịch vụ</value>
+    <comment>Sử dụng dịch vụ</comment>
+  </data>
+  <data name="1000054" xml:space="preserve">
+    <value>vĩnh viễn</value>
+    <comment>vĩnh viễn</comment>
+  </data>
+  <data name="1000055" xml:space="preserve">
+    <value>1 năm</value>
+    <comment>1 năm</comment>
+  </data>
+  <data name="1000056" xml:space="preserve">
+    <value>Giá</value>
+    <comment>Giá</comment>
+  </data>
+  <data name="1000057" xml:space="preserve">
+    <value>Bạn mua dịch vụ {0} {1} / ngày {2} với giá {3} VND</value>
+    <comment>Bạn mua dịch vụ {0} {1} {2} / ngày với giá {3} VND</comment>
+  </data>
 </root>

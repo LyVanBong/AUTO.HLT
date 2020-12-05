@@ -527,5 +527,59 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000051", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register Service.
+        /// </summary>
+        internal static string _1000052 {
+            get {
+                return ResourceManager.GetString("1000052", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using the service.
+        /// </summary>
+        internal static string _1000053 {
+            get {
+                return ResourceManager.GetString("1000053", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to forever.
+        /// </summary>
+        internal static string _1000054 {
+            get {
+                return ResourceManager.GetString("1000054", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        internal static string _1000055 {
+            get {
+                return ResourceManager.GetString("1000055", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        internal static string _1000056 {
+            get {
+                return ResourceManager.GetString("1000056", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You buy service {0} {1} / day {2} for {3} VND.
+        /// </summary>
+        internal static string _1000057 {
+            get {
+                return ResourceManager.GetString("1000057", resourceCulture);
+            }
+        }
     }
 }

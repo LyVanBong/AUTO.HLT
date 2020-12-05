@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models;
+﻿using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.Product
 {
     public interface IProductService
     {
+        /// <summary>
+        /// Lấy toàn bộ danh sách user đã đăng ký sản phẩm
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<ResponseModel<IEnumerable<ListRegisterProductModel>>> GetListRegisterProductForUser(string id);
         /// <summary>
         /// Cập nhật lại sản phẩm
         /// </summary>
