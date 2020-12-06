@@ -1,0 +1,112 @@
+﻿<Frame
+    x:Class="AUTOHLT.MOBILE.Controls.Dialog.UseService.UseServiceDialog"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    Padding="0"
+    prism:DialogLayout.CloseOnBackgroundTapped="False"
+    prism:DialogLayout.RelativeHeightRequest=".5"
+    prism:DialogLayout.RelativeWidthRequest=".8"
+    BackgroundColor="{StaticResource Gray-White}"
+    BorderColor="{StaticResource Gray-600}"
+    CornerRadius="20"
+    HasShadow="True">
+    <Grid
+        Margin="0"
+        Padding="0"
+        ColumnDefinitions="*,60"
+        RowDefinitions="40,60,160,65,*">
+        <Grid.Resources>
+            <Style TargetType="textInputLayout:SfTextInputLayout">
+                <Setter Property="ContainerType" Value="Outlined" />
+                <Setter Property="Margin" Value="10,0" />
+                <Setter Property="OutlineCornerRadius" Value="5" />
+            </Style>
+        </Grid.Resources>
+        <BoxView
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="{StaticResource HeaderHome}" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            BackgroundColor="{StaticResource HeaderHome}"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding Title}"
+            TextColor="{StaticResource Gray-White}"
+            VerticalOptions="CenterAndExpand" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            BackgroundColor="{StaticResource HeaderHome}"
+            FontFamily="Awesome5ProSolid"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{x:Static icon:FontAwesome5ProSolid.Times}"
+            TextColor="{StaticResource Gray-White}"
+            VerticalOptions="CenterAndExpand">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+        <textInputLayout:SfTextInputLayout
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            FocusedColor="{StaticResource BtLogin}"
+            Hint="{markupExtensions:Translate 1000059}"
+            LeadingViewPosition="Inside"
+            TrailingViewPosition="Inside">
+            <Entry
+                ClearButtonVisibility="WhileEditing"
+                Keyboard="Numeric"
+                ReturnType="Next"
+                Text="{Binding Number}" />
+            <textInputLayout:SfTextInputLayout.TrailingView>
+                <Label FontAttributes="Bold" Text="{Binding MaxNumber}" />
+            </textInputLayout:SfTextInputLayout.TrailingView>
+            <textInputLayout:SfTextInputLayout.LeadingView>
+                <Label
+                    FontFamily="Awesome5ProSolid"
+                    Text="{x:Static icon:FontAwesome5ProSolid.Star}"
+                    VerticalTextAlignment="Center" />
+            </textInputLayout:SfTextInputLayout.LeadingView>
+        </textInputLayout:SfTextInputLayout>
+        <textInputLayout:SfTextInputLayout
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            FocusedColor="{StaticResource BtLogin}"
+            Hint="{markupExtensions:Translate 1000060}"
+            LeadingViewPosition="Inside">
+            <Editor
+                HeightRequest="150"
+                Keyboard="Text"
+                Text="{Binding Content}" />
+            <textInputLayout:SfTextInputLayout.LeadingView>
+                <Label
+                    FontFamily="Awesome5ProSolid"
+                    Text="{x:Static icon:FontAwesome5ProSolid.Newspaper}"
+                    VerticalTextAlignment="Center" />
+            </textInputLayout:SfTextInputLayout.LeadingView>
+        </textInputLayout:SfTextInputLayout>
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="10,5"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            BorderColor="{StaticResource BtLogin}"
+            BorderWidth="1"
+            Command="{Binding UseServiceCommand}"
+            CornerRadius="10"
+            FontSize="18"
+            IsEnabled="{Binding IsEnabledLogin}"
+            Text="{Binding TextSubmit}" />
+    </Grid>
+</Frame>

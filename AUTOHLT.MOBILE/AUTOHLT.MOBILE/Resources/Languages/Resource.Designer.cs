@@ -500,5 +500,122 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000048", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service pack.
+        /// </summary>
+        internal static string _1000049 {
+            get {
+                return ResourceManager.GetString("1000049", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string _1000050 {
+            get {
+                return ResourceManager.GetString("1000050", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string _1000051 {
+            get {
+                return ResourceManager.GetString("1000051", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register Service.
+        /// </summary>
+        internal static string _1000052 {
+            get {
+                return ResourceManager.GetString("1000052", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using the service.
+        /// </summary>
+        internal static string _1000053 {
+            get {
+                return ResourceManager.GetString("1000053", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to forever.
+        /// </summary>
+        internal static string _1000054 {
+            get {
+                return ResourceManager.GetString("1000054", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        internal static string _1000055 {
+            get {
+                return ResourceManager.GetString("1000055", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        internal static string _1000056 {
+            get {
+                return ResourceManager.GetString("1000056", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You buy service {0} {1} / day {2} for {3} VND.
+        /// </summary>
+        internal static string _1000057 {
+            get {
+                return ResourceManager.GetString("1000057", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use.
+        /// </summary>
+        internal static string _1000058 {
+            get {
+                return ResourceManager.GetString("1000058", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        internal static string _1000059 {
+            get {
+                return ResourceManager.GetString("1000059", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posts.
+        /// </summary>
+        internal static string _1000060 {
+            get {
+                return ResourceManager.GetString("1000060", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have run out of service today.
+        /// </summary>
+        internal static string _1000061 {
+            get {
+                return ResourceManager.GetString("1000061", resourceCulture);
+            }
+        }
     }
 }

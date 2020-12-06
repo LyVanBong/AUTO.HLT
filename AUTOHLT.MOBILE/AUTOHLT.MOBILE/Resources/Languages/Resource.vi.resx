@@ -313,4 +313,56 @@
     <value>Số tiền lớn hơn số tiền bạn có</value>
     <comment>Số tiền lớn hơn số tiền bạn có</comment>
   </data>
+  <data name="1000049" xml:space="preserve">
+    <value>Gói dịch vụ</value>
+    <comment>Gói dịch vụ</comment>
+  </data>
+  <data name="1000050" xml:space="preserve">
+    <value>Ngày sử dụng</value>
+    <comment>Ngày sử dụng</comment>
+  </data>
+  <data name="1000051" xml:space="preserve">
+    <value>ngày</value>
+    <comment>Ngày</comment>
+  </data>
+  <data name="1000052" xml:space="preserve">
+    <value>Đăng ký dịch vụ</value>
+    <comment>Đăng ký dịch vụ</comment>
+  </data>
+  <data name="1000053" xml:space="preserve">
+    <value>Sử dụng dịch vụ</value>
+    <comment>Sử dụng dịch vụ</comment>
+  </data>
+  <data name="1000054" xml:space="preserve">
+    <value>vĩnh viễn</value>
+    <comment>vĩnh viễn</comment>
+  </data>
+  <data name="1000055" xml:space="preserve">
+    <value>1 năm</value>
+    <comment>1 năm</comment>
+  </data>
+  <data name="1000056" xml:space="preserve">
+    <value>Giá</value>
+    <comment>Giá</comment>
+  </data>
+  <data name="1000057" xml:space="preserve">
+    <value>Bạn mua dịch vụ {0} {1} / ngày {2} với giá {3} VND</value>
+    <comment>Bạn mua dịch vụ {0} {1} {2} / ngày với giá {3} VND</comment>
+  </data>
+  <data name="1000058" xml:space="preserve">
+    <value>Dùng</value>
+    <comment>Dùng</comment>
+  </data>
+  <data name="1000059" xml:space="preserve">
+    <value>Số lượng</value>
+    <comment>Số lượng</comment>
+  </data>
+  <data name="1000060" xml:space="preserve">
+    <value>Bài viết</value>
+    <comment>Bài viết</comment>
+  </data>
+  <data name="1000061" xml:space="preserve">
+    <value>Bạn đã dùng hết dịch vụ trong ngày hôm nay</value>
+    <comment>Bạn đã dùng hết dịch vụ trong ngày hôm nay</comment>
+  </data>
 </root>
