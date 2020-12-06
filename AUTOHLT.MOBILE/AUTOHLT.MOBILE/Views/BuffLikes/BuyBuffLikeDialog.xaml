@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Frame
+    x:Class="AUTOHLT.MOBILE.Views.BuffLikes.BuyBuffLikeDialog"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Margin="0"
+    Padding="0"
+    prism:DialogLayout.RelativeHeightRequest="0.5"
+    prism:DialogLayout.RelativeWidthRequest="0.9"
+    BackgroundColor="{StaticResource Gray-White}"
+    BorderColor="{StaticResource Gray-Black}"
+    CornerRadius="20"
+    HasShadow="True">
+    <Grid />
+</Frame>

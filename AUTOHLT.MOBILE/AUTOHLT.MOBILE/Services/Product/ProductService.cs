@@ -16,6 +16,24 @@ namespace AUTOHLT.MOBILE.Services.Product
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<string>> RegisterProduct(string idProduct, string idUser)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("IdProduct",idProduct),
+                    new RequestParameter("IdUser",idUser),
+                };
+                var data = await _requestProvider.PostAsync<string>("registerproduct/registerproduct", para);
+                return data;
+            }
+            catch (Exception )
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseModel<IEnumerable<ListRegisterProductModel>>> GetListRegisterProductForUser(string id)
         {
             try

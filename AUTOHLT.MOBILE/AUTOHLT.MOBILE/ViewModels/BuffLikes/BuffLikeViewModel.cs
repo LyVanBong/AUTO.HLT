@@ -8,9 +8,12 @@ using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Product;
+using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Views.BuffLikes;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
@@ -26,6 +29,8 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
         private IDatabaseService _databaseService;
         private UserModel _userModel;
         private IPageDialogService _pageDialogService;
+        private IUserService _userService;
+        private IDialogService _dialogService;
 
         public ICommand LikeUseServiceCommand { get; private set; }
         /// <summary>
@@ -69,8 +74,10 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService) : base(navigationService)
+        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService, IDialogService dialogService) : base(navigationService)
         {
+            _dialogService = dialogService;
+            _userService = userService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             _productService = productService;
@@ -87,7 +94,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                 // Đã đang kỹ dịch vụ này tiến hành sử dụng
                 if (product.IsRegisterProduct)
                 {
-
+                    _dialogService.ShowDialog(nameof(BuyBuffLikeDialog));
                 }
                 else // Chưa đang kỹ dịch vụ bắt đầu đăng ký lại
                 {
@@ -96,7 +103,47 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                         "Cancel");
                     if (res)
                     {
-
+                        var username = _userModel.UserName;
+                        var idUser = _userModel.ID;
+                        var moneyModel = await _userService.GetMoneyUser(username);
+                        if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
+                        {
+                            var money = int.Parse(moneyModel.Data);
+                            var price = int.Parse(product.Price);
+                            if (money >= price)
+                            {
+                                var registerProduct = await _productService.RegisterProduct(product.ID, idUser);
+                                if (registerProduct != null && registerProduct.Code > 0 && registerProduct.Data != null)
+                                {
+                                    var user = new UserModel
+                                    {
+                                        UserName = _userModel.UserName,
+                                        Name = _userModel.Name,
+                                        Password = _userModel.Password,
+                                        Email = _userModel.Email,
+                                        NumberPhone = _userModel.NumberPhone,
+                                        Sex = _userModel.Sex,
+                                        Role = _userModel.Role,
+                                        IsActive = _userModel.IsActive,
+                                        Age = _userModel.Age,
+                                        Price = money - price,
+                                        IdDevice = _userModel.IdDevice
+                                    };
+                                    var updateUser = await _userService.UpdateUser(user.UserName, user.Name, user.Password, user.Email, user.NumberPhone.ToString(), user.Sex.ToString(), user.Role.ToString(), user.IsActive.ToString(), user.Age.ToString(), user.Price.ToString(), user.IdDevice);
+                                    if (updateUser != null && updateUser.Code > 0)
+                                    {
+                                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
+                                            "OK");
+                                        await InitializeData();
+                                    }
+                                    else
+                                    {
+                                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041,
+                                            "OK");
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

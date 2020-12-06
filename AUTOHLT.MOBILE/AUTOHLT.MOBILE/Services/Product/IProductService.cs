@@ -8,6 +8,13 @@ namespace AUTOHLT.MOBILE.Services.Product
     public interface IProductService
     {
         /// <summary>
+        /// đăng ký sản phảm
+        /// </summary>
+        /// <param name="idProduct"></param>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> RegisterProduct(string idProduct, string idUser);
+        /// <summary>
         /// Lấy toàn bộ danh sách user đã đăng ký sản phẩm
         /// </summary>
         /// <param name="id"></param>

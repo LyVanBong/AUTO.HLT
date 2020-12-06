@@ -1,5 +1,6 @@
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.HistoryService;
 using AUTOHLT.MOBILE.Services.Login;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.RequestProvider;
@@ -42,8 +43,15 @@ namespace AUTOHLT.MOBILE
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #region Registering the Dialog service
+
+            containerRegistry.RegisterDialog<BuyBuffLikeDialog, BuyBuffLikeDialogViewModel>();
+
+            #endregion
+
             #region Register Service
 
+            containerRegistry.Register<IHistoryService, HistoryService>();
             containerRegistry.Register<IProductService, ProductService>();
             containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<IDatabaseService, DatabaseService>();
