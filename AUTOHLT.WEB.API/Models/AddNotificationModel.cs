@@ -8,5 +8,6 @@ namespace AUTOHLT.WEB.API.Models
         public Guid IdSend { get; set; }
         public Guid IdReceive { get; set; }
         public int NotificationType { get; set; }
+        public DateTime DateCreate { get; set; }
     }
 }

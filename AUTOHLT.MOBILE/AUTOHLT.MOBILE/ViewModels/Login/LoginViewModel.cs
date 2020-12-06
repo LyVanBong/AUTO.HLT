@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Helpers;
+﻿using AUTOHLT.MOBILE.Helpers;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Login;
@@ -9,7 +7,9 @@ using AUTOHLT.MOBILE.Views.Login;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
-using Prism.Services.Dialogs;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -24,6 +24,14 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         private IPageDialogService _pageDialogService;
         private bool _isEnabledLogin;
         private IDatabaseService _databaseService;
+        private bool _isCheckSavePassword;
+
+        public bool IsCheckSavePassword
+        {
+            get => _isCheckSavePassword;
+            set => SetProperty(ref _isCheckSavePassword, value);
+        }
+
         public bool IsEnabledLogin
         {
             get => _isEnabledLogin;
@@ -68,12 +76,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             }
         }
 
-        public bool IsCheckSavePassword
-        {
-            get => Preferences.Get(nameof(IsCheckSavePassword), true);
-            set => Preferences.Set(nameof(IsCheckSavePassword), IsCheckSavePassword);
-        }
-
         public ICommand SignUpCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
         public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
@@ -86,9 +88,10 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             IsLoading = true;
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsCheckSavePassword = true;
             if (parameters != null)
             {
                 if (parameters.ContainsKey("SignUp"))
@@ -97,7 +100,30 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                         UserName = parameters["UserName"] as string;
                 }
             }
+
+            await InitializeDataLogin();
             IsLoading = false;
+        }
+
+        private async Task InitializeDataLogin()
+        {
+            try
+            {
+                if (Preferences.Get("IsCheckSavePassword", false))
+                {
+                    var data = await _databaseService.GetAccountUser();
+                    if (data != null)
+                    {
+                        UserName = data.UserName;
+                        Password = data.Password;
+                        await DoLogin(Password);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private async void LoginAccount()
@@ -108,33 +134,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
                 {
-                    var data = await _loginService.Login(UserName, HashFunctionHelper.GetHashCode(Password, 1));
-                    if (data != null)
-                    {
-                        if (data.Code > 0 && data.Data != null)
-                        {
-                            if (IsCheckSavePassword)
-                            {
-                                Preferences.Set(nameof(IsCheckSavePassword), true);
-                                await _databaseService.UpdateAccountUser(data.Data);
-                            }
-                            else
-                            {
-                                Preferences.Set(nameof(IsCheckSavePassword), false);
-                            }
-                            await NavigationService.NavigateAsync(nameof(HomePage), null, true, true);
-                        }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
-                        }
-                    }
-                    else
-                    {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
-                    }
-
-                    Password = "";
+                    var pass = HashFunctionHelper.GetHashCode(Password, 1);
+                    await DoLogin(pass);
                 }
             }
             catch (Exception e)
@@ -145,6 +146,38 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 IsLoading = false;
             }
+        }
+
+        private async Task DoLogin(string pass)
+        {
+            var data = await _loginService.Login(UserName, pass);
+            if (data != null)
+            {
+                if (data.Code > 0 && data.Data != null)
+                {
+                    if (IsCheckSavePassword)
+                    {
+                        Preferences.Set(nameof(IsCheckSavePassword), true);
+                        await _databaseService.UpdateAccountUser(data.Data);
+                    }
+                    else
+                    {
+                        Preferences.Set(nameof(IsCheckSavePassword), false);
+                    }
+
+                    await NavigationService.NavigateAsync(nameof(HomePage), null, true, true);
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
+                }
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
+            }
+
+            Password = "";
         }
 
         private void SignUpAccount()

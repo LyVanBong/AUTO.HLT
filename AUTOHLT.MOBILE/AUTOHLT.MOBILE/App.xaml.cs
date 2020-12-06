@@ -1,12 +1,19 @@
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.HistoryService;
 using AUTOHLT.MOBILE.Services.Login;
+using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.ViewModels.BuffLikes;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Login;
+using AUTOHLT.MOBILE.ViewModels.Transfers;
+using AUTOHLT.MOBILE.Views.BuffLikes;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Login;
+using AUTOHLT.MOBILE.Views.Transfers;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -37,8 +44,16 @@ namespace AUTOHLT.MOBILE
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #region Registering the Dialog service
+
+            containerRegistry.RegisterDialog<UseServiceDialog, UseServiceDialogViewModel>();
+
+            #endregion
+
             #region Register Service
 
+            containerRegistry.Register<IHistoryService, HistoryService>();
+            containerRegistry.Register<IProductService, ProductService>();
             containerRegistry.Register<IUserService, UserService>();
             containerRegistry.Register<IDatabaseService, DatabaseService>();
             containerRegistry.Register<ILoginService, LoginService>();
@@ -54,6 +69,8 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<BuffLikePage, BuffLikeViewModel>();
+            containerRegistry.RegisterForNavigation<TransferPage, TransferViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();

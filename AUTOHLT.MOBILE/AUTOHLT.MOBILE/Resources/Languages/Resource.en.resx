@@ -285,4 +285,84 @@
     <value>Error</value>
     <comment>Lỗi</comment>
   </data>
+  <data name="1000042" xml:space="preserve">
+    <value>You want to sign out of your account !</value>
+    <comment>Bạn muốn đăng xuất khỏi tài khoản của mình !</comment>
+  </data>
+  <data name="1000043" xml:space="preserve">
+    <value>Transfers</value>
+    <comment>Chuyển tiền</comment>
+  </data>
+  <data name="1000044" xml:space="preserve">
+    <value>Amount money</value>
+    <comment>Số tiền</comment>
+  </data>
+  <data name="1000045" xml:space="preserve">
+    <value>Save to contacts</value>
+    <comment>Lưu vào danh bạ</comment>
+  </data>
+  <data name="1000046" xml:space="preserve">
+    <value>Account does not exist</value>
+    <comment>Tài khoản không tồn tại</comment>
+  </data>
+  <data name="1000047" xml:space="preserve">
+    <value>Money transfer is successful</value>
+    <comment>Chuyển tiền thành công</comment>
+  </data>
+  <data name="1000048" xml:space="preserve">
+    <value>The amount of money is greater than the amount you have</value>
+    <comment>Số tiền lớn hơn số tiền bạn có</comment>
+  </data>
+  <data name="1000049" xml:space="preserve">
+    <value>Service pack</value>
+    <comment>Gói dịch vụ</comment>
+  </data>
+  <data name="1000050" xml:space="preserve">
+    <value>Date</value>
+    <comment>Ngày sử dụng</comment>
+  </data>
+  <data name="1000051" xml:space="preserve">
+    <value>Date</value>
+    <comment>Date</comment>
+  </data>
+  <data name="1000052" xml:space="preserve">
+    <value>Register Service</value>
+    <comment>Đăng ký dịch vụ</comment>
+  </data>
+  <data name="1000053" xml:space="preserve">
+    <value>Using the service</value>
+    <comment>Sử dụng dịch vụ</comment>
+  </data>
+  <data name="1000054" xml:space="preserve">
+    <value>forever</value>
+    <comment>mãi mãi</comment>
+  </data>
+  <data name="1000055" xml:space="preserve">
+    <value>1 year</value>
+    <comment>1 năm</comment>
+  </data>
+  <data name="1000056" xml:space="preserve">
+    <value>Price</value>
+    <comment>Giá</comment>
+  </data>
+  <data name="1000057" xml:space="preserve">
+    <value>You buy service {0} {1} / day {2} for {3} VND</value>
+    <comment>Bạn mua dịch vụ {0} {1} {2} với giá {3} VND</comment>
+  </data>
+  <data name="1000058" xml:space="preserve">
+    <value>Use</value>
+    <comment>Dùng</comment>
+  </data>
+  <data name="1000059" xml:space="preserve">
+    <value>Number</value>
+    <comment>Số lượng</comment>
+  </data>
+  <data name="1000060" xml:space="preserve">
+    <value>Posts</value>
+    <comment>Bài viết</comment>
+  </data>
+  <data name="1000061" xml:space="preserve">
+    <value>You have run out of service today</value>
+    <comment>Bạn đã dùng hết dịch vụ trong ngày hôm nay</comment>
+  </data>
 </root>
