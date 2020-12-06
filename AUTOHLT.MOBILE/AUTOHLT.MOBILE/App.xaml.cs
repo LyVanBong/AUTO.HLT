@@ -1,4 +1,5 @@
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.HistoryService;
 using AUTOHLT.MOBILE.Services.Login;
@@ -45,7 +46,7 @@ namespace AUTOHLT.MOBILE
         {
             #region Registering the Dialog service
 
-            containerRegistry.RegisterDialog<BuyBuffLikeDialog, BuyBuffLikeDialogViewModel>();
+            containerRegistry.RegisterDialog<UseServiceDialog, UseServiceDialogViewModel>();
 
             #endregion
 

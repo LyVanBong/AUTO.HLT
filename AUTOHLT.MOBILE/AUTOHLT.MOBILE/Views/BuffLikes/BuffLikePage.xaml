@@ -52,6 +52,9 @@
                         <Setter Property="BorderColor" Value="{StaticResource ColorBuffLike}" />
                         <Setter Property="BorderWidth" Value=".5" />
                     </Style>
+                    <Style TargetType="Span">
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
                 </Grid.Resources>
                 <Frame Grid.Row="0" Grid.Column="0">
                     <Grid RowDefinitions="50,30,30,30,60">

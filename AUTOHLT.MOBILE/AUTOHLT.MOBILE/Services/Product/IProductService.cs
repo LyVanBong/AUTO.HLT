@@ -2,11 +2,28 @@
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AUTOHLT.MOBILE.Models.HistoryService;
 
 namespace AUTOHLT.MOBILE.Services.Product
 {
     public interface IProductService
     {
+        /// <summary>
+        /// api ghi log lich sử sử dụng dịch vụ
+        /// </summary>
+        /// <param name="idProduct"></param>
+        /// <param name="content"></param>
+        /// <param name="idUser"></param>
+        /// <param name="number"></param>
+        /// <param name="dateCreate"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> AddHistoryUseService(string idProduct, string content, string idUser, string number, string dateCreate);
+        /// <summary>
+        /// lấy danh sách sử dụng dịch vụ trong ngày
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<ResponseModel<IEnumerable<HistoryUserServiceModel>>> GetHistoryUseServiceForUser(string id);
         /// <summary>
         /// đăng ký sản phảm
         /// </summary>

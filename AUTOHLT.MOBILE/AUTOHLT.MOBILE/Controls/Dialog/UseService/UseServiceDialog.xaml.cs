@@ -1,11 +1,11 @@
 ﻿using Xamarin.Forms.Xaml;
 
-namespace AUTOHLT.MOBILE.Views.BuffLikes
+namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class BuyBuffLikeDialog 
+    public partial class UseServiceDialog
     {
-        public BuyBuffLikeDialog()
+        public UseServiceDialog()
         {
             InitializeComponent();
         }

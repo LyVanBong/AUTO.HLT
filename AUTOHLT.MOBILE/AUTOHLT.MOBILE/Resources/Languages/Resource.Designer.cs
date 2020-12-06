@@ -581,5 +581,41 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000057", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use.
+        /// </summary>
+        internal static string _1000058 {
+            get {
+                return ResourceManager.GetString("1000058", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        internal static string _1000059 {
+            get {
+                return ResourceManager.GetString("1000059", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posts.
+        /// </summary>
+        internal static string _1000060 {
+            get {
+                return ResourceManager.GetString("1000060", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have run out of service today.
+        /// </summary>
+        internal static string _1000061 {
+            get {
+                return ResourceManager.GetString("1000061", resourceCulture);
+            }
+        }
     }
 }

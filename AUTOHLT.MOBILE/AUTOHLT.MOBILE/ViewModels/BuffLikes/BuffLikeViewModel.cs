@@ -1,19 +1,19 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.User;
-using AUTOHLT.MOBILE.Views.BuffLikes;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
@@ -94,7 +94,36 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                 // Đã đang kỹ dịch vụ này tiến hành sử dụng
                 if (product.IsRegisterProduct)
                 {
-                    _dialogService.ShowDialog(nameof(BuyBuffLikeDialog));
+                    var id = _userModel.ID;
+                    var number = int.Parse(product.Number);
+                    var num = 0;
+                    var data = await _productService.GetHistoryUseServiceForUser(id);
+                    if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
+                    {
+                        var lsHistoryUserService = data.Data.ToList()
+                            .Where(x => x.ID_ProductType == product.ID && DateTime.Parse(x.DateCreate).Date == DateTime.Now.Date).ToList();
+                        if (lsHistoryUserService.Any())
+                        {
+                            foreach (var item in lsHistoryUserService)
+                            {
+                                num += int.Parse(item.Number);
+                            }
+                        }
+                    }
+
+                    if (num >= number)
+                    {
+                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000061, "OK");
+                    }
+                    else
+                    {
+                        var para = new DialogParameters();
+                        para.Add("IdProduct",product.ID);
+                        para.Add("IdUser",id);
+                        para.Add("Number", (number - num).ToString());
+                        para.Add("Title", Resource._1000029);
+                        await _dialogService.ShowDialogAsync(nameof(UseServiceDialog), para);
+                    }
                 }
                 else // Chưa đang kỹ dịch vụ bắt đầu đăng ký lại
                 {

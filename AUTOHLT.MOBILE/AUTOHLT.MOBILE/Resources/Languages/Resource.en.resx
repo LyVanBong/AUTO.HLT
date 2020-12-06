@@ -349,4 +349,20 @@
     <value>You buy service {0} {1} / day {2} for {3} VND</value>
     <comment>Bạn mua dịch vụ {0} {1} {2} với giá {3} VND</comment>
   </data>
+  <data name="1000058" xml:space="preserve">
+    <value>Use</value>
+    <comment>Dùng</comment>
+  </data>
+  <data name="1000059" xml:space="preserve">
+    <value>Number</value>
+    <comment>Số lượng</comment>
+  </data>
+  <data name="1000060" xml:space="preserve">
+    <value>Posts</value>
+    <comment>Bài viết</comment>
+  </data>
+  <data name="1000061" xml:space="preserve">
+    <value>You have run out of service today</value>
+    <comment>Bạn đã dùng hết dịch vụ trong ngày hôm nay</comment>
+  </data>
 </root>

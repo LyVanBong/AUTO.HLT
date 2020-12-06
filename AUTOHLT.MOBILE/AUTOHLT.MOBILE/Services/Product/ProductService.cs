@@ -4,6 +4,7 @@ using AUTOHLT.MOBILE.Services.RequestProvider;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AUTOHLT.MOBILE.Models.HistoryService;
 
 namespace AUTOHLT.MOBILE.Services.Product
 {
@@ -14,6 +15,44 @@ namespace AUTOHLT.MOBILE.Services.Product
         public ProductService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;
+        }
+
+        public async Task<ResponseModel<string>> AddHistoryUseService(string idProduct, string content, string idUser, string number, string dateCreate)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("IdProductType",idProduct),
+                    new RequestParameter("Content",content),
+                    new RequestParameter("IdUser",idUser),
+                    new RequestParameter("Number",number),
+                    new RequestParameter("DateCreate",dateCreate),
+                };
+                var data = await _requestProvider.PostAsync<string>("servicessehistory/add", para);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseModel<IEnumerable<HistoryUserServiceModel>>> GetHistoryUseServiceForUser(string id)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("id",id),
+                };
+                var data = await _requestProvider.GetAsync<IEnumerable<HistoryUserServiceModel>>("servicessehistory/servicehistory", para);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<ResponseModel<string>> RegisterProduct(string idProduct, string idUser)
@@ -28,7 +67,7 @@ namespace AUTOHLT.MOBILE.Services.Product
                 var data = await _requestProvider.PostAsync<string>("registerproduct/registerproduct", para);
                 return data;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
