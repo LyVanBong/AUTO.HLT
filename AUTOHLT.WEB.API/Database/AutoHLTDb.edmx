@@ -10,6 +10,7 @@
           <Parameter Name="Id_send" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Id_receive" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Noti_Type" Type="int" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
         </Function>
         <Function Name="AddProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
@@ -23,6 +24,7 @@
           <Parameter Name="Content" Type="text" Mode="In" />
           <Parameter Name="Id_User" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Number" Type="int" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
         </Function>
         <Function Name="AddTransferMoney" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Discount" Type="float" Mode="In" />
@@ -120,6 +122,7 @@
             <Parameter Name="Id_send" Mode="In" Type="Guid" />
             <Parameter Name="Id_receive" Mode="In" Type="Guid" />
             <Parameter Name="Noti_Type" Mode="In" Type="Int32" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="AddProductType">
             <Parameter Name="ProductName" Mode="In" Type="String" />
@@ -133,6 +136,7 @@
             <Parameter Name="Content" Mode="In" Type="String" />
             <Parameter Name="Id_User" Mode="In" Type="Guid" />
             <Parameter Name="Number" Mode="In" Type="Int32" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="AddTransferMoney">
             <Parameter Name="Discount" Mode="In" Type="Double" />
