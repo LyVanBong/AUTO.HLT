@@ -365,4 +365,32 @@
     <value>Bạn đã dùng hết dịch vụ trong ngày hôm nay</value>
     <comment>Bạn đã dùng hết dịch vụ trong ngày hôm nay</comment>
   </data>
+  <data name="1000062" xml:space="preserve">
+    <value>Buff mắt xem</value>
+    <comment>Buff mắt xem</comment>
+  </data>
+  <data name="1000063" xml:space="preserve">
+    <value>Mắt</value>
+    <comment>Mắt</comment>
+  </data>
+  <data name="1000064" xml:space="preserve">
+    <value>Nạp tiền</value>
+    <comment>Nạp tiền</comment>
+  </data>
+  <data name="1000065" xml:space="preserve">
+    <value>Số tiền</value>
+    <comment>Số tiền</comment>
+  </data>
+  <data name="1000066" xml:space="preserve">
+    <value>Số dư hiện tại</value>
+    <comment>Số dư hiện tại</comment>
+  </data>
+  <data name="1000067" xml:space="preserve">
+    <value>Bạn nạp {0} VND cho tài khoản {1} !</value>
+    <comment>Bạn nạp {0} VND cho tài khoản {1} !</comment>
+  </data>
+  <data name="1000068" xml:space="preserve">
+    <value>Giảm giá</value>
+    <comment>Giảm giá</comment>
+  </data>
 </root>

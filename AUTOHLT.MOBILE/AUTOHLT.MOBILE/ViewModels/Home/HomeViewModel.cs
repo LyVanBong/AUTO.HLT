@@ -21,6 +21,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private string _moneyUser;
         private IPageDialogService _pageDialogService;
         private bool _isLoading;
+        private int _permission;
+
+        public int Permission
+        {
+            get => _permission;
+            set => SetProperty(ref _permission, value);
+        }
 
         public bool IsLoading
         {
@@ -65,6 +72,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 if (data != null)
                 {
                     UserModel = data;
+                    Permission = data.Role;
                 }
 
                 var money = await _userService.GetMoneyUser(UserModel.UserName);
