@@ -617,5 +617,23 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000061", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff eyes view.
+        /// </summary>
+        internal static string _1000062 {
+            get {
+                return ResourceManager.GetString("1000062", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eyes.
+        /// </summary>
+        internal static string _1000063 {
+            get {
+                return ResourceManager.GetString("1000063", resourceCulture);
+            }
+        }
     }
 }

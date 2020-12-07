@@ -1,4 +1,9 @@
-﻿using AUTOHLT.MOBILE.Controls.Dialog.UseService;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
@@ -9,16 +14,11 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
+namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
 {
-    public class BuffLikeViewModel : ViewModelBase
+    public class BuffEyesViewViewModel : ViewModelBase
     {
         private IProductService _productService;
         private bool _isLoading;
@@ -74,7 +74,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService, IDialogService dialogService) : base(navigationService)
+        public BuffEyesViewViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService, IDialogService dialogService) : base(navigationService)
         {
             _dialogService = dialogService;
             _userService = userService;
@@ -121,7 +121,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                         para.Add("IdProduct", product.ID);
                         para.Add("IdUser", id);
                         para.Add("Number", (number - num).ToString());
-                        para.Add("Title", Resource._1000029);
+                        para.Add("Title", Resource._1000063);
                         await _dialogService.ShowDialogAsync(nameof(UseServiceDialog), para);
                     }
                 }
@@ -130,20 +130,19 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     var username = _userModel.UserName;
                     var idUser = _userModel.ID;
                     var moneyModel = await _userService.GetMoneyUser(username);
-                    if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
+                    var money = int.Parse(moneyModel.Data);
+                    var price = int.Parse(product.Price);
+                    if (money >= price)
                     {
-                        var money = int.Parse(moneyModel.Data);
-                        var price = int.Parse(product.Price);
-                        if (money >= price)
+
+                        var messager = string.Format(Resource._1000057, string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Number)), Resource._1000063, product.TmpEndDate, string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Price)));
+                        var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, messager, "OK",
+                            "Cancel");
+                        if (res)
                         {
-                            var messager = string.Format(Resource._1000057,
-                                string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Number)), "Like",
-                                product.TmpEndDate,
-                                string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Price)));
-                            var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, messager, "OK",
-                                "Cancel");
-                            if (res)
+                            if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
                             {
+
                                 var registerProduct = await _productService.RegisterProduct(product.ID, idUser);
                                 if (registerProduct != null && registerProduct.Code > 0 && registerProduct.Data != null)
                                 {
@@ -161,10 +160,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                         Price = money - price,
                                         IdDevice = _userModel.IdDevice
                                     };
-                                    var updateUser = await _userService.UpdateUser(user.UserName, user.Name,
-                                        user.Password, user.Email, user.NumberPhone.ToString(), user.Sex.ToString(),
-                                        user.Role.ToString(), user.IsActive.ToString(), user.Age.ToString(),
-                                        user.Price.ToString(), user.IdDevice);
+                                    var updateUser = await _userService.UpdateUser(user.UserName, user.Name, user.Password, user.Email, user.NumberPhone.ToString(), user.Sex.ToString(), user.Role.ToString(), user.IsActive.ToString(), user.Age.ToString(), user.Price.ToString(), user.IdDevice);
                                     if (updateUser != null && updateUser.Code > 0)
                                     {
                                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
@@ -179,10 +175,10 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                 }
                             }
                         }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, moneyModel.Message, "OK");
-                        }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, moneyModel.Message, "OK");
                     }
                 }
             }
@@ -214,10 +210,10 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     var lsProduct = await _productService.GetAllProduct();
                     if (lsProduct != null && lsProduct.Code > 0 && lsProduct.Data != null && lsProduct.Data.Any())
                     {
-                        Like1year = lsProduct.Data.FirstOrDefault(x => x.ID == "570116f4-d7c9-462d-a048-2a1a001401a7");
-                        Like1Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "1159ef89-fa4e-4611-91ba-a451e0cd12b1");
-                        Like2year = lsProduct.Data.FirstOrDefault(x => x.ID == "b60e1c97-d36a-4ae3-b639-2dd58f6583c3");
-                        Like2Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "d5d6c926-5195-48ed-8616-c0e34213a714");
+                        Like1year = lsProduct.Data.FirstOrDefault(x => x.ID == "c81cd058-8374-4c3f-9de7-4002d0d46ee0");
+                        Like1Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "72235dda-5689-4b88-ac7e-0a82143e45d6");
+                        Like2year = lsProduct.Data.FirstOrDefault(x => x.ID == "9ec8a62e-ee56-4c8f-ace1-89bc20296bfa");
+                        Like2Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "4f1946ed-913f-431b-97ef-a3c5d5094708");
                     }
 
                     var lsRegisterProduct = await _productService.GetListRegisterProductForUser(_userModel.ID);
@@ -227,7 +223,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                         {
                             switch (item.ID_ProductType)
                             {
-                                case "570116f4-d7c9-462d-a048-2a1a001401a7":
+                                case "c81cd058-8374-4c3f-9de7-4002d0d46ee0":
                                     var dataEnd = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
                                     var dateNow = DateTime.Now;
                                     if (dateNow < dataEnd)
@@ -236,11 +232,11 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                         RaisePropertyChanged(nameof(Like1year));
                                     }
                                     break;
-                                case "1159ef89-fa4e-4611-91ba-a451e0cd12b1":
+                                case "72235dda-5689-4b88-ac7e-0a82143e45d6":
                                     Like1Forever.IsRegisterProduct = true;
                                     RaisePropertyChanged(nameof(Like1Forever));
                                     break;
-                                case "b60e1c97-d36a-4ae3-b639-2dd58f6583c3":
+                                case "9ec8a62e-ee56-4c8f-ace1-89bc20296bfa":
                                     var dataEnd2 = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
                                     var dateNow2 = DateTime.Now;
                                     if (dateNow2 < dataEnd2)
@@ -250,7 +246,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                     }
 
                                     break;
-                                case "d5d6c926-5195-48ed-8616-c0e34213a714":
+                                case "4f1946ed-913f-431b-97ef-a3c5d5094708":
                                     Like2Forever.IsRegisterProduct = true;
                                     RaisePropertyChanged(nameof(Like2Forever));
                                     break;

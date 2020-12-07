@@ -244,6 +244,9 @@
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_view.png}" />
                             <Label Grid.Row="1" Text="{markupExtensions:Translate 1000030}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{prism:NavigateTo 'BuffEyesViewPage'}" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                     <Frame
                         Grid.Row="0"
