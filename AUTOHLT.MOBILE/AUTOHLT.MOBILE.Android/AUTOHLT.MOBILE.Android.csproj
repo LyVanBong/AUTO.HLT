@@ -58,7 +58,7 @@
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
     <MandroidI18n />
-    <AndroidLinkMode>Full</AndroidLinkMode>
+    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
