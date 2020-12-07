@@ -395,6 +395,9 @@
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_top_up.png}" />
                             <Label Grid.Row="1" Text="{markupExtensions:Translate 1000024}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{prism:NavigateTo 'RechargeCustomersPage'}" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                     <Frame
                         Grid.Row="1"

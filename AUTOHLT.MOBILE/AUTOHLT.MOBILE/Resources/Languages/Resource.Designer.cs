@@ -635,5 +635,50 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000063", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recharge.
+        /// </summary>
+        internal static string _1000064 {
+            get {
+                return ResourceManager.GetString("1000064", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        internal static string _1000065 {
+            get {
+                return ResourceManager.GetString("1000065", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current balance.
+        /// </summary>
+        internal static string _1000066 {
+            get {
+                return ResourceManager.GetString("1000066", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You deposit {0} VND for your {1} account!.
+        /// </summary>
+        internal static string _1000067 {
+            get {
+                return ResourceManager.GetString("1000067", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount.
+        /// </summary>
+        internal static string _1000068 {
+            get {
+                return ResourceManager.GetString("1000068", resourceCulture);
+            }
+        }
     }
 }
