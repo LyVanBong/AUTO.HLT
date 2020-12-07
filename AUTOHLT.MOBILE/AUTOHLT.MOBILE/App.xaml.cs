@@ -5,6 +5,7 @@ using AUTOHLT.MOBILE.Services.HistoryService;
 using AUTOHLT.MOBILE.Services.Login;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.RequestProvider;
+using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.ViewModels.BuffEyesView;
 using AUTOHLT.MOBILE.ViewModels.BuffLikes;
@@ -56,6 +57,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register Service
 
+            containerRegistry.Register<ITelegramService, TelegramService>();
             containerRegistry.Register<IHistoryService, HistoryService>();
             containerRegistry.Register<IProductService, ProductService>();
             containerRegistry.Register<IUserService, UserService>();
