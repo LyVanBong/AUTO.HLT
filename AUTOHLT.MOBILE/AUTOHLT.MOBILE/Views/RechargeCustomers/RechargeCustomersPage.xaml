@@ -33,7 +33,7 @@
                                                Hint="{markupExtensions:Translate 1000005}">
                 <Entry ClearButtonVisibility="WhileEditing"
                        ReturnType="Next"
-                       Keyboard="Text"
+                       Keyboard="Email"
                        Text="{Binding UserName}">
                     <Entry.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="Unfocused"
