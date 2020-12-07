@@ -365,4 +365,12 @@
     <value>Bạn đã dùng hết dịch vụ trong ngày hôm nay</value>
     <comment>Bạn đã dùng hết dịch vụ trong ngày hôm nay</comment>
   </data>
+  <data name="1000062" xml:space="preserve">
+    <value>Buff mắt xem</value>
+    <comment>Buff mắt xem</comment>
+  </data>
+  <data name="1000063" xml:space="preserve">
+    <value>Mắt</value>
+    <comment>Mắt</comment>
+  </data>
 </root>
