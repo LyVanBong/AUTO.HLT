@@ -373,4 +373,24 @@
     <value>Eyes</value>
     <comment>Mắt</comment>
   </data>
+  <data name="1000064" xml:space="preserve">
+    <value>Recharge</value>
+    <comment>Nạp tiền</comment>
+  </data>
+  <data name="1000065" xml:space="preserve">
+    <value>Amount</value>
+    <comment>Số tiền</comment>
+  </data>
+  <data name="1000066" xml:space="preserve">
+    <value>Current balance</value>
+    <comment>Số dư hiện tại</comment>
+  </data>
+  <data name="1000067" xml:space="preserve">
+    <value>You deposit {0} VND for your {1} account!</value>
+    <comment>Bạn nạp {0} VND cho tài khoản {1} !</comment>
+  </data>
+  <data name="1000068" xml:space="preserve">
+    <value>Discount</value>
+    <comment>Giảm giá</comment>
+  </data>
 </root>

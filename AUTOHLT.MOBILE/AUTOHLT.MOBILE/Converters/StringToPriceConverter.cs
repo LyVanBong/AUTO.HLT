@@ -23,7 +23,8 @@ namespace AUTOHLT.MOBILE.Converters
             if (value != null)
             {
                 var res = value.ToString();
-                res = res.Replace(",", "");
+                if (res.Contains(","))
+                    res = res.Replace(",", "");
                 return res;
             }
             return value;
