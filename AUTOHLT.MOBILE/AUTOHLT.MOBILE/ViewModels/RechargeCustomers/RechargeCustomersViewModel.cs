@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
@@ -25,6 +27,7 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
         private string _discount;
         private string _totalMoney;
         private string _idRec;
+        private ITelegramService _telegramService;
 
 
         public ICommand UnfocusedDiscountCommand { get; set; }
@@ -73,8 +76,9 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
             set => SetProperty(ref _userName, value);
         }
 
-        public RechargeCustomersViewModel(INavigationService navigationService, IUserService userService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
+        public RechargeCustomersViewModel(INavigationService navigationService, IUserService userService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService) : base(navigationService)
         {
+            _telegramService = telegramService;
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             _userService = userService;
@@ -165,6 +169,14 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
                             var log = await _userService.HistorySetMoneyForUser(Discount, NumberMoney, user.ID, _idRec,
                                 "1");
+                            var messageTele = $"Nạp tiền\n" +
+                                          $"Id người gửi: {user.ID}\n" +
+                                          $"Id người nhận: {_idRec}\n" +
+                                          $"Số tiền nạp: {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(NumberMoney))} VND\n" +
+                                          $"Chiết khẩu: {Discount} %\n" +
+                                          $"Thời gian chuyển: {DateTime.Now.ToString("F")}";
+                            var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWMoneyHistory,
+                                messageTele);
                         }
                         else
                         {
@@ -180,10 +192,7 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
             }
             finally
             {
-                UserName = "";
-                NumberMoney = "";
-                Discount = "50";
-                CurrentBalance = "";
+                UserName = string.Empty;
                 IsLoading = false;
             }
         }

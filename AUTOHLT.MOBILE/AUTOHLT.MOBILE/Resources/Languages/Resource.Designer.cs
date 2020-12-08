@@ -680,5 +680,50 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000068", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        internal static string _1000069 {
+            get {
+                return ResourceManager.GetString("1000069", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account information.
+        /// </summary>
+        internal static string _1000070 {
+            get {
+                return ResourceManager.GetString("1000070", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A new password.
+        /// </summary>
+        internal static string _1000071 {
+            get {
+                return ResourceManager.GetString("1000071", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old password.
+        /// </summary>
+        internal static string _1000072 {
+            get {
+                return ResourceManager.GetString("1000072", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string _1000073 {
+            get {
+                return ResourceManager.GetString("1000073", resourceCulture);
+            }
+        }
     }
 }

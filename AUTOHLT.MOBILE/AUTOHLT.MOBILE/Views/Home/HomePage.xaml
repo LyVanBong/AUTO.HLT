@@ -168,13 +168,21 @@
                         </BoxView>
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
-                                 Grid.Column="1" />
+                                 Grid.Column="1">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{prism:NavigateTo 'ChangePasswordPage'}" />
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
                                  Grid.Column="2" />
                         <BoxView Grid.Row="1"
                                  Grid.RowSpan="2"
-                                 Grid.Column="3" />
+                                 Grid.Column="3">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{prism:NavigateTo 'AccountInformationPage'}" />
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                     </Grid>
                 </Frame>
                 <Grid Grid.Row="3"

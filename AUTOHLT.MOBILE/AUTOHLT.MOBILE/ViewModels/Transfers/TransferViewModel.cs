@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
@@ -23,6 +26,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
         private IDatabaseService _databaseService;
         private string _idReceive;
         private UserModel _userModel;
+        private ITelegramService _telegramService;
 
         public ICommand UnfocusedAmountMoneyCommand { get; private set; }
         public bool IsLoading
@@ -58,8 +62,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
             set => SetProperty(ref _isSaveContacts, value);
         }
 
-        public TransferViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IUserService userService, IDatabaseService databaseService) : base(navigationService)
+        public TransferViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IUserService userService, IDatabaseService databaseService, ITelegramService telegramService) : base(navigationService)
         {
+            _telegramService = telegramService;
             _databaseService = databaseService;
             _userService = userService;
             _pageDialogService = pageDialogService;
@@ -157,6 +162,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
                     if (data != null && data.Code > 0 && data.Data == "2")
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000047, "OK");
+                        var message = $"Chuyển tiền\n" +
+                                      $"Id người gửi: {id}\n" +
+                                      $"Id người nhận: {_idReceive}\n" +
+                                      $"Số tiền chuyển: {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(AmountMoney))} VND\n" +
+                                      $"Thời gian chuyển: {DateTime.Now.ToString("F")}";
+                        var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWMoneyHistory,
+                            message);
                     }
                     else
                     {

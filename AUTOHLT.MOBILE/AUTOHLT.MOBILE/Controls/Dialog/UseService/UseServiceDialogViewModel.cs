@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Product;
+using AUTOHLT.MOBILE.Services.Telegram;
 using Microsoft.AppCenter.Crashes;
 using Prism.Mvvm;
 using Prism.Services;
@@ -21,6 +23,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
         private string _idUser;
         private string _idProduct;
         private IPageDialogService _pageDialogService;
+        private ITelegramService _telegramService;
 
         public string Number
         {
@@ -64,8 +67,9 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
             set => SetProperty(ref _title, value);
         }
 
-        public UseServiceDialogViewModel(IProductService productService, IPageDialogService pageDialogService)
+        public UseServiceDialogViewModel(IProductService productService, IPageDialogService pageDialogService, ITelegramService telegramService)
         {
+            _telegramService = telegramService;
             _pageDialogService = pageDialogService;
             _productService = productService;
             CloseCommand = new Command(CloseDialog);
@@ -82,6 +86,13 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
                     if (addHistoryUse != null && addHistoryUse.Code > 0 && addHistoryUse.Data != null)
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                        var message = $"{Title}\n" +
+                                      $"Số lượng: {Number}\n" +
+                                      $"Nội dung: {Content}\n" +
+                                      $"Id người dùng dịch vụ: {_idUser}\n" +
+                                      $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                        var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                            message);
                     }
                     else
                     {
