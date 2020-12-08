@@ -7,14 +7,18 @@ using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.ViewModels.AccountInformation;
 using AUTOHLT.MOBILE.ViewModels.BuffEyesView;
 using AUTOHLT.MOBILE.ViewModels.BuffLikes;
+using AUTOHLT.MOBILE.ViewModels.ChangePassword;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Login;
 using AUTOHLT.MOBILE.ViewModels.RechargeCustomers;
 using AUTOHLT.MOBILE.ViewModels.Transfers;
+using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.BuffEyesView;
 using AUTOHLT.MOBILE.Views.BuffLikes;
+using AUTOHLT.MOBILE.Views.ChangePassword;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Login;
 using AUTOHLT.MOBILE.Views.RechargeCustomers;
@@ -75,6 +79,8 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordViewModels>();
+            containerRegistry.RegisterForNavigation<AccountInformationPage, AccountInformationViewModel>();
             containerRegistry.RegisterForNavigation<RechargeCustomersPage, RechargeCustomersViewModel>();
             containerRegistry.RegisterForNavigation<BuffEyesViewPage, BuffEyesViewViewModel>();
             containerRegistry.RegisterForNavigation<BuffLikePage, BuffLikeViewModel>();

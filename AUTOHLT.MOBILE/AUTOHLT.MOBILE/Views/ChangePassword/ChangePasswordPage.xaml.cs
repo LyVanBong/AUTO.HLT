@@ -4,12 +4,12 @@ using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
-namespace AUTOHLT.MOBILE.Views.RechargeCustomers
+namespace AUTOHLT.MOBILE.Views.ChangePassword
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RechargeCustomersPage : ContentPage
+    public partial class ChangePasswordPage : ContentPage
     {
-        public RechargeCustomersPage()
+        public ChangePasswordPage()
         {
             InitializeComponent();
         }
