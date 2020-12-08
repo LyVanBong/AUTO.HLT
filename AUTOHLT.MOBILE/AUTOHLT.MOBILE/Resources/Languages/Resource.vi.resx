@@ -393,4 +393,24 @@
     <value>Giảm giá</value>
     <comment>Giảm giá</comment>
   </data>
+  <data name="1000069" xml:space="preserve">
+    <value>Đổi mật khẩu</value>
+    <comment>Đổi mật khẩu</comment>
+  </data>
+  <data name="1000070" xml:space="preserve">
+    <value>Thông tin tài khoản</value>
+    <comment>Thông tin tài khoản</comment>
+  </data>
+  <data name="1000071" xml:space="preserve">
+    <value>Mật khẩu mới</value>
+    <comment>Mật khẩu mới</comment>
+  </data>
+  <data name="1000072" xml:space="preserve">
+    <value>Mật khẩu cũ</value>
+    <comment>Mật khẩu cũ</comment>
+  </data>
+  <data name="1000073" xml:space="preserve">
+    <value>Cập nhật</value>
+    <comment>Cập nhật</comment>
+  </data>
 </root>
