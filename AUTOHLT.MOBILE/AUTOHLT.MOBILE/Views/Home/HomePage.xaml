@@ -313,6 +313,9 @@
                             <Label Grid.Row="1"
                                    Text="{markupExtensions:Translate 1000026}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{prism:NavigateTo 'InteractivePage'}" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </Grid>
                 <BoxView Grid.Row="4"
