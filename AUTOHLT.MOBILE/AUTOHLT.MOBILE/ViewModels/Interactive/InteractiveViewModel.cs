@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
+using Microsoft.AppCenter.Crashes;
 using Plugin.FacebookClient;
 using Prism.Navigation;
 using Xamarin.Forms;
@@ -19,22 +22,27 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
 
         public InteractiveViewModel(INavigationService navigationService) : base(navigationService)
         {
-            InteractiveCommand=new Command(Interactive);
+            InteractiveCommand = new Command(Interactive);
             IsLoading = true;
         }
 
         private async void Interactive()
         {
-            await CrossFacebookClient.Current.LoginAsync(new string[] { "email" });
-            CrossFacebookClient.Current.OnLogin += (s, a) =>
+            try
             {
-                switch (a.Status)
+                //await CrossFacebookClient.Current.LoginAsync(new string[] { "email" });
+
+                var fb = await CrossFacebookClient.Current.RequestUserDataAsync(new string[] { "email", "first_name", "gender", "last_name", "birthday" }, new string[] { "email", "user_birthday" });
+           var test=     await CrossFacebookClient.Current.QueryDataAsync("me/friends", new string[] { "user_friends" }, new Dictionary<string, string>()
                 {
-                    case FacebookActionStatus.Completed:
-                        //Logged in succesfully
-                        break;
-                }
-            };
+                    {"fields", "id, first_name, last_name, middle_name, name, email, picture"}
+                });
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
