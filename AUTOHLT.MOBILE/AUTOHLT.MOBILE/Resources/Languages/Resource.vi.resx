@@ -409,4 +409,8 @@
     <value>Mật khẩu cũ</value>
     <comment>Mật khẩu cũ</comment>
   </data>
+  <data name="1000073" xml:space="preserve">
+    <value>Cập nhật</value>
+    <comment>Cập nhật</comment>
+  </data>
 </root>

@@ -716,5 +716,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000072", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string _1000073 {
+            get {
+                return ResourceManager.GetString("1000073", resourceCulture);
+            }
+        }
     }
 }
