@@ -262,6 +262,11 @@
                             <Label Grid.Row="1"
                                    Text="{markupExtensions:Translate 1000031}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}"
+                                                  CommandParameter="0">
+                            </TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
                     </Frame>
                     <Frame Grid.Row="1"
                            Grid.Column="0"
@@ -279,6 +284,11 @@
                             <Label Grid.Row="1"
                                    Text="{markupExtensions:Translate 1000032}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}"
+                                                  CommandParameter="1">
+                            </TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
                     </Frame>
                     <Frame Grid.Row="1"
                            Grid.Column="1"
@@ -296,6 +306,11 @@
                             <Label Grid.Row="1"
                                    Text="{markupExtensions:Translate 1000033}" />
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}"
+                                                  CommandParameter="2">
+                            </TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
                     </Frame>
                     <Frame Grid.Row="1"
                            Grid.Column="2"

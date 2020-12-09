@@ -413,4 +413,8 @@
     <value>Update</value>
     <comment>Cập nhật</comment>
   </data>
+  <data name="1000074" xml:space="preserve">
+    <value>Content</value>
+    <comment>Nội dung</comment>
+  </data>
 </root>
