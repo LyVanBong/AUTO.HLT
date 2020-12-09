@@ -66,13 +66,14 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Plugin.FacebookClient" Version="2.2.1" />
     <PackageReference Include="Prism.Plugin.Popups" Version="7.2.0.1046" />
     <PackageReference Include="Realm" Version="5.1.2" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.7" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.3.0.52" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.3.0.52" />
-    <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.3.0.52" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.3.0.53" />
+    <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.3.0.53" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.5.3.2" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
@@ -108,6 +109,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Home\HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Interactive\InteractivePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\LoginPage.xaml">
