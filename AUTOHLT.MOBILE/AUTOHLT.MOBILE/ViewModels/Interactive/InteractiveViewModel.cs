@@ -12,7 +12,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
     {
         private bool _isLoading;
 
+        private string _tokenFacebook;
 
+        public string TokenFacebook
+        {
+            get => _tokenFacebook;
+            set => SetProperty(ref _tokenFacebook, value);
+        }
         public ICommand InteractiveCommand { get; private set; }
         public bool IsLoading
         {
@@ -30,14 +36,19 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
         {
             try
             {
-                //await CrossFacebookClient.Current.LoginAsync(new string[] { "email" });
-
-                var fb = await CrossFacebookClient.Current.RequestUserDataAsync(new string[] { "email", "first_name", "gender", "last_name", "birthday" }, new string[] { "email", "user_birthday" });
-           var test=     await CrossFacebookClient.Current.QueryDataAsync("me/friends", new string[] { "user_friends" }, new Dictionary<string, string>()
+                await CrossFacebookClient.Current.RequestUserDataAsync(new string[] { "email", "first_name", "gender", "last_name", "birthday" }, new string[] { "email", "user_birthday" }); ;
+                CrossFacebookClient.Current.OnLogin += (s, a) =>
                 {
-                    {"fields", "id, first_name, last_name, middle_name, name, email, picture"}
-                });
-
+                    switch (a.Status)
+                    {
+                        case FacebookActionStatus.Completed:
+                            TokenFacebook = CrossFacebookClient.Current.ActiveToken + "\n" +
+                                            CrossFacebookClient.Current.ActiveUserId + "\n" +
+                                            CrossFacebookClient.Current.TokenExpirationDate + "\n" +
+                                            CrossFacebookClient.Current.IsLoggedIn;
+                            break;
+                    }
+                };
             }
             catch (Exception e)
             {

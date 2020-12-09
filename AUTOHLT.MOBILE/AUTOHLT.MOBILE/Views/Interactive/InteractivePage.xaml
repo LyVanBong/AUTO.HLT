@@ -35,7 +35,10 @@
                     CornerRadius="10"
                     FontSize="18"
                     Text="Facebook" />
-
+            <Editor Grid.Row="2"
+                    Text="{Binding TokenFacebook}"
+                    Margin="20"
+                    VerticalOptions="FillAndExpand"></Editor>
             <controls:LoadingView Grid.Row="0"
                                   Grid.RowSpan="3"
                                   IsVisible="{Binding IsLoading}" />

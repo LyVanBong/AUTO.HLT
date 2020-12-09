@@ -37,6 +37,7 @@
                                                    Hint="{markupExtensions:Translate 1000005}">
                     <Entry ClearButtonVisibility="WhileEditing"
                            ReturnType="Next"
+                           Keyboard="Email"
                            Text="{Binding UserName}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
                         <Label FontFamily="Awesome5ProSolid"
@@ -51,6 +52,7 @@
                                                    Hint="{markupExtensions:Translate 1000006}">
                     <Entry ClearButtonVisibility="WhileEditing"
                            IsPassword="True"
+                           Keyboard="Email"
                            ReturnCommand="{Binding LoginCommand}"
                            ReturnType="Done"
                            Text="{Binding Password}" />
