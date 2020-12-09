@@ -13,7 +13,7 @@
         <ScrollView Margin="0"
                     Padding="0"
                     VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="{OnPlatform Android='10,100,70,70,70,70,70,70,70,70,50,20,50',iOS='10,100,60,60,60,60,60,60,60,60,50,20,50'}"
+            <Grid RowDefinitions="{OnPlatform Android='10,100,70,70,70,70,70,70,60,20,50',iOS='10,100,60,60,60,60,60,60,60,20,50'}"
                   RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
@@ -100,24 +100,9 @@
                            Keyboard="Email"
                            Text="{Binding Email}" />
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout Grid.Row="8"
-                                                   FocusedColor="{StaticResource BtLogin}"
-                                                   Hint="{markupExtensions:Translate 1000012}">
-                    <Entry ClearButtonVisibility="WhileEditing"
-                           Keyboard="Numeric"
-                           Text="{Binding Age}" />
-                </textInputLayout:SfTextInputLayout>
-                <buttons:SfRadioGroup Grid.Row="9"
-                                      Margin="20,0"
-                                      Padding="0"
-                                      Orientation="Horizontal">
-                    <buttons:SfRadioButton IsChecked="{Binding IsMale}"
-                                           Text="{markupExtensions:Translate 1000016}" />
-                    <buttons:SfRadioButton IsChecked="True"
-                                           Text="{markupExtensions:Translate 1000017}" />
-                </buttons:SfRadioGroup>
-                <Button Grid.Row="10"
-                        Margin="20,0"
+                
+                <Button Grid.Row="8"
+                        Margin="20,5"
                         Padding="0"
                         BackgroundColor="{StaticResource Gray-White}"
                         BorderColor="{StaticResource BtLogin}"
@@ -127,7 +112,7 @@
                         FontSize="18"
                         IsEnabled="{Binding IsEnableSignUp}"
                         Text="{markupExtensions:Translate 1000002}" />
-                <Label Grid.Row="12"
+                <Label Grid.Row="10"
                        Margin="20,0"
                        Padding="0">
                     <Label.FormattedText>
@@ -143,7 +128,7 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <controls:LoadingView Grid.Row="0"
-                                      Grid.RowSpan="13"
+                                      Grid.RowSpan="11"
                                       IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>

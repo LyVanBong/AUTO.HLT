@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">AUTOHLT.MOBILE.Droid</string>
+  <string name="facebook_app_name">BSoft</string>
+  <string name="facebook_app_id">214838516781654</string>
+  <string name="fb_login_protocol_scheme">fb214838516781654</string>
 </resources>

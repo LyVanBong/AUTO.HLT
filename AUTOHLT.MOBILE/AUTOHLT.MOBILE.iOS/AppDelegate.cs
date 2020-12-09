@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
@@ -28,12 +29,28 @@ namespace AUTOHLT.MOBILE.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer()));
-            OtherLibraries();
+            OtherLibraries(app, options);
             return base.FinishedLaunching(app, options);
         }
 
-        private void OtherLibraries()
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
+            return FacebookClientManager.OpenUrl(app, url, options);
+        }
+
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            return FacebookClientManager.OpenUrl(application, url, sourceApplication, annotation);
+        }
+        public override void OnActivated(UIApplication uiApplication)
+        {
+            base.OnActivated(uiApplication);
+            FacebookClientManager.OnActivated();
+        }
+
+        private void OtherLibraries(UIApplication app, NSDictionary options)
+        {
+            FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();
             SfRadioButtonRenderer.Init();
             new SfBusyIndicatorRenderer();
