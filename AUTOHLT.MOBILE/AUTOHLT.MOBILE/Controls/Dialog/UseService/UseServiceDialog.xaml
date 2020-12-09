@@ -22,7 +22,7 @@
         <Grid.Resources>
             <Style TargetType="textInputLayout:SfTextInputLayout">
                 <Setter Property="ContainerType" Value="Outlined" />
-                <Setter Property="Margin" Value="10,0" />
+                <Setter Property="Margin" Value="10,5" />
                 <Setter Property="OutlineCornerRadius" Value="5" />
             </Style>
         </Grid.Resources>
@@ -84,7 +84,7 @@
             Hint="{markupExtensions:Translate 1000060}"
             LeadingViewPosition="Inside">
             <Editor
-                HeightRequest="150"
+                HeightRequest="140"
                 Keyboard="Text"
                 Text="{Binding Content}" />
             <textInputLayout:SfTextInputLayout.LeadingView>

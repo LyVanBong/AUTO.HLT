@@ -725,5 +725,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000073", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        internal static string _1000074 {
+            get {
+                return ResourceManager.GetString("1000074", resourceCulture);
+            }
+        }
     }
 }

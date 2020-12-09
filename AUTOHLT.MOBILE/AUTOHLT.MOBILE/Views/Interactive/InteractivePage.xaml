@@ -36,6 +36,7 @@
                     FontSize="18"
                     Text="Facebook" />
             <Editor Grid.Row="2"
+                    BackgroundColor="{StaticResource Gray-White}"
                     Text="{Binding TokenFacebook}"
                     Margin="20"
                     VerticalOptions="FillAndExpand"></Editor>
