@@ -1,104 +1,108 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="AUTOHLT.MOBILE.Views.Login.LoginPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-             xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-             iOsSpecific:Page.UseSafeArea="true"
-             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.Login.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    iOsSpecific:Page.UseSafeArea="true">
     <ContentPage.Content>
-        <ScrollView Margin="0"
-                    Padding="0"
-                    VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="{OnPlatform Android='10,350,70,70,50,50,20,50',iOS='10,350,60,60,50,50,20,50'}"
-                  RowSpacing="0">
+        <ScrollView
+            Margin="0"
+            Padding="0"
+            VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="{OnPlatform Android='10,350,70,70,50,50,20,50', iOS='10,350,60,60,50,50,20,50'}" RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
-                        <Setter Property="ContainerType"
-                                Value="Outlined" />
-                        <Setter Property="Margin"
-                                Value="20,0" />
-                        <Setter Property="OutlineCornerRadius"
-                                Value="5" />
+                        <Setter Property="ContainerType" Value="Outlined" />
+                        <Setter Property="Margin" Value="20,0" />
+                        <Setter Property="OutlineCornerRadius" Value="5" />
                     </Style>
                     <Style TargetType="Label">
-                        <Setter Property="FontSize"
-                                Value="16" />
+                        <Setter Property="FontSize" Value="16" />
                     </Style>
                 </Grid.Resources>
-                <Image Grid.Row="1"
-                       Source="{markupExtensions:ImageResource logo.png}" />
-                <textInputLayout:SfTextInputLayout Grid.Row="2"
-                                                   LeadingViewPosition="Inside"
-                                                   FocusedColor="{StaticResource BtLogin}"
-                                                   Hint="{markupExtensions:Translate 1000005}">
-                    <Entry ClearButtonVisibility="WhileEditing"
-                           ReturnType="Next"
-                           Keyboard="Email"
-                           Text="{Binding UserName}" />
+                <Image Grid.Row="1" Source="{markupExtensions:ImageResource logo.png}" />
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="2"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000005}"
+                    LeadingViewPosition="Inside">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Email"
+                        ReturnType="Next"
+                        Text="{Binding UserName}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
-                        <Label FontFamily="Awesome5ProSolid"
-                               VerticalTextAlignment="Center"
-                               Text="{x:Static icon:FontAwesome5ProSolid.User}" />
+                        <Label
+                            FontFamily="Awesome5ProSolid"
+                            Text="{x:Static icon:FontAwesome5ProSolid.User}"
+                            VerticalTextAlignment="Center" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout Grid.Row="3"
-                                                   EnablePasswordVisibilityToggle="True"
-                                                   LeadingViewPosition="Inside"
-                                                   FocusedColor="{StaticResource BtLogin}"
-                                                   Hint="{markupExtensions:Translate 1000006}">
-                    <Entry ClearButtonVisibility="WhileEditing"
-                           IsPassword="True"
-                           Keyboard="Email"
-                           ReturnCommand="{Binding LoginCommand}"
-                           ReturnType="Done"
-                           Text="{Binding Password}" />
+                <textInputLayout:SfTextInputLayout
+                    Grid.Row="3"
+                    EnablePasswordVisibilityToggle="True"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="{markupExtensions:Translate 1000006}"
+                    LeadingViewPosition="Inside">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        IsPassword="True"
+                        ReturnCommand="{Binding LoginCommand}"
+                        ReturnType="Done"
+                        Text="{Binding Password}" />
                     <textInputLayout:SfTextInputLayout.LeadingView>
-                        <Label FontFamily="Awesome5ProSolid"
-                               VerticalTextAlignment="Center"
-                               Text="{x:Static icon:FontAwesome5ProSolid.Key}" />
+                        <Label
+                            FontFamily="Awesome5ProSolid"
+                            Text="{x:Static icon:FontAwesome5ProSolid.Key}"
+                            VerticalTextAlignment="Center" />
                     </textInputLayout:SfTextInputLayout.LeadingView>
                 </textInputLayout:SfTextInputLayout>
-                <buttons:SfCheckBox x:Name="checkBox"
-                                    Grid.Row="4"
-                                    Margin="20,0"
-                                    Padding="0"
-                                    CheckedColor="{StaticResource BtLogin}"
-                                    FontSize="16"
-                                    IsChecked="{Binding IsCheckSavePassword}"
-                                    Text="{markupExtensions:Translate 1000007}" />
-                <Button Grid.Row="5"
-                        Margin="20,0"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-White}"
-                        BorderColor="{StaticResource BtLogin}"
-                        BorderWidth="1"
-                        Command="{Binding LoginCommand}"
-                        CornerRadius="10"
-                        FontSize="18"
-                        IsEnabled="{Binding IsEnabledLogin}"
-                        Text="{markupExtensions:Translate 1000000}" />
-                <Label Grid.Row="7"
-                       Margin="20,0"
-                       Padding="0">
+                <buttons:SfCheckBox
+                    x:Name="checkBox"
+                    Grid.Row="4"
+                    Margin="20,0"
+                    Padding="0"
+                    CheckedColor="{StaticResource BtLogin}"
+                    FontSize="16"
+                    IsChecked="{Binding IsCheckSavePassword}"
+                    Text="{markupExtensions:Translate 1000007}" />
+                <Button
+                    Grid.Row="5"
+                    Margin="20,0"
+                    Padding="0"
+                    BackgroundColor="{StaticResource Gray-White}"
+                    BorderColor="{StaticResource BtLogin}"
+                    BorderWidth="1"
+                    Command="{Binding LoginCommand}"
+                    CornerRadius="10"
+                    FontSize="18"
+                    IsEnabled="{Binding IsEnabledLogin}"
+                    Text="{markupExtensions:Translate 1000000}" />
+                <Label
+                    Grid.Row="7"
+                    Margin="20,0"
+                    Padding="0">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{markupExtensions:Translate 1000007}" />
                             <Span Text=" " />
-                            <Span Text="{markupExtensions:Translate 1000002}"
-                                  TextColor="{StaticResource HyperLink}" />
+                            <Span Text="{markupExtensions:Translate 1000002}" TextColor="{StaticResource HyperLink}" />
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SignUpCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <controls:LoadingView Grid.Row="0"
-                                      Grid.RowSpan="8"
-                                      IsVisible="{Binding IsLoading}" />
+                <controls:LoadingView
+                    Grid.Row="0"
+                    Grid.RowSpan="8"
+                    IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>
     </ContentPage.Content>

@@ -36,7 +36,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
         {
             try
             {
-                await CrossFacebookClient.Current.RequestUserDataAsync(new string[] { "email", "first_name", "gender", "last_name", "birthday" }, new string[] { "email", "user_birthday" }); ;
+                await CrossFacebookClient.Current.LoginAsync(new string[] { "email" });
                 CrossFacebookClient.Current.OnLogin += (s, a) =>
                 {
                     switch (a.Status)

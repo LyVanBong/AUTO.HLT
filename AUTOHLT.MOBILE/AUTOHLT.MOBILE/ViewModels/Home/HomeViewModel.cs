@@ -69,6 +69,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             if (IsLoading) return;
             IsLoading = true;
             var para = new DialogParameters();
+            para.Add("UserName", UserModel.UserName);
             switch (key)
             {
                 case "0":
