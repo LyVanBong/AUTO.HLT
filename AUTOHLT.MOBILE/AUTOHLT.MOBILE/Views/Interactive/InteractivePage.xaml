@@ -1,47 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             BackgroundColor="{StaticResource HeaderHome}"
-             x:Class="AUTOHLT.MOBILE.Views.Interactive.InteractivePage">
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.Interactive.InteractivePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
-        <Grid Margin="0"
-              Padding="0"
-              BackgroundColor="{StaticResource Gray-White}"
-              RowDefinitions="40,60,*"
-              RowSpacing="0">
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            RowDefinitions="40,60,*"
+            RowSpacing="0">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">
-                    <Setter Property="ContainerType"
-                            Value="Outlined" />
-                    <Setter Property="Margin"
-                            Value="20,0" />
-                    <Setter Property="OutlineCornerRadius"
-                            Value="5" />
+                    <Setter Property="ContainerType" Value="Outlined" />
+                    <Setter Property="Margin" Value="20,0" />
+                    <Setter Property="OutlineCornerRadius" Value="5" />
                 </Style>
             </Grid.Resources>
-            <controls:NavigationView Grid.Row="0"
-                                     Text="{markupExtensions:Translate 1000026}" />
+            <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000026}" />
 
-            <Button Grid.Row="1"
-                    Margin="20,5"
-                    Padding="0"
-                    BackgroundColor="{StaticResource Gray-White}"
-                    BorderColor="{StaticResource BtLogin}"
-                    BorderWidth="1"
-                    Command="{Binding InteractiveCommand}"
-                    CornerRadius="10"
-                    FontSize="18"
-                    Text="Facebook" />
-            <Editor Grid.Row="2"
-                    Text="{Binding TokenFacebook}"
-                    Margin="20"
-                    VerticalOptions="FillAndExpand"></Editor>
-            <controls:LoadingView Grid.Row="0"
-                                  Grid.RowSpan="3"
-                                  IsVisible="{Binding IsLoading}" />
+            <Button
+                Grid.Row="1"
+                Margin="20,5"
+                Padding="0"
+                BackgroundColor="{StaticResource Gray-White}"
+                BorderColor="{StaticResource BtLogin}"
+                BorderWidth="1"
+                Command="{Binding InteractiveCommand}"
+                CornerRadius="10"
+                FontSize="18"
+                Text="Facebook" />
+            <Editor
+                Grid.Row="2"
+                Margin="20"
+                BackgroundColor="{StaticResource Gray-White}"
+                Text="{Binding TokenFacebook}"
+                VerticalOptions="FillAndExpand" />
+            <controls:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
