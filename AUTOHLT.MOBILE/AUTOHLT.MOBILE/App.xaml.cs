@@ -12,6 +12,7 @@ using AUTOHLT.MOBILE.ViewModels.AccountInformation;
 using AUTOHLT.MOBILE.ViewModels.BuffEyesView;
 using AUTOHLT.MOBILE.ViewModels.BuffLikes;
 using AUTOHLT.MOBILE.ViewModels.ChangePassword;
+using AUTOHLT.MOBILE.ViewModels.FakeUpApp;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Interactive;
 using AUTOHLT.MOBILE.ViewModels.Login;
@@ -21,6 +22,7 @@ using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.BuffEyesView;
 using AUTOHLT.MOBILE.Views.BuffLikes;
 using AUTOHLT.MOBILE.Views.ChangePassword;
+using AUTOHLT.MOBILE.Views.FakeUpApp;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Interactive;
 using AUTOHLT.MOBILE.Views.Login;
@@ -83,6 +85,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<HomePageF, HomeFViewModel>();
             containerRegistry.RegisterForNavigation<InteractivePage, InteractiveViewModel>();
             containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordViewModels>();
             containerRegistry.RegisterForNavigation<AccountInformationPage, AccountInformationViewModel>();
