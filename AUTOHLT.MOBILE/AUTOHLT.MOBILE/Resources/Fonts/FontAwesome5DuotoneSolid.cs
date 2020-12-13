@@ -1,6 +1,6 @@
 ﻿namespace AUTOHLT.MOBILE.Resources.Fonts
 {
-    static class FontAwesome5DuotoneSolid
+    internal static class FontAwesome5DuotoneSolid
     {
         public const string Space = "\u0020";
         public const string Hyphen = "\u002d";

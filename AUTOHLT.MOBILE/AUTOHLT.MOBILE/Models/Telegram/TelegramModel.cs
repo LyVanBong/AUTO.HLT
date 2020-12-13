@@ -5,6 +5,7 @@
         public bool ok { get; set; }
         public Result result { get; set; }
     }
+
     public class Result
     {
         public int message_id { get; set; }

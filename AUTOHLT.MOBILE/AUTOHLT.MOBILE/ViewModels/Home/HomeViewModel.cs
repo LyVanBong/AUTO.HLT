@@ -6,8 +6,16 @@ using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Views.AccountInformation;
+using AUTOHLT.MOBILE.Views.BuffEyesView;
+using AUTOHLT.MOBILE.Views.BuffLikes;
+using AUTOHLT.MOBILE.Views.ChangePassword;
+using AUTOHLT.MOBILE.Views.Interactive;
+using AUTOHLT.MOBILE.Views.RechargeCustomers;
+using AUTOHLT.MOBILE.Views.Transfers;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using Prism.Navigation.Xaml;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using Xamarin.Essentials;
@@ -27,6 +35,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private IDialogService _dialogService;
 
 
+        public ICommand NavigationCommand { get; private set; }
         public ICommand BuffServiceCommand { get; private set; }
         public int Permission
         {
@@ -62,6 +71,40 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             LogoutCommand = new Command(LogoutAccount);
             IsLoading = true;
             BuffServiceCommand = new Command<string>(BuffService);
+            NavigationCommand = new Command<string>(NavigationPageService);
+        }
+
+        private async void NavigationPageService(string key)
+        {
+            if (IsLoading) return;
+            IsLoading = true;
+            var navigation = this.ToString();
+            switch (key)
+            {
+                case "0":
+                    navigation = "TransferPage";
+                    break;
+                case "1":
+                    navigation = "ChangePasswordPage";
+                    break;
+                case "2":
+                    navigation = "AccountInformationPage";
+                    break;
+                case "3":
+                    navigation = "BuffLikePage";
+                    break;
+                case "4":
+                    navigation = "BuffEyesViewPage";
+                    break;
+                case "5":
+                    navigation = "InteractivePage";
+                    break;
+                case "6":
+                    navigation = "RechargeCustomersPage";
+                    break;
+            }
+            await NavigationService.NavigateAsync(navigation);
+            IsLoading = false;
         }
 
         private async void BuffService(string key)
