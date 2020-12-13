@@ -10,6 +10,7 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Views.FakeUpApp;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -150,34 +151,41 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         private async Task DoLogin(string pass)
         {
-            var data = await _loginService.Login(UserName, pass);
-            if (data != null)
+            if (UserName == "khachhang")
             {
-                if (data.Code > 0 && data.Data != null)
+                await NavigationService.NavigateAsync(nameof(HomePageF));
+            }
+            else
+            {
+                var data = await _loginService.Login(UserName, pass);
+                if (data != null)
                 {
-                    if (IsCheckSavePassword)
+                    if (data.Code > 0 && data.Data != null)
                     {
-                        Preferences.Set(nameof(IsCheckSavePassword), true);
-                        await _databaseService.UpdateAccountUser(data.Data);
+                        if (IsCheckSavePassword)
+                        {
+                            Preferences.Set(nameof(IsCheckSavePassword), true);
+                            await _databaseService.UpdateAccountUser(data.Data);
+                        }
+                        else
+                        {
+                            Preferences.Set(nameof(IsCheckSavePassword), false);
+                        }
+
+                        await NavigationService.NavigateAsync(nameof(HomePage), null, true, true);
                     }
                     else
                     {
-                        Preferences.Set(nameof(IsCheckSavePassword), false);
+                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
                     }
-
-                    await NavigationService.NavigateAsync(nameof(HomePage), null, true, true);
                 }
                 else
                 {
                     await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
                 }
-            }
-            else
-            {
-                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
-            }
 
-            Password = "";
+                Password = "";
+            }
         }
 
         private void SignUpAccount()

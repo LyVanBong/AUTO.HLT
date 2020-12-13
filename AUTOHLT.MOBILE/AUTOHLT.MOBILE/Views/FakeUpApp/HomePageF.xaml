@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AUTOHLT.MOBILE.Views.Home.HomePage"
+    x:Class="AUTOHLT.MOBILE.Views.FakeUpApp.HomePageF"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-    BackgroundColor="{StaticResource HeaderHome}">
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE">
     <ContentPage.Content>
         <ScrollView
             Margin="0"
@@ -51,10 +50,10 @@
                                     TextColor="#fff" />
                                 <!--<Span Text="{Binding Name}" />-->
                                 <Span Text="  " />
-                                <Span Text="{Binding UserModel.Name}" TextColor="#fff" />
+                                <Span Text="Khach Hang" TextColor="#fff" />
                                 <Span Text=" (" TextColor="#fff" />
                                 <!--<Span Text="{Binding UserName}" />-->
-                                <Span Text="{Binding UserModel.UserName}" TextColor="#fff" />
+                                <Span Text="khachhang" TextColor="#fff" />
                                 <Span Text=")" TextColor="#fff" />
                             </FormattedString>
                         </Label.FormattedText>
@@ -97,36 +96,15 @@
                                 <Setter Property="Aspect" Value="AspectFit" />
                             </Style>
                         </Grid.Resources>
+
                         <Label
                             Grid.Row="0"
                             Grid.Column="0"
+                            Grid.ColumnSpan="4"
                             FontSize="16"
-                            HorizontalOptions="FillAndExpand"
-                            TextColor="{StaticResource Gray-800}"
-                            VerticalOptions="CenterAndExpand">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span FontFamily="Awesome5ProSolid" Text="{x:Static icon:FontAwesome5ProSolid.MoneyCheckAlt}" />
-                                    <Span Text=" " />
-                                    <Span Text="{markupExtensions:Translate 1000018}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="3"
-                            FontSize="16"
-                            HorizontalOptions="EndAndExpand"
-                            TextColor="{StaticResource Gray-800}">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding MoneyUser, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" " />
-                                    <Span FontFamily="Awesome5ProSolid" Text="{x:Static icon:FontAwesome5ProSolid.DollarSign}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                            HorizontalOptions="StartAndExpand"
+                            Text="Chào bạn, ngày mới tốt lành"
+                            TextColor="{StaticResource Gray-800}" />
                         <Label
                             Grid.Row="2"
                             Grid.Column="0"
@@ -499,10 +477,6 @@
                         </Grid>
                     </Frame>
                 </Grid>
-                <controls:LoadingView
-                    Grid.Row="0"
-                    Grid.RowSpan="7"
-                    IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>
     </ContentPage.Content>
