@@ -11,8 +11,8 @@
     Margin="0"
     Padding="0"
     xaml:DialogLayout.CloseOnBackgroundTapped="False"
-    xaml:DialogLayout.RelativeHeightRequest="1"
-    xaml:DialogLayout.RelativeWidthRequest="1"
+    xaml:DialogLayout.RelativeHeightRequest=".8"
+    xaml:DialogLayout.RelativeWidthRequest=".9"
     BackgroundColor="{StaticResource Gray-White}"
     BorderColor="{StaticResource Gray-600}"
     CornerRadius="20"
@@ -22,7 +22,7 @@
         Padding="0"
         ColumnDefinitions="*,60"
         ColumnSpacing="0"
-        RowDefinitions="40,40,60,160,40,65,*"
+        RowDefinitions="40,40,60,200,40,65,*"
         RowSpacing="0">
         <Grid.Resources>
             <Style TargetType="textInputLayout:SfTextInputLayout">

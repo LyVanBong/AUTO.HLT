@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.Telegram;
@@ -8,6 +6,8 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Mvvm;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
@@ -54,6 +54,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
         }
 
         public ICommand UseServiceCommand { get; private set; }
+
         public string TextSubmit
         {
             get => _textSubmit;
@@ -61,6 +62,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
         }
 
         public ICommand CloseCommand { get; private set; }
+
         public string Title
         {
             get => _title;
@@ -116,7 +118,6 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
 
         public void OnDialogClosed()
         {
-
         }
 
         public void OnDialogOpened(IDialogParameters parameters)

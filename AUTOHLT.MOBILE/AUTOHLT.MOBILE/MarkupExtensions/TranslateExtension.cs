@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AUTOHLT.MOBILE.Resources.Languages;
+using System;
 using System.Reflection;
 using System.Resources;
-using AUTOHLT.MOBILE.Resources.Languages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

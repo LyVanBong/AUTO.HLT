@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
@@ -13,6 +10,9 @@ using AUTOHLT.MOBILE.ViewModels;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
@@ -35,7 +35,6 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         private IDatabaseService _database;
         private ITelegramService _telegramService;
 
-
         public string UserMoney
         {
             get => _userMoney;
@@ -43,6 +42,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         }
 
         public ICommand UnfocusedCommand { get; private set; }
+
         public string TextSubmit
         {
             get => _textSubmit;
@@ -56,6 +56,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         }
 
         public ICommand UseServiceCommand { get; private set; }
+
         public string Amount
         {
             get => _amount;
@@ -179,7 +180,6 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
 
         public void OnDialogClosed()
         {
-
         }
 
         public async void OnDialogOpened(IDialogParameters parameters)
