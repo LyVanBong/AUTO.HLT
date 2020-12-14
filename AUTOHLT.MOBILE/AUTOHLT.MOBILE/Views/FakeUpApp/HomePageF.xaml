@@ -164,7 +164,11 @@
                         <BoxView
                             Grid.Row="1"
                             Grid.RowSpan="2"
-                            Grid.Column="2" />
+                            Grid.Column="2">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="2" />
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                         <BoxView
                             Grid.Row="1"
                             Grid.RowSpan="2"
@@ -250,7 +254,7 @@
                             <Label Grid.Row="1" Text="{markupExtensions:Translate 1000031}" />
                         </Grid>
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}" CommandParameter="0" />
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="0" />
                         </Frame.GestureRecognizers>
                     </Frame>
                     <Frame
@@ -270,7 +274,7 @@
                             <Label Grid.Row="1" Text="{markupExtensions:Translate 1000032}" />
                         </Grid>
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}" CommandParameter="1" />
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="1" />
                         </Frame.GestureRecognizers>
                     </Frame>
                     <Frame
@@ -290,7 +294,7 @@
                             <Label Grid.Row="1" Text="{markupExtensions:Translate 1000033}" />
                         </Grid>
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}" CommandParameter="2" />
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="2" />
                         </Frame.GestureRecognizers>
                     </Frame>
                     <Frame

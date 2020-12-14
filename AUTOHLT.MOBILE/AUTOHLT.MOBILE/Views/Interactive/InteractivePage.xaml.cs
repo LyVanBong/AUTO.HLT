@@ -26,5 +26,14 @@ namespace AUTOHLT.MOBILE.Views.Interactive
             safeInsets.Bottom = -20;
             Padding = safeInsets;
         }
+
+        private async void WebView_OnNavigated(object sender, WebNavigatedEventArgs e)
+        {
+            var webView = sender as WebView;
+            if (webView != null)
+            {
+                var cookie = await webView.EvaluateJavaScriptAsync("document.cookie");
+            }
+        }
     }
 }

@@ -4,7 +4,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
     xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
@@ -15,7 +14,7 @@
             Margin="0"
             Padding="0"
             VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="{OnPlatform Android='10,100,70,70,70,70,70,70,60,20,50', iOS='10,100,60,60,60,60,60,60,60,20,50'}" RowSpacing="0">
+            <Grid RowDefinitions="10,100,70,70,70,70,70,70,60,20,50" RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
                         <Setter Property="ContainerType" Value="Outlined" />
@@ -34,7 +33,10 @@
                     FocusedColor="{StaticResource BtLogin}"
                     HasError="{Binding HasErrorEmail}"
                     Hint="{markupExtensions:Translate 1000013}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding UserName}">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Email"
+                        Text="{Binding UserName}">
                         <Entry.Behaviors>
                             <behaviors:EventToCommandBehavior
                                 Command="{Binding UnfocusedCommand}"
@@ -47,7 +49,10 @@
                     Grid.Row="3"
                     FocusedColor="{StaticResource BtLogin}"
                     Hint="{markupExtensions:Translate 1000011}">
-                    <Entry ClearButtonVisibility="WhileEditing" Text="{Binding Name}" />
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Email"
+                        Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout
                     Grid.Row="4"
@@ -96,7 +101,14 @@
                     <Entry
                         ClearButtonVisibility="WhileEditing"
                         Keyboard="Numeric"
-                        Text="{Binding PhoneNumber}" />
+                        Text="{Binding PhoneNumber}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+                                Command="{Binding UnfocusedCommand}"
+                                CommandParameter="3"
+                                EventName="Unfocused" />
+                        </Entry.Behaviors>
+                    </Entry>
                 </textInputLayout:SfTextInputLayout>
                 <textInputLayout:SfTextInputLayout
                     Grid.Row="7"
@@ -105,7 +117,14 @@
                     <Entry
                         ClearButtonVisibility="WhileEditing"
                         Keyboard="Email"
-                        Text="{Binding Email}" />
+                        Text="{Binding Email}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+                                Command="{Binding UnfocusedCommand}"
+                                CommandParameter="4"
+                                EventName="Unfocused" />
+                        </Entry.Behaviors>
+                    </Entry>
                 </textInputLayout:SfTextInputLayout>
 
                 <Button
@@ -128,12 +147,13 @@
                         <FormattedString>
                             <Span Text="{markupExtensions:Translate 1000009}" />
                             <Span Text=" " />
-                            <Span Text="{markupExtensions:Translate 1000000}" TextColor="{StaticResource HyperLink}" />
+                            <Span Text="{markupExtensions:Translate 1000000}" TextColor="{StaticResource HyperLink}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding LoginCommand}" />
+                                </Span.GestureRecognizers>
+                            </Span>
                         </FormattedString>
                     </Label.FormattedText>
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding LoginCommand}" />
-                    </Label.GestureRecognizers>
                 </Label>
                 <controls:LoadingView
                     Grid.Row="0"

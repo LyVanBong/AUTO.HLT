@@ -119,11 +119,11 @@ namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
                     Name = Name,
                     Password = _user.Password,
                     Email = Email,
-                    NumberPhone = int.Parse(PhoneNumber),
+                    NumberPhone = PhoneNumber,
                     Sex = _user.Sex,
                     Role = _user.Role,
                     IsActive = _user.IsActive,
-                    Age = int.Parse(Age),
+                    Age = Age,
                     Price = _user.Price,
                     IdDevice = _user.IdDevice,
                 };

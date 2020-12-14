@@ -120,9 +120,9 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         {
             if (!string.IsNullOrWhiteSpace(Number) && !string.IsNullOrWhiteSpace(Content))
             {
-                var amout = int.Parse(Amount);
+                var amout = long.Parse(Amount);
                 var user = await _database.GetAccountUser();
-                if (amout > 0 && amout <= user.Price)
+                if (amout > 0 && amout <= long.Parse(user.Price))
                 {
                     var data = new UserModel
                     {
@@ -135,7 +135,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                         Role = user.Role,
                         IsActive = user.IsActive,
                         Age = user.Age,
-                        Price = user.Price - amout,
+                        Price = long.Parse(user.Price) - amout +"",
                         IdDevice = user.IdDevice,
                     };
                     var update = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
