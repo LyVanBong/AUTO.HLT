@@ -130,8 +130,8 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                     var username = _userModel.UserName;
                     var idUser = _userModel.ID;
                     var moneyModel = await _userService.GetMoneyUser(username);
-                    var money = int.Parse(moneyModel.Data);
-                    var price = int.Parse(product.Price);
+                    var money = long.Parse(moneyModel.Data);
+                    var price = long.Parse(product.Price);
                     if (money >= price)
                     {
 
@@ -157,7 +157,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                                         Role = _userModel.Role,
                                         IsActive = _userModel.IsActive,
                                         Age = _userModel.Age,
-                                        Price = money - price,
+                                        Price = money - price + "",
                                         IdDevice = _userModel.IdDevice
                                     };
                                     var updateUser = await _userService.UpdateUser(user.UserName, user.Name, user.Password, user.Email, user.NumberPhone.ToString(), user.Sex.ToString(), user.Role.ToString(), user.IsActive.ToString(), user.Age.ToString(), user.Price.ToString(), user.IdDevice);

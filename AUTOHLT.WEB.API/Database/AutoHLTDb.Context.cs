@@ -202,13 +202,13 @@ namespace AUTOHLT.WEB.API.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetNotificationUser_Result>("GetNotificationUser", idParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> GetPriceUser(string userName)
+        public virtual ObjectResult<Nullable<decimal>> GetPriceUser(string userName)
         {
             var userNameParameter = userName != null ?
                 new ObjectParameter("UserName", userName) :
                 new ObjectParameter("UserName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetPriceUser", userNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("GetPriceUser", userNameParameter);
         }
     
         public virtual ObjectResult<ListRegisterProduct_Result> ListRegisterProduct(Nullable<System.Guid> id)

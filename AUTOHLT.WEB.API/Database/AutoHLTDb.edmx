@@ -198,7 +198,7 @@
           <FunctionImport Name="GetNotificationUser" ReturnType="Collection(bsoft_autohltModel.GetNotificationUser_Result)">
           <Parameter Name="Id" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="GetPriceUser" ReturnType="Collection(Int32)">
+          <FunctionImport Name="GetPriceUser" ReturnType="Collection(Decimal)">
           <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ListRegisterProduct" ReturnType="Collection(bsoft_autohltModel.ListRegisterProduct_Result)">

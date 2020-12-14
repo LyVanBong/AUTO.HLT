@@ -1,23 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
+﻿using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.User;
-using AUTOHLT.MOBILE.Views.AccountInformation;
-using AUTOHLT.MOBILE.Views.BuffEyesView;
-using AUTOHLT.MOBILE.Views.BuffLikes;
-using AUTOHLT.MOBILE.Views.ChangePassword;
-using AUTOHLT.MOBILE.Views.Interactive;
-using AUTOHLT.MOBILE.Views.RechargeCustomers;
-using AUTOHLT.MOBILE.Views.Transfers;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
-using Prism.Navigation.Xaml;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -150,7 +143,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 if (data != null)
                 {
                     UserModel = data;
-                    Permission = data.Role;
+                    Permission = int.Parse(data.Role);
                 }
 
                 var money = await _userService.GetMoneyUser(UserModel.UserName);
@@ -158,7 +151,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 {
                     if (money.Code > 0)
                     {
-                        MoneyUser = money.Data;
+                        MoneyUser = money.Data.Replace(".0000", "");
                     }
                     else
                     {
