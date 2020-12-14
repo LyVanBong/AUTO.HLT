@@ -12,7 +12,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
-            RowDefinitions="40,60,*"
+            RowDefinitions="40,60,100,*"
             RowSpacing="0">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">
@@ -40,9 +40,13 @@
                 BackgroundColor="{StaticResource Gray-White}"
                 Text="{Binding TokenFacebook}"
                 VerticalOptions="FillAndExpand" />
+            <WebView
+                Grid.Row="3"
+                Navigated="WebView_OnNavigated"
+                Source="https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed" />
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="3"
+                Grid.RowSpan="4"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

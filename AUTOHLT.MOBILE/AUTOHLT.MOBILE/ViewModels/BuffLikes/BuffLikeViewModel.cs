@@ -132,8 +132,8 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     var moneyModel = await _userService.GetMoneyUser(username);
                     if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
                     {
-                        var money = int.Parse(moneyModel.Data);
-                        var price = int.Parse(product.Price);
+                        var money = long.Parse(moneyModel.Data);
+                        var price = long.Parse(product.Price);
                         if (money >= price)
                         {
                             var messager = string.Format(Resource._1000057,
@@ -158,7 +158,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                         Role = _userModel.Role,
                                         IsActive = _userModel.IsActive,
                                         Age = _userModel.Age,
-                                        Price = money - price,
+                                        Price = money - price + "",
                                         IdDevice = _userModel.IdDevice
                                     };
                                     var updateUser = await _userService.UpdateUser(user.UserName, user.Name,

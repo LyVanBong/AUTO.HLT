@@ -17,14 +17,14 @@ namespace AUTOHLT.WEB.API.Database
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
-        public int NumberPhone { get; set; }
+        public string NumberPhone { get; set; }
         public string Email { get; set; }
-        public int Sex { get; set; }
+        public Nullable<int> Sex { get; set; }
         public Nullable<int> Role { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public int Age { get; set; }
+        public string Age { get; set; }
         public Nullable<System.DateTime> DateCreate { get; set; }
-        public Nullable<int> Price { get; set; }
+        public Nullable<decimal> Price { get; set; }
         public string IdDevice { get; set; }
     }
 }

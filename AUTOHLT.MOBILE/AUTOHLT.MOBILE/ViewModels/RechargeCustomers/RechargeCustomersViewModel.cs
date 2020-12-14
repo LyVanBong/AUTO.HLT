@@ -142,8 +142,8 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
                 var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, message, "OK", "Cancel");
                 if (res)
                 {
-                    var myMoney = int.Parse(CurrentBalance);
-                    var number = int.Parse(NumberMoney);
+                    var myMoney = long.Parse(CurrentBalance);
+                    var number = long.Parse(NumberMoney);
                     var user = await _databaseService.GetAccountUser();
                     if (user != null)
                     {
@@ -158,7 +158,7 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
                             Role = user.Role,
                             IsActive = user.IsActive,
                             Age = user.Age,
-                            Price = myMoney + int.Parse(TotalMoney),
+                            Price = myMoney + long.Parse(TotalMoney) + "",
                             IdDevice = user.IdDevice,
                         };
                         var setMoneyForUser = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
