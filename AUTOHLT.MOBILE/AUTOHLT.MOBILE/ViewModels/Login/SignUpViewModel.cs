@@ -1,12 +1,11 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Models.Login;
-using AUTOHLT.MOBILE.Resources.Languages;
+﻿using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Login;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.Login
@@ -57,85 +56,43 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         public string UserName
         {
             get => _userName;
-            set
-            {
-                if (SetProperty(ref _userName, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set => SetProperty(ref _userName, value);
         }
 
         public string Name
         {
             get => _name;
-            set
-            {
-                if (SetProperty(ref _name, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set => SetProperty(ref _name, value);
         }
 
         public string Password
         {
             get => _password;
-            set
-            {
-                if (SetProperty(ref _password, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set=>SetProperty(ref _password, value);
         }
 
         public string ConfirmPassword
         {
             get => _confirmPassword;
-            set
-            {
-                if (SetProperty(ref _confirmPassword, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set => SetProperty(ref _confirmPassword, value);
         }
 
         public string PhoneNumber
         {
             get => _phoneNumber;
-            set
-            {
-                if (SetProperty(ref _phoneNumber, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set => SetProperty(ref _phoneNumber, value);
         }
 
         public string Email
         {
             get => _email;
-            set
-            {
-                if (SetProperty(ref _email, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set => SetProperty(ref _email, value);
         }
 
         public string Age
         {
             get => _age;
-            set
-            {
-                if (SetProperty(ref _age, value))
-                {
-                    CheckDataEnableSignUp();
-                }
-            }
+            set => SetProperty(ref _age, value);
         }
 
         public bool IsMale
@@ -208,7 +165,12 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             HasErrorConfirmPass = true;
                         }
                         break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
                 }
+                CheckDataEnableSignUp();
             }
             catch (Exception e)
             {
@@ -218,8 +180,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         private void CheckDataEnableSignUp()
         {
-            if (!string.IsNullOrWhiteSpace(Age) &&
-                !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+            if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
                 !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
                 !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
             {

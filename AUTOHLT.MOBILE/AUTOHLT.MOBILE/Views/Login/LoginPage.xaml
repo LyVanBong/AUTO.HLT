@@ -92,12 +92,13 @@
                         <FormattedString>
                             <Span Text="{markupExtensions:Translate 1000007}" />
                             <Span Text=" " />
-                            <Span Text="{markupExtensions:Translate 1000002}" TextColor="{StaticResource HyperLink}" />
+                            <Span Text="{markupExtensions:Translate 1000002}" TextColor="{StaticResource HyperLink}">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+                                </Span.GestureRecognizers>
+                            </Span>
                         </FormattedString>
                     </Label.FormattedText>
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SignUpCommand}" />
-                    </Label.GestureRecognizers>
                 </Label>
                 <controls:LoadingView
                     Grid.Row="0"

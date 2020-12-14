@@ -41,7 +41,9 @@
                 Text="{Binding TokenFacebook}"
                 VerticalOptions="FillAndExpand" />
             <WebView
-                Source="https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed" Grid.Row="3" Navigated="WebView_OnNavigated"></WebView>
+                Grid.Row="3"
+                Navigated="WebView_OnNavigated"
+                Source="https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed" />
             <controls:LoadingView
                 Grid.Row="0"
                 Grid.RowSpan="4"

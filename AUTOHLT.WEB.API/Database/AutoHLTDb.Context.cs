@@ -242,7 +242,7 @@ namespace AUTOHLT.WEB.API.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegisterProduct", id_productParameter, id_UserParameter);
         }
     
-        public virtual int RegistrationAccount(string userName, string password, string name, Nullable<int> numberPhone, string email, Nullable<int> sex, Nullable<int> age, Nullable<System.DateTime> dateCreate)
+        public virtual int RegistrationAccount(string userName, string password, string name, string numberPhone, string email, Nullable<int> sex, string age, Nullable<System.DateTime> dateCreate)
         {
             var userNameParameter = userName != null ?
                 new ObjectParameter("UserName", userName) :
@@ -256,9 +256,9 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("Name", name) :
                 new ObjectParameter("Name", typeof(string));
     
-            var numberPhoneParameter = numberPhone.HasValue ?
+            var numberPhoneParameter = numberPhone != null ?
                 new ObjectParameter("NumberPhone", numberPhone) :
-                new ObjectParameter("NumberPhone", typeof(int));
+                new ObjectParameter("NumberPhone", typeof(string));
     
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -268,9 +268,9 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("Sex", sex) :
                 new ObjectParameter("Sex", typeof(int));
     
-            var ageParameter = age.HasValue ?
+            var ageParameter = age != null ?
                 new ObjectParameter("Age", age) :
-                new ObjectParameter("Age", typeof(int));
+                new ObjectParameter("Age", typeof(string));
     
             var dateCreateParameter = dateCreate.HasValue ?
                 new ObjectParameter("DateCreate", dateCreate) :
@@ -317,7 +317,7 @@ namespace AUTOHLT.WEB.API.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateReadNotification", idParameter);
         }
     
-        public virtual int UpdateUser(string userName, string password, string name, Nullable<int> numberPhone, string email, Nullable<int> sex, Nullable<int> role, Nullable<bool> isActive, Nullable<int> age, Nullable<int> price, string idDevice)
+        public virtual int UpdateUser(string userName, string password, string name, string numberPhone, string email, Nullable<int> sex, Nullable<int> role, Nullable<bool> isActive, string age, Nullable<decimal> price, string idDevice)
         {
             var userNameParameter = userName != null ?
                 new ObjectParameter("UserName", userName) :
@@ -331,9 +331,9 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("Name", name) :
                 new ObjectParameter("Name", typeof(string));
     
-            var numberPhoneParameter = numberPhone.HasValue ?
+            var numberPhoneParameter = numberPhone != null ?
                 new ObjectParameter("NumberPhone", numberPhone) :
-                new ObjectParameter("NumberPhone", typeof(int));
+                new ObjectParameter("NumberPhone", typeof(string));
     
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -351,13 +351,13 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("IsActive", isActive) :
                 new ObjectParameter("IsActive", typeof(bool));
     
-            var ageParameter = age.HasValue ?
+            var ageParameter = age != null ?
                 new ObjectParameter("Age", age) :
-                new ObjectParameter("Age", typeof(int));
+                new ObjectParameter("Age", typeof(string));
     
             var priceParameter = price.HasValue ?
                 new ObjectParameter("Price", price) :
-                new ObjectParameter("Price", typeof(int));
+                new ObjectParameter("Price", typeof(decimal));
     
             var idDeviceParameter = idDevice != null ?
                 new ObjectParameter("IdDevice", idDevice) :
@@ -379,7 +379,7 @@ namespace AUTOHLT.WEB.API.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserInformation_Result>("UserInformation", userNameParameter, passwordParameter);
         }
     
-        public virtual int UserTransfers(Nullable<System.Guid> iD_Send, Nullable<System.Guid> iD_Receive, Nullable<int> price)
+        public virtual int UserTransfers(Nullable<System.Guid> iD_Send, Nullable<System.Guid> iD_Receive, Nullable<decimal> price)
         {
             var iD_SendParameter = iD_Send.HasValue ?
                 new ObjectParameter("ID_Send", iD_Send) :
@@ -391,9 +391,112 @@ namespace AUTOHLT.WEB.API.Database
     
             var priceParameter = price.HasValue ?
                 new ObjectParameter("Price", price) :
-                new ObjectParameter("Price", typeof(int));
+                new ObjectParameter("Price", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserTransfers", iD_SendParameter, iD_ReceiveParameter, priceParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }

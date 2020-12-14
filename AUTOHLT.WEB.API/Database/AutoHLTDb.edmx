@@ -45,6 +45,7 @@
         <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAllHistoryUserSevice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTransferMoney" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -72,12 +73,42 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
           <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="NumberPhone" Type="int" Mode="In" />
+          <Parameter Name="NumberPhone" Type="varchar" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Sex" Type="int" Mode="In" />
-          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Age" Type="varchar" Mode="In" />
           <Parameter Name="DateCreate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="UpdateProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="ProducName" Type="nvarchar" Mode="In" />
@@ -93,13 +124,13 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="NumberPhone" Type="int" Mode="In" />
+          <Parameter Name="NumberPhone" Type="varchar" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Sex" Type="int" Mode="In" />
           <Parameter Name="Role" Type="int" Mode="In" />
           <Parameter Name="IsActive" Type="bit" Mode="In" />
-          <Parameter Name="Age" Type="int" Mode="In" />
-          <Parameter Name="Price" Type="int" Mode="In" />
+          <Parameter Name="Age" Type="varchar" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
           <Parameter Name="IdDevice" Type="text" Mode="In" />
         </Function>
         <Function Name="UserInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -109,7 +140,7 @@
         <Function Name="UserTransfers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Send" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="ID_Receive" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="Price" Type="int" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
         </Function>
         <EntityContainer Name="bsoft_autohltModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -184,10 +215,10 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="Name" Mode="In" Type="String" />
-            <Parameter Name="NumberPhone" Mode="In" Type="Int32" />
+            <Parameter Name="NumberPhone" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Sex" Mode="In" Type="Int32" />
-            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Age" Mode="In" Type="String" />
             <Parameter Name="DateCreate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="UpdateProductType">
@@ -205,13 +236,13 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="Name" Mode="In" Type="String" />
-            <Parameter Name="NumberPhone" Mode="In" Type="Int32" />
+            <Parameter Name="NumberPhone" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Sex" Mode="In" Type="Int32" />
             <Parameter Name="Role" Mode="In" Type="Int32" />
             <Parameter Name="IsActive" Mode="In" Type="Boolean" />
-            <Parameter Name="Age" Mode="In" Type="Int32" />
-            <Parameter Name="Price" Mode="In" Type="Int32" />
+            <Parameter Name="Age" Mode="In" Type="String" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
             <Parameter Name="IdDevice" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UserInformation" ReturnType="Collection(bsoft_autohltModel.UserInformation_Result)">
@@ -221,8 +252,38 @@
           <FunctionImport Name="UserTransfers">
             <Parameter Name="ID_Send" Mode="In" Type="Guid" />
             <Parameter Name="ID_Receive" Mode="In" Type="Guid" />
-            <Parameter Name="Price" Mode="In" Type="Int32" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(bsoft_autohltModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(bsoft_autohltModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -255,14 +316,14 @@
           <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="NumberPhone" Nullable="false" />
+          <Property Type="String" Name="NumberPhone" Nullable="false" MaxLength="12" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
-          <Property Type="Int32" Name="Sex" Nullable="false" />
+          <Property Type="Int32" Name="Sex" Nullable="true" />
           <Property Type="Int32" Name="Role" Nullable="true" />
           <Property Type="Boolean" Name="IsActive" Nullable="true" />
-          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="String" Name="Age" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="19" />
           <Property Type="String" Name="IdDevice" Nullable="true" MaxLength="Max" />
         </ComplexType>
         <ComplexType Name="GetHistoryService_Result">
@@ -302,15 +363,26 @@
           <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="NumberPhone" Nullable="false" />
+          <Property Type="String" Name="NumberPhone" Nullable="false" MaxLength="12" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
-          <Property Type="Int32" Name="Sex" Nullable="false" />
+          <Property Type="Int32" Name="Sex" Nullable="true" />
           <Property Type="Int32" Name="Role" Nullable="true" />
           <Property Type="Boolean" Name="IsActive" Nullable="true" />
-          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="String" Name="Age" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="19" />
           <Property Type="String" Name="IdDevice" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -457,6 +529,30 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserTransfers" FunctionName="bsoft_autohltModel.Store.UserTransfers" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="bsoft_autohltModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="bsoft_autohltModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="bsoft_autohltModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="bsoft_autohltModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="bsoft_autohltModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="bsoft_autohltModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="bsoft_autohltModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
