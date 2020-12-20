@@ -96,6 +96,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         {
             if (key == "0")
             {
+                if (Number == null) return;
                 var res = long.Parse(Price) * long.Parse(Number);
                 if (res > int.Parse(UserMoney))
                 {
@@ -135,7 +136,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                         Role = user.Role,
                         IsActive = user.IsActive,
                         Age = user.Age,
-                        Price = long.Parse(user.Price) - amout +"",
+                        Price = long.Parse(user.Price) - amout + "",
                         IdDevice = user.IdDevice,
                     };
                     var update = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
