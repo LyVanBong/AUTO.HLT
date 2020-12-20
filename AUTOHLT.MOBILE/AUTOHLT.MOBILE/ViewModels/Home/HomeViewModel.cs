@@ -1,4 +1,5 @@
 ﻿using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
+using AUTOHLT.MOBILE.Models.Home;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
@@ -8,6 +9,7 @@ using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,7 +28,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private bool _isLoading;
         private int _permission;
         private IDialogService _dialogService;
+        private List<ServiceModel> _serviceData;
 
+        public List<ServiceModel> ServiceData
+        {
+            get => _serviceData;
+            set => SetProperty(ref _serviceData, value);
+        }
 
         public ICommand NavigationCommand { get; private set; }
         public ICommand BuffServiceCommand { get; private set; }
@@ -158,6 +166,59 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         MoneyUser = "0";
                     }
                 }
+                ServiceData = new List<ServiceModel>
+                {
+                    new ServiceModel
+                    {
+                        Icon="icon_like.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_view.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_Interactive.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_like.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_follow.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_like.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_like.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_like.png",
+                        TitleService=Resource._1000029,
+                        TypeService=0,
+                    },
+
+                };
+
             }
             catch (Exception e)
             {

@@ -17,13 +17,8 @@
                 Margin="0"
                 Padding="0"
                 BackgroundColor="{StaticResource Gray-White}"
-                RowDefinitions="50,80,80,300,30,300,*"
+                RowDefinitions="50,160,20,Auto"
                 RowSpacing="0">
-                <!--<Image
-                    Grid.Row="0"
-                    Grid.RowSpan="8"
-                    Aspect="AspectFit"
-                    Source="{markupExtensions:ImageResource logo.png}" />-->
                 <BoxView
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -61,7 +56,7 @@
                     </Label>
                     <Label
                         FontFamily="Awesome5ProSolid"
-                        FontSize="20"
+                        FontSize="25"
                         Text="{x:Static icon:FontAwesome5ProSolid.PowerOff}"
                         TextColor="#f4f4f2"
                         VerticalOptions="CenterAndExpand">
@@ -72,8 +67,7 @@
                 </StackLayout>
                 <Frame
                     Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Margin="20,0"
+                    Margin="20,10"
                     Padding="0"
                     BackgroundColor="{StaticResource Gray-White}"
                     BorderColor="{StaticResource Gray-300}"
@@ -197,312 +191,35 @@
                         </BoxView>
                     </Grid>
                 </Frame>
-                <Grid
-                    Grid.Row="3"
-                    Margin="20"
-                    Padding="0"
-                    ColumnDefinitions="*,*,*"
-                    ColumnSpacing="0"
-                    RowDefinitions="*,*"
-                    RowSpacing="0">
-                    <Grid.Resources>
-                        <Style TargetType="Image">
-                            <Setter Property="Margin" Value="10" />
-                        </Style>
-                        <Style TargetType="Label">
-                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-                            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                            <Setter Property="FontSize" Value="12" />
-                        </Style>
-                    </Grid.Resources>
-                    <Frame
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_like.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000029}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="3" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                    <Frame
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_view.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000030}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="4" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                    <Frame
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_share.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000031}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}" CommandParameter="0" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                    <Frame
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_comments.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000032}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}" CommandParameter="1" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                    <Frame
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_follow.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000033}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuffServiceCommand}" CommandParameter="2" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                    <Frame
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_Interactive.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000026}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="5" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                </Grid>
-                <BoxView
-                    Grid.Row="4"
-                    Margin="20,0"
-                    BackgroundColor="{StaticResource Gray-100}"
-                    IsVisible="False">
-                    <BoxView.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Permission}"
-                            TargetType="BoxView"
-                            Value="0">
-                            <Setter Property="BoxView.IsVisible" Value="True" />
-                        </DataTrigger>
-                    </BoxView.Triggers>
-                </BoxView>
-                <Label
-                    Grid.Row="4"
-                    Margin="20,0"
-                    FontSize="16"
-                    IsVisible="False"
-                    Text="{markupExtensions:Translate 1000028}"
-                    VerticalOptions="CenterAndExpand">
-                    <Label.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Permission}"
-                            TargetType="Label"
-                            Value="0">
-                            <Setter Property="Label.IsVisible" Value="True" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
-                <Grid
-                    Grid.Row="5"
-                    Margin="20"
-                    Padding="0"
-                    ColumnDefinitions="*,*,*"
-                    ColumnSpacing="0"
-                    IsVisible="False"
-                    RowDefinitions="*,*"
-                    RowSpacing="0">
-                    <Grid.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Permission}"
-                            TargetType="Grid"
-                            Value="0">
-                            <Setter Property="Grid.IsVisible" Value="True" />
-                        </DataTrigger>
-                    </Grid.Triggers>
-                    <Grid.Resources>
-                        <Style TargetType="Image">
-                            <Setter Property="Margin" Value="10" />
-                        </Style>
-                        <Style TargetType="Label">
-                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-                            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                            <Setter Property="FontSize" Value="12" />
-                        </Style>
-                    </Grid.Resources>
-                    <Frame
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_revenue.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000022}" />
-                        </Grid>
-                    </Frame>
-                    <Frame
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_settings.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000023}" />
-                        </Grid>
-                    </Frame>
-                    <Frame
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_top_up.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000024}" />
-                        </Grid>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="6" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                    <Frame
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_service.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000025}" />
-                        </Grid>
-                    </Frame>
-                    <Frame
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_work.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000027}" />
-                        </Grid>
-                    </Frame>
-                    <Frame
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Margin="5"
-                        Padding="0"
-                        BackgroundColor="{StaticResource Gray-100}"
-                        BorderColor="{StaticResource Gray-300}"
-                        CornerRadius="10"
-                        HasShadow="True">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            RowDefinitions="*,20">
-                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_history.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000034}" />
-                        </Grid>
-                    </Frame>
-                </Grid>
-                <controls:LoadingView
-                    Grid.Row="0"
-                    Grid.RowSpan="7"
-                    IsVisible="{Binding IsLoading}" />
+                <CollectionView BackgroundColor="{StaticResource Gray-White}" Margin="10,0"  ItemsSource="{Binding ServiceData}"  Grid.Row="3">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="5" HorizontalItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                HeightRequest="120"
+                                Margin="0" Padding="0"
+                                BackgroundColor="{StaticResource Gray-100}"
+                                BorderColor="{StaticResource Gray-300}"
+                                CornerRadius="10"
+                                HasShadow="False">
+                                <Grid
+                                            Margin="0"
+                                            Padding="0"
+                                            RowDefinitions="*,30">
+                                    <Image Margin="10" Grid.Row="0" Source="{Binding IconService}" />
+                                    <Label Grid.Row="1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding TitleService}" />
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="{Binding TypeService}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
         </ScrollView>
     </ContentPage.Content>
