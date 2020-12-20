@@ -59,6 +59,7 @@ namespace AUTOHLT.MOBILE.Droid
 
         private void OtherLibraries()
         {
+            DIPS.Xamarin.UI.Android.Library.Initialize();
             FacebookClientManager.Initialize(this);
         }
 

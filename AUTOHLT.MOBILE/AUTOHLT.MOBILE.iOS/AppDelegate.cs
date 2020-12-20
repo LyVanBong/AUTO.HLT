@@ -50,6 +50,7 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
+            DIPS.Xamarin.UI.iOS.Library.Initialize();
             Syncfusion.XForms.iOS.BadgeView.SfBadgeViewRenderer.Init();
             FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();

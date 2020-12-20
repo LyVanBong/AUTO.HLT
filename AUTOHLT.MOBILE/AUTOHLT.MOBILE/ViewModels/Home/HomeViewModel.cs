@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Controls.Toast;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -86,39 +87,47 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             LogoutCommand = new Command(LogoutAccount);
             IsLoading = true;
             BuffServiceCommand = new Command<string>(BuffService);
-            NavigationCommand = new Command<string>(NavigationPageService);
+            NavigationCommand = new Command<ServiceModel>(NavigationPageService);
         }
 
-        private async void NavigationPageService(string key)
+        private async void NavigationPageService(ServiceModel obj)
         {
             if (IsLoading) return;
             IsLoading = true;
-            var navigation = this.ToString();
-            switch (key)
+
+            var options = new ToastOptions
             {
-                case "0":
-                    navigation = "TransferPage";
-                    break;
-                case "1":
-                    navigation = "ChangePasswordPage";
-                    break;
-                case "2":
-                    navigation = "AccountInformationPage";
-                    break;
-                case "3":
-                    navigation = "BuffLikePage";
-                    break;
-                case "4":
-                    navigation = "BuffEyesViewPage";
-                    break;
-                case "5":
-                    navigation = "InteractivePage";
-                    break;
-                case "6":
-                    navigation = "RechargeCustomersPage";
-                    break;
-            }
-            await NavigationService.NavigateAsync(navigation);
+                ToastAction = async () =>
+                {
+                    // something
+                    await Toast.HideToast();
+                },
+                OnBeforeDisplayingToast = toast =>
+                {
+                    toast.TranslationY -= 50;
+                    return toast.TranslateTo(0, toast.TranslationY + 50, 500, Easing.Linear);
+                },
+                OnBeforeHidingToast = toast => toast.TranslateTo(0, -(toast.TranslationY + 50), 500, Easing.Linear),
+                Duration = 5000
+            };
+
+            var layout = new ToastLayout
+            {
+                BackgroundColor = Color.DodgerBlue,
+                CornerRadius = 10,
+                FontFamily = "Arial",
+                FontSize = 12,
+                HasShadow = true,
+                HorizontalMargin = 25,
+                LineBreakMode = LineBreakMode.TailTruncation,
+                MaxLines = 2,
+                Padding = new Thickness(20, 10),
+                PositionY = 20,
+                TextColor = Color.White
+            };
+
+            await Toast.DisplayToast("Hello World!", options, layout);
+
             IsLoading = false;
         }
 
@@ -186,63 +195,63 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     {
                         Icon="icon_like.png",
                         TitleService=Resource._1000076,
-                        TypeService=0,
+                        TypeService=1,
                     },
                     new ServiceModel
                     {
                         Icon="icon_view.png",
                         TitleService=Resource._1000077,
-                        TypeService=1,
+                        TypeService=2,
                     },
                     new ServiceModel
                     {
                         Icon="icon_Interactive.png",
                         TitleService=Resource._1000026,
-                        TypeService=2,
+                        TypeService=3,
                         BadgeView = "Coming"
                     },
                     new ServiceModel
                     {
                         Icon="icon_add_friends.png",
                         TitleService=Resource._1000078,
-                        TypeService=3,
+                        TypeService=4,
                     },
                     new ServiceModel
                     {
                         Icon="icon_follow.png",
                         TitleService=Resource._1000079,
-                        TypeService=4,
+                        TypeService=5,
                     },
                     new ServiceModel
                     {
                         Icon="icon_like_page.png",
                         TitleService=Resource._1000080,
-                        TypeService=5,
+                        TypeService=6,
                     },
                     new ServiceModel
                     {
                         Icon="icon_unlock.png",
                         TitleService=Resource._1000081,
-                        TypeService=6,
+                        TypeService=7,
                     },
                     new ServiceModel
                     {
                         Icon="icon_security_fb.png",
                         TitleService=Resource._1000082,
-                        TypeService=7,
+                        TypeService=8,
                     },
                     new ServiceModel
                     {
                         Icon="icon_filter_friends.png",
                         TitleService=Resource._1000083,
-                        TypeService=8,
+                        TypeService=-1,
                         BadgeView = "Free"
                     },
                     new ServiceModel
                     {
                         Icon="icon_customer_support.png",
                         TitleService=Resource._1000084,
-                        TypeService=-1,
+                        TypeService=0,
                         BadgeView = "Support"
                     },
                 };

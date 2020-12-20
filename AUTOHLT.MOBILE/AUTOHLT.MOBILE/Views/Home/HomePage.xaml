@@ -8,6 +8,7 @@
     xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    x:Name="PageHome"
     BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <ScrollView
@@ -217,7 +218,6 @@
                 </ScrollView>
                 <!--  danh sach dich vu phai tra tien  -->
                 <customRenderer:CustomCollectionViewRenderer
-                    x:Name="LsDataService"
                     Grid.Row="4"
                     Margin="10,0"
                     BackgroundColor="#fff"
@@ -270,7 +270,7 @@
                                         VerticalOptions="Center" />
                                 </Grid>
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference LsDataService}, Path=BindingContext.NavigationPageService}" CommandParameter="{Binding TypeService}" />
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference PageHome}, Path=BindingContext.NavigationCommand}" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
                             </Frame>
                         </DataTemplate>
