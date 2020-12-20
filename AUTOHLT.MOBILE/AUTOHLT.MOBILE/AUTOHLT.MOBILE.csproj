@@ -18,19 +18,25 @@
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <None Remove="Resources\Fonts\RobotoRegular.ttf" />
     <None Remove="Resources\Images\icon_account.png" />
+    <None Remove="Resources\Images\icon_add_friends.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_comments.png" />
+    <None Remove="Resources\Images\icon_customer_support.png" />
+    <None Remove="Resources\Images\icon_filter_friends.png" />
     <None Remove="Resources\Images\icon_follow.png" />
     <None Remove="Resources\Images\icon_history.png" />
     <None Remove="Resources\Images\icon_Interactive.png" />
     <None Remove="Resources\Images\icon_like.png" />
+    <None Remove="Resources\Images\icon_like_page.png" />
     <None Remove="Resources\Images\icon_notification.png" />
     <None Remove="Resources\Images\icon_revenue.png" />
+    <None Remove="Resources\Images\icon_security_fb.png" />
     <None Remove="Resources\Images\icon_service.png" />
     <None Remove="Resources\Images\icon_settings.png" />
     <None Remove="Resources\Images\icon_share.png" />
     <None Remove="Resources\Images\icon_top_up.png" />
     <None Remove="Resources\Images\icon_transfer.png" />
+    <None Remove="Resources\Images\icon_unlock.png" />
     <None Remove="Resources\Images\icon_view.png" />
     <None Remove="Resources\Images\icon_work.png" />
     <None Remove="Resources\Images\logo.png" />
@@ -44,19 +50,25 @@
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <EmbeddedResource Include="Resources\Fonts\RobotoRegular.ttf" />
     <EmbeddedResource Include="Resources\Images\icon_account.png" />
+    <EmbeddedResource Include="Resources\Images\icon_add_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />
+    <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
+    <EmbeddedResource Include="Resources\Images\icon_filter_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_follow.png" />
     <EmbeddedResource Include="Resources\Images\icon_history.png" />
     <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
     <EmbeddedResource Include="Resources\Images\icon_like.png" />
+    <EmbeddedResource Include="Resources\Images\icon_like_page.png" />
     <EmbeddedResource Include="Resources\Images\icon_notification.png" />
     <EmbeddedResource Include="Resources\Images\icon_revenue.png" />
+    <EmbeddedResource Include="Resources\Images\icon_security_fb.png" />
     <EmbeddedResource Include="Resources\Images\icon_service.png" />
     <EmbeddedResource Include="Resources\Images\icon_settings.png" />
     <EmbeddedResource Include="Resources\Images\icon_share.png" />
     <EmbeddedResource Include="Resources\Images\icon_top_up.png" />
     <EmbeddedResource Include="Resources\Images\icon_transfer.png" />
+    <EmbeddedResource Include="Resources\Images\icon_unlock.png" />
     <EmbeddedResource Include="Resources\Images\icon_view.png" />
     <EmbeddedResource Include="Resources\Images\icon_work.png" />
     <EmbeddedResource Include="Resources\Images\logo.png" />
@@ -71,6 +83,7 @@
     <PackageReference Include="Realm" Version="5.1.2" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.30" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.4.0.30" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.30" />
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.4.0.30" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />

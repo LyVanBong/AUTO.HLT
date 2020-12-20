@@ -50,6 +50,7 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
+            Syncfusion.XForms.iOS.BadgeView.SfBadgeViewRenderer.Init();
             FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();
             SfRadioButtonRenderer.Init();

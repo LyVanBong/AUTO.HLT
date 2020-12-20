@@ -40,6 +40,7 @@ namespace AUTOHLT.MOBILE.Services.User
         {
             try
             {
+                var prices = price.Replace(".0000", "");
                 var para = new List<RequestParameter>
                 {
                     new RequestParameter("UserName",userName),
@@ -51,7 +52,7 @@ namespace AUTOHLT.MOBILE.Services.User
                     new RequestParameter("Role",role),
                     new RequestParameter("IsActive",isActive),
                     new RequestParameter("Age",age),
-                    new RequestParameter("Price",price),
+                    new RequestParameter("Price",prices),
                     new RequestParameter("IdDevice",idDevice),
                 };
                 var data = await _requestProvider.PutAsync<string>("user/updateuser", para);

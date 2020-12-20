@@ -10,7 +10,6 @@ using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -29,6 +28,21 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private int _permission;
         private IDialogService _dialogService;
         private List<ServiceModel> _serviceData;
+        private int _heightPaidService;
+        private int _heightFreeService;
+
+
+        public int HeightFreeService
+        {
+            get => _heightFreeService;
+            set => SetProperty(ref _heightFreeService, value);
+        }
+
+        public int HeightPaidService
+        {
+            get => _heightPaidService;
+            set => SetProperty(ref _heightPaidService, value);
+        }
 
         public List<ServiceModel> ServiceData
         {
@@ -171,54 +185,71 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     new ServiceModel
                     {
                         Icon="icon_like.png",
-                        TitleService=Resource._1000029,
+                        TitleService=Resource._1000076,
                         TypeService=0,
                     },
                     new ServiceModel
                     {
                         Icon="icon_view.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        TitleService=Resource._1000077,
+                        TypeService=1,
                     },
                     new ServiceModel
                     {
                         Icon="icon_Interactive.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        TitleService=Resource._1000026,
+                        TypeService=2,
+                        BadgeView = "Coming"
                     },
                     new ServiceModel
                     {
-                        Icon="icon_like.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        Icon="icon_add_friends.png",
+                        TitleService=Resource._1000078,
+                        TypeService=3,
                     },
                     new ServiceModel
                     {
                         Icon="icon_follow.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        TitleService=Resource._1000079,
+                        TypeService=4,
                     },
                     new ServiceModel
                     {
-                        Icon="icon_like.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        Icon="icon_like_page.png",
+                        TitleService=Resource._1000080,
+                        TypeService=5,
                     },
                     new ServiceModel
                     {
-                        Icon="icon_like.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        Icon="icon_unlock.png",
+                        TitleService=Resource._1000081,
+                        TypeService=6,
                     },
                     new ServiceModel
                     {
-                        Icon="icon_like.png",
-                        TitleService=Resource._1000029,
-                        TypeService=0,
+                        Icon="icon_security_fb.png",
+                        TitleService=Resource._1000082,
+                        TypeService=7,
                     },
-
+                    new ServiceModel
+                    {
+                        Icon="icon_filter_friends.png",
+                        TitleService=Resource._1000083,
+                        TypeService=8,
+                        BadgeView = "Free"
+                    },
+                    new ServiceModel
+                    {
+                        Icon="icon_customer_support.png",
+                        TitleService=Resource._1000084,
+                        TypeService=-1,
+                        BadgeView = "Support"
+                    },
                 };
-
+                double count = ServiceData.Count;
+                var soDu = count / 3;
+                var heightPaidService = Math.Ceiling((decimal)soDu);
+                HeightPaidService = (int)(heightPaidService * 140);
             }
             catch (Exception e)
             {

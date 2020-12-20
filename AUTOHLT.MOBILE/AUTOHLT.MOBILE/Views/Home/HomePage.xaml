@@ -3,9 +3,11 @@
     x:Class="AUTOHLT.MOBILE.Views.Home.HomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:badge="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <ScrollView
@@ -17,8 +19,15 @@
                 Margin="0"
                 Padding="0"
                 BackgroundColor="{StaticResource Gray-White}"
-                RowDefinitions="50,160,20,Auto"
                 RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="{Binding HeightPaidService}" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
                 <BoxView
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -44,11 +53,9 @@
                                     FontSize="28"
                                     Text="{x:Static icon:FontAwesome5ProSolid.Home}"
                                     TextColor="#fff" />
-                                <!--<Span Text="{Binding Name}" />-->
                                 <Span Text="  " />
                                 <Span Text="{Binding UserModel.Name}" TextColor="#fff" />
                                 <Span Text=" (" TextColor="#fff" />
-                                <!--<Span Text="{Binding UserName}" />-->
                                 <Span Text="{Binding UserModel.UserName}" TextColor="#fff" />
                                 <Span Text=")" TextColor="#fff" />
                             </FormattedString>
@@ -67,6 +74,7 @@
                 </StackLayout>
                 <Frame
                     Grid.Row="1"
+                    Grid.RowSpan="2"
                     Margin="20,10"
                     Padding="0"
                     BackgroundColor="{StaticResource Gray-White}"
@@ -191,35 +199,84 @@
                         </BoxView>
                     </Grid>
                 </Frame>
-                <CollectionView BackgroundColor="{StaticResource Gray-White}" Margin="10,0"  ItemsSource="{Binding ServiceData}"  Grid.Row="3">
+                <ScrollView
+                    x:Name="ScrollViewWebcome"
+                    Grid.Row="3"
+                    Margin="0"
+                    Padding="0"
+                    HorizontalScrollBarVisibility="Never"
+                    Orientation="Horizontal">
+                    <Label
+                        x:Name="LabelWebcome"
+                        Padding="5,0"
+                        FontSize="14"
+                        HorizontalOptions="FillAndExpand"
+                        LineBreakMode="NoWrap"
+                        Text="{markupExtensions:Translate 1000075}"
+                        VerticalOptions="FillAndExpand" />
+                </ScrollView>
+                <!--  danh sach dich vu phai tra tien  -->
+                <customRenderer:CustomCollectionViewRenderer
+                    x:Name="LsDataService"
+                    Grid.Row="4"
+                    Margin="10,0"
+                    BackgroundColor="#fff"
+                    ItemsSource="{Binding ServiceData}"
+                    VerticalScrollBarVisibility="Never">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="5" HorizontalItemSpacing="5" />
+                        <GridItemsLayout
+                            HorizontalItemSpacing="5"
+                            Orientation="Vertical"
+                            Span="3"
+                            VerticalItemSpacing="5" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                HeightRequest="120"
-                                Margin="0" Padding="0"
+                                Margin="0"
+                                Padding="0"
                                 BackgroundColor="{StaticResource Gray-100}"
                                 BorderColor="{StaticResource Gray-300}"
                                 CornerRadius="10"
-                                HasShadow="False">
+                                HasShadow="False"
+                                HeightRequest="120">
                                 <Grid
-                                            Margin="0"
-                                            Padding="0"
-                                            RowDefinitions="*,30">
-                                    <Image Margin="10" Grid.Row="0" Source="{Binding IconService}" />
-                                    <Label Grid.Row="1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding TitleService}" />
+                                    Margin="0"
+                                    Padding="0"
+                                    RowDefinitions="*,30">
+                                    <badge:SfBadgeView
+                                        Grid.Row="0"
+                                        Margin="5"
+                                        Padding="0"
+                                        BadgeText="{Binding BadgeView}">
+                                        <badge:SfBadgeView.BadgeSettings>
+                                            <badge:BadgeSetting
+                                                BadgeAnimation="Scale"
+                                                BadgePosition="TopRight"
+                                                BadgeType="Info"
+                                                CornerRadius="5"
+                                                FontSize="12" />
+                                        </badge:SfBadgeView.BadgeSettings>
+                                        <badge:SfBadgeView.Content>
+                                            <Image Source="{Binding IconService}" />
+                                        </badge:SfBadgeView.Content>
+                                    </badge:SfBadgeView>
+                                    <Label
+                                        Grid.Row="1"
+                                        FontAttributes="Bold"
+                                        FontSize="13"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding TitleService}"
+                                        VerticalOptions="Center" />
                                 </Grid>
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="{Binding TypeService}" />
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference LsDataService}, Path=BindingContext.NavigationPageService}" CommandParameter="{Binding TypeService}" />
                                 </Frame.GestureRecognizers>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                </CollectionView>
+                </customRenderer:CustomCollectionViewRenderer>
+                <!--  danh sach dich vu free  -->
             </Grid>
         </ScrollView>
     </ContentPage.Content>
