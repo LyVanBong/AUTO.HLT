@@ -1,4 +1,5 @@
 ﻿using System;
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -59,7 +60,7 @@ namespace AUTOHLT.MOBILE.Droid
 
         private void OtherLibraries()
         {
-            DIPS.Xamarin.UI.Android.Library.Initialize();
+            UserDialogs.Init(this);
             FacebookClientManager.Initialize(this);
         }
 

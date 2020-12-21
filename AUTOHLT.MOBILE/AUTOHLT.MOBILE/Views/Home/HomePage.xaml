@@ -33,7 +33,7 @@
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     BackgroundColor="{StaticResource HeaderHome}"
-                    CornerRadius="{OnPlatform Android='0,0,50,50',
+                    CornerRadius="{OnPlatform Android='0,0,40,40',
                                               iOS='0,0,30,30'}" />
                 <StackLayout
                     Grid.Row="0"

@@ -10,5 +10,6 @@ namespace AUTOHLT.MOBILE.Models.Home
         public string TitleService { get; set; }
         public int TypeService { get; set; }
         public string BadgeView { get; set; }
+        public string UserRole { get; set; }
     }
 }

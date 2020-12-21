@@ -73,8 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DIPS.Xamarin.UI">
-      <Version>6.7.0</Version>
+    <PackageReference Include="Acr.UserDialogs">
+      <Version>7.1.0.470</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>4.0.0</Version>

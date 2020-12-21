@@ -799,7 +799,7 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to security fb.
+        ///   Looks up a localized string similar to Security fb.
         /// </summary>
         internal static string _1000082 {
             get {

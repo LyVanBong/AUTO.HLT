@@ -45,7 +45,6 @@ namespace AUTOHLT.MOBILE
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
-            DIPS.Xamarin.UI.Library.Initialize();
         }
 
         protected override async void OnInitialized()
