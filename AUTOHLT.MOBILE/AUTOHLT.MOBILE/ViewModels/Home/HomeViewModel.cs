@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
@@ -36,6 +37,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private ObservableCollection<ServiceModel> _serviceData;
         private int _heightPaidService;
         private int _heightFreeService;
+        private bool _startNotification = true;
         private List<NameModel> _nameModels;
         private List<ServiceModel> _dataHome = new List<ServiceModel>
                 {
@@ -157,6 +159,29 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     },
                 };
 
+        private Dictionary<int, string> ServiceFunctions = new Dictionary<int, string>
+        {
+            {-1,"" },
+            {0,"" },
+            {1,"BuffLikePage" },
+            {2,"BuffEyesViewPage" },
+            {3,"InteractivePage" },
+            {4,"" },
+            {5,"" },
+            {6,"" },
+            {7,"" },
+            {8,"" },
+            {9,"" },
+            {10,"" },
+            {11,"" },
+            {12,"" },
+            {13,"" },
+            {14,"" },
+            {15,"TransferPage" },
+            {16,"ChangePasswordPage" },
+            {17,"" },
+            {18,"AccountInformationPage" },
+        };
 
         public int HeightFreeService
         {
@@ -210,15 +235,32 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             _userService = userService;
             _databaseService = databaseService;
             LogoutCommand = new Command(LogoutAccount);
-            IsLoading = true;
             BuffServiceCommand = new Command<string>(BuffService);
-            NavigationCommand = new Command<ServiceModel>(NavigationPageService);
+            NavigationCommand = new Command<Object>(NavigationPageService);
             ServiceData = new ObservableCollection<ServiceModel>();
         }
 
-        private void NavigationPageService(ServiceModel obj)
+        private async void NavigationPageService(Object obj)
         {
+            if (IsLoading) return;
+            IsLoading = true;
+            var key = -9999;
+            var data = obj is ServiceModel;
+            if (data)
+            {
+                var service = obj as ServiceModel;
+                key = service.TypeService;
+            }
+            else
+            {
+                var para = obj as string;
+                if (para != null)
+                    key = int.Parse(para);
+            }
 
+            await NavigationService.NavigateAsync(ServiceFunctions[key]);
+
+            IsLoading = false;
         }
 
         private async void BuffService(string key)
@@ -253,7 +295,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         {
             base.OnNavigatedTo(parameters);
             await InitializeDataHome();
-            IsLoading = false;
         }
         /// <summary>
         /// hàm khởi tạo dữ liệu ban đầu cho trang home
@@ -263,6 +304,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         {
             try
             {
+                IsLoading = true;
                 ServiceData.Clear();
                 var data = await _databaseService.GetAccountUser();
                 if (data != null)
@@ -288,17 +330,16 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 var role = _userModel.Role;
                 foreach (var item in _dataHome)
                 {
+                    await Task.Delay(TimeSpan.FromMilliseconds(50));
                     if (role == "2")
                     {
                         if (item.UserRole == "2")
                         {
-                            await Task.Delay(TimeSpan.FromMilliseconds(200));
                             ServiceData.Add(item);
                         }
                     }
                     if (role == "0")
                     {
-                        await Task.Delay(TimeSpan.FromMilliseconds(200));
                         ServiceData.Add(item);
                     }
                 }
@@ -311,7 +352,11 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             }
             finally
             {
-                await NoticeServiceSubscribers();
+                new Thread(() =>
+               {
+                   NoticeServiceSubscribers();
+               }).Start();
+                IsLoading = false;
             }
         }
         /// <summary>
@@ -341,7 +386,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         /// Gửi thông báo đang ký mỗi khách hàng
         /// </summary>
         /// <returns></returns>
-        private async Task NoticeServiceSubscribers()
+        private async void NoticeServiceSubscribers()
         {
             try
             {
@@ -375,7 +420,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                             Position = ToastPosition.Bottom,
                             MessageTextColor = Color.Gray,
                         });
-                        return true;
+                        return _startNotification;
                     });
                 }
             }
@@ -384,6 +429,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 Crashes.TrackError(e);
             }
         }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            _startNotification = false;
+        }
+
         /// <summary>
         /// đăng xuất khỏi tài khoản
         /// </summary>

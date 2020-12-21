@@ -162,10 +162,26 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Source="{markupExtensions:ImageResource icon_change_password.png}" />
-                        <Image
+                        <badge:SfBadgeView
                             Grid.Row="1"
                             Grid.Column="2"
-                            Source="{markupExtensions:ImageResource icon_notification.png}" />
+                            Margin="0"
+                            Padding="0"
+                            BadgeText="Coming">
+                            <badge:SfBadgeView.BadgeSettings>
+                                <badge:BadgeSetting
+                                    BadgeAnimation="Scale"
+                                    BadgePosition="TopRight"
+                                    BadgeType="Primary"
+                                    CornerRadius="5"
+                                    FontSize="8"
+                                    TextPadding="2" />
+                            </badge:SfBadgeView.BadgeSettings>
+                            <badge:SfBadgeView.Content>
+                                <Image Source="{markupExtensions:ImageResource icon_notification.png}" />
+                            </badge:SfBadgeView.Content>
+                        </badge:SfBadgeView>
+
                         <Image
                             Grid.Row="1"
                             Grid.Column="3"
@@ -175,7 +191,7 @@
                             Grid.RowSpan="2"
                             Grid.Column="0">
                             <BoxView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="0" />
+                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="15" />
                             </BoxView.GestureRecognizers>
                         </BoxView>
                         <BoxView
@@ -183,19 +199,23 @@
                             Grid.RowSpan="2"
                             Grid.Column="1">
                             <BoxView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="1" />
+                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="16" />
                             </BoxView.GestureRecognizers>
                         </BoxView>
                         <BoxView
                             Grid.Row="1"
                             Grid.RowSpan="2"
-                            Grid.Column="2" />
+                            Grid.Column="2">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="17" />
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                         <BoxView
                             Grid.Row="1"
                             Grid.RowSpan="2"
                             Grid.Column="3">
                             <BoxView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="2" />
+                                <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="18" />
                             </BoxView.GestureRecognizers>
                         </BoxView>
                     </Grid>
