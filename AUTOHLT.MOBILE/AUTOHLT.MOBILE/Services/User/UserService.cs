@@ -15,6 +15,24 @@ namespace AUTOHLT.MOBILE.Services.User
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<string>> SetMoneyUser(string userName, string price)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("UserName",userName),
+                    new RequestParameter("Price",price),
+                };
+                var data = await _requestProvider.PutAsync<string>("user/SetMoney", para);
+                return data;
+            }
+            catch (Exception )
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseModel<string>> HistorySetMoneyForUser(string discount, string price, string idSend, string idReceive, string transferType)
         {
             try

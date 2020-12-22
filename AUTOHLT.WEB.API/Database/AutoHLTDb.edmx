@@ -79,6 +79,10 @@
           <Parameter Name="Age" Type="varchar" Mode="In" />
           <Parameter Name="DateCreate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="SetMoneyUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Price" Type="money" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -284,6 +288,10 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="SetMoneyUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -553,6 +561,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="bsoft_autohltModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="bsoft_autohltModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="SetMoneyUser" FunctionName="bsoft_autohltModel.Store.SetMoneyUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

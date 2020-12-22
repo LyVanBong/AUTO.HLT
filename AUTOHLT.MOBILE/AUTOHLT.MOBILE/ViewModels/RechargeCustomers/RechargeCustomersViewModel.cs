@@ -144,30 +144,14 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
                     var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, message, "OK", "Cancel");
                     if (res)
                     {
-                        var myMoney = long.Parse(CurrentBalance.Replace(".0000", ""));
+                        var myMoney = long.Parse(CurrentBalance);
                         var user = await _databaseService.GetAccountUser();
                         if (user != null)
                         {
                             var a = double.Parse(TotalMoney);
                             var total = Math.Ceiling((decimal)a);
 
-                            var data = new UserModel
-                            {
-                                UserName = UserName,
-                                Name = user.Name,
-                                Password = user.Password,
-                                Email = user.Email,
-                                NumberPhone = user.NumberPhone,
-                                Sex = user.Sex,
-                                Role = user.Role,
-                                IsActive = user.IsActive,
-                                Age = user.Age,
-                                Price = myMoney + total + "",
-                                IdDevice = user.IdDevice,
-                            };
-                            var setMoneyForUser = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
-                                data.Email, data.NumberPhone, data.Sex, data.Role,
-                                data.IsActive.ToString(), data.Age, data.Price, data.IdDevice);
+                            var setMoneyForUser = await _userService.SetMoneyUser(UserName, myMoney + total + "");
                             if (setMoneyForUser != null && setMoneyForUser.Code > 0)
                             {
                                 await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
