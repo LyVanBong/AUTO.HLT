@@ -11,6 +11,7 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -174,7 +175,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {8,"" },
             {9,"" },
             {10,"" },
-            {11,"" },
+            {11,"RechargeCustomersPage" },
             {12,"" },
             {13,"" },
             {14,"" },
@@ -295,13 +296,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            if (parameters != null)
-            {
-                if (parameters.ContainsKey(AppConstants.LoginApp))
-                {
-                    await InitializeDataHome();
-                }
-            }
+
+            await InitializeDataHome();
         }
         /// <summary>
         /// hàm khởi tạo dữ liệu ban đầu cho trang home
@@ -319,7 +315,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     UserModel = data;
                     Permission = int.Parse(data.Role);
                 }
-
                 var money = await _userService.GetMoneyUser(UserModel.UserName);
                 if (money != null)
                 {
@@ -332,7 +327,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         MoneyUser = "0";
                     }
                 }
-
                 HeightPaidService = 1000;
                 var role = _userModel.Role;
                 foreach (var item in _dataHome)
@@ -414,10 +408,11 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                             " đăng ký gói tăng mắt xem livestream 1 năm",
                             " đăng ký gói tăng mắt xem livestream vính viễn",
                             " sử dụng dịch vụ thêm full 5k bạn bè",
-                            $" Sử dụng dich vụ tăng {random.Next(1000,6000000)} theo dõi trang cá nhân",
-                            $" đăng ký dịch vụ tăng {random.Next(1000,6000000)} like page",
+                            $" Sử dụng dich vụ tăng { string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(random.Next(1000,6000000)+""))} theo dõi trang cá nhân",
+                            $" đăng ký dịch vụ tăng {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(random.Next(1000,6000000)+""))} like page",
                             " đã sử dụng dịch vụ mở khoán fb thành công",
                             " báo mật fb cá nhân",
+                           
                         };
                         var xungHo = new string[] { "Anh/Chi ", "Em ", "Bạn " };
                         var messager = $"{xungHo[random.Next(xungHo.Length - 1)]}{name.full_name}{cmt[random.Next(cmt.Length - 1)]}";
