@@ -13,5 +13,6 @@ namespace AUTOHLT.MOBILE.Models.Product
         public string ProductContent { get; set; }
         public string Number { get; set; }
         public bool IsRegisterProduct { get; set; }
+        public string GroupProduct { get; set; }
     }
 }

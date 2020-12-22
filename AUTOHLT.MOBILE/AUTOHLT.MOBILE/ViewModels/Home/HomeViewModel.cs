@@ -18,6 +18,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Views.AddFullFriend;
+using AUTOHLT.MOBILE.Views.BuffLikePage;
+using AUTOHLT.MOBILE.Views.BuffSub;
+using AUTOHLT.MOBILE.Views.FilterFriend;
+using AUTOHLT.MOBILE.Views.SecurityFb;
+using AUTOHLT.MOBILE.Views.SuportCustumer;
+using AUTOHLT.MOBILE.Views.UnLockFb;
 using Newtonsoft.Json;
 using RestSharp;
 using Xamarin.Essentials;
@@ -163,16 +170,16 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
 
         private Dictionary<int, string> ServiceFunctions = new Dictionary<int, string>
         {
-            {-1,"" },
-            {0,"" },
+            {-1,nameof(FilterFriendPage) },
+            {0,nameof(SuportCustumerPage) },
             {1,"BuffLikePage" },
             {2,"BuffEyesViewPage" },
             {3,"InteractivePage" },
-            {4,"" },
-            {5,"" },
-            {6,"" },
-            {7,"" },
-            {8,"" },
+            {4,nameof(AddFullFriendPage) },
+            {5,nameof(BuffSubPage) },
+            {6,nameof(BuffLikePagePage) },
+            {7,nameof(UnLockFbPage) },
+            {8,nameof(SecurityFbPage) },
             {9,"" },
             {10,"" },
             {11,"RechargeCustomersPage" },
@@ -308,7 +315,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             try
             {
                 IsLoading = true;
-                ServiceData.Clear();
                 var data = await _databaseService.GetAccountUser();
                 if (data != null)
                 {
@@ -328,18 +334,18 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     }
                 }
                 HeightPaidService = 1000;
-                var role = _userModel.Role;
+                if (ServiceData != null && ServiceData.Any()) return;
                 foreach (var item in _dataHome)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(50));
-                    if (role == "2")
+                    if (Permission == 2)
                     {
                         if (item.UserRole == "2")
                         {
                             ServiceData.Add(item);
                         }
                     }
-                    if (role == "0")
+                    if (Permission == 0)
                     {
                         ServiceData.Add(item);
                     }
@@ -412,7 +418,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                             $" đăng ký dịch vụ tăng {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(random.Next(1000,6000000)+""))} like page",
                             " đã sử dụng dịch vụ mở khoán fb thành công",
                             " báo mật fb cá nhân",
-                           
+
                         };
                         var xungHo = new string[] { "Anh/Chi ", "Em ", "Bạn " };
                         var messager = $"{xungHo[random.Next(xungHo.Length - 1)]}{name.full_name}{cmt[random.Next(cmt.Length - 1)]}";
@@ -448,6 +454,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 {
                     Preferences.Clear();
                     await _databaseService.DeleteAccontUser();
+                    ServiceData.Clear();
                     await NavigationService.NavigateAsync("/LoginPage");
                 }
             }

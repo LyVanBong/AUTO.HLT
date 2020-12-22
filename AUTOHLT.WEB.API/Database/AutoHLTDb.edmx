@@ -309,6 +309,7 @@
           <Property Type="Int32" Name="EndDate" Nullable="false" />
           <Property Type="String" Name="ProductContent" Nullable="false" MaxLength="Max" />
           <Property Type="Int32" Name="Number" Nullable="false" />
+          <Property Type="Int32" Name="GroupProduct" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetAllTransferMoney_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -428,6 +429,7 @@
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="ProductContent" ColumnName="ProductContent" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="GroupProduct" ColumnName="GroupProduct" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
