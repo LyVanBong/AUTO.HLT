@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
+using AUTOHLT.MOBILE.Configurations;
 using Newtonsoft.Json;
 using RestSharp;
 using Xamarin.Essentials;
@@ -37,7 +38,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private ObservableCollection<ServiceModel> _serviceData;
         private int _heightPaidService;
         private int _heightFreeService;
-        private bool _startNotification = true;
+        private static bool _startNotification;
         private List<NameModel> _nameModels;
         private List<ServiceModel> _dataHome = new List<ServiceModel>
                 {
@@ -294,7 +295,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            await InitializeDataHome();
+            if (parameters != null)
+            {
+                if (parameters.ContainsKey(AppConstants.LoginApp))
+                {
+                    await InitializeDataHome();
+                }
+            }
         }
         /// <summary>
         /// hàm khởi tạo dữ liệu ban đầu cho trang home
@@ -390,6 +397,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         {
             try
             {
+                if (_startNotification) return;
+                _startNotification = true;
                 _nameModels = _nameModels == null ? await GetDataname() : _nameModels;
                 if (_nameModels != null && _nameModels.Any())
                 {
@@ -428,12 +437,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {
                 Crashes.TrackError(e);
             }
-        }
-
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            base.OnNavigatedFrom(parameters);
-            _startNotification = false;
         }
 
         /// <summary>

@@ -130,7 +130,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                     var username = _userModel.UserName;
                     var idUser = _userModel.ID;
                     var moneyModel = await _userService.GetMoneyUser(username);
-                    var money = long.Parse(moneyModel.Data);
+                    var money = long.Parse(moneyModel.Data.Replace(".0000", ""));
                     var price = long.Parse(product.Price);
                     if (money >= price)
                     {

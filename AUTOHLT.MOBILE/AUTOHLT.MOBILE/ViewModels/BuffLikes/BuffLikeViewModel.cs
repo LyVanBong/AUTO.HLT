@@ -132,7 +132,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     var moneyModel = await _userService.GetMoneyUser(username);
                     if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
                     {
-                        var money = long.Parse(moneyModel.Data);
+                        var money = long.Parse(moneyModel.Data.Replace(".0000",""));
                         var price = long.Parse(product.Price);
                         if (money >= price)
                         {
