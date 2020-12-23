@@ -407,6 +407,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     Device.StartTimer(TimeSpan.FromSeconds(15), () =>
                     {
                         var name = _nameModels[random.Next(_nameModels.Count - 1)];
+                        var number = string.Format(new CultureInfo("en-US"), "{0:0,0}",
+                            decimal.Parse(random.Next(1000, 6000000) + ""));
                         var cmt = new string[]
                         {
                             " đăng ký gói tăng like 1 năm",
@@ -414,8 +416,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                             " đăng ký gói tăng mắt xem livestream 1 năm",
                             " đăng ký gói tăng mắt xem livestream vính viễn",
                             " sử dụng dịch vụ thêm full 5k bạn bè",
-                            $" Sử dụng dich vụ tăng { string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(random.Next(1000,6000000)+""))} theo dõi trang cá nhân",
-                            $" đăng ký dịch vụ tăng {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(random.Next(1000,6000000)+""))} like page",
+                            $" Sử dụng dich vụ tăng { number} theo dõi trang cá nhân",
+                            $" đăng ký dịch vụ tăng {number} like page",
                             " đã sử dụng dịch vụ mở khoán fb thành công",
                             " báo mật fb cá nhân",
 
