@@ -1,4 +1,6 @@
-﻿using AUTOHLT.MOBILE.Resources.Languages;
+﻿using System.Reflection;
+using AUTOHLT.MOBILE.Resources.Languages;
+using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Models.Product
 {
@@ -14,5 +16,6 @@ namespace AUTOHLT.MOBILE.Models.Product
         public string Number { get; set; }
         public bool IsRegisterProduct { get; set; }
         public string GroupProduct { get; set; }
+        public ImageSource IconLike => ImageSource.FromResource($"AUTOHLT.MOBILE.Resources.Images.icon_like_product.png", typeof(ProductModel).GetTypeInfo().Assembly);
     }
 }

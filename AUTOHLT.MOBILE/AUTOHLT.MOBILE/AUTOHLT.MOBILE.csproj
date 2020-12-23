@@ -28,6 +28,7 @@
     <None Remove="Resources\Images\icon_Interactive.png" />
     <None Remove="Resources\Images\icon_like.png" />
     <None Remove="Resources\Images\icon_like_page.png" />
+    <None Remove="Resources\Images\icon_like_product.png" />
     <None Remove="Resources\Images\icon_notification.png" />
     <None Remove="Resources\Images\icon_revenue.png" />
     <None Remove="Resources\Images\icon_security_fb.png" />
@@ -60,6 +61,7 @@
     <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
     <EmbeddedResource Include="Resources\Images\icon_like.png" />
     <EmbeddedResource Include="Resources\Images\icon_like_page.png" />
+    <EmbeddedResource Include="Resources\Images\icon_like_product.png" />
     <EmbeddedResource Include="Resources\Images\icon_notification.png" />
     <EmbeddedResource Include="Resources\Images\icon_revenue.png" />
     <EmbeddedResource Include="Resources\Images\icon_security_fb.png" />

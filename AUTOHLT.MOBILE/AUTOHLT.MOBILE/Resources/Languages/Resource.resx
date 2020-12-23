@@ -457,4 +457,16 @@
     <value>Support</value>
     <comment>Hố trợ</comment>
   </data>
+  <data name="1000085" xml:space="preserve">
+    <value>Package</value>
+    <comment>Gói</comment>
+  </data>
+  <data name="1000086" xml:space="preserve">
+    <value>Like</value>
+    <comment>Like</comment>
+  </data>
+  <data name="1000087" xml:space="preserve">
+    <value>View</value>
+    <comment>Mắt</comment>
+  </data>
 </root>

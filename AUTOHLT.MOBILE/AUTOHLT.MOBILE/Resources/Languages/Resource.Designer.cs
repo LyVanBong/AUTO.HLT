@@ -824,5 +824,32 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000084", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package.
+        /// </summary>
+        internal static string _1000085 {
+            get {
+                return ResourceManager.GetString("1000085", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Like.
+        /// </summary>
+        internal static string _1000086 {
+            get {
+                return ResourceManager.GetString("1000086", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        internal static string _1000087 {
+            get {
+                return ResourceManager.GetString("1000087", resourceCulture);
+            }
+        }
     }
 }
