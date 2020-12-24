@@ -52,7 +52,17 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                 var data = await _productService.GetAllProduct();
                 if (data != null && data.Code > 0 && data.Data.Any())
                 {
-                    ProductData = new ObservableCollection<ProductModel>(data.Data.Where(x => x.GroupProduct == "1"));
+                    ProductData = new ObservableCollection<ProductModel>();
+                    var lsProduct = data.Data;
+                    foreach (var item in lsProduct)
+                    {
+                        if (item.GroupProduct == "1")
+                        {
+                            item.Icon = "icon_like_product.png";
+                            ProductData.Add(item);
+                            await Task.Delay(TimeSpan.FromMilliseconds(50));
+                        }
+                    }
                 }
             }
             catch (Exception e)

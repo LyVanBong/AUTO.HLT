@@ -44,7 +44,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private int _permission;
         private IDialogService _dialogService;
         private ObservableCollection<ServiceModel> _serviceData;
-        private int _heightPaidService;
         private int _heightFreeService;
         private static bool _startNotification;
         private List<NameModel> _nameModels;
@@ -197,13 +196,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             get => _heightFreeService;
             set => SetProperty(ref _heightFreeService, value);
         }
-
-        public int HeightPaidService
-        {
-            get => _heightPaidService;
-            set => SetProperty(ref _heightPaidService, value);
-        }
-
         public ObservableCollection<ServiceModel> ServiceData
         {
             get => _serviceData;
@@ -246,7 +238,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             LogoutCommand = new Command(LogoutAccount);
             BuffServiceCommand = new Command<string>(BuffService);
             NavigationCommand = new Command<Object>(NavigationPageService);
-            ServiceData = new ObservableCollection<ServiceModel>();
         }
 
         private async void NavigationPageService(Object obj)
@@ -333,8 +324,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         MoneyUser = "0";
                     }
                 }
-                HeightPaidService = 1000;
                 if (ServiceData != null && ServiceData.Any()) return;
+                ServiceData = new ObservableCollection<ServiceModel>();
                 foreach (var item in _dataHome)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(50));
@@ -350,8 +341,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         ServiceData.Add(item);
                     }
                 }
-                var heightPaidService = Math.Ceiling((decimal)((double)ServiceData.Count / 3));
-                HeightPaidService = (int)(heightPaidService * 140);
             }
             catch (Exception e)
             {

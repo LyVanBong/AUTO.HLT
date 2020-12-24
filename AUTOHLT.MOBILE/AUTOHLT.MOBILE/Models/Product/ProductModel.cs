@@ -11,11 +11,13 @@ namespace AUTOHLT.MOBILE.Models.Product
         public string Price { get; set; }
         public string DateCreate { get; set; }
         public string EndDate { get; set; }
-        public string TmpEndDate => EndDate == "365" ? Resource._1000055 : Resource._1000054;
         public string ProductContent { get; set; }
         public string Number { get; set; }
         public bool IsRegisterProduct { get; set; }
         public string GroupProduct { get; set; }
-        public ImageSource IconLike => ImageSource.FromResource($"AUTOHLT.MOBILE.Resources.Images.icon_like_product.png", typeof(ProductModel).GetTypeInfo().Assembly);
+        public ImageSource IconLike => ImageSource.FromResource($"AUTOHLT.MOBILE.Resources.Images.{Icon}", typeof(ProductModel).GetTypeInfo().Assembly);
+        public string Icon { get; set; }
+        public string TitleProduct { get; set; }
+        public string ColorBg => IsRegisterProduct ? "#d0e8f2" : "#f1f1f1";
     }
 }
