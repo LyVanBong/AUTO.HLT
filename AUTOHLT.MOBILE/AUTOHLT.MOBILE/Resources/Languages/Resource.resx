@@ -469,4 +469,12 @@
     <value>View</value>
     <comment>Mắt</comment>
   </data>
+  <data name="1000088" xml:space="preserve">
+    <value>day</value>
+    <comment>ngày</comment>
+  </data>
+  <data name="1000089" xml:space="preserve">
+    <value>in</value>
+    <comment>trong</comment>
+  </data>
 </root>

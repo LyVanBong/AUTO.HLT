@@ -851,5 +851,23 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000087", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to day.
+        /// </summary>
+        internal static string _1000088 {
+            get {
+                return ResourceManager.GetString("1000088", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in.
+        /// </summary>
+        internal static string _1000089 {
+            get {
+                return ResourceManager.GetString("1000089", resourceCulture);
+            }
+        }
     }
 }

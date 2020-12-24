@@ -469,4 +469,12 @@
     <value>Mắt</value>
     <comment>Mắt</comment>
   </data>
+  <data name="1000088" xml:space="preserve">
+    <value>ngày</value>
+    <comment>ngày</comment>
+  </data>
+  <data name="1000089" xml:space="preserve">
+    <value>trong</value>
+    <comment>trong</comment>
+  </data>
 </root>

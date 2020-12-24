@@ -114,57 +114,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
             try
             {
                 _userModel = await _databaseService.GetAccountUser();
-                if (_userModel != null)
-                {
-                    var lsProduct = await _productService.GetAllProduct();
-                    if (lsProduct != null && lsProduct.Code > 0 && lsProduct.Data != null && lsProduct.Data.Any())
-                    {
-                        Like1year = lsProduct.Data.FirstOrDefault(x => x.ID == "c81cd058-8374-4c3f-9de7-4002d0d46ee0");
-                        Like1Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "72235dda-5689-4b88-ac7e-0a82143e45d6");
-                        Like2year = lsProduct.Data.FirstOrDefault(x => x.ID == "9ec8a62e-ee56-4c8f-ace1-89bc20296bfa");
-                        Like2Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "4f1946ed-913f-431b-97ef-a3c5d5094708");
-                    }
-
-                    var lsRegisterProduct = await _productService.GetListRegisterProductForUser(_userModel.ID);
-                    if (lsRegisterProduct != null && lsRegisterProduct.Code > 0 && lsRegisterProduct.Data != null && lsRegisterProduct.Data.Any())
-                    {
-                        foreach (var item in lsRegisterProduct.Data)
-                        {
-                            switch (item.ID_ProductType)
-                            {
-                                case "c81cd058-8374-4c3f-9de7-4002d0d46ee0":
-                                    var dataEnd = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
-                                    var dateNow = DateTime.Now;
-                                    if (dateNow < dataEnd)
-                                    {
-                                        Like1year.IsRegisterProduct = true;
-                                        RaisePropertyChanged(nameof(Like1year));
-                                    }
-                                    break;
-                                case "72235dda-5689-4b88-ac7e-0a82143e45d6":
-                                    Like1Forever.IsRegisterProduct = true;
-                                    RaisePropertyChanged(nameof(Like1Forever));
-                                    break;
-                                case "9ec8a62e-ee56-4c8f-ace1-89bc20296bfa":
-                                    var dataEnd2 = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
-                                    var dateNow2 = DateTime.Now;
-                                    if (dateNow2 < dataEnd2)
-                                    {
-                                        Like2year.IsRegisterProduct = true;
-                                        RaisePropertyChanged(nameof(Like2year));
-                                    }
-
-                                    break;
-                                case "4f1946ed-913f-431b-97ef-a3c5d5094708":
-                                    Like2Forever.IsRegisterProduct = true;
-                                    RaisePropertyChanged(nameof(Like2Forever));
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }
+               
             }
             catch (Exception e)
             {
