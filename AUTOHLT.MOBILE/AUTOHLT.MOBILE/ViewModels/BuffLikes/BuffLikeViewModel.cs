@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Services.Product;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Windows.Input;
+using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.User;
+using Prism.Services;
+using Xamarin.Forms;
+using AUTOHLT.MOBILE.Resources.Languages;
+using Prism.Services.Dialogs;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
 {
@@ -21,7 +28,10 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
         private IUserService _userService;
         private IDatabaseService _databaseService;
         private List<ListRegisterProductModel> _regis;
+        private IPageDialogService _pageDialogService;
+        private IDialogService _dialogService;
 
+        public ICommand BuffLikeCommand { get; private set; }
         public ObservableCollection<ProductModel> ProductData
         {
             get => _productData;
@@ -34,11 +44,113 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IDatabaseService databaseService) : base(navigationService)
+        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IDatabaseService databaseService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
         {
+            _dialogService = dialogService;
+            _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             _userService = userService;
             _productService = productService;
+            BuffLikeCommand = new Command<ProductModel>(BuffLike);
+        }
+
+        private async void BuffLike(ProductModel obj)
+        {
+            try
+            {
+                if (IsLoading) return;
+                IsLoading = true;
+                var user = await _databaseService.GetAccountUser();
+                if (obj != null)
+                {
+                    if (obj.IsRegisterProduct)
+                    {
+                        var id = user.ID;
+                        var number = int.Parse(obj.Number);
+                        var num = 0;
+                        var data = await _productService.GetHistoryUseServiceForUser(id);
+                        if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
+                        {
+                            var lsHistoryUserService = data.Data.ToList()
+                                .Where(x => x.ID_ProductType == obj.ID &&
+                                            DateTime.Parse(x.DateCreate).Date == DateTime.Now.Date).ToList();
+                            if (lsHistoryUserService.Any())
+                            {
+                                foreach (var item in lsHistoryUserService)
+                                {
+                                    num += int.Parse(item.Number);
+                                }
+                            }
+                        }
+
+                        if (num >= number)
+                        {
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000061, "OK");
+                        }
+                        else
+                        {
+                            var para = new DialogParameters();
+                            para.Add("IdProduct", obj.ID);
+                            para.Add("IdUser", id);
+                            para.Add("Number", (number - num).ToString());
+                            para.Add("Title", Resource._1000029);
+                            await _dialogService.ShowDialogAsync(nameof(UseServiceDialog), para);
+                        }
+                    }
+                    else
+                    {
+                        var username = user.UserName;
+                        var idUser = user.ID;
+                        var moneyModel = await _userService.GetMoneyUser(username);
+                        if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
+                        {
+                            var money = long.Parse(moneyModel.Data.Replace(".0000", ""));
+                            var price = long.Parse(obj.Price);
+                            if (money >= price)
+                            {
+                                var messager = string.Format(Resource._1000057,
+                                    string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(obj.Number)), "Like",
+                                    $"{obj.EndDate} {Resource._1000088}",
+                                    string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(obj.Price)));
+                                var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, messager, "OK",
+                                    "Cancel");
+                                if (res)
+                                {
+                                    var registerProduct = await _productService.RegisterProduct(obj.ID, idUser);
+                                    if (registerProduct != null && registerProduct.Code > 0 && registerProduct.Data != null)
+                                    {
+
+                                        var updateUser = await _userService.SetMoneyUser(username, money - price + "");
+                                        if (updateUser != null && updateUser.Code > 0)
+                                        {
+                                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
+                                                "OK");
+                                            await InitializeData();
+                                        }
+                                        else
+                                        {
+                                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041,
+                                                "OK");
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, moneyModel.Message, "OK");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         public override void Initialize(INavigationParameters parameters)
@@ -67,7 +179,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                 if (data != null && data.Code > 0 && data.Data.Any())
                 {
                     var product = new List<ProductModel>();
-                    var lsProduct = (List<BuffLikeModel>)data.Data;
+                    var lsProduct = data.Data;
                     foreach (var item in lsProduct)
                     {
                         if (item.GroupProduct == "1")
@@ -90,7 +202,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                             product.Add(item);
                         }
                     }
-                    
+
                     ProductData = new ObservableCollection<ProductModel>(product);
                 }
             }

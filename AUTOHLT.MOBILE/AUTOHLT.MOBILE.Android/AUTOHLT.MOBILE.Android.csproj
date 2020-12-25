@@ -40,7 +40,7 @@
     <AndroidDexTool>d8</AndroidDexTool>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>D:\KIDS\KEY.STORE\Android\kids.mobile.app.android\kids.mobile.app.android.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>kids.mobile.app.android</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>kids.mobile.app.android</AndroidSigningKeyAlias>
