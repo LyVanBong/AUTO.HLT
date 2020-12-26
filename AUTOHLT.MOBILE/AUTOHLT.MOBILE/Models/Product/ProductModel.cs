@@ -25,6 +25,7 @@ namespace AUTOHLT.MOBILE.Models.Product
         public string TitleProduct =>
             $"Buff {Number} like / {Resource._1000088} {Resource._1000089} {EndDate} {Resource._1000088}";
         public string ColorBg => IsRegisterProduct ? "#d0e8f2" : "#f1f1f1";
+        public string BadgeView { get; set; }
 
         #endregion
     }
