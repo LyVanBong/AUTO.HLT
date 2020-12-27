@@ -3,268 +3,97 @@
     x:Class="AUTOHLT.MOBILE.Views.BuffLikes.BuffLikePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:badgeView="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:syncEffectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <Grid
             Margin="0"
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
-            RowDefinitions="40,500,*"
+            RowDefinitions="40,*"
             RowSpacing="0">
             <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000029}" />
-            <Grid
+
+            <customRenderer:CustomCollectionViewRenderer
+                x:Name="Lscollection"
                 Grid.Row="1"
-                Margin="0"
-                Padding="0"
-                ColumnDefinitions="*,*"
-                RowDefinitions="*,*"
-                RowSpacing="0">
-                <Grid.Resources>
-                    <Style TargetType="Frame">
-                        <Setter Property="CornerRadius" Value="10" />
-                        <Setter Property="Padding" Value="5" />
-                        <Setter Property="Margin" Value="10" />
-                        <Setter Property="BorderColor" Value="{StaticResource Gray-300}" />
-                        <Setter Property="HasShadow" Value="True" />
-                        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}" />
-                    </Style>
-                    <Style TargetType="Grid">
-                        <Setter Property="Margin" Value="0" />
-                        <Setter Property="Padding" Value="0" />
-                    </Style>
-                    <Style x:Key="IconLabel" TargetType="Label">
-                        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}" />
-                        <Setter Property="FontFamily" Value="Awesome5ProSolid" />
-                        <Setter Property="FontSize" Value="30" />
-                        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-                        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                        <Setter Property="TextColor" Value="{StaticResource ColorBuffLike}" />
-                    </Style>
-                    <Style TargetType="Button">
-                        <Setter Property="CornerRadius" Value="10" />
-                        <Setter Property="Margin" Value="5,10" />
-                        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}" />
-                        <Setter Property="BorderColor" Value="{StaticResource ColorBuffLike}" />
-                        <Setter Property="BorderWidth" Value=".5" />
-                    </Style>
-                    <Style TargetType="Span">
-                        <Setter Property="FontSize" Value="14" />
-                    </Style>
-                </Grid.Resources>
-                <Frame Grid.Row="0" Grid.Column="0">
-                    <Grid RowDefinitions="50,30,30,30,60">
-                        <Label
-                            Grid.Row="0"
-                            Style="{StaticResource IconLabel}"
-                            Text="{x:Static icon:FontAwesome5ProSolid.HandPointDown}" />
-                        <Label Grid.Row="1">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000049}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like1year.Number, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" Like" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="2">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000050}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like1year.TmpEndDate}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="3">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000056}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like1year.Price, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" VND" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Button Grid.Row="4" />
-                        <Button
-                            Grid.Row="4"
-                            Command="{Binding LikeUseServiceCommand}"
-                            CommandParameter="{Binding Like1year}"
-                            Text="{markupExtensions:Translate 1000052}">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding Like1year.IsRegisterProduct}"
-                                    TargetType="Button"
-                                    Value="True">
-                                    <Setter Property="Button.Text" Value="{markupExtensions:Translate 1000053}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                    </Grid>
-                </Frame>
-                <Frame Grid.Row="0" Grid.Column="1">
-                    <Grid RowDefinitions="50,30,30,30,60">
-                        <Label
-                            Grid.Row="0"
-                            Style="{StaticResource IconLabel}"
-                            Text="{x:Static icon:FontAwesome5ProSolid.HandPointLeft}" />
-                        <Label Grid.Row="1">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000049}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like1Forever.Number, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" Like" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="2">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000050}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like1Forever.TmpEndDate}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="3">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000056}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like1Forever.Price, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" VND" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Button
-                            Grid.Row="4"
-                            Command="{Binding LikeUseServiceCommand}"
-                            CommandParameter="{Binding Like1Forever}"
-                            Text="{markupExtensions:Translate 1000052}">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding Like1Forever.IsRegisterProduct}"
-                                    TargetType="Button"
-                                    Value="True">
-                                    <Setter Property="Button.Text" Value="{markupExtensions:Translate 1000053}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                    </Grid>
-                </Frame>
-                <Frame Grid.Row="1" Grid.Column="0">
-                    <Grid RowDefinitions="50,30,30,30,60">
-                        <Label
-                            Grid.Row="0"
-                            Style="{StaticResource IconLabel}"
-                            Text="{x:Static icon:FontAwesome5ProSolid.HandPointRight}" />
-                        <Label Grid.Row="1">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000049}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like2year.Number, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" Like" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="2">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000050}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like2year.TmpEndDate}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="3">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000056}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like2year.Price, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" VND" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Button
-                            Grid.Row="4"
-                            Command="{Binding LikeUseServiceCommand}"
-                            CommandParameter="{Binding Like2year}"
-                            Text="{markupExtensions:Translate 1000052}">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding Like2year.IsRegisterProduct}"
-                                    TargetType="Button"
-                                    Value="True">
-                                    <Setter Property="Button.Text" Value="{markupExtensions:Translate 1000053}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                    </Grid>
-                </Frame>
-                <Frame Grid.Row="1" Grid.Column="1">
-                    <Grid RowDefinitions="50,30,30,30,60">
-                        <Label
-                            Grid.Row="0"
-                            Style="{StaticResource IconLabel}"
-                            Text="{x:Static icon:FontAwesome5ProSolid.HandPointUp}" />
-                        <Label Grid.Row="1">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000049}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like2Forever.Number, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" Like" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="2">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000050}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like2Forever.TmpEndDate}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Grid.Row="3">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{markupExtensions:Translate 1000056}" />
-                                    <Span Text=": " />
-                                    <Span Text="{Binding Like2Forever.Price, Converter={StaticResource StringToPrice}}" />
-                                    <Span Text=" VND" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Button
-                            Grid.Row="4"
-                            Command="{Binding LikeUseServiceCommand}"
-                            CommandParameter="{Binding Like2Forever}"
-                            Text="{markupExtensions:Translate 1000052}">
-                            <Button.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding Like2Forever.IsRegisterProduct}"
-                                    TargetType="Button"
-                                    Value="True">
-                                    <Setter Property="Button.Text" Value="{markupExtensions:Translate 1000053}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                    </Grid>
-                </Frame>
-            </Grid>
+                Margin="10"
+                ItemsSource="{Binding ProductData}">
+                <customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                <customRenderer:CustomCollectionViewRenderer.ItemTemplate>
+                    <DataTemplate>
+                        <syncEffectsView:SfEffectsView
+                            Margin="0"
+                            Padding="5"
+                            BackgroundColor="{Binding ColorBg}"
+                            CornerRadius="15">
+                            <Grid
+                                Margin="3"
+                                Padding="0"
+                                ColumnDefinitions="*,80"
+                                RowDefinitions="40,20,20">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.BuffLikeCommand}" CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="{Binding TitleProduct}"
+                                    VerticalOptions="Center" />
+                                <Label Grid.Row="1" Grid.Column="0">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{markupExtensions:Translate 1000085}" />
+                                            <Span Text=" " />
+                                            <Span Text="{Binding Number}" />
+                                            <Span Text=" " />
+                                            <Span Text="{markupExtensions:Translate 1000086}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Row="2" Grid.Column="0">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Price, Converter={StaticResource StringToPrice}}" />
+                                            <Span Text=" VNĐ" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <badgeView:SfBadgeView
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    Padding="0"
+                                    BadgeText="{Binding BadgeView}">
+                                    <badgeView:SfBadgeView.BadgeSettings>
+                                        <badgeView:BadgeSetting
+                                            BadgeAnimation="Scale"
+                                            BadgePosition="TopRight"
+                                            BadgeType="Info"
+                                            CornerRadius="5"
+                                            FontSize="12" />
+                                    </badgeView:SfBadgeView.BadgeSettings>
+                                    <badgeView:SfBadgeView.Content>
+                                        <Image Source="{Binding IconLike}" />
+                                    </badgeView:SfBadgeView.Content>
+                                </badgeView:SfBadgeView>
+                            </Grid>
+                        </syncEffectsView:SfEffectsView>
+                    </DataTemplate>
+                </customRenderer:CustomCollectionViewRenderer.ItemTemplate>
+            </customRenderer:CustomCollectionViewRenderer>
 
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="3"
+                Grid.RowSpan="2"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

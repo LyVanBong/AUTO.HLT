@@ -18,6 +18,35 @@ namespace AUTOHLT.WEB.API.Controllers
         }
 
         /// <summary>
+        /// set số dư cho user
+        /// </summary>
+        /// <param name="moneyModel"></param>
+        /// <returns></returns>
+        [Route("SetMoney")]
+        [HttpPut]
+        public IHttpActionResult SetMoneyUser(MoneyModel moneyModel)
+        {
+            var data = _entities.SetMoneyUser(moneyModel.UserName, moneyModel.Price);
+            if (data > 0)
+            {
+                return Ok(new ResponseModel<int>
+                {
+                    Code = 987,
+                    Message = "Thanh cong",
+                    Data = data
+                });
+            }
+            else
+            {
+                return Ok(new ResponseModel<int>
+                {
+                    Code = -987,
+                    Message = "Loi phat sinh",
+                    Data = data
+                });
+            }
+        }
+        /// <summary>
         /// kiem tra tai khoan user da ton tai hay chua
         /// </summary>
         /// <param name="userName"></param>

@@ -28,7 +28,7 @@
                 Grid.Column="0"
                 BackgroundColor="Transparent"
                 FontFamily="Awesome5ProSolid"
-                FontSize="25"
+                FontSize="30"
                 HorizontalOptions="Center"
                 Text="{x:Static icon:FontAwesome5ProSolid.ChevronLeft}"
                 TextColor="#fff"

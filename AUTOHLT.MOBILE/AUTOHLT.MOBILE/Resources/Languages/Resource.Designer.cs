@@ -734,5 +734,149 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000074", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AUTOHLT Joint Stock Company hotline: 0829.726.888 web: autohlt.com.
+        /// </summary>
+        internal static string _1000075 {
+            get {
+                return ResourceManager.GetString("1000075", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff like.
+        /// </summary>
+        internal static string _1000076 {
+            get {
+                return ResourceManager.GetString("1000076", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff eyes.
+        /// </summary>
+        internal static string _1000077 {
+            get {
+                return ResourceManager.GetString("1000077", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff 5k friends.
+        /// </summary>
+        internal static string _1000078 {
+            get {
+                return ResourceManager.GetString("1000078", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff sub.
+        /// </summary>
+        internal static string _1000079 {
+            get {
+                return ResourceManager.GetString("1000079", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff like page.
+        /// </summary>
+        internal static string _1000080 {
+            get {
+                return ResourceManager.GetString("1000080", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock fb.
+        /// </summary>
+        internal static string _1000081 {
+            get {
+                return ResourceManager.GetString("1000081", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security fb.
+        /// </summary>
+        internal static string _1000082 {
+            get {
+                return ResourceManager.GetString("1000082", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter friends.
+        /// </summary>
+        internal static string _1000083 {
+            get {
+                return ResourceManager.GetString("1000083", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        internal static string _1000084 {
+            get {
+                return ResourceManager.GetString("1000084", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package.
+        /// </summary>
+        internal static string _1000085 {
+            get {
+                return ResourceManager.GetString("1000085", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Like.
+        /// </summary>
+        internal static string _1000086 {
+            get {
+                return ResourceManager.GetString("1000086", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        internal static string _1000087 {
+            get {
+                return ResourceManager.GetString("1000087", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to day.
+        /// </summary>
+        internal static string _1000088 {
+            get {
+                return ResourceManager.GetString("1000088", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in.
+        /// </summary>
+        internal static string _1000089 {
+            get {
+                return ResourceManager.GetString("1000089", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The price of  {0} {1} is {2} VND.
+        /// </summary>
+        internal static string _1000090 {
+            get {
+                return ResourceManager.GetString("1000090", resourceCulture);
+            }
+        }
     }
 }

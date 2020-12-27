@@ -3,6 +3,10 @@
     public class AppConstants
     {
         /// <summary>
+        /// key xác nhận chuyển từ app => home
+        /// </summary>
+        public static string LoginApp = "LoginApp";
+        /// <summary>
         /// id group chat list cong viec
         /// </summary>
         public static string IdChatWork = "-1001426073771";

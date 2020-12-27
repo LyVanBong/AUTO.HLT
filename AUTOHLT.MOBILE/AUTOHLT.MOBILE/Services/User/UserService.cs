@@ -15,6 +15,24 @@ namespace AUTOHLT.MOBILE.Services.User
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<string>> SetMoneyUser(string userName, string price)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("UserName",userName),
+                    new RequestParameter("Price",price),
+                };
+                var data = await _requestProvider.PutAsync<string>("user/SetMoney", para);
+                return data;
+            }
+            catch (Exception )
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseModel<string>> HistorySetMoneyForUser(string discount, string price, string idSend, string idReceive, string transferType)
         {
             try
@@ -40,6 +58,7 @@ namespace AUTOHLT.MOBILE.Services.User
         {
             try
             {
+                var prices = price.Replace(".0000", "");
                 var para = new List<RequestParameter>
                 {
                     new RequestParameter("UserName",userName),
@@ -51,7 +70,7 @@ namespace AUTOHLT.MOBILE.Services.User
                     new RequestParameter("Role",role),
                     new RequestParameter("IsActive",isActive),
                     new RequestParameter("Age",age),
-                    new RequestParameter("Price",price),
+                    new RequestParameter("Price",prices),
                     new RequestParameter("IdDevice",idDevice),
                 };
                 var data = await _requestProvider.PutAsync<string>("user/updateuser", para);

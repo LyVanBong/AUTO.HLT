@@ -137,52 +137,41 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var message = string.Format(Resource._1000067,
-                    string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(TotalMoney)), UserName);
-                var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, message, "OK", "Cancel");
-                if (res)
+                if (NumberMoney != null && UserName != null)
                 {
-                    var myMoney = long.Parse(CurrentBalance);
-                    var number = long.Parse(NumberMoney);
-                    var user = await _databaseService.GetAccountUser();
-                    if (user != null)
+                    var message = string.Format(Resource._1000067,
+                        string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(TotalMoney)), UserName);
+                    var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, message, "OK", "Cancel");
+                    if (res)
                     {
-                        var data = new UserModel
+                        var myMoney = long.Parse(CurrentBalance);
+                        var user = await _databaseService.GetAccountUser();
+                        if (user != null)
                         {
-                            UserName = UserName,
-                            Name = user.Name,
-                            Password = user.Password,
-                            Email = user.Email,
-                            NumberPhone = user.NumberPhone,
-                            Sex = user.Sex,
-                            Role = user.Role,
-                            IsActive = user.IsActive,
-                            Age = user.Age,
-                            Price = myMoney + long.Parse(TotalMoney) + "",
-                            IdDevice = user.IdDevice,
-                        };
-                        var setMoneyForUser = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
-                            data.Email, data.NumberPhone.ToString(), data.Sex.ToString(), data.Role.ToString(),
-                            data.IsActive.ToString(), data.Age.ToString(), data.Price.ToString(), data.IdDevice);
-                        if (setMoneyForUser != null && setMoneyForUser.Code > 0)
-                        {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                            var log = await _userService.HistorySetMoneyForUser(Discount, NumberMoney, user.ID, _idRec,
-                                "1");
-                            var messageTele = $"Nạp tiền\n" +
-                                          $"Id người gửi: {user.ID}\n" +
-                                          $"Id người nhận: {_idRec}\n" +
-                                          $"Số tiền nạp: {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(NumberMoney))} VND\n" +
-                                          $"Chiết khẩu: {Discount} %\n" +
-                                          $"Thời gian chuyển: {DateTime.Now.ToString("F")}";
-                            var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWMoneyHistory,
-                                messageTele);
-                        }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
-                        }
+                            var a = double.Parse(TotalMoney);
+                            var total = Math.Ceiling((decimal)a);
 
+                            var setMoneyForUser = await _userService.SetMoneyUser(UserName, myMoney + total + "");
+                            if (setMoneyForUser != null && setMoneyForUser.Code > 0)
+                            {
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                                var log = await _userService.HistorySetMoneyForUser(Discount, NumberMoney, user.ID, _idRec,
+                                    "1");
+                                var messageTele = $"Nạp tiền\n" +
+                                              $"Id người gửi: {user.ID}\n" +
+                                              $"Id người nhận: {_idRec}\n" +
+                                              $"Số tiền nạp: {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(NumberMoney))} VND\n" +
+                                              $"Chiết khẩu: {Discount} %\n" +
+                                              $"Thời gian chuyển: {DateTime.Now.ToString("F")}";
+                                var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWMoneyHistory,
+                                    messageTele);
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                            }
+
+                        }
                     }
                 }
             }
@@ -193,6 +182,7 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
             finally
             {
                 UserName = string.Empty;
+                IsEnabledButton = false;
                 IsLoading = false;
             }
         }
@@ -259,7 +249,7 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
                         var money = await _userService.GetMoneyUser(UserName);
                         if (money != null && money.Code > 0 && money.Data != null)
                         {
-                            CurrentBalance = money.Data;
+                            CurrentBalance = money.Data.Replace(".0000", "");
                         }
                     }
                     else

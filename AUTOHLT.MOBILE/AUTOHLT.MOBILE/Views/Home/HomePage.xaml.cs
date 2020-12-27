@@ -1,5 +1,4 @@
-﻿
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
@@ -22,7 +21,6 @@ namespace AUTOHLT.MOBILE.Views.Home
             safeInsets.Bottom = -20;
             Padding = safeInsets;
         }
-
         protected override bool OnBackButtonPressed()
         {
             return true;

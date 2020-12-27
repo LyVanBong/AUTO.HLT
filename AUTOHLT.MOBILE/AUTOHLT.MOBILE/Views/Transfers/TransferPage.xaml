@@ -33,6 +33,7 @@
                 LeadingViewPosition="Inside">
                 <Entry
                     ClearButtonVisibility="WhileEditing"
+                    Keyboard="Email"
                     ReturnType="Next"
                     Text="{Binding UserName}">
                     <Entry.Behaviors>

@@ -95,6 +95,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
                                       $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
                         var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
                             message);
+                        CloseDialog();
                     }
                     else
                     {

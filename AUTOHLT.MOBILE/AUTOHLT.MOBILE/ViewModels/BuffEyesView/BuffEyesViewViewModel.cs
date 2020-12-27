@@ -1,12 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.UseService;
-using AUTOHLT.MOBILE.Models.Product;
+﻿using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.User;
-using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.User;
@@ -14,6 +7,15 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTOHLT.MOBILE.Controls.Dialog.UseService;
+using AUTOHLT.MOBILE.Resources.Languages;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
@@ -27,12 +29,20 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
         private ProductModel _like2Year;
         private ProductModel _like2Forever;
         private IDatabaseService _databaseService;
-        private UserModel _userModel;
+        // private UserModel _userModel;
         private IPageDialogService _pageDialogService;
         private IUserService _userService;
         private IDialogService _dialogService;
+        private List<ListRegisterProductModel> _regis;
+        private List<ProductModel> _productData;
 
-        public ICommand LikeUseServiceCommand { get; private set; }
+        public List<ProductModel> ProductData
+        {
+            get => _productData;
+            set => SetProperty(ref _productData, value);
+        }
+
+        public ICommand BuffViewEyeCommand { get; private set; }
         /// <summary>
         /// goij like 1 400 thoi han vinh vien
         /// </summary>
@@ -82,103 +92,94 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
             _databaseService = databaseService;
             _productService = productService;
             IsLoading = true;
-            LikeUseServiceCommand = new Command<ProductModel>(LikeUseService);
+            BuffViewEyeCommand = new Command<ProductModel>(BuffViewEye);
         }
 
-        private async void LikeUseService(ProductModel product)
+        private async void BuffViewEye(ProductModel product)
         {
             try
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                // Đã đang kỹ dịch vụ này tiến hành sử dụng
-                if (product.IsRegisterProduct)
+                if (product != null)
                 {
-                    var id = _userModel.ID;
-                    var number = int.Parse(product.Number);
-                    var num = 0;
-                    var data = await _productService.GetHistoryUseServiceForUser(id);
-                    if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
+                    var user = await _databaseService.GetAccountUser();
+                    if (product.IsRegisterProduct)
                     {
-                        var lsHistoryUserService = data.Data.ToList()
-                            .Where(x => x.ID_ProductType == product.ID && DateTime.Parse(x.DateCreate).Date == DateTime.Now.Date).ToList();
-                        if (lsHistoryUserService.Any())
+                        var id = user.ID;
+                        var number = int.Parse(product.Number);
+                        var num = 0;
+                        var data = await _productService.GetHistoryUseServiceForUser(id);
+                        if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
                         {
-                            foreach (var item in lsHistoryUserService)
+                            var lsHistoryUserService = data.Data.ToList()
+                                .Where(x => x.ID_ProductType == product.ID && DateTime.Parse(x.DateCreate).Date == DateTime.Now.Date).ToList();
+                            if (lsHistoryUserService.Any())
                             {
-                                num += int.Parse(item.Number);
+                                foreach (var item in lsHistoryUserService)
+                                {
+                                    num += int.Parse(item.Number);
+                                }
                             }
                         }
-                    }
 
-                    if (num >= number)
-                    {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000061, "OK");
+                        if (num >= number)
+                        {
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000061, "OK");
+                        }
+                        else
+                        {
+                            var para = new DialogParameters();
+                            para.Add("IdProduct", product.ID);
+                            para.Add("IdUser", id);
+                            para.Add("Number", (number - num).ToString());
+                            para.Add("Title", Resource._1000063);
+                            await _dialogService.ShowDialogAsync(nameof(UseServiceDialog), para);
+                        }
                     }
                     else
                     {
-                        var para = new DialogParameters();
-                        para.Add("IdProduct", product.ID);
-                        para.Add("IdUser", id);
-                        para.Add("Number", (number - num).ToString());
-                        para.Add("Title", Resource._1000063);
-                        await _dialogService.ShowDialogAsync(nameof(UseServiceDialog), para);
-                    }
-                }
-                else // Chưa đang kỹ dịch vụ bắt đầu đăng ký lại
-                {
-                    var username = _userModel.UserName;
-                    var idUser = _userModel.ID;
-                    var moneyModel = await _userService.GetMoneyUser(username);
-                    var money = long.Parse(moneyModel.Data);
-                    var price = long.Parse(product.Price);
-                    if (money >= price)
-                    {
 
-                        var messager = string.Format(Resource._1000057, string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Number)), Resource._1000063, product.TmpEndDate, string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Price)));
-                        var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, messager, "OK",
-                            "Cancel");
-                        if (res)
+                        var username = user.UserName;
+                        var idUser = user.ID;
+                        var moneyModel = await _userService.GetMoneyUser(username);
+                        var money = long.Parse(moneyModel.Data.Replace(".0000", ""));
+                        var price = long.Parse(product.Price);
+                        if (money >= price)
                         {
-                            if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
-                            {
 
-                                var registerProduct = await _productService.RegisterProduct(product.ID, idUser);
-                                if (registerProduct != null && registerProduct.Code > 0 && registerProduct.Data != null)
+                            var messager = string.Format(Resource._1000057, string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Number)), Resource._1000063, product.EndDate, string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Price)));
+                            var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, messager, "OK",
+                                "Cancel");
+                            if (res)
+                            {
+                                if (moneyModel != null && moneyModel.Code > 0 && moneyModel.Data != null)
                                 {
-                                    var user = new UserModel
+
+                                    var registerProduct = await _productService.RegisterProduct(product.ID, idUser);
+                                    if (registerProduct != null && registerProduct.Code > 0 && registerProduct.Data != null)
                                     {
-                                        UserName = _userModel.UserName,
-                                        Name = _userModel.Name,
-                                        Password = _userModel.Password,
-                                        Email = _userModel.Email,
-                                        NumberPhone = _userModel.NumberPhone,
-                                        Sex = _userModel.Sex,
-                                        Role = _userModel.Role,
-                                        IsActive = _userModel.IsActive,
-                                        Age = _userModel.Age,
-                                        Price = money - price + "",
-                                        IdDevice = _userModel.IdDevice
-                                    };
-                                    var updateUser = await _userService.UpdateUser(user.UserName, user.Name, user.Password, user.Email, user.NumberPhone.ToString(), user.Sex.ToString(), user.Role.ToString(), user.IsActive.ToString(), user.Age.ToString(), user.Price.ToString(), user.IdDevice);
-                                    if (updateUser != null && updateUser.Code > 0)
-                                    {
-                                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
-                                            "OK");
-                                        await InitializeData();
-                                    }
-                                    else
-                                    {
-                                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041,
-                                            "OK");
+
+                                        var updateUser = await _userService.SetMoneyUser(username, money - price + "");
+                                        if (updateUser != null && updateUser.Code > 0)
+                                        {
+                                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
+                                                "OK");
+                                            await InitializeData();
+                                        }
+                                        else
+                                        {
+                                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041,
+                                                "OK");
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, moneyModel.Message, "OK");
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, moneyModel.Message, "OK");
+                        }
                     }
                 }
             }
@@ -204,58 +205,44 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
         {
             try
             {
-                _userModel = await _databaseService.GetAccountUser();
-                if (_userModel != null)
+                var user = await _databaseService.GetAccountUser();
+                var data = await _productService.GetAllProduct();
+                var regisProductData = await _productService.GetListRegisterProductForUser(user.ID);
+                if (regisProductData != null && regisProductData.Code > 0 && regisProductData.Data != null &&
+                    regisProductData.Data.Any())
+                    _regis = new List<ListRegisterProductModel>(regisProductData.Data);
+                if (data != null && data.Code > 0 && data.Data.Any())
                 {
-                    var lsProduct = await _productService.GetAllProduct();
-                    if (lsProduct != null && lsProduct.Code > 0 && lsProduct.Data != null && lsProduct.Data.Any())
+                    var product = new List<ProductModel>();
+                    var lsProduct = data.Data;
+                    foreach (var item in lsProduct)
                     {
-                        Like1year = lsProduct.Data.FirstOrDefault(x => x.ID == "c81cd058-8374-4c3f-9de7-4002d0d46ee0");
-                        Like1Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "72235dda-5689-4b88-ac7e-0a82143e45d6");
-                        Like2year = lsProduct.Data.FirstOrDefault(x => x.ID == "9ec8a62e-ee56-4c8f-ace1-89bc20296bfa");
-                        Like2Forever = lsProduct.Data.FirstOrDefault(x => x.ID == "4f1946ed-913f-431b-97ef-a3c5d5094708");
-                    }
-
-                    var lsRegisterProduct = await _productService.GetListRegisterProductForUser(_userModel.ID);
-                    if (lsRegisterProduct != null && lsRegisterProduct.Code > 0 && lsRegisterProduct.Data != null && lsRegisterProduct.Data.Any())
-                    {
-                        foreach (var item in lsRegisterProduct.Data)
+                        if (item.GroupProduct == "2")
                         {
-                            switch (item.ID_ProductType)
+                            item.TitleProduct= $"Buff { item.Number} {Resource._1000087} / {Resource._1000088} {Resource._1000089} { item.EndDate} {Resource._1000088}";
+                            item.Icon = "icon_eye_view.png";
+                            if (_regis != null && _regis.Any())
                             {
-                                case "c81cd058-8374-4c3f-9de7-4002d0d46ee0":
-                                    var dataEnd = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
-                                    var dateNow = DateTime.Now;
-                                    if (dateNow < dataEnd)
+                                var obj = _regis.FirstOrDefault(x => x.ID_ProductType == item.ID);
+                                if (obj != null)
+                                {
+                                    var endDate = DateTime.Parse(obj.DateCreate);
+                                    var totalDay = (DateTime.Now - endDate).TotalDays;
+                                    var number = double.Parse(item.Number);
+                                    if (totalDay <= number)
                                     {
-                                        Like1year.IsRegisterProduct = true;
-                                        RaisePropertyChanged(nameof(Like1year));
+                                        item.IsRegisterProduct = true;
+                                        item.BadgeView = "Paid";
                                     }
-                                    break;
-                                case "72235dda-5689-4b88-ac7e-0a82143e45d6":
-                                    Like1Forever.IsRegisterProduct = true;
-                                    RaisePropertyChanged(nameof(Like1Forever));
-                                    break;
-                                case "9ec8a62e-ee56-4c8f-ace1-89bc20296bfa":
-                                    var dataEnd2 = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
-                                    var dateNow2 = DateTime.Now;
-                                    if (dateNow2 < dataEnd2)
-                                    {
-                                        Like2year.IsRegisterProduct = true;
-                                        RaisePropertyChanged(nameof(Like2year));
-                                    }
-
-                                    break;
-                                case "4f1946ed-913f-431b-97ef-a3c5d5094708":
-                                    Like2Forever.IsRegisterProduct = true;
-                                    RaisePropertyChanged(nameof(Like2Forever));
-                                    break;
-                                default:
-                                    break;
+                                }
                             }
+                            product.Add(item);
                         }
                     }
+
+                    ProductData = new List<ProductModel>(product);
                 }
+
             }
             catch (Exception e)
             {
