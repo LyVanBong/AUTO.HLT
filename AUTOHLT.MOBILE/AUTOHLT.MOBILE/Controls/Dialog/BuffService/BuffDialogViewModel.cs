@@ -1,6 +1,5 @@
 ﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.Product;
-using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Product;
@@ -165,6 +164,10 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                             if (RequestClose != null)
                                 RequestClose(null);
                         }
+
+                        var num = long.Parse(Number) * long.Parse(NumberService);
+                        var historyService = await _productService.AddHistoryUseService(_idProduct, Title, _userName,
+                            num + "", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
                         var message = $"{Title}\n" +
                                       $"Số lượng: {Number}\n" +
                                       $"Nội dung: {Content}\n" +
@@ -218,7 +221,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                     if (_productModel != null)
                     {
                         Price = _productModel.Price;
-                        NumberService =_productModel.Number;
+                        NumberService = _productModel.Number;
                         NoteService = string.Format(Resource._1000090, string.Format(new CultureInfo("en-US"), "{0:0,0}",
                                 decimal.Parse(_productModel.Number)), service,
                             string.Format(new CultureInfo("en-US"), "{0:0,0}",

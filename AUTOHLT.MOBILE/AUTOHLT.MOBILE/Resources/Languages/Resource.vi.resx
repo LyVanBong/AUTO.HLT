@@ -481,4 +481,12 @@
     <value>Giá của {0} {1} là {2} VND</value>
     <comment>Giá của {0} {1} với giá {2} VND</comment>
   </data>
+  <data name="1000091" xml:space="preserve">
+    <value>Liên hệ trực tiếp</value>
+    <comment>Liên hệ trực tiếp</comment>
+  </data>
+  <data name="1000092" xml:space="preserve">
+    <value>Gửi yêu cầu</value>
+    <comment>Gửi yêu cầu</comment>
+  </data>
 </root>

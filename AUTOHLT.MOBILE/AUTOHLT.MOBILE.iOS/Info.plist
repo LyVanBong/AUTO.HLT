@@ -62,5 +62,10 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The library I use requires this permission</string>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>lyft</string>
+    <string>fb</string>
+  </array>
 </dict>
 </plist>

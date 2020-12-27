@@ -14,7 +14,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
-            RowDefinitions="40,60,40,60,60,40,60,*"
+            RowDefinitions="40,40,200,60,*"
             RowSpacing="0">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">
@@ -24,117 +24,69 @@
                 </Style>
             </Grid.Resources>
             <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000081}" />
-
-            <textInputLayout:SfTextInputLayout
+            <Label
                 Grid.Row="1"
-                FocusedColor="{StaticResource BtLogin}"
-                Hint="{markupExtensions:Translate 1000080}"
-                LeadingViewPosition="Inside">
-                <Entry
-                    ClearButtonVisibility="WhileEditing"
-                    Keyboard="Email"
-                    ReturnType="Next"
-                    Text="{Binding UserName}">
-                    <Entry.Behaviors>
-                        <behaviors:EventToCommandBehavior Command="{Binding UnfocusedUserNameCommand}" EventName="Unfocused" />
-                    </Entry.Behaviors>
-                </Entry>
-                <textInputLayout:SfTextInputLayout.LeadingView>
-                    <Label
-                        FontFamily="Awesome5ProSolid"
-                        Text="{x:Static icon:FontAwesome5ProSolid.User}"
-                        VerticalTextAlignment="Center" />
-                </textInputLayout:SfTextInputLayout.LeadingView>
-            </textInputLayout:SfTextInputLayout>
-
-            <Label
+                Margin="20,0"
+                BackgroundColor="#fff"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{markupExtensions:Translate 1000091}" />
+                        <Span Text=":   " />
+                        <Span Text="0829.726.888   " TextColor="#21209c">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CallAdminCommand}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span
+                            FontFamily="Awesome5ProSolid"
+                            Text="{x:Static icon:FontAwesome5ProSolid.Phone}"
+                            TextColor="#21209c">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CallAdminCommand}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <textInputLayout:SfTextInputLayout
                 Grid.Row="2"
-                Margin="20,0"
-                VerticalOptions="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{markupExtensions:Translate 1000066}" />
-                        <Span Text=": " />
-                        <Span Text="{Binding CurrentBalance, Converter={StaticResource StringToPrice}}" />
-                        <Span Text=" VND" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-
-            <textInputLayout:SfTextInputLayout
-                Grid.Row="3"
                 FocusedColor="{StaticResource BtLogin}"
-                Hint="{markupExtensions:Translate 1000065}"
+                Hint="{markupExtensions:Translate 1000074}"
                 LeadingViewPosition="Inside">
-                <Entry
-                    ClearButtonVisibility="WhileEditing"
-                    Keyboard="Numeric"
-                    ReturnType="Next"
-                    Text="{Binding NumberMoney}">
-                    <Entry.Behaviors>
-                        <behaviors:EventToCommandBehavior Command="{Binding UnfocusedNumberMoneyCommand}" EventName="Unfocused" />
-                    </Entry.Behaviors>
-                </Entry>
+                <Editor
+                    HeightRequest="160"
+                    Keyboard="Text"
+                    Text="{Binding Content}">
+                    <Editor.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding UnfocusedCommand}" EventName="Unfocused" />
+                    </Editor.Behaviors>
+                </Editor>
                 <textInputLayout:SfTextInputLayout.LeadingView>
                     <Label
                         FontFamily="Awesome5ProSolid"
-                        Text="{x:Static icon:FontAwesome5ProSolid.DollarSign}"
+                        Text="{x:Static icon:FontAwesome5ProSolid.Newspaper}"
                         VerticalTextAlignment="Center" />
                 </textInputLayout:SfTextInputLayout.LeadingView>
             </textInputLayout:SfTextInputLayout>
-
-            <textInputLayout:SfTextInputLayout
-                Grid.Row="4"
-                FocusedColor="{StaticResource BtLogin}"
-                Hint="{markupExtensions:Translate 1000068}"
-                LeadingViewPosition="Inside">
-                <Entry
-                    ClearButtonVisibility="WhileEditing"
-                    Keyboard="Numeric"
-                    ReturnType="Next"
-                    Text="{Binding Discount}">
-                    <Entry.Behaviors>
-                        <behaviors:EventToCommandBehavior Command="{Binding UnfocusedDiscountCommand}" EventName="Unfocused" />
-                    </Entry.Behaviors>
-                </Entry>
-                <textInputLayout:SfTextInputLayout.LeadingView>
-                    <Label
-                        FontFamily="Awesome5ProSolid"
-                        Text="{x:Static icon:FontAwesome5ProSolid.Percentage}"
-                        VerticalTextAlignment="Center" />
-                </textInputLayout:SfTextInputLayout.LeadingView>
-            </textInputLayout:SfTextInputLayout>
-
-            <Label
-                Grid.Row="5"
-                Margin="20,0"
-                VerticalOptions="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{markupExtensions:Translate 1000065}" />
-                        <Span Text=": " />
-                        <Span Text="{Binding TotalMoney, Converter={StaticResource StringToPrice}}" />
-                        <Span Text=" VND" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
 
             <Button
-                Grid.Row="6"
+                Grid.Row="3"
                 Margin="20,5"
                 Padding="0"
                 BackgroundColor="{StaticResource Gray-White}"
                 BorderColor="{StaticResource BtLogin}"
                 BorderWidth="1"
-                Command="{Binding TransfersCommand}"
+                Command="{Binding UnlockFacebookCommand}"
                 CornerRadius="10"
                 FontSize="18"
                 IsEnabled="{Binding IsEnabledButton}"
-                Text="{markupExtensions:Translate 1000064}" />
+                Text="{markupExtensions:Translate 1000092}" />
 
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="8"
+                Grid.RowSpan="4"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

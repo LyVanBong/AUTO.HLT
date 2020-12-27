@@ -878,5 +878,23 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000090", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        internal static string _1000091 {
+            get {
+                return ResourceManager.GetString("1000091", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send require.
+        /// </summary>
+        internal static string _1000092 {
+            get {
+                return ResourceManager.GetString("1000092", resourceCulture);
+            }
+        }
     }
 }
