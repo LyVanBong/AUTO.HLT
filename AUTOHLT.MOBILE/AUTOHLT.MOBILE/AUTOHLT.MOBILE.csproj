@@ -167,7 +167,7 @@
     <EmbeddedResource Update="Views\SecurityFb\SecurityFbPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\SuportCustumer\SuportCustumerPage.xaml">
+    <EmbeddedResource Update="Views\SuportCustumer\SuportCustomerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\UnLockFb\UnLockFbPage.xaml">
@@ -180,6 +180,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SuportCustumer\SuportCustomerPage.xaml.cs">
+      <DependentUpon>SuportCustomerPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

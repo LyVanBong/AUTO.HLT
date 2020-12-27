@@ -99,7 +99,7 @@ namespace AUTOHLT.MOBILE
             #region Register For Navigation
 
             containerRegistry.RegisterForNavigation<BuffSubPage, BuffLikePageViewModel>();
-            containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustumerViewModel>();
+            containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
             containerRegistry.RegisterForNavigation<FilterFriendPage, FilterFriendViewModel>();
             containerRegistry.RegisterForNavigation<SecurityFbPage, SecurityFbViewModel>();
             containerRegistry.RegisterForNavigation<UnLockFbPage, UnLockFbViewModel>();

@@ -489,4 +489,12 @@
     <value>Send require</value>
     <comment>Gửi yêu cầu</comment>
   </data>
+  <data name="1000093" xml:space="preserve">
+    <value>Send require suport</value>
+    <comment>Gửi yêu cầu hố trợ</comment>
+  </data>
+  <data name="1000094" xml:space="preserve">
+    <value>Successfully sent the request to the admin, we will get back to you shortly!</value>
+    <comment>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</comment>
+  </data>
 </root>

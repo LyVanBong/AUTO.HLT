@@ -489,4 +489,12 @@
     <value>Gửi yêu cầu</value>
     <comment>Gửi yêu cầu</comment>
   </data>
+  <data name="1000093" xml:space="preserve">
+    <value>Gửi yêu cầu hố trợ</value>
+    <comment>Gửi yêu cầu hố trợ</comment>
+  </data>
+  <data name="1000094" xml:space="preserve">
+    <value>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</value>
+    <comment>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</comment>
+  </data>
 </root>
