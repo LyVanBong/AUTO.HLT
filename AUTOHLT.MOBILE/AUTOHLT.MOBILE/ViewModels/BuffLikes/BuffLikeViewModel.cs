@@ -184,6 +184,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     {
                         if (item.GroupProduct == "1")
                         {
+                            item.TitleProduct= $"Buff {item.Number} like / {Resource._1000088} {Resource._1000089} {item.EndDate} {Resource._1000088}";
                             item.Icon = "icon_like_product.png";
                             if (_regis != null && _regis.Any())
                             {

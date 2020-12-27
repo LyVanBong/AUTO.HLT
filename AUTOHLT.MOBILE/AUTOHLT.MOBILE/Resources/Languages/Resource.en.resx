@@ -477,4 +477,8 @@
     <value>in</value>
     <comment>trong</comment>
   </data>
+  <data name="1000090" xml:space="preserve">
+    <value>The price of  {0} {1} is {2} VND</value>
+    <comment>Giá của {0} {1} với giá {2} VND</comment>
+  </data>
 </root>

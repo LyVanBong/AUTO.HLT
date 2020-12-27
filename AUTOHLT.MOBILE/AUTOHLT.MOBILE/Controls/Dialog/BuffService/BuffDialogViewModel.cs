@@ -11,6 +11,7 @@ using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -34,6 +35,21 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         private IPageDialogService _pageDialogService;
         private IDatabaseService _database;
         private ITelegramService _telegramService;
+        private string _noteService;
+        private string _numberService;
+
+        public string NumberService
+        {
+            get => _numberService;
+            set => SetProperty(ref _numberService, value);
+        }
+
+        public ICommand ClosePopupCommand { get; private set; }
+        public string NoteService
+        {
+            get => _noteService;
+            set => SetProperty(ref _noteService, value);
+        }
 
         public string UserMoney
         {
@@ -90,6 +106,13 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             _productService = productService;
             UseServiceCommand = new Command(UseService);
             UnfocusedCommand = new Command<string>(Unfocused);
+            ClosePopupCommand = new Command(ClosePopup);
+        }
+
+        private void ClosePopup()
+        {
+            if (RequestClose != null)
+                RequestClose(null);
         }
 
         private void Unfocused(string key)
@@ -97,7 +120,8 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             if (key == "0")
             {
                 if (Number == null) return;
-                var res = long.Parse(Price) * long.Parse(Number);
+                var res = (long.Parse(Price) / long.Parse(NumberService)) *
+                          (long.Parse(Number) * long.Parse(NumberService));
                 if (res > int.Parse(UserMoney))
                 {
                     var a = int.Parse(UserMoney) / int.Parse(Price);
@@ -125,23 +149,8 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                 var user = await _database.GetAccountUser();
                 if (amout > 0 && amout <= long.Parse(user.Price))
                 {
-                    var data = new UserModel
-                    {
-                        UserName = user.UserName,
-                        Name = user.Name,
-                        Password = user.Password,
-                        Email = user.Email,
-                        NumberPhone = user.NumberPhone,
-                        Sex = user.Sex,
-                        Role = user.Role,
-                        IsActive = user.IsActive,
-                        Age = user.Age,
-                        Price = long.Parse(user.Price) - amout + "",
-                        IdDevice = user.IdDevice,
-                    };
-                    var update = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
-                        data.Email, data.NumberPhone.ToString(), data.Sex.ToString(), data.Role.ToString(),
-                        data.IsActive.ToString(), data.Age.ToString(), data.Price.ToString(), data.IdDevice);
+                    var data = long.Parse(user.Price) - amout;
+                    var update = await _userService.SetMoneyUser(user.UserName, data + "");
                     if (update != null && update.Code > 0)
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
@@ -149,7 +158,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                         var myMoney = await _userService.GetMoneyUser(_userName);
                         if (myMoney != null && myMoney.Code > 0)
                         {
-                            UserMoney = myMoney.Data;
+                            UserMoney = myMoney.Data.Replace(".0000", "");
                         }
                         else
                         {
@@ -191,10 +200,11 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                 Title = Resource._1000058 + " " + TextSubmit;
                 _idProduct = parameters.GetValue<string>("IdProduct");
                 _userName = parameters.GetValue<string>("UserName");
+                var service = parameters.GetValue<string>("Service");
                 var myMoney = await _userService.GetMoneyUser(_userName);
                 if (myMoney != null && myMoney.Code > 0)
                 {
-                    UserMoney = myMoney.Data;
+                    UserMoney = myMoney.Data.Replace(".0000", "");
                 }
                 else
                 {
@@ -208,6 +218,11 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                     if (_productModel != null)
                     {
                         Price = _productModel.Price;
+                        NumberService =_productModel.Number;
+                        NoteService = string.Format(Resource._1000090, string.Format(new CultureInfo("en-US"), "{0:0,0}",
+                                decimal.Parse(_productModel.Number)), service,
+                            string.Format(new CultureInfo("en-US"), "{0:0,0}",
+                                decimal.Parse(_productModel.Price)));
                     }
                     else
                     {

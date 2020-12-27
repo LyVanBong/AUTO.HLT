@@ -219,6 +219,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                     {
                         if (item.GroupProduct == "2")
                         {
+                            item.TitleProduct= $"Buff { item.Number} {Resource._1000087} / {Resource._1000088} {Resource._1000089} { item.EndDate} {Resource._1000088}";
                             item.Icon = "icon_eye_view.png";
                             if (_regis != null && _regis.Any())
                             {

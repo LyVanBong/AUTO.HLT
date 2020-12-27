@@ -869,5 +869,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000089", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The price of  {0} {1} is {2} VND.
+        /// </summary>
+        internal static string _1000090 {
+            get {
+                return ResourceManager.GetString("1000090", resourceCulture);
+            }
+        }
     }
 }

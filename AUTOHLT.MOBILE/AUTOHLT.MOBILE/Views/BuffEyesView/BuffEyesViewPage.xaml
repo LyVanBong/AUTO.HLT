@@ -17,6 +17,7 @@
             RowDefinitions="40,*"
             RowSpacing="0">
             <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000062}" />
+
             <customRenderer:CustomCollectionViewRenderer
                 x:Name="Lscollection"
                 Grid.Row="1"
@@ -38,8 +39,7 @@
                                 ColumnDefinitions="*,80"
                                 RowDefinitions="40,20,20">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.BuffViewEyeCommand}" CommandParameter="{Binding .}" />
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.BuffViewEyeCommand}" CommandParameter="{Binding .}" />
                                 </Grid.GestureRecognizers>
                                 <Label
                                     Grid.Row="0"
@@ -53,7 +53,7 @@
                                             <Span Text=" " />
                                             <Span Text="{Binding Number}" />
                                             <Span Text=" " />
-                                            <Span Text="{markupExtensions:Translate 1000086}" />
+                                            <Span Text="{markupExtensions:Translate 1000087}" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>

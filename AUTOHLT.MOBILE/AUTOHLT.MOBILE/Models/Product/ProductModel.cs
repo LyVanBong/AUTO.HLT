@@ -22,8 +22,7 @@ namespace AUTOHLT.MOBILE.Models.Product
         public ImageSource IconLike => ImageSource.FromResource($"AUTOHLT.MOBILE.Resources.Images.{Icon}", typeof(ProductModel).GetTypeInfo().Assembly);
         public string Icon { get; set; }
 
-        public string TitleProduct =>
-            $"Buff {Number} like / {Resource._1000088} {Resource._1000089} {EndDate} {Resource._1000088}";
+        public string TitleProduct { get; set; }
         public string ColorBg => IsRegisterProduct ? "#d0e8f2" : "#f1f1f1";
         public string BadgeView { get; set; }
 

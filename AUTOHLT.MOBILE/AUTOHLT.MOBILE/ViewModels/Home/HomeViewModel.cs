@@ -153,7 +153,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     new ServiceModel
                     {
                         Icon = "icon_work.png",
-                        TitleService = Resource._1000026,
+                        TitleService = Resource._1000027,
                         TypeService = 13,
                         UserRole = "1",
                         BadgeView = "Employees"
@@ -161,7 +161,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     new ServiceModel
                     {
                         Icon = "icon_history.png",
-                        TitleService = Resource._1000027,
+                        TitleService = Resource._1000034,
                         TypeService = 14,
                         UserRole = "0",
                     },
@@ -257,38 +257,45 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 if (para != null)
                     key = int.Parse(para);
             }
-
-            await NavigationService.NavigateAsync(ServiceFunctions[key]);
+            if (key == 5 || key == 6)
+            {
+                BuffService(key + "");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync(ServiceFunctions[key]);
+            }
 
             IsLoading = false;
         }
 
         private async void BuffService(string key)
         {
-            if (IsLoading) return;
+            ;
             IsLoading = true;
             var para = new DialogParameters();
             para.Add("UserName", UserModel.UserName);
             switch (key)
             {
-                case "0":
-                    para.Add("ServiceName", Resource._1000031);
-                    para.Add("IdProduct", "50d91145-9fb2-4be8-ac5f-1c7e5a97d34f");
+                case "5":
+                    para.Add("ServiceName", Resource._1000079);
+                    para.Add("Service","sub");
+                    para.Add("IdProduct", "1ad3c424-5333-46b0-a0e8-5c31a6dbb161");
                     break;
-                case "1":
-                    para.Add("ServiceName", Resource._1000032);
-                    para.Add("IdProduct", "4f6225ee-c18c-4b14-b3cf-f7243d0f3dbf");
+                case "6":
+                    para.Add("ServiceName", Resource._1000080);
+                    para.Add("Service", "like");
+                    para.Add("IdProduct", "82ea2831-60b3-4cf4-9828-be58c1c51a62");
                     break;
-                case "2":
-                    para.Add("ServiceName", Resource._1000033);
-                    para.Add("IdProduct", "1bddab36-9297-4698-9124-c977238a4a84");
-                    break;
+                //case "8":
+                //    para.Add("ServiceName", Resource._1000082);
+                //    para.Add("IdProduct", "ae1274f0-a779-4601-b59f-8bf9b3e5cdf7");
+                //    break;
                 default:
                     break;
             }
 
             await _dialogService.ShowDialogAsync(nameof(BuffDialog), para);
-            IsLoading = false;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -411,15 +418,14 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                             " báo mật fb cá nhân",
 
                         };
-                        var xungHo = new string[] { "Anh/Chi ", "Em ", "Bạn " };
-                        var messager = $"{xungHo[random.Next(xungHo.Length - 1)]}{name.full_name}{cmt[random.Next(cmt.Length - 1)]}";
+                        var messager = $"{name.full_name} {cmt[random.Next(cmt.Length - 1)]}";
                         UserDialogs.Instance.Toast(new ToastConfig(messager)
                         {
 
                             BackgroundColor = Color.WhiteSmoke,
                             Message = messager,
                             Position = ToastPosition.Bottom,
-                            MessageTextColor = Color.Gray,
+                            MessageTextColor = Color.DarkGray,
                         });
                         return _startNotification;
                     });
