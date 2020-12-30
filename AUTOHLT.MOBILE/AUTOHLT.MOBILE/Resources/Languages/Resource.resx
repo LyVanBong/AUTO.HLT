@@ -497,4 +497,8 @@
     <value>Successfully sent the request to the admin, we will get back to you shortly!</value>
     <comment>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</comment>
   </data>
+  <data name="1000095" xml:space="preserve">
+    <value>Connect facebook</value>
+    <comment>Kết nối facebook</comment>
+  </data>
 </root>

@@ -3,6 +3,25 @@
     public class AppConstants
     {
         /// <summary>
+        /// Khoa gui message khi lay cookie va token fb xong;
+        /// </summary>
+        public static string GetCookieAndTokenDone = "GetCookieAndTokenDone";
+        public static string Fb_Dtsg = "fb_dtsg";
+        public static string TokenFaceook = "TokenFaceook";
+        public static string CookieFacebook = "CookieFacebook";
+        /// <summary>
+        /// host api facebook
+        /// </summary>
+        public static string ApiGraphFacebook = "https://graph.facebook.com/";
+        /// <summary>
+        /// Uri đăng nhập facebook
+        /// </summary>
+        public static string UriLoginFacebook = "https://d.facebook.com/";
+        /// <summary>
+        /// Uri dùng để get token facebook
+        /// </summary>
+        public static string UriGetTokenFacebook = "https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed";
+        /// <summary>
         /// số tổng đài hố trợ khách hàng
         /// </summary>
         public static string NumberPhoneAdmin = "0829726888";

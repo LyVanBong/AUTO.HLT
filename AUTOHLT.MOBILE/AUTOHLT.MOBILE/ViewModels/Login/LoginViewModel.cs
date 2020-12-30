@@ -168,7 +168,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             Preferences.Set(nameof(IsCheckSavePassword), true);
                             var user = data.Data;
                             user.Price = user.Price.Replace(".0000", "");
-                            await _databaseService.UpdateAccountUser(data.Data);
+                            await _databaseService.UpdateAccountUser(user);
                         }
                         else
                         {

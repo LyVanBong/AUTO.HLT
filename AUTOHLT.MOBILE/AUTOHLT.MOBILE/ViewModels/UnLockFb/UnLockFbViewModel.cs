@@ -64,7 +64,7 @@ namespace AUTOHLT.MOBILE.ViewModels.UnLockFb
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                PhoneDialer.Open("0829.726.888");
+                PhoneDialer.Open(AppConstants.NumberPhoneAdmin);
             }
             catch (Exception e)
             {

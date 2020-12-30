@@ -914,5 +914,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000094", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect facebook.
+        /// </summary>
+        internal static string _1000095 {
+            get {
+                return ResourceManager.GetString("1000095", resourceCulture);
+            }
+        }
     }
 }

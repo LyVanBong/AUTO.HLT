@@ -18,6 +18,7 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
         public RequestProvider()
         {
             _client = new RestClient();
+            //_client.Timeout = 10000;
         }
 
         public async Task<ResponseModel<T>> GetAsync<T>(string uri, IReadOnlyCollection<RequestParameter> parameters = null)
@@ -48,7 +49,6 @@ namespace AUTOHLT.MOBILE.Services.RequestProvider
             {
                 uri = AppConstants.UriApi + uri;
                 _client.BaseUrl = new Uri(uri);
-                _client.Timeout = 10000;
                 _request = new RestRequest(method);
             }
             catch (Exception)
