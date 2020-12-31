@@ -7,6 +7,13 @@ namespace AUTOHLT.MOBILE.Services.User
     public interface IUserService
     {
         /// <summary>
+        /// Nap tien cho user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> SetMoneyUser(string userName, string price);
+        /// <summary>
         /// Ghi lai lich su set tien cho user
         /// </summary>
         /// <param name="discount"></param>

@@ -3,6 +3,8 @@ using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfDataGrid.XForms.iOS;
+using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.Buttons;
 using Syncfusion.XForms.iOS.Graphics;
 using Syncfusion.XForms.iOS.MaskedEdit;
@@ -50,6 +52,7 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
+            SfBadgeViewRenderer.Init();
             FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();
             SfRadioButtonRenderer.Init();
@@ -57,6 +60,7 @@ namespace AUTOHLT.MOBILE.iOS
             SfTextInputLayoutRenderer.Init();
             SfCheckBoxRenderer.Init();
             SfGradientViewRenderer.Init();
+            SfDataGridRenderer.Init();
         }
     }
 

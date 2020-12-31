@@ -3,7 +3,10 @@
     x:Class="AUTOHLT.MOBILE.Views.Interactive.InteractivePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:badgeView="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
+    xmlns:effectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     BackgroundColor="{StaticResource HeaderHome}">
@@ -12,41 +15,81 @@
             Margin="0"
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
-            RowDefinitions="40,60,100,*"
+            RowDefinitions="40,*"
             RowSpacing="0">
-            <Grid.Resources>
-                <Style TargetType="textInputLayout:SfTextInputLayout">
-                    <Setter Property="ContainerType" Value="Outlined" />
-                    <Setter Property="Margin" Value="20,0" />
-                    <Setter Property="OutlineCornerRadius" Value="5" />
-                </Style>
-            </Grid.Resources>
             <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000026}" />
 
-            <Button
+            <customRenderer:CustomCollectionViewRenderer
+                x:Name="Lscollection"
                 Grid.Row="1"
-                Margin="20,5"
-                Padding="0"
-                BackgroundColor="{StaticResource Gray-White}"
-                BorderColor="{StaticResource BtLogin}"
-                BorderWidth="1"
-                Command="{Binding InteractiveCommand}"
-                CornerRadius="10"
-                FontSize="18"
-                Text="Facebook" />
-            <Editor
-                Grid.Row="2"
-                Margin="20"
-                BackgroundColor="{StaticResource Gray-White}"
-                Text="{Binding TokenFacebook}"
-                VerticalOptions="FillAndExpand" />
-            <WebView
-                Grid.Row="3"
-                Navigated="WebView_OnNavigated"
-                Source="https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed" />
+                Margin="10"
+                ItemsSource="{Binding ProductData}">
+                <customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                <customRenderer:CustomCollectionViewRenderer.ItemTemplate>
+                    <DataTemplate>
+                        <effectsView:SfEffectsView
+                            Margin="0"
+                            Padding="5"
+                            BackgroundColor="{Binding ColorBg}"
+                            CornerRadius="15">
+                            <Grid
+                                Margin="3"
+                                Padding="0"
+                                ColumnDefinitions="*,80"
+                                RowDefinitions="30,30"
+                                RowSpacing="0">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.BuffViewEyeCommand}" CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0"
+                                    Padding="0"
+                                    Text="{Binding ProductContent}"
+                                    VerticalOptions="CenterAndExpand" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="0"
+                                    Padding="0">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Price, Converter={StaticResource StringToPrice}}" />
+                                            <Span Text=" VNĐ" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <badgeView:SfBadgeView
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    Padding="0"
+                                    BadgeText="{Binding BadgeView}">
+                                    <badgeView:SfBadgeView.BadgeSettings>
+                                        <badgeView:BadgeSetting
+                                            BadgeAnimation="Scale"
+                                            BadgePosition="TopRight"
+                                            BadgeType="Info"
+                                            CornerRadius="5"
+                                            FontSize="12" />
+                                    </badgeView:SfBadgeView.BadgeSettings>
+                                    <badgeView:SfBadgeView.Content>
+                                        <Image Source="{Binding IconLike}" />
+                                    </badgeView:SfBadgeView.Content>
+                                </badgeView:SfBadgeView>
+                            </Grid>
+                        </effectsView:SfEffectsView>
+                    </DataTemplate>
+                </customRenderer:CustomCollectionViewRenderer.ItemTemplate>
+            </customRenderer:CustomCollectionViewRenderer>
+
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="4"
+                Grid.RowSpan="2"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

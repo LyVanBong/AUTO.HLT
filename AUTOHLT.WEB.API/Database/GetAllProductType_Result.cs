@@ -20,5 +20,6 @@ namespace AUTOHLT.WEB.API.Database
         public int EndDate { get; set; }
         public string ProductContent { get; set; }
         public int Number { get; set; }
+        public Nullable<int> GroupProduct { get; set; }
     }
 }

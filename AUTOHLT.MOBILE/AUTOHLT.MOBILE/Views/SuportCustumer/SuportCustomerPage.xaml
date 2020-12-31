@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.SuportCustumer.SuportCustumerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    BackgroundColor="{StaticResource HeaderHome}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            RowDefinitions="40,40,200,60,*"
+            RowSpacing="0">
+            <Grid.Resources>
+                <Style TargetType="textInputLayout:SfTextInputLayout">
+                    <Setter Property="ContainerType" Value="Outlined" />
+                    <Setter Property="Margin" Value="20,0" />
+                    <Setter Property="OutlineCornerRadius" Value="5" />
+                </Style>
+            </Grid.Resources>
+            <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000084}" />
+            <Label
+                Grid.Row="1"
+                Margin="20,0"
+                BackgroundColor="#fff"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{markupExtensions:Translate 1000091}" />
+                        <Span Text=":   " />
+                        <Span Text="0829.726.888   " TextColor="#21209c">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CallAdminCommand}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span
+                            FontFamily="Awesome5ProSolid"
+                            Text="{x:Static icon:FontAwesome5ProSolid.Phone}"
+                            TextColor="#21209c">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CallAdminCommand}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <textInputLayout:SfTextInputLayout
+                Grid.Row="2"
+                FocusedColor="{StaticResource BtLogin}"
+                Hint="{markupExtensions:Translate 1000074}"
+                LeadingViewPosition="Inside">
+                <Editor
+                    HeightRequest="160"
+                    Keyboard="Text"
+                    Text="{Binding Content}">
+                    <Editor.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding UnfocusedCommand}" EventName="Unfocused" />
+                    </Editor.Behaviors>
+                </Editor>
+                <textInputLayout:SfTextInputLayout.LeadingView>
+                    <Label
+                        FontFamily="Awesome5ProSolid"
+                        Text="{x:Static icon:FontAwesome5ProSolid.Newspaper}"
+                        VerticalTextAlignment="Center" />
+                </textInputLayout:SfTextInputLayout.LeadingView>
+            </textInputLayout:SfTextInputLayout>
+
+            <Button
+                Grid.Row="3"
+                Margin="20,5"
+                Padding="0"
+                BackgroundColor="{StaticResource Gray-White}"
+                BorderColor="{StaticResource BtLogin}"
+                BorderWidth="1"
+                Command="{Binding SuportCustomerCommand}"
+                CornerRadius="10"
+                FontSize="18"
+                IsEnabled="{Binding IsEnabledButton}"
+                Text="{markupExtensions:Translate 1000093}" />
+
+            <controls:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="4"
+                IsVisible="{Binding IsLoading}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

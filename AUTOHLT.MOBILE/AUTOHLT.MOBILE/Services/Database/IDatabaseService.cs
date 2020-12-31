@@ -6,6 +6,11 @@ namespace AUTOHLT.MOBILE.Services.Database
     public interface IDatabaseService
     {
         /// <summary>
+        /// Xoa toan bo db local
+        /// </summary>
+        /// <returns></returns>
+        void RemoveDatabaseLocal();
+        /// <summary>
         /// Lưu tài khoản người dùng vào database local
         /// </summary>
         /// <param name="user"></param>

@@ -56,7 +56,7 @@
             TextColor="{StaticResource Gray-White}"
             VerticalOptions="CenterAndExpand">
             <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{prism:GoBack}" />
+                <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
             </Label.GestureRecognizers>
         </Label>
         <Label
@@ -95,11 +95,14 @@
                 </Entry.Behaviors>
             </Entry>
             <textInputLayout:SfTextInputLayout.TrailingView>
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="8"
-                    Text="{Binding Price, Converter={StaticResource StringToPrice}}"
-                    VerticalOptions="CenterAndExpand" />
+                <Label FontAttributes="Bold" VerticalOptions="CenterAndExpand">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontSize="8" Text="x" />
+                            <Span FontSize="8" Text="{Binding NumberService}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
             </textInputLayout:SfTextInputLayout.TrailingView>
             <textInputLayout:SfTextInputLayout.LeadingView>
                 <Label
@@ -116,7 +119,7 @@
             Hint="{markupExtensions:Translate 1000074}"
             LeadingViewPosition="Inside">
             <Editor
-                HeightRequest="150"
+                HeightRequest="160"
                 Keyboard="Text"
                 Text="{Binding Content}">
                 <Editor.Behaviors>
@@ -162,5 +165,12 @@
             FontSize="18"
             IsEnabled="{Binding IsEnabledLogin}"
             Text="{Binding TextSubmit}" />
+        <Label
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="10"
+            Padding="0"
+            Text="{Binding NoteService}" />
     </Grid>
 </Frame>

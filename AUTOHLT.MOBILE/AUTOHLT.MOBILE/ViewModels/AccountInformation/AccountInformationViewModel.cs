@@ -70,7 +70,7 @@ namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
             set => SetProperty(ref _userName, value);
         }
 
-        public AccountInformationViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService,IPageDialogService pageDialogService) : base(navigationService)
+        public AccountInformationViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService) : base(navigationService)
         {
             _pageDialogService = pageDialogService;
             _userService = userService;
@@ -113,23 +113,8 @@ namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var data = new UserModel
-                {
-                    UserName = UserName,
-                    Name = Name,
-                    Password = _user.Password,
-                    Email = Email,
-                    NumberPhone = PhoneNumber,
-                    Sex = _user.Sex,
-                    Role = _user.Role,
-                    IsActive = _user.IsActive,
-                    Age = Age,
-                    Price = _user.Price,
-                    IdDevice = _user.IdDevice,
-                };
-                var update = await _userService.UpdateUser(data.UserName, data.Name, data.Password,
-                    data.Email, data.NumberPhone.ToString(), data.Sex.ToString(), data.Role.ToString(),
-                    data.IsActive.ToString(), data.Age.ToString(), data.Price.ToString(), data.IdDevice);
+                var price = _user.Price.Replace(".0000", "");
+                var update = await _userService.UpdateUser(UserName, Name, _user.Password, Email, PhoneNumber, _user.Sex, _user.Role, _user.IsActive.ToString(), Age, price, _user.IdDevice);
                 if (update != null && update.Code > 0)
                 {
                     await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");

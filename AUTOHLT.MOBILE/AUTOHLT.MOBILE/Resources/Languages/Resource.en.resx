@@ -417,4 +417,88 @@
     <value>Content</value>
     <comment>Nội dung</comment>
   </data>
+  <data name="1000075" xml:space="preserve">
+    <value>AUTOHLT Joint Stock Company - hotline: 0829.726.888 - website: autohlt.com</value>
+    <comment>Công ty cổ phần AUTOHLT - đường dây nóng: 0829.726.888 - website: autohlt.com</comment>
+  </data>
+  <data name="1000076" xml:space="preserve">
+    <value>Buff like</value>
+    <comment>Tăng like</comment>
+  </data>
+  <data name="1000077" xml:space="preserve">
+    <value>Buff eyes</value>
+    <comment>Tăng mắt xem</comment>
+  </data>
+  <data name="1000078" xml:space="preserve">
+    <value>Buff 5k friends</value>
+    <comment>Tăng 5k bb</comment>
+  </data>
+  <data name="1000079" xml:space="preserve">
+    <value>Buff sub</value>
+    <comment>Tăng theo dõi</comment>
+  </data>
+  <data name="1000080" xml:space="preserve">
+    <value>Buff like page</value>
+    <comment>Tăng like page</comment>
+  </data>
+  <data name="1000081" xml:space="preserve">
+    <value>Unlock fb</value>
+    <comment>Mở khóa fb</comment>
+  </data>
+  <data name="1000082" xml:space="preserve">
+    <value>Security fb</value>
+    <comment>Bảo mật fb</comment>
+  </data>
+  <data name="1000083" xml:space="preserve">
+    <value>Filter friends</value>
+    <comment>Lọc bạn bè</comment>
+  </data>
+  <data name="1000084" xml:space="preserve">
+    <value>Support</value>
+    <comment>Hố trợ</comment>
+  </data>
+  <data name="1000085" xml:space="preserve">
+    <value>Package</value>
+    <comment>Gói</comment>
+  </data>
+  <data name="1000086" xml:space="preserve">
+    <value>Like</value>
+    <comment>Like</comment>
+  </data>
+  <data name="1000087" xml:space="preserve">
+    <value>View</value>
+    <comment>Mắt</comment>
+  </data>
+  <data name="1000088" xml:space="preserve">
+    <value>day</value>
+    <comment>ngày</comment>
+  </data>
+  <data name="1000089" xml:space="preserve">
+    <value>in</value>
+    <comment>trong</comment>
+  </data>
+  <data name="1000090" xml:space="preserve">
+    <value>The price of  {0} {1} is {2} VND</value>
+    <comment>Giá của {0} {1} với giá {2} VND</comment>
+  </data>
+  <data name="1000091" xml:space="preserve">
+    <value>Contact</value>
+    <comment>Liên hệ trực tiếp</comment>
+  </data>
+  <data name="1000092" xml:space="preserve">
+    <value>Send require</value>
+    <comment>Gửi yêu cầu</comment>
+  </data>
+  <data name="1000093" xml:space="preserve">
+    <value>Send require suport</value>
+    <comment>Gửi yêu cầu hố trợ</comment>
+  </data>
+  <data name="1000094" xml:space="preserve">
+    <value>Successfully sent the request to the admin, we will get back to you shortly!</value>
+    <comment>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</comment>
+  </data>
+  <data name="1000095" xml:space="preserve">
+    <value>Connect facebook</value>
+    <comment>Kết nối facebook</comment>
+  </data>
 </root>

@@ -417,4 +417,88 @@
     <value>Nội dung</value>
     <comment>Nội dung</comment>
   </data>
+  <data name="1000075" xml:space="preserve">
+    <value>Công ty cổ phần AUTOHLT - đường dây nóng: 0829.726.888 - website: autohlt.com</value>
+    <comment>Công ty cổ phần AUTOHLT - đường dây nóng: 0829.726.888 - website: autohlt.com</comment>
+  </data>
+  <data name="1000076" xml:space="preserve">
+    <value>Tăng like</value>
+    <comment>Tăng like</comment>
+  </data>
+  <data name="1000077" xml:space="preserve">
+    <value>Tăng mắt xem</value>
+    <comment>Tăng mắt xem</comment>
+  </data>
+  <data name="1000078" xml:space="preserve">
+    <value>Tăng 5k bb</value>
+    <comment>Tăng 5k bb</comment>
+  </data>
+  <data name="1000079" xml:space="preserve">
+    <value>Tăng theo dõi</value>
+    <comment>Tăng theo dõi</comment>
+  </data>
+  <data name="1000080" xml:space="preserve">
+    <value>Tăng like page</value>
+    <comment>Tăng like page</comment>
+  </data>
+  <data name="1000081" xml:space="preserve">
+    <value>Mở khóa fb</value>
+    <comment>Mở khóa fb</comment>
+  </data>
+  <data name="1000082" xml:space="preserve">
+    <value>Bảo mật fb</value>
+    <comment>Bảo mật fb</comment>
+  </data>
+  <data name="1000083" xml:space="preserve">
+    <value>Lọc bạn bè</value>
+    <comment>Lọc bạn bè</comment>
+  </data>
+  <data name="1000084" xml:space="preserve">
+    <value>Hố trợ</value>
+    <comment>Hố trợ</comment>
+  </data>
+  <data name="1000085" xml:space="preserve">
+    <value>Gói</value>
+    <comment>Gói</comment>
+  </data>
+  <data name="1000086" xml:space="preserve">
+    <value>Like</value>
+    <comment>Like</comment>
+  </data>
+  <data name="1000087" xml:space="preserve">
+    <value>Mắt</value>
+    <comment>Mắt</comment>
+  </data>
+  <data name="1000088" xml:space="preserve">
+    <value>ngày</value>
+    <comment>ngày</comment>
+  </data>
+  <data name="1000089" xml:space="preserve">
+    <value>trong</value>
+    <comment>trong</comment>
+  </data>
+  <data name="1000090" xml:space="preserve">
+    <value>Giá của {0} {1} là {2} VND</value>
+    <comment>Giá của {0} {1} với giá {2} VND</comment>
+  </data>
+  <data name="1000091" xml:space="preserve">
+    <value>Liên hệ trực tiếp</value>
+    <comment>Liên hệ trực tiếp</comment>
+  </data>
+  <data name="1000092" xml:space="preserve">
+    <value>Gửi yêu cầu</value>
+    <comment>Gửi yêu cầu</comment>
+  </data>
+  <data name="1000093" xml:space="preserve">
+    <value>Gửi yêu cầu hố trợ</value>
+    <comment>Gửi yêu cầu hố trợ</comment>
+  </data>
+  <data name="1000094" xml:space="preserve">
+    <value>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</value>
+    <comment>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</comment>
+  </data>
+  <data name="1000095" xml:space="preserve">
+    <value>Kết nối facebook</value>
+    <comment>Kết nối facebook</comment>
+  </data>
 </root>

@@ -10,6 +10,7 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Views.FakeUpApp;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -165,14 +166,18 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                         if (IsCheckSavePassword)
                         {
                             Preferences.Set(nameof(IsCheckSavePassword), true);
-                            await _databaseService.UpdateAccountUser(data.Data);
+                            var user = data.Data;
+                            user.Price = user.Price.Replace(".0000", "");
+                            await _databaseService.UpdateAccountUser(user);
                         }
                         else
                         {
                             Preferences.Set(nameof(IsCheckSavePassword), false);
                         }
 
-                        await NavigationService.NavigateAsync(nameof(HomePage), null, true, true);
+                        var para = new NavigationParameters();
+                        para.Add(AppConstants.LoginApp, "LoginApp");
+                        await NavigationService.NavigateAsync(nameof(HomePage), para, true, true);
                     }
                     else
                     {
