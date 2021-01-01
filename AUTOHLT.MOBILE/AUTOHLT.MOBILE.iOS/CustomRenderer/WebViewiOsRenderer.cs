@@ -47,7 +47,8 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
 
                         if (data.Contains("c_user="))
                         {
-                            Preferences.Set(AppConstants.CookieFacebook, data);
+                            var ck = data.TrimEnd(';');
+                            Preferences.Set(AppConstants.CookieFacebook, ck);
                             MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetCookieDone);
                             _hasCookie = true;
                         }

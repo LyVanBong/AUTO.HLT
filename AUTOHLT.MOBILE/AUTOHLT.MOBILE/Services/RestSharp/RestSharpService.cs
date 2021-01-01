@@ -1,12 +1,11 @@
-﻿using System;
+﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
+using Microsoft.AppCenter.Crashes;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
-using Microsoft.AppCenter.Crashes;
-using Newtonsoft.Json;
-using RestSharp;
 using Xamarin.Forms.Internals;
 
 namespace AUTOHLT.MOBILE.Services.RestSharp
@@ -18,7 +17,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
         public RestSharpService()
         {
             _client = new RestClient();
-            //_client.Timeout = 10000;
+            _client.Timeout = -1;
         }
         private void CreateClients(string uri, Method method = Method.GET)
         {
@@ -57,9 +56,9 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                     var data = cookie?.Value?.Split(';');
                     if (data != null)
                     {
-                        data.ForEach(s =>
+                        foreach (var item in data)
                         {
-                            var ckie = s?.Split('=');
+                            var ckie = item?.Split('=');
                             if (ckie != null)
                             {
                                 cookieContainer.Add(new Cookie
@@ -70,7 +69,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                                     Path = "/"
                                 });
                             }
-                        });
+                        }
                         _client.CookieContainer = cookieContainer;
                     }
                 }
