@@ -736,7 +736,7 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AUTOHLT Joint Stock Company hotline: 0829.726.888 web: autohlt.com.
+        ///   Looks up a localized string similar to AUTOHLT Joint Stock Company hotline: 0824.726.888 web: autohlt.com.
         /// </summary>
         internal static string _1000075 {
             get {

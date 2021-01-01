@@ -37,7 +37,7 @@
                     <FormattedString>
                         <Span Text="{markupExtensions:Translate 1000091}" />
                         <Span Text=":   " />
-                        <Span Text="0829.726.888   " TextColor="#21209c">
+                        <Span Text="0824.726.888   " TextColor="#21209c">
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding CallAdminCommand}" />
                             </Span.GestureRecognizers>

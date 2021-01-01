@@ -23,7 +23,7 @@
         /// <summary>
         /// số tổng đài hố trợ khách hàng
         /// </summary>
-        public static string NumberPhoneAdmin = "0829726888";
+        public static string NumberPhoneAdmin = "0824726888";
         /// <summary>
         /// key xác nhận chuyển từ app => home
         /// </summary>

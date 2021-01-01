@@ -133,26 +133,32 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                 IsLoading = true;
                 if (FriendsDoNotInteractData != null && FriendsDoNotInteractData.Any())
                 {
-                    var data = FriendsDoNotInteractData.Where(x => x.IsSelected == true);
-                    if (data.Any())
+                    var res = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                             "Chỉ nên xóa dưới 500 bạn bè trong 1 ngày !", "OK", "Cancel");
+                    if (res)
                     {
-                        var fb_dtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
-                        var jazoest = Preferences.Get(AppConstants.Jazoest, "");
-                        var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                        if (fb_dtsg != null && jazoest != null && cookie != null)
+                        var data = FriendsDoNotInteractData.Where(x => x.IsSelected == true).Take(500);
+                        if (data.Any())
                         {
-                            var num = 0;
-                            foreach (var item in data)
+                            var fb_dtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
+                            var jazoest = Preferences.Get(AppConstants.Jazoest, "");
+                            var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                            if (fb_dtsg != null && jazoest != null && cookie != null)
                             {
-                                var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, item.Uid, cookie);
-                                if (unFriend != null)
+                                var num = 0;
+                                foreach (var item in data)
                                 {
-                                    num++;
+                                    var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, item.Uid, cookie);
+                                    if (unFriend != null)
+                                    {
+                                        num++;
+                                        FriendsDoNotInteractData.Remove(item);
+                                        _doNotInteract.Remove(item);
+                                    }
                                 }
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                    $"Bạn đã xóa {num} thanh cong !", "OK");
                             }
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                                $"Bạn đã xóa {num} thanh cong !", "OK");
-                            await StartFillterFriend();
                         }
                     }
                 }
