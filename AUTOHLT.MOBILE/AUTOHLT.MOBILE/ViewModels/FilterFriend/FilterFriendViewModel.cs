@@ -142,14 +142,14 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                         if (fb_dtsg != null && jazoest != null && cookie != null)
                         {
                             var num = 0;
-                            data.ForEach(async (model) =>
-                           {
-                               var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, model.Uid, cookie);
-                               if (unFriend != null)
-                               {
-                                   num++;
-                               }
-                           });
+                            foreach (var item in data)
+                            {
+                                var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, item.Uid, cookie);
+                                if (unFriend != null)
+                                {
+                                    num++;
+                                }
+                            }
                             await _pageDialogService.DisplayAlertAsync(Resource._1000021,
                                 $"Bạn đã xóa {num} thanh cong !", "OK");
                             await StartFillterFriend();
