@@ -1,21 +1,21 @@
-﻿using Microsoft.AppCenter.Crashes;
-using Prism.Navigation;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Models.Product;
-using AUTOHLT.MOBILE.Services.Product;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.UseService;
-using AUTOHLT.MOBILE.Models.User;
-using AUTOHLT.MOBILE.Services.Database;
-using AUTOHLT.MOBILE.Services.User;
-using Prism.Services;
-using Xamarin.Forms;
 using AUTOHLT.MOBILE.Resources.Languages;
+using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Product;
+using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Services.User;
+using Microsoft.AppCenter.Crashes;
+using Prism.Services;
+using Prism.Services.Dialogs;
+using Prism.Navigation;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Globalization;
+using System.Linq;
+using System.Globalization;
+using Prism.Services;
 using Prism.Services.Dialogs;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
@@ -181,10 +181,9 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     var product = new List<ProductModel>();
                     var lsProduct = data.Data;
                     foreach (var item in lsProduct)
-                    {
                         if (item.GroupProduct == "1")
                         {
-                            item.TitleProduct= $"Buff {item.Number} like / {Resource._1000088} {Resource._1000089} {item.EndDate} {Resource._1000088}";
+                            item.TitleProduct = $"Buff {item.Number} like / {Resource._1000088} {Resource._1000089} {item.EndDate} {Resource._1000088}";
                             item.Icon = "icon_like_product.png";
                             if (_regis != null && _regis.Any())
                             {
@@ -195,17 +194,22 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                     var totalDay = (DateTime.Now - endDate).TotalDays;
                                     var number = double.Parse(item.Number);
                                     if (totalDay <= number)
+                            {
+                                case "570116f4-d7c9-462d-a048-2a1a001401a7":
+                                    var dataEnd = DateTime.Parse(item.DateCreate).Add(TimeSpan.FromDays(365));
+                                    var dateNow = DateTime.Now;
+                                    if (dateNow < dataEnd)
                                     {
                                         item.IsRegisterProduct = true;
                                         item.BadgeView = "Paid";
                                     }
+
+                    ProductData = new ObservableCollection<ProductModel>(product.OrderBy(x => int.Parse(x.EndDate)));
                                 }
                             }
                             product.Add(item);
                         }
                     }
-
-                    ProductData = new ObservableCollection<ProductModel>(product);
                 }
             }
             catch (Exception e)

@@ -17,6 +17,29 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             _restSharpService = restSharpService;
         }
 
+        public async Task<string> UnFriend(string fb_dtsg, string jazoest, string friend_id, string cookie)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("fb_dtsg",fb_dtsg),
+                    new RequestParameter("jazoest",jazoest),
+                    new RequestParameter("friend_id",friend_id),
+                };
+                var headers = new List<RequestParameter>
+                {
+                    new RequestParameter("Cookie",cookie),
+                };
+                var data = await _restSharpService.PostAsync("https://d.facebook.com/a/removefriend.php", para, headers);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<FriendsModel> GetAllFriend(string fields, string accessToken)
         {
             try

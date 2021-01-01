@@ -2,6 +2,32 @@
 {
     public class AppConstants
     {
+        public static string Jazoest = "jazoest";
+        public static string GetokenDone = "GetokenDone";
+        public static string GetCookieDone = "GetCookieDone";
+        public static string Fb_Dtsg = "fb_dtsg";
+        public static string TokenFaceook = "TokenFaceook";
+        public static string CookieFacebook = "CookieFacebook";
+        /// <summary>
+        /// host api facebook
+        /// </summary>
+        public static string ApiGraphFacebook = "https://graph.facebook.com/";
+        /// <summary>
+        /// Uri đăng nhập facebook
+        /// </summary>
+        public static string UriLoginFacebook = "https://d.facebook.com/";
+        /// <summary>
+        /// Uri dùng để get token facebook
+        /// </summary>
+        public static string UriGetTokenFacebook = "https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed";
+        /// <summary>
+        /// số tổng đài hố trợ khách hàng
+        /// </summary>
+        public static string NumberPhoneAdmin = "0829726888";
+        /// <summary>
+        /// key xác nhận chuyển từ app => home
+        /// </summary>
+        public static string LoginApp = "LoginApp";
         /// <summary>
         /// Khoa gui message khi lay cookie va token fb xong;
         /// </summary>

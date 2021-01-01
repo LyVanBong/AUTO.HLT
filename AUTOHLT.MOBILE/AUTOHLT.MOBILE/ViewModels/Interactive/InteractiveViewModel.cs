@@ -98,7 +98,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
                         }
                     }
 
-                    ProductData = new List<ProductModel>(product);
+                    ProductData = new List<ProductModel>(product.OrderBy(x=>int.Parse(x.Price)));
                 }
 
             }

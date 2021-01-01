@@ -30,38 +30,76 @@ namespace AUTOHLT.MOBILE.Droid.CustomRenderer
 
     public class CookieWebview : WebViewClient
     {
+        private bool _hasToken;
+        private bool _hasCookie;
+        private bool _hasFb_d;
+        private bool _hasJazoest;
+
         public override void OnPageFinished(WebView view, string url)
         {
             base.OnPageFinished(view, url);
-            //lấy cookie tại đây
-            var cookieHeader = CookieManager.Instance?.GetCookie(url)?.Replace(" ", "");
-            if (!string.IsNullOrWhiteSpace(cookieHeader) && cookieHeader.Contains("c_user=") && !Preferences.ContainsKey(AppConstants.CookieFacebook))
+            if (!_hasCookie)
             {
-                Preferences.Set(AppConstants.CookieFacebook, cookieHeader);
+                //lấy cookie tại đây
+                var cookieHeader = CookieManager.Instance?.GetCookie(url)?.Replace(" ", "");
+                if (!string.IsNullOrWhiteSpace(cookieHeader) && cookieHeader.Contains("c_user=") && !Preferences.ContainsKey(AppConstants.CookieFacebook))
+                {
+                    Preferences.Set(AppConstants.CookieFacebook, cookieHeader);
+                    MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetCookieDone);
+                    _hasCookie = true;
+                }
             }
 
             view.EvaluateJavascript("document.body.innerHTML", new JavascriptCallback(html =>
             {
                 if (html != null)
                 {
-                    var fbDtsg = Regex.Match(html, @"name=\\""fb_dtsg\\"" value=\\""(.*?)\\").Groups[1].Value;
-                    if (!string.IsNullOrWhiteSpace(fbDtsg))
+                    if (!_hasFb_d)
                     {
-                        Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
+                        var fbDtsg = Regex.Match(html, @"name=\\""fb_dtsg\\"" value=\\""(.*?)\\").Groups[1].Value;
+                        if (!string.IsNullOrWhiteSpace(fbDtsg))
+                        {
+                            Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
+                            _hasFb_d = true;
+                        }
                     }
-                    var data = Regex.Match(html, @"EAAAAZ(.*?)\"",").Groups[1].Value;
-                    var token = $"EAAAAZ{data}";
-                    if (!string.IsNullOrWhiteSpace(data))
-                        Preferences.Set(AppConstants.TokenFaceook, token.Replace(@"\\\", ""));
+
+                    if (!_hasJazoest)
+                    {
+                        var jazoest = Regex.Match(html, @"name=\\""jazoest\\"" value=\\""(.*?)\\").Groups[1].Value;
+                        if (!string.IsNullOrWhiteSpace(jazoest))
+                        {
+                            Preferences.Set(AppConstants.Jazoest, jazoest);
+                            _hasJazoest = true;
+                        }
+                    }
+
+                    if (!_hasToken)
+                    {
+                        var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
+                        if (!string.IsNullOrWhiteSpace(data))
+                        {
+                            var token = $"EAAAAZ{data}ZDZD";
+                            Preferences.Set(AppConstants.TokenFaceook, token);
+                            _hasToken = true;
+                        }
+                    }
                 }
             }));
-            if (Preferences.ContainsKey(AppConstants.CookieFacebook) &&
-                (!Preferences.ContainsKey(AppConstants.TokenFaceook) || !Preferences.ContainsKey(AppConstants.Fb_Dtsg)))
-                view.LoadUrl(AppConstants.UriGetTokenFacebook);
-            if (Preferences.ContainsKey(AppConstants.CookieFacebook) &&
-                Preferences.ContainsKey(AppConstants.TokenFaceook) && Preferences.ContainsKey(AppConstants.Fb_Dtsg))
+            if (_hasCookie)
             {
-                MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetCookieAndTokenDone);
+                if (!_hasToken)
+                {
+                    view.LoadUrl(AppConstants.UriGetTokenFacebook);
+                }
+            }
+            if (_hasCookie && _hasToken && _hasFb_d)
+            {
+                MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetokenDone);
+                _hasCookie = false;
+                _hasToken = false;
+                _hasFb_d = false;
+                _hasJazoest = false;
             }
         }
     }

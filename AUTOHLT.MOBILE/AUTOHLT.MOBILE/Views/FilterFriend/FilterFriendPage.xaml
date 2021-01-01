@@ -1,40 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="AUTOHLT.MOBILE.Views.FilterFriend.FilterFriendPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-             xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
-             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
-             BackgroundColor="{StaticResource HeaderHome}">
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.FilterFriend.FilterFriendPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
-        <Grid Margin="0"
-              Padding="0"
-              BackgroundColor="{StaticResource Gray-White}"
-              ColumnDefinitions="60,*"
-              RowDefinitions="40,30,30,60,*"
-              RowSpacing="5">
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            ColumnDefinitions="60,*"
+            RowDefinitions="40,30,30,50,Auto,70,*"
+            RowSpacing="5">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">
-                    <Setter Property="ContainerType"
-                            Value="Outlined" />
-                    <Setter Property="Margin"
-                            Value="20,0" />
-                    <Setter Property="OutlineCornerRadius"
-                            Value="5" />
+                    <Setter Property="ContainerType" Value="Outlined" />
+                    <Setter Property="Margin" Value="20,0" />
+                    <Setter Property="OutlineCornerRadius" Value="5" />
                 </Style>
             </Grid.Resources>
-            <controls:NavigationView Grid.Row="0"
-                                     Grid.Column="0"
-                                     Grid.ColumnSpan="2"
-                                     Text="{markupExtensions:Translate 1000083}" />
-            <Image Grid.Row="1"
-                   Grid.RowSpan="2"
-                   Grid.Column="0"
-                   Source="{Binding AvatarFacebook}" />
-            <Label Grid.Row="1"
-                   Grid.Column="1">
+            <controls:NavigationView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="{markupExtensions:Translate 1000083}" />
+            <Image
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Source="{Binding AvatarFacebook}" />
+            <Label Grid.Row="1" Grid.Column="1">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{markupExtensions:Translate 1000011}" />
@@ -43,8 +45,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Grid.Row="2"
-                   Grid.Column="1">
+            <Label Grid.Row="2" Grid.Column="1">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="ID" />
@@ -54,37 +55,134 @@
                 </Label.FormattedText>
             </Label>
 
-            <Button Grid.Row="3"
+            <Grid
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,5"
+                Padding="0"
+                ColumnDefinitions="*,*">
+                <Button
                     Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="20,5"
+                    Margin="0"
                     Padding="0"
                     BackgroundColor="DarkGray"
                     Command="{Binding ConnectFacebookCommand}"
                     CornerRadius="10"
                     Text="{markupExtensions:Translate 1000095}"
                     TextColor="#000" />
+                <Button
+                    Grid.Column="1"
+                    Margin="0"
+                    Padding="0"
+                    BackgroundColor="DarkGray"
+                    Command="{Binding FilterFriendsCommand}"
+                    CornerRadius="10"
+                    Text="{markupExtensions:Translate 1000104}"
+                    TextColor="#000" />
+            </Grid>
 
-            <xForms:SfDataGrid x:Name="dataGrid"
-                               ItemsSource="{Binding FriendsDoNotInteractData}"
-                               Grid.Row="4"
-                               AutoGenerateColumns="True"
-                               ColumnSizer="Star"
-                               Grid.Column="0"
-                               FrozenColumnsCount="1"
-                               Grid.ColumnSpan="2" />
 
-            <customRenderer:WebViewRenderer IsVisible="{Binding IsvisibleWebView}"
-                                            Grid.Row="4"
-                                            Grid.Column="0"
-                                            Grid.ColumnSpan="2"
-                                            Source="{Binding UriFacebook}" />
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,0"
+                BackgroundColor="{StaticResource Gray-White}"
+                HorizontalOptions="FillAndExpand"
+                Text="{Binding NotifillterDone}"
+                TextColor="Black"
+                VerticalOptions="Center" />
 
-            <controls:LoadingView Grid.Row="0"
-                                  Grid.RowSpan="5"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="2"
-                                  IsVisible="{Binding IsLoading}" />
+            <FlexLayout
+                x:Name="FlexLayout"
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,0"
+                AlignContent="Start"
+                AlignItems="Start"
+                BindableLayout.ItemsSource="{Binding FillterFriendModels}"
+                Direction="Row"
+                HeightRequest="70"
+                HorizontalOptions="Start"
+                JustifyContent="Start"
+                VerticalOptions="Center"
+                Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Margin="5,2"
+                            Padding="5,0"
+                            BackgroundColor="#c9cbff"
+                            Command="{Binding Source={x:Reference FlexLayout}, Path=BindingContext.FillterCommand}"
+                            CommandParameter="{Binding .}"
+                            CornerRadius="10"
+                            HeightRequest="30"
+                            Text="{Binding NameFilter}"
+                            TextColor="#222831" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+
+            <xForms:SfDataGrid
+                x:Name="dataGrid"
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                AutoGenerateColumns="False"
+                BackgroundColor="#fff"
+                ColumnSizer="Auto"
+                FrozenColumnsCount="1"
+                ItemsSource="{Binding FriendsDoNotInteractData}"
+                ScrollingMode="Pixel">
+                <xForms:SfDataGrid.Columns>
+                    <xForms:GridTextColumn
+                        HeaderText="{markupExtensions:Translate 1000100}"
+                        MappingName="Id"
+                        MinimumWidth="50" />
+                    <xForms:GridTextColumn
+                        HeaderText="UID"
+                        MappingName="Uid"
+                        MinimumWidth="300" />
+                    <xForms:GridSwitchColumn
+                        AllowEditing="True"
+                        HeaderText="{markupExtensions:Translate 1000102}"
+                        MappingName="IsSelected"
+                        MinimumWidth="50" />
+                    <xForms:GridTextColumn
+                        HeaderText="{markupExtensions:Translate 1000011}"
+                        MappingName="Name"
+                        MinimumWidth="150" />
+                    <xForms:GridTextColumn
+                        HeaderText="{markupExtensions:Translate 1000026}"
+                        MappingName="Reaction"
+                        MinimumWidth="50" />
+                    <xForms:GridTextColumn
+                        HeaderText="{markupExtensions:Translate 1000101}"
+                        MappingName="Comment"
+                        MinimumWidth="50" />
+                    <xForms:GridTextColumn
+                        HeaderText="{markupExtensions:Translate 1000103}"
+                        MappingName="Status"
+                        MinimumWidth="100" />
+                </xForms:SfDataGrid.Columns>
+            </xForms:SfDataGrid>
+
+            <customRenderer:WebViewRenderer
+                Grid.Row="4"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding IsvisibleWebView}"
+                Source="{Binding UriFacebook}" />
+
+            <controls:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -501,4 +501,40 @@
     <value>Kết nối facebook</value>
     <comment>Kết nối facebook</comment>
   </data>
+  <data name="1000096" xml:space="preserve">
+    <value>Hoàn thành</value>
+    <comment>Hoàn thành</comment>
+  </data>
+  <data name="1000097" xml:space="preserve">
+    <value>Số người không tương tác {0} / {1}</value>
+    <comment>Số người không tương tác {0} / {1}</comment>
+  </data>
+  <data name="1000098" xml:space="preserve">
+    <value>Không tương tác</value>
+    <comment>Không tương tác</comment>
+  </data>
+  <data name="1000099" xml:space="preserve">
+    <value>Không lọc</value>
+    <comment>Không lọc</comment>
+  </data>
+  <data name="1000100" xml:space="preserve">
+    <value>STT</value>
+    <comment>STT</comment>
+  </data>
+  <data name="1000101" xml:space="preserve">
+    <value>Bình luận</value>
+    <comment>Bình luận</comment>
+  </data>
+  <data name="1000102" xml:space="preserve">
+    <value>Chọn</value>
+    <comment>Chọn</comment>
+  </data>
+  <data name="1000103" xml:space="preserve">
+    <value>Trạng thái</value>
+    <comment>Trạng thái</comment>
+  </data>
+  <data name="1000104" xml:space="preserve">
+    <value>Lọc bạn bè</value>
+    <comment>Lọc bạn bè</comment>
+  </data>
 </root>
