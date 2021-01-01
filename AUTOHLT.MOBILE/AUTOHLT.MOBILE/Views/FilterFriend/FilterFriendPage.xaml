@@ -144,7 +144,7 @@
                     <xForms:GridTextColumn
                         HeaderText="UID"
                         MappingName="Uid"
-                        MinimumWidth="300" />
+                        MinimumWidth="150" />
                     <xForms:GridSwitchColumn
                         AllowEditing="True"
                         HeaderText="{markupExtensions:Translate 1000102}"
