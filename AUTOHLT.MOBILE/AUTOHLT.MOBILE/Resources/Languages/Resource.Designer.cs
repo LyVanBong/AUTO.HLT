@@ -923,5 +923,86 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000095", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complete.
+        /// </summary>
+        internal static string _1000096 {
+            get {
+                return ResourceManager.GetString("1000096", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of non-interactive people {0} / {1}.
+        /// </summary>
+        internal static string _1000097 {
+            get {
+                return ResourceManager.GetString("1000097", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No interaction.
+        /// </summary>
+        internal static string _1000098 {
+            get {
+                return ResourceManager.GetString("1000098", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No filter.
+        /// </summary>
+        internal static string _1000099 {
+            get {
+                return ResourceManager.GetString("1000099", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string _1000100 {
+            get {
+                return ResourceManager.GetString("1000100", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        internal static string _1000101 {
+            get {
+                return ResourceManager.GetString("1000101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to choose.
+        /// </summary>
+        internal static string _1000102 {
+            get {
+                return ResourceManager.GetString("1000102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        internal static string _1000103 {
+            get {
+                return ResourceManager.GetString("1000103", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter friends.
+        /// </summary>
+        internal static string _1000104 {
+            get {
+                return ResourceManager.GetString("1000104", resourceCulture);
+            }
+        }
     }
 }

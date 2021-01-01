@@ -2,10 +2,9 @@
 {
     public class AppConstants
     {
-        /// <summary>
-        /// Khoa gui message khi lay cookie va token fb xong;
-        /// </summary>
-        public static string GetCookieAndTokenDone = "GetCookieAndTokenDone";
+        public static string Jazoest = "jazoest";
+        public static string GetokenDone = "GetokenDone";
+        public static string GetCookieDone = "GetCookieDone";
         public static string Fb_Dtsg = "fb_dtsg";
         public static string TokenFaceook = "TokenFaceook";
         public static string CookieFacebook = "CookieFacebook";

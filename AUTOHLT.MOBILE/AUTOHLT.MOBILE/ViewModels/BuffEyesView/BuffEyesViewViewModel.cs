@@ -1,5 +1,6 @@
-﻿using AUTOHLT.MOBILE.Models.Product;
-using AUTOHLT.MOBILE.Models.User;
+﻿using AUTOHLT.MOBILE.Controls.Dialog.UseService;
+using AUTOHLT.MOBILE.Models.Product;
+using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.User;
@@ -9,13 +10,10 @@ using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.UseService;
-using AUTOHLT.MOBILE.Resources.Languages;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
@@ -240,7 +238,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                         }
                     }
 
-                    ProductData = new List<ProductModel>(product);
+                    ProductData = new List<ProductModel>(product.OrderBy(x=>int.Parse(x.EndDate)));
                 }
 
             }

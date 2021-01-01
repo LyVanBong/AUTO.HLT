@@ -22,6 +22,9 @@
                     <Setter Property="Margin" Value="20,0" />
                     <Setter Property="OutlineCornerRadius" Value="5" />
                 </Style>
+                <Style TargetType="Editor">
+                    <Setter Property="TextColor" Value="#222831" />
+                </Style>
             </Grid.Resources>
             <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000084}" />
             <Label

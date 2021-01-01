@@ -5,9 +5,10 @@
         public string Id { get; set; }
         public string Uid { get; set; }
         public string Name { get; set; }
-        public string Reaction { get; set; }
-        public string Comment { get; set; }
+        public int Reaction { get; set; }
+        public int Comment { get; set; }
         public string Status { get; set; }
+        public bool IsSelected { get; set; }
     }
 
 
@@ -68,5 +69,4 @@
     {
         public string id { get; set; }
     }
-
 }

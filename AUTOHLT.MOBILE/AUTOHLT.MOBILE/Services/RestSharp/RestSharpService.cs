@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using RestSharp;
+using Xamarin.Forms.Internals;
 
 namespace AUTOHLT.MOBILE.Services.RestSharp
 {
@@ -44,7 +46,41 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 throw;
             }
         }
-        public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null)
+        private void AddHeader(IReadOnlyCollection<RequestParameter> headers)
+        {
+            try
+            {
+                var cookie = headers.FirstOrDefault();
+                if (cookie != null)
+                {
+                    var cookieContainer = new CookieContainer();
+                    var data = cookie?.Value?.Split(';');
+                    if (data != null)
+                    {
+                        data.ForEach(s =>
+                        {
+                            var ckie = s?.Split('=');
+                            if (ckie != null)
+                            {
+                                cookieContainer.Add(new Cookie
+                                {
+                                    Name = ckie[0],
+                                    Value = ckie[1],
+                                    Domain = ".facebook.com",
+                                    Path = "/"
+                                });
+                            }
+                        });
+                        _client.CookieContainer = cookieContainer;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+        public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
         {
             try
             {
@@ -54,6 +90,11 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                     AddPrarameter(parameters);
                 }
 
+                if (headers != null && headers.Any())
+                {
+                    AddHeader(headers);
+                }
+
                 var response = await _client.ExecuteAsync(_request);
 
                 return response.Content;
@@ -64,7 +105,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
             }
         }
 
-        public async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null)
+        public async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
         {
             try
             {
@@ -73,7 +114,10 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 {
                     AddPrarameter(parameters);
                 }
-
+                if (headers != null && headers.Any())
+                {
+                    AddHeader(headers);
+                }
                 var response = await _client.ExecuteAsync(_request);
                 return response.Content;
             }
@@ -83,7 +127,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
             }
         }
 
-        public async Task<string> PutAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null)
+        public async Task<string> PutAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
         {
             try
             {
@@ -92,7 +136,10 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 {
                     AddPrarameter(parameters);
                 }
-
+                if (headers != null && headers.Any())
+                {
+                    AddHeader(headers);
+                }
                 var response = await _client.ExecuteAsync(_request);
                 return response.Content;
             }
@@ -102,7 +149,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
             }
         }
 
-        public async Task<string> DeleteAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null)
+        public async Task<string> DeleteAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
         {
             try
             {
@@ -111,7 +158,10 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 {
                     AddPrarameter(parameters);
                 }
-
+                if (headers != null && headers.Any())
+                {
+                    AddHeader(headers);
+                }
                 var response = await _client.ExecuteAsync(_request);
                 return response.Content;
             }

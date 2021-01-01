@@ -52,6 +52,8 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
+            SfChipGroupRenderer.Init();
+            SfChipRenderer.Init();
             SfBadgeViewRenderer.Init();
             FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();

@@ -1,13 +1,23 @@
-﻿using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
+﻿using Acr.UserDialogs;
+using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
 using AUTOHLT.MOBILE.Models.Home;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Views.AddFullFriend;
+using AUTOHLT.MOBILE.Views.BuffLikePage;
+using AUTOHLT.MOBILE.Views.BuffSub;
+using AUTOHLT.MOBILE.Views.FilterFriend;
+using AUTOHLT.MOBILE.Views.SecurityFb;
+using AUTOHLT.MOBILE.Views.SuportCustumer;
+using AUTOHLT.MOBILE.Views.UnLockFb;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,17 +26,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Acr.UserDialogs;
-using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.Views.AddFullFriend;
-using AUTOHLT.MOBILE.Views.BuffLikePage;
-using AUTOHLT.MOBILE.Views.BuffSub;
-using AUTOHLT.MOBILE.Views.FilterFriend;
-using AUTOHLT.MOBILE.Views.SecurityFb;
-using AUTOHLT.MOBILE.Views.SuportCustumer;
-using AUTOHLT.MOBILE.Views.UnLockFb;
-using Newtonsoft.Json;
-using RestSharp;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
@@ -279,7 +278,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {
                 case "5":
                     para.Add("ServiceName", Resource._1000079);
-                    para.Add("Service","sub");
+                    para.Add("Service", "sub");
                     para.Add("IdProduct", "1ad3c424-5333-46b0-a0e8-5c31a6dbb161");
                     break;
                 case "6":
@@ -425,7 +424,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                             BackgroundColor = Color.WhiteSmoke,
                             Message = messager,
                             Position = ToastPosition.Bottom,
-                            MessageTextColor = Color.DarkGray,
+                            MessageTextColor = Color.Red,
                         });
                         return _startNotification;
                     });

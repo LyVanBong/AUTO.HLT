@@ -1,9 +1,11 @@
 ﻿
+using System;
 using AUTOHLT.MOBILE.Configurations;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
+using SelectionChangedEventArgs = Syncfusion.Buttons.XForms.SfChip.SelectionChangedEventArgs;
 
 namespace AUTOHLT.MOBILE.Views.FilterFriend
 {

@@ -6,6 +6,15 @@ namespace AUTOHLT.MOBILE.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// Huy ban be khong tuong tac
+        /// </summary>
+        /// <param name="fb_dtsg"></param>
+        /// <param name="jazoest"></param>
+        /// <param name="friend_id"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        Task<string> UnFriend(string fb_dtsg, string jazoest, string friend_id, string cookie);
+        /// <summary>
         /// Lấy 5000 bạn bè trên facebook
         /// </summary>
         /// <param name="fields"></param>

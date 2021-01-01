@@ -1,22 +1,21 @@
-﻿using Microsoft.AppCenter.Crashes;
+﻿using AUTOHLT.MOBILE.Controls.Dialog.UseService;
+using AUTOHLT.MOBILE.Models.Product;
+using AUTOHLT.MOBILE.Resources.Languages;
+using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Product;
+using AUTOHLT.MOBILE.Services.User;
+using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.Product;
-using AUTOHLT.MOBILE.Services.Product;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.UseService;
-using AUTOHLT.MOBILE.Models.User;
-using AUTOHLT.MOBILE.Services.Database;
-using AUTOHLT.MOBILE.Services.User;
-using Prism.Services;
 using Xamarin.Forms;
-using AUTOHLT.MOBILE.Resources.Languages;
-using Prism.Services.Dialogs;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
 {
@@ -184,7 +183,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                     {
                         if (item.GroupProduct == "1")
                         {
-                            item.TitleProduct= $"Buff {item.Number} like / {Resource._1000088} {Resource._1000089} {item.EndDate} {Resource._1000088}";
+                            item.TitleProduct = $"Buff {item.Number} like / {Resource._1000088} {Resource._1000089} {item.EndDate} {Resource._1000088}";
                             item.Icon = "icon_like_product.png";
                             if (_regis != null && _regis.Any())
                             {
@@ -205,7 +204,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                         }
                     }
 
-                    ProductData = new ObservableCollection<ProductModel>(product);
+                    ProductData = new ObservableCollection<ProductModel>(product.OrderBy(x => int.Parse(x.EndDate)));
                 }
             }
             catch (Exception e)

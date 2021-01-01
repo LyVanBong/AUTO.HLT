@@ -26,9 +26,13 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
 
     public class CookieNavigationDelegate : WKNavigationDelegate
     {
+        private bool _hasToken;
+        private bool _hasCookie;
+        private bool _hasFb_d;
+        private bool _hasJazoest;
         public override async void DidFinishNavigation(WKWebView webView, WKNavigation navigation)
         {
-            if (!Preferences.ContainsKey(AppConstants.CookieFacebook))
+            if (!_hasCookie)
             {
                 //Lấy cookie tại đây
                 webView.Configuration.WebsiteDataStore.HttpCookieStore.GetAllCookies((cookies) =>
@@ -44,6 +48,8 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
                         if (data.Contains("c_user="))
                         {
                             Preferences.Set(AppConstants.CookieFacebook, data);
+                            MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetCookieDone);
+                            _hasCookie = true;
                         }
                     }
                 });
@@ -53,24 +59,52 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
             var html = jsData.ToString();
             if (!string.IsNullOrWhiteSpace(html))
             {
-                var fbDtsg = Regex.Match(html, @"name=""fb_dtsg"" value=""(.*?)""").Groups[1].Value;
-                if (!string.IsNullOrWhiteSpace(fbDtsg))
+                if (!_hasFb_d)
                 {
-                    Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
+                    var fbDtsg = Regex.Match(html, @"name=""fb_dtsg"" value=""(.*?)""").Groups[1].Value;
+                    if (!string.IsNullOrWhiteSpace(fbDtsg))
+                    {
+                        Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
+                        _hasFb_d = true;
+                    }
                 }
-                var data = Regex.Match(html, @"EAAAAZ(.*?)\"",").Groups[1].Value;
-                if (!string.IsNullOrWhiteSpace(data))
-                    Preferences.Set(AppConstants.TokenFaceook, $"EAAAAZ{data}");
+
+                if (!_hasJazoest)
+                {
+                    var jazoest = Regex.Match(html, @"name=""jazoest"" value=""(.*?)""").Groups[1].Value;
+                    if (!string.IsNullOrWhiteSpace(jazoest))
+                    {
+                        Preferences.Set(AppConstants.Jazoest, jazoest);
+                        _hasJazoest = true;
+                    }
+                }
+
+                if (!_hasToken)
+                {
+                    var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
+                    if (!string.IsNullOrWhiteSpace(data))
+                    {
+                        var token = $"EAAAAZ{data}ZDZD";
+                        Preferences.Set(AppConstants.TokenFaceook, token);
+                        _hasToken = true;
+                    }
+                }
             }
-            if (Preferences.ContainsKey(AppConstants.CookieFacebook) && (!Preferences.ContainsKey(AppConstants.TokenFaceook) || !Preferences.ContainsKey(AppConstants.Fb_Dtsg)))
+            if (_hasCookie)
             {
-                webView.LoadRequest(NSUrlRequest.FromUrl(new NSUrl(AppConstants.UriGetTokenFacebook)));
+                if (!_hasToken)
+                {
+                    webView.LoadRequest(NSUrlRequest.FromUrl(new NSUrl(AppConstants.UriGetTokenFacebook)));
+                }
             }
 
-            if (Preferences.ContainsKey(AppConstants.CookieFacebook) &&
-                Preferences.ContainsKey(AppConstants.TokenFaceook) && Preferences.ContainsKey(AppConstants.Fb_Dtsg))
+            if (_hasToken && _hasFb_d && _hasCookie && _hasJazoest)
             {
-                MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetCookieAndTokenDone);
+                MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetokenDone);
+                _hasCookie = false;
+                _hasFb_d = false;
+                _hasJazoest = false;
+                _hasToken = false;
             }
         }
     }
