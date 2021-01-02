@@ -11,7 +11,6 @@
         public bool IsSelected { get; set; }
     }
 
-
     public class ReactionModel
     {
         public Timeline_Feed_Units timeline_feed_units { get; set; }
@@ -69,5 +68,4 @@
     {
         public string id { get; set; }
     }
-
 }

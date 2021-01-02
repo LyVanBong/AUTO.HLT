@@ -44,6 +44,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         }
 
         public ICommand ClosePopupCommand { get; private set; }
+
         public string NoteService
         {
             get => _noteService;

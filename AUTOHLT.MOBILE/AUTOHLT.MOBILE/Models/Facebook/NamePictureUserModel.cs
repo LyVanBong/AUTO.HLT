@@ -1,7 +1,4 @@
-﻿using AUTOHLT.MOBILE.Configurations;
-using Newtonsoft.Json;
-
-namespace AUTOHLT.MOBILE.Models.Facebook
+﻿namespace AUTOHLT.MOBILE.Models.Facebook
 {
     public class NamePictureUserModel
     {
@@ -9,6 +6,7 @@ namespace AUTOHLT.MOBILE.Models.Facebook
         public Picture picture { get; set; }
         public string id { get; set; }
     }
+
     public class Picture
     {
         public Data data { get; set; }

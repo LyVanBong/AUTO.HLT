@@ -4,6 +4,5 @@ namespace AUTOHLT.MOBILE.CustomRenderer
 {
     public class CustomCollectionViewRenderer : CollectionView
     {
-
     }
 }

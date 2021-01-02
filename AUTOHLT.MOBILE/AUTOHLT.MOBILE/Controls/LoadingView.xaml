@@ -1,23 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentView
-    x:Class="AUTOHLT.MOBILE.Controls.LoadingView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-    xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-    Margin="0"
-    Padding="0">
+<ContentView x:Class="AUTOHLT.MOBILE.Controls.LoadingView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             Margin="0"
+             Padding="0">
     <ContentView.Content>
-        <xForms:SfBusyIndicator
-            x:Name="busyindicator"
-            Title="{markupExtensions:Translate 1000008}"
-            AnimationType="Gear"
-            BackgroundColor="Transparent"
-            FontFamily="RobotoRegular"
-            TextColor="{StaticResource Loading}"
-            TextSize="16"
-            ViewBoxHeight="80"
-            ViewBoxWidth="80"
-            Duration="2" />
+        <xForms:SfBusyIndicator x:Name="busyindicator"
+                                Title="{markupExtensions:Translate 1000008}"
+                                AnimationType="Gear"
+                                BackgroundColor="Transparent"
+                                FontFamily="RobotoRegular"
+                                TextColor="{StaticResource Loading}"
+                                TextSize="16"
+                                ViewBoxHeight="80"
+                                ViewBoxWidth="80"
+                                Duration="2" />
     </ContentView.Content>
 </ContentView>

@@ -1,16 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="AUTOHLT.MOBILE.Views.FilterFriend.FilterFriendPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-    xmlns:prism="http://prismlibrary.com"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
-    BackgroundColor="{StaticResource HeaderHome}">
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+             xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
+             xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+             xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <Grid
             Margin="0"
@@ -69,6 +67,7 @@
                     BackgroundColor="DarkGray"
                     Command="{Binding ConnectFacebookCommand}"
                     CornerRadius="10"
+                    FontSize="12"
                     Text="{markupExtensions:Translate 1000095}"
                     TextColor="#000" />
                 <Button
@@ -78,6 +77,7 @@
                     BackgroundColor="DarkGray"
                     Command="{Binding FilterFriendsCommand}"
                     CornerRadius="10"
+                    FontSize="12"
                     Text="{markupExtensions:Translate 1000104}"
                     TextColor="#000" />
             </Grid>
@@ -118,6 +118,7 @@
                             Command="{Binding Source={x:Reference FlexLayout}, Path=BindingContext.FillterCommand}"
                             CommandParameter="{Binding .}"
                             CornerRadius="10"
+                            FontSize="12"
                             HeightRequest="30"
                             Text="{Binding NameFilter}"
                             TextColor="#222831" />

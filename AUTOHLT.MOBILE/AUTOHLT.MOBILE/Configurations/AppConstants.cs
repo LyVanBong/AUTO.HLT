@@ -2,11 +2,29 @@
 {
     public class AppConstants
     {
+        /// <summary>
+        /// key lưu Jazoest
+        /// </summary>
         public static string Jazoest = "jazoest";
+        /// <summary>
+        /// message thông báo đã get token done
+        /// </summary>
         public static string GetokenDone = "GetokenDone";
+        /// <summary>
+        /// message thông báo đã get cookie done
+        /// </summary>
         public static string GetCookieDone = "GetCookieDone";
+        /// <summary>
+        /// key luu Fb_Dtsg
+        /// </summary>
         public static string Fb_Dtsg = "fb_dtsg";
+        /// <summary>
+        /// key lưu token fb
+        /// </summary>
         public static string TokenFaceook = "TokenFaceook";
+        /// <summary>
+        /// key lưu cookie fb
+        /// </summary>
         public static string CookieFacebook = "CookieFacebook";
         /// <summary>
         /// host api facebook

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using AUTOHLT.MOBILE.Resources.Languages;
+﻿using System.Reflection;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Models.Product
@@ -26,6 +24,6 @@ namespace AUTOHLT.MOBILE.Models.Product
         public string ColorBg => IsRegisterProduct ? "#d0e8f2" : "#f1f1f1";
         public string BadgeView { get; set; }
 
-        #endregion
+        #endregion Extend
     }
 }

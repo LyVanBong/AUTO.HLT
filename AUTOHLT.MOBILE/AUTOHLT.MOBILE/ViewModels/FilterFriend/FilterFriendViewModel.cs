@@ -254,9 +254,10 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         {
             base.OnNavigatedFrom(parameters);
             MessagingCenter.Unsubscribe<App>(this, AppConstants.GetokenDone);
+            MessagingCenter.Unsubscribe<App>(this, AppConstants.GetCookieDone);
         }
 
-        private void ConnectFacebook()
+        private async void ConnectFacebook()
         {
             try
             {
@@ -264,12 +265,15 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                 {
                     if (_isConnectfb) return;
                     _isConnectfb = true;
+                    IsLoading = true;
+                    IsvisibleWebView = true;
+                    UriFacebook = AppConstants.UriLoginFacebook;
                     Preferences.Remove(AppConstants.CookieFacebook);
                     Preferences.Remove(AppConstants.TokenFaceook);
                     Preferences.Remove(AppConstants.Fb_Dtsg);
                     Preferences.Remove(AppConstants.Jazoest);
-                    UriFacebook = AppConstants.UriLoginFacebook;
-                    IsvisibleWebView = true;
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    IsLoading = false;
                 }
             }
             catch (Exception e)
