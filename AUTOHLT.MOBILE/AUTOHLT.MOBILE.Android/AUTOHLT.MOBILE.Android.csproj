@@ -165,7 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AUTOHLT.MOBILE\AUTOHLT.MOBILE.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{06B8432C-E5D9-436D-A7B8-336D3B7B6D76}</Project>
       <Name>AUTOHLT.MOBILE</Name>
     </ProjectReference>
   </ItemGroup>
