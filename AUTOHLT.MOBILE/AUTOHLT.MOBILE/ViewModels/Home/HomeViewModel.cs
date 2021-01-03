@@ -21,6 +21,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -71,8 +72,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         Icon = "icon_Interactive.png",
                         TitleService = Resource._1000026,
                         TypeService = 3,
-                        BadgeView = "Coming",
+                        BadgeView = "Hot",
                         UserRole = "2",
+                        BadgeType = BadgeType.Light
                     },
                     new ServiceModel
                     {
@@ -194,11 +196,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {17,"" },
             {18,"AccountInformationPage" },
         };
-
+        private string[] _paraDialogSheet = new string[]
+            {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè"};
         private IProductService _productService;
         private string _idProductSecurityFb = "ae1274f0-a779-4601-b59f-8bf9b3e5cdf7";
         private ITelegramService _telegramService;
         private BadgeType _badgeType;
+        private string _idProductAddFriends = "82ea2831-60b3-4cf4-9828-be58c1c51a62";
 
         public BadgeType BadgeType
         {
@@ -278,7 +282,112 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         key = int.Parse(para);
                 }
 
-                if (key == 8)
+                if (key == 4)
+                {
+                    var result = await _pageDialogService.DisplayActionSheetAsync("Số lượng bạn muỗn tăng !", "Cancel", null, _paraDialogSheet);
+                    var name = "";
+                    var prices = 0;
+                    if (result == _paraDialogSheet[0])
+                    {
+                        name = _paraDialogSheet[0];
+                        prices = 1;
+                    }
+                    else if (result == _paraDialogSheet[1])
+                    {
+                        name = _paraDialogSheet[1];
+                        prices = 2;
+                    }
+                    else if (result == _paraDialogSheet[2])
+                    {
+                        name = _paraDialogSheet[2];
+                        prices = 3;
+                    }
+                    else if (result == _paraDialogSheet[3])
+                    {
+                        name = _paraDialogSheet[3];
+                        prices = 4;
+                    }
+                    else if (result == _paraDialogSheet[4])
+                    {
+                        name = _paraDialogSheet[4];
+                        prices = 5;
+                    }
+                    var user = await _databaseService.GetAccountUser();
+                    if (user != null)
+                    {
+                        var product = await _productService.GetAllProduct();
+                        if (product != null && product.Code > 0 && product.Data != null && product.Data.Any())
+                        {
+                            var addFriends = product.Data.FirstOrDefault(x => x.ID == _idProductAddFriends);
+                            if (addFriends != null && addFriends.DateCreate != null)
+                            {
+                                var pr = long.Parse(addFriends.Price) * prices;
+                                var regis = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                    $"Bạn đăng ký dịch vụ tăng {name} với giá {string.Format(new CultureInfo("en-US"), "{0:0,0}", pr)} VND",
+                                    "OK", "Cancel");
+                                if (regis)
+                                {
+                                    var myMoney = await _userService.GetMoneyUser(user.UserName);
+                                    if (myMoney != null && myMoney.Code > 0 && myMoney.Data != null)
+                                    {
+                                        var money = long.Parse(myMoney.Data.Replace(".0000", ""));
+                                        if (money >= pr)
+                                        {
+                                            var addServiceForUser =
+                                                await _productService.RegisterProduct(_idProductAddFriends, user.ID);
+                                            if (addServiceForUser != null && addServiceForUser.Code > 0)
+                                            {
+                                                await _pageDialogService.DisplayAlertAsync(Resource._1000035,
+                                                    "Đăng kỹ dịch vụ thành công, chúng tôi sẽ liên lạc với bạn để hỗ trợ sử dụng dịch vụ !",
+                                                    "OK");
+
+                                                await _userService.SetMoneyUser(user.UserName, money - pr + "");
+                                                var addHistoryUse = await _productService.AddHistoryUseService(_idProductSecurityFb, $"Tăng {name}", user.ID, "1", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
+                                                var message = $"Tăng bạn bè\n" +
+                                                              $"Nội dung: Khách hàng đăng ký gói dịch tăng {name} facebook cần liên hệ với khách để thực hiện dịch vụ cho khách\n" +
+                                                              $"Id người dùng dịch vụ: {user.ID}\n" +
+                                                              $"Số điện thoại: {user.NumberPhone}\n" +
+                                                              $"Tên: {user.Name}\n" +
+                                                              $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                                                var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                                    message);
+                                                var dataMoneyUser = await _userService.GetMoneyUser(UserModel.UserName);
+                                                if (dataMoneyUser != null)
+                                                {
+                                                    if (dataMoneyUser.Code > 0)
+                                                    {
+                                                        MoneyUser = dataMoneyUser.Data.Replace(".0000", "");
+                                                    }
+                                                    else
+                                                    {
+                                                        MoneyUser = "0";
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                                "Số dư hiện tại của bạn không đủ, vui lòng nạp thêm tiền để sử dụng dịch vụ !",
+                                                "OK");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                            "Số dư hiện tại của bạn không đủ, vui lòng nạp thêm tiền để sử dụng dịch vụ !",
+                                            "OK");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (key == 8)
                 {
                     await ServiceSecurityFacebook();
                 }
@@ -318,7 +427,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         if (regis)
                         {
                             var myMoney = await _userService.GetMoneyUser(user.UserName);
-                            if (myMoney != null && myMoney.Code > 0 && myMoney != null)
+                            if (myMoney != null && myMoney.Code > 0 && myMoney.Data != null)
                             {
                                 var money = long.Parse(myMoney.Data.Replace(".0000", ""));
                                 var price = long.Parse(securityFB.Price);
