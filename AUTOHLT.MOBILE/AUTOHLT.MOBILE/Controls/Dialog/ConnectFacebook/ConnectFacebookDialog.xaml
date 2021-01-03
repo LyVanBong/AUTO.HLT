@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Frame
+    x:Class="AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook.ConnectFacebookDialog"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:xaml="http://prismlibrary.com"
+    Padding="0"
+    xaml:DialogLayout.CloseOnBackgroundTapped="False"
+    xaml:DialogLayout.RelativeHeightRequest=".8"
+    xaml:DialogLayout.RelativeWidthRequest=".95"
+    BackgroundColor="{StaticResource Gray-White}"
+    BorderColor="{StaticResource Gray-600}"
+    CornerRadius="20"
+    HasShadow="True">
+    <Grid
+        Margin="0"
+        Padding="0"
+        ColumnDefinitions="*,60"
+        ColumnSpacing="0"
+        RowDefinitions="40,*"
+        RowSpacing="0">
+        <Grid.Resources>
+            <Style TargetType="textInputLayout:SfTextInputLayout">
+                <Setter Property="ContainerType" Value="Outlined" />
+                <Setter Property="Margin" Value="10,5" />
+                <Setter Property="OutlineCornerRadius" Value="5" />
+            </Style>
+        </Grid.Resources>
+        <BoxView
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="{StaticResource HeaderHome}" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            BackgroundColor="{StaticResource HeaderHome}"
+            HorizontalOptions="CenterAndExpand"
+            Text="{markupExtensions:Translate 1000095}"
+            TextColor="{StaticResource Gray-White}"
+            VerticalOptions="CenterAndExpand" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            BackgroundColor="{StaticResource HeaderHome}"
+            FontFamily="Awesome5ProSolid"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{x:Static icon:FontAwesome5ProSolid.Times}"
+            TextColor="{StaticResource Gray-White}"
+            VerticalOptions="CenterAndExpand">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+        <customRenderer:WebViewRenderer
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsVisibleWebview}"
+            Source="{Binding UriFacebook}" />
+        <controls:LoadingView
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsLoading}" />
+    </Grid>
+</Frame>

@@ -31,6 +31,10 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 throw;
             }
         }
+        /// <summary>
+        /// them du lieu chuyen vao request
+        /// </summary>
+        /// <param name="parameters"></param>
         private void AddPrarameter(IReadOnlyCollection<RequestParameter> parameters)
         {
             try
@@ -45,21 +49,24 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 throw;
             }
         }
-        private void AddHeader(IReadOnlyCollection<RequestParameter> headers)
+        /// <summary>
+        /// them cookie
+        /// </summary>
+        /// <param name="cookie"></param>
+        private void AddHeader(string cookie)
         {
             try
             {
-                var cookie = headers.FirstOrDefault();
                 if (cookie != null)
                 {
                     var cookieContainer = new CookieContainer();
-                    var data = cookie?.Value?.Split(';');
-                    if (data != null)
+                    var data = cookie.Split(';');
+                    if (data.Any())
                     {
                         foreach (var item in data)
                         {
                             var ckie = item?.Split('=');
-                            if (ckie != null)
+                            if (ckie.Any())
                             {
                                 cookieContainer.Add(new Cookie
                                 {
@@ -79,7 +86,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 Crashes.TrackError(ex);
             }
         }
-        public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
+        public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -89,9 +96,9 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                     AddPrarameter(parameters);
                 }
 
-                if (headers != null && headers.Any())
+                if (!string.IsNullOrWhiteSpace(cookie))
                 {
-                    AddHeader(headers);
+                    AddHeader(cookie);
                 }
 
                 var response = await _client.ExecuteAsync(_request);
@@ -104,7 +111,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
             }
         }
 
-        public async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
+        public async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -113,9 +120,9 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 {
                     AddPrarameter(parameters);
                 }
-                if (headers != null && headers.Any())
+                if (!string.IsNullOrWhiteSpace(cookie))
                 {
-                    AddHeader(headers);
+                    AddHeader(cookie);
                 }
                 var response = await _client.ExecuteAsync(_request);
                 return response.Content;
@@ -126,7 +133,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
             }
         }
 
-        public async Task<string> PutAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
+        public async Task<string> PutAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -135,9 +142,9 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 {
                     AddPrarameter(parameters);
                 }
-                if (headers != null && headers.Any())
+                if (!string.IsNullOrWhiteSpace(cookie))
                 {
-                    AddHeader(headers);
+                    AddHeader(cookie);
                 }
                 var response = await _client.ExecuteAsync(_request);
                 return response.Content;
@@ -148,7 +155,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
             }
         }
 
-        public async Task<string> DeleteAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, IReadOnlyCollection<RequestParameter> headers = null)
+        public async Task<string> DeleteAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -157,9 +164,9 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 {
                     AddPrarameter(parameters);
                 }
-                if (headers != null && headers.Any())
+                if (!string.IsNullOrWhiteSpace(cookie))
                 {
-                    AddHeader(headers);
+                    AddHeader(cookie);
                 }
                 var response = await _client.ExecuteAsync(_request);
                 return response.Content;

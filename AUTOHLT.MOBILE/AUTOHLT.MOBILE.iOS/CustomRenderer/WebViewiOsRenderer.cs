@@ -35,7 +35,7 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
             if (!_hasCookie)
             {
                 //Lấy cookie tại đây
-                webView.Configuration.WebsiteDataStore.HttpCookieStore.GetAllCookies((cookies) =>
+                webView.Configuration.WebsiteDataStore.HttpCookieStore.GetAllCookies(async (cookies) =>
                 {
                     var data = string.Empty;
                     if (cookies != null && cookies.Any())
@@ -51,51 +51,55 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
                             Preferences.Set(AppConstants.CookieFacebook, ck);
                             MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetCookieDone);
                             _hasCookie = true;
+                            var jsData = await webView.EvaluateJavaScriptAsync("document.body.innerHTML");
+                            var html = jsData.ToString();
+                            if (!string.IsNullOrWhiteSpace(html))
+                            {
+                                if (!_hasFb_d)
+                                {
+                                    var fbDtsg = Regex.Match(html, @"name=""fb_dtsg"" value=""(.*?)""").Groups[1].Value;
+                                    if (!string.IsNullOrWhiteSpace(fbDtsg))
+                                    {
+                                        Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
+                                        _hasFb_d = true;
+                                    }
+                                }
+                                if (!_hasJazoest)
+                                {
+                                    var jazoest = Regex.Match(html, @"name=""jazoest"" value=""(.*?)""").Groups[1].Value;
+                                    if (!string.IsNullOrWhiteSpace(jazoest))
+                                    {
+                                        Preferences.Set(AppConstants.Jazoest, jazoest);
+                                        _hasJazoest = true;
+                                    }
+                                }
+                            }
+                            if (!_hasToken)
+                            {
+                                webView.LoadRequest(NSUrlRequest.FromUrl(new NSUrl(AppConstants.UriGetTokenFacebook)));
+                            }
                         }
                     }
                 });
             }
 
-            var jsData = await webView.EvaluateJavaScriptAsync("document.body.innerHTML");
-            var html = jsData.ToString();
-            if (!string.IsNullOrWhiteSpace(html))
-            {
-                if (!_hasFb_d)
-                {
-                    var fbDtsg = Regex.Match(html, @"name=""fb_dtsg"" value=""(.*?)""").Groups[1].Value;
-                    if (!string.IsNullOrWhiteSpace(fbDtsg))
-                    {
-                        Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
-                        _hasFb_d = true;
-                    }
-                }
 
-                if (!_hasJazoest)
-                {
-                    var jazoest = Regex.Match(html, @"name=""jazoest"" value=""(.*?)""").Groups[1].Value;
-                    if (!string.IsNullOrWhiteSpace(jazoest))
-                    {
-                        Preferences.Set(AppConstants.Jazoest, jazoest);
-                        _hasJazoest = true;
-                    }
-                }
-
-                if (!_hasToken)
-                {
-                    var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
-                    if (!string.IsNullOrWhiteSpace(data))
-                    {
-                        var token = $"EAAAAZ{data}ZDZD";
-                        Preferences.Set(AppConstants.TokenFaceook, token);
-                        _hasToken = true;
-                    }
-                }
-            }
             if (_hasCookie)
             {
-                if (!_hasToken)
+                var jsData = await webView.EvaluateJavaScriptAsync("document.body.innerHTML");
+                var html = jsData.ToString();
+                if (!string.IsNullOrWhiteSpace(html))
                 {
-                    webView.LoadRequest(NSUrlRequest.FromUrl(new NSUrl(AppConstants.UriGetTokenFacebook)));
+                    if (!_hasToken)
+                    {
+                        var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
+                        if (!string.IsNullOrWhiteSpace(data))
+                        {
+                            var token = $"EAAAAZ{data}ZDZD";
+                            Preferences.Set(AppConstants.TokenFaceook, token);
+                            _hasToken = true;
+                        }
+                    }
                 }
             }
 

@@ -511,5 +511,36 @@ namespace AUTOHLT.WEB.API.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SetMoneyUser", userNameParameter, priceParameter);
         }
+    
+        public virtual ObjectResult<string> CheckNumberPhone(string numberPhone)
+        {
+            var numberPhoneParameter = numberPhone != null ?
+                new ObjectParameter("NumberPhone", numberPhone) :
+                new ObjectParameter("NumberPhone", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CheckNumberPhone", numberPhoneParameter);
+        }
+    
+        public virtual ObjectResult<string> GetVersionApp(Nullable<int> idVersion)
+        {
+            var idVersionParameter = idVersion.HasValue ?
+                new ObjectParameter("IdVersion", idVersion) :
+                new ObjectParameter("IdVersion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetVersionApp", idVersionParameter);
+        }
+    
+        public virtual int UpdateAppVersion(string versionApp, Nullable<int> id)
+        {
+            var versionAppParameter = versionApp != null ?
+                new ObjectParameter("VersionApp", versionApp) :
+                new ObjectParameter("VersionApp", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAppVersion", versionAppParameter, idParameter);
+        }
     }
 }

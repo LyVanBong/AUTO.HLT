@@ -133,8 +133,8 @@
                 Text="{markupExtensions:Translate 1000064}" />
 
             <controls:LoadingView
-                Grid.Row="0"
-                Grid.RowSpan="8"
+                Grid.Row="1"
+                Grid.RowSpan="7"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

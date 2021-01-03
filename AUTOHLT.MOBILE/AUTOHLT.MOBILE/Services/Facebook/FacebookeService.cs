@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.Models.Facebook;
+﻿using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AUTOHLT.MOBILE.Configurations;
 
 namespace AUTOHLT.MOBILE.Services.Facebook
 {
@@ -15,6 +15,21 @@ namespace AUTOHLT.MOBILE.Services.Facebook
         public FacebookeService(IRestSharpService restSharpService)
         {
             _restSharpService = restSharpService;
+        }
+
+        public async Task<bool> CheckCookie(string cookie)
+        {
+            try
+            {
+                var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
+                if (html == null || html.Contains("sign_up"))
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<string> UnFriend(string fb_dtsg, string jazoest, string friend_id, string cookie)
@@ -27,11 +42,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
                     new RequestParameter("jazoest",jazoest),
                     new RequestParameter("friend_id",friend_id),
                 };
-                var headers = new List<RequestParameter>
-                {
-                    new RequestParameter("Cookie",cookie),
-                };
-                var data = await _restSharpService.PostAsync("https://d.facebook.com/a/removefriend.php", para, headers);
+                var data = await _restSharpService.PostAsync("https://d.facebook.com/a/removefriend.php", para, cookie);
                 return data;
             }
             catch (Exception)
@@ -46,6 +57,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             {
                 var parameters = new List<RequestParameter>
                 {
+                    new RequestParameter("fields","name,picture{url}"),
                     new RequestParameter("limit",fields),
                     new RequestParameter("access_token",accessToken),
                 };

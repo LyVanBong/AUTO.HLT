@@ -42,7 +42,7 @@ namespace AUTOHLT.MOBILE.Droid.CustomRenderer
             {
                 //lấy cookie tại đây
                 var cookieHeader = CookieManager.Instance?.GetCookie(url)?.Replace(" ", "");
-                if (!string.IsNullOrWhiteSpace(cookieHeader) && cookieHeader.Contains("c_user=") && !Preferences.ContainsKey(AppConstants.CookieFacebook))
+                if (!string.IsNullOrWhiteSpace(cookieHeader) && cookieHeader.Contains("c_user="))
                 {
                     Preferences.Set(AppConstants.CookieFacebook, cookieHeader);
                     MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetCookieDone);
@@ -50,44 +50,44 @@ namespace AUTOHLT.MOBILE.Droid.CustomRenderer
                 }
             }
 
-            view.EvaluateJavascript("document.body.innerHTML", new JavascriptCallback(html =>
-            {
-                if (html != null)
-                {
-                    if (!_hasFb_d)
-                    {
-                        var fbDtsg = Regex.Match(html, @"name=\\""fb_dtsg\\"" value=\\""(.*?)\\").Groups[1].Value;
-                        if (!string.IsNullOrWhiteSpace(fbDtsg))
-                        {
-                            Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
-                            _hasFb_d = true;
-                        }
-                    }
-
-                    if (!_hasJazoest)
-                    {
-                        var jazoest = Regex.Match(html, @"name=\\""jazoest\\"" value=\\""(.*?)\\").Groups[1].Value;
-                        if (!string.IsNullOrWhiteSpace(jazoest))
-                        {
-                            Preferences.Set(AppConstants.Jazoest, jazoest);
-                            _hasJazoest = true;
-                        }
-                    }
-
-                    if (!_hasToken)
-                    {
-                        var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
-                        if (!string.IsNullOrWhiteSpace(data))
-                        {
-                            var token = $"EAAAAZ{data}ZDZD";
-                            Preferences.Set(AppConstants.TokenFaceook, token);
-                            _hasToken = true;
-                        }
-                    }
-                }
-            }));
             if (_hasCookie)
             {
+                view.EvaluateJavascript("document.body.innerHTML", new JavascriptCallback(html =>
+                {
+                    if (html != null)
+                    {
+                        if (!_hasFb_d)
+                        {
+                            var fbDtsg = Regex.Match(html, @"name=\\""fb_dtsg\\"" value=\\""(.*?)\\").Groups[1].Value;
+                            if (!string.IsNullOrWhiteSpace(fbDtsg))
+                            {
+                                Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
+                                _hasFb_d = true;
+                            }
+                        }
+
+                        if (!_hasJazoest)
+                        {
+                            var jazoest = Regex.Match(html, @"name=\\""jazoest\\"" value=\\""(.*?)\\").Groups[1].Value;
+                            if (!string.IsNullOrWhiteSpace(jazoest))
+                            {
+                                Preferences.Set(AppConstants.Jazoest, jazoest);
+                                _hasJazoest = true;
+                            }
+                        }
+
+                        if (!_hasToken)
+                        {
+                            var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
+                            if (!string.IsNullOrWhiteSpace(data))
+                            {
+                                var token = $"EAAAAZ{data}ZDZD";
+                                Preferences.Set(AppConstants.TokenFaceook, token);
+                                _hasToken = true;
+                            }
+                        }
+                    }
+                }));
                 if (!_hasToken)
                 {
                     view.LoadUrl(AppConstants.UriGetTokenFacebook);

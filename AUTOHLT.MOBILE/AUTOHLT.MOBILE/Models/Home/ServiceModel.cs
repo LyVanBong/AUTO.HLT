@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Syncfusion.XForms.BadgeView;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Models.Home
@@ -11,5 +12,6 @@ namespace AUTOHLT.MOBILE.Models.Home
         public int TypeService { get; set; }
         public string BadgeView { get; set; }
         public string UserRole { get; set; }
+        public BadgeType BadgeType { get; set; }
     }
 }

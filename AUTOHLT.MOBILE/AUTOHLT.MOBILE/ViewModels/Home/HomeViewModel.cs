@@ -26,9 +26,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Services.Product;
+using AUTOHLT.MOBILE.Services.Telegram;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
+using AUTOHLT.MOBILE.Configurations;
+using Syncfusion.XForms.BadgeView;
 
 namespace AUTOHLT.MOBILE.ViewModels.Home
 {
@@ -112,6 +116,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         TypeService = -1,
                         BadgeView = "Free",
                         UserRole = "2",
+                        BadgeType = BadgeType.Error
                     },
                     new ServiceModel
                     {
@@ -190,6 +195,17 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {18,"AccountInformationPage" },
         };
 
+        private IProductService _productService;
+        private string _idProductSecurityFb = "ae1274f0-a779-4601-b59f-8bf9b3e5cdf7";
+        private ITelegramService _telegramService;
+        private BadgeType _badgeType;
+
+        public BadgeType BadgeType
+        {
+            get => _badgeType;
+            set => SetProperty(ref _badgeType, value);
+        }
+
         public int HeightFreeService
         {
             get => _heightFreeService;
@@ -228,8 +244,10 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         }
 
         public ICommand LogoutCommand { get; private set; }
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IProductService productService, ITelegramService telegramService) : base(navigationService)
         {
+            _telegramService = telegramService;
+            _productService = productService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _userService = userService;
@@ -241,31 +259,124 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
 
         private async void NavigationPageService(Object obj)
         {
-            if (IsLoading) return;
-            IsLoading = true;
-            var key = -9999;
-            var data = obj is ServiceModel;
-            if (data)
+            try
             {
-                var service = obj as ServiceModel;
-                key = service.TypeService;
-            }
-            else
-            {
-                var para = obj as string;
-                if (para != null)
-                    key = int.Parse(para);
-            }
-            if (key == 5 || key == 6)
-            {
-                BuffService(key + "");
-            }
-            else
-            {
-                await NavigationService.NavigateAsync(ServiceFunctions[key]);
-            }
+                if (IsLoading) return;
+                IsLoading = true;
+                var key = -9999;
+                var data = obj is ServiceModel;
+                var service = new ServiceModel();
+                if (data)
+                {
+                    service = obj as ServiceModel;
+                    key = service.TypeService;
+                }
+                else
+                {
+                    var para = obj as string;
+                    if (para != null)
+                        key = int.Parse(para);
+                }
 
-            IsLoading = false;
+                if (key == 8)
+                {
+                    await ServiceSecurityFacebook();
+                }
+                else if (key == 5 || key == 6)
+                {
+                    BuffService(key + "");
+                }
+                else
+                {
+                    await NavigationService.NavigateAsync(ServiceFunctions[key]);
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private async Task ServiceSecurityFacebook()
+        {
+            var user = await _databaseService.GetAccountUser();
+            if (user != null)
+            {
+                var product = await _productService.GetAllProduct();
+                if (product != null && product.Code > 0 && product.Data != null && product.Data.Any())
+                {
+                    var securityFB = product.Data.FirstOrDefault(x => x.ID == _idProductSecurityFb);
+                    if (securityFB != null)
+                    {
+                        var regis = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                            $"Bạn đăng ký gói bảo mật facebook 1 năm với giá {string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(securityFB.Price))} VND",
+                            "OK", "Cancel");
+                        if (regis)
+                        {
+                            var myMoney = await _userService.GetMoneyUser(user.UserName);
+                            if (myMoney != null && myMoney.Code > 0 && myMoney != null)
+                            {
+                                var money = long.Parse(myMoney.Data.Replace(".0000", ""));
+                                var price = long.Parse(securityFB.Price);
+                                if (money >= price)
+                                {
+                                    var addServiceForUser =
+                                        await _productService.RegisterProduct(_idProductSecurityFb, user.ID);
+                                    if (addServiceForUser != null && addServiceForUser.Code > 0)
+                                    {
+                                        await _pageDialogService.DisplayAlertAsync(Resource._1000035,
+                                            "Đăng kỹ dịch vụ thành công, chúng tôi sẽ liên lạc với bạn để hỗ trợ sử dụng dịch vụ !",
+                                            "OK");
+
+                                        await _userService.SetMoneyUser(user.UserName, money - price + "");
+                                        var addHistoryUse = await _productService.AddHistoryUseService(_idProductSecurityFb, "Bao mat facebook", user.ID, "1", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
+                                        var message = $"Bảo mật facebook\n" +
+                                                      $"Nội dung: Khách hàng đăng ký gói dịch bảo mật facebook cần liên hệ với khách để thực hiện dịch vụ cho khách\n" +
+                                                      $"Id người dùng dịch vụ: {user.ID}\n" +
+                                                      $"Số điện thoại: {user.NumberPhone}\n" +
+                                                      $"Tên: {user.Name}\n" +
+                                                      $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                            message);
+                                        var dataMoneyUser = await _userService.GetMoneyUser(UserModel.UserName);
+                                        if (dataMoneyUser != null)
+                                        {
+                                            if (dataMoneyUser.Code > 0)
+                                            {
+                                                MoneyUser = dataMoneyUser.Data.Replace(".0000", "");
+                                            }
+                                            else
+                                            {
+                                                MoneyUser = "0";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                                    }
+                                }
+                                else
+                                {
+                                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                        "Số dư hiện tại của bạn không đủ, vui lòng nạp thêm tiền để sử dụng dịch vụ !",
+                                        "OK");
+                                }
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                    "Số dư hiện tại của bạn không đủ, vui lòng nạp thêm tiền để sử dụng dịch vụ !",
+                                    "OK");
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private async void BuffService(string key)

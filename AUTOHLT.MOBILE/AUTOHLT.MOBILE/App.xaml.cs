@@ -1,5 +1,6 @@
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
+using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
@@ -75,6 +76,7 @@ namespace AUTOHLT.MOBILE
         {
             #region Registering the Dialog service
 
+            containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookeViewModel>();
             containerRegistry.RegisterDialog<BuffDialog, BuffDialogViewModel>();
             containerRegistry.RegisterDialog<UseServiceDialog, UseServiceDialogViewModel>();
 
