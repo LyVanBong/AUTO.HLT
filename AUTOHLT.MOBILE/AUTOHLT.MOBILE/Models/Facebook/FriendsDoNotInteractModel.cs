@@ -9,6 +9,7 @@
         public int Comment { get; set; }
         public string Status { get; set; }
         public bool IsSelected { get; set; }
+        public string Picture { get; set; }
     }
 
     public class ReactionModel

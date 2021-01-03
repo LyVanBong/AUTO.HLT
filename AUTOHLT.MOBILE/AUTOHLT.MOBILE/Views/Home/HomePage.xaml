@@ -161,12 +161,12 @@
                         Grid.Column="2"
                         Margin="0"
                         Padding="0"
-                        BadgeText="Coming">
+                        BadgeText="">
                         <badge:SfBadgeView.BadgeSettings>
                             <badge:BadgeSetting
                                 BadgeAnimation="Scale"
                                 BadgePosition="TopRight"
-                                BadgeType="Primary"
+                                BadgeType="{Binding BadgeType}"
                                 CornerRadius="5"
                                 FontSize="8"
                                 TextPadding="2" />
@@ -270,7 +270,7 @@
                                         <badge:BadgeSetting
                                             BadgeAnimation="Scale"
                                             BadgePosition="TopRight"
-                                            BadgeType="Info"
+                                            BadgeType="{Binding BadgeType}"
                                             CornerRadius="5"
                                             FontSize="12" />
                                     </badge:SfBadgeView.BadgeSettings>

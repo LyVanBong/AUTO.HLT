@@ -6,6 +6,15 @@ namespace AUTOHLT.MOBILE.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// Kiểm tra cookie còn sông hay đã chết
+        /// </summary>
+        /// <param name="cookie">cookie</param>
+        /// <returns>
+        /// true còn sôngs
+        /// false đã tèo
+        /// </returns>
+        Task<bool> CheckCookie(string cookie);
+        /// <summary>
         /// Huy ban be khong tuong tac
         /// </summary>
         /// <param name="fb_dtsg"></param>

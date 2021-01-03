@@ -108,6 +108,9 @@
     <EmbeddedResource Update="Controls\Dialog\BuffService\BuffDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Dialog\ConnectFacebook\ConnectFacebookDialog.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\Dialog\UseService\UseServiceDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

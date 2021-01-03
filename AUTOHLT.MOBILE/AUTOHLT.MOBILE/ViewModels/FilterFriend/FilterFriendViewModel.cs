@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.DependencyServices;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Facebook;
@@ -14,17 +6,22 @@ using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using Prism.Services.Dialogs;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
 {
     public class FilterFriendViewModel : ViewModelBase
     {
         private bool _isLoading;
-        private string _uriFacebook;
-        private bool _isvisibleWebView;
         private IFacebookService _facebookService;
         private string _idFacebook;
         private string _nameUserFacebook;
@@ -47,7 +44,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         private string _notifillterDone;
         private IPageDialogService _pageDialogService;
         private List<FriendsDoNotInteractModel> _doNotInteract;
-        private bool _isConnectfb;
+        private IDialogService _dialogService;
 
         public ICommand FilterFriendsCommand { get; private set; }
         public string NotifillterDone
@@ -88,11 +85,6 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         }
 
         public ICommand ConnectFacebookCommand { get; private set; }
-        public string UriFacebook
-        {
-            get => _uriFacebook;
-            set => SetProperty(ref _uriFacebook, value);
-        }
 
         public bool IsLoading
         {
@@ -100,29 +92,14 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             set => SetProperty(ref _isLoading, value);
         }
 
-        public bool IsvisibleWebView
+        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
         {
-            get => _isvisibleWebView;
-            set => SetProperty(ref _isvisibleWebView, value);
-        }
-
-        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService) : base(navigationService)
-        {
+            _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
             FilterFriendsCommand = new Command(FilterFriends);
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
-            IsvisibleWebView = true;
-            MessagingCenter.Subscribe<App>(this, AppConstants.GetokenDone, async (message) =>
-            {
-                await StartFillterFriend();
-            });
-            MessagingCenter.Subscribe<App>(this, AppConstants.GetCookieDone, (message) =>
-            {
-                IsLoading = true;
-                IsvisibleWebView = false;
-            });
         }
 
         private async void FilterFriends()
@@ -134,30 +111,34 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                 if (FriendsDoNotInteractData != null && FriendsDoNotInteractData.Any())
                 {
                     var res = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                             "Chỉ nên xóa dưới 500 bạn bè trong 1 ngày !", "OK", "Cancel");
+                             "Chỉ nên xóa tối đa 200 bạn bè trong một ngày !", "OK", "Cancel");
                     if (res)
                     {
-                        var data = FriendsDoNotInteractData.Where(x => x.IsSelected == true).Take(500);
-                        if (data.Any())
+                        var dataFriends = FriendsDoNotInteractData.Where(x => x.IsSelected == true);
+                        if (dataFriends.Any())
                         {
-                            var fb_dtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
-                            var jazoest = Preferences.Get(AppConstants.Jazoest, "");
-                            var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                            if (fb_dtsg != null && jazoest != null && cookie != null)
+                            var data = dataFriends.Take(499).ToList();
+                            if (data.Any())
                             {
-                                var num = 0;
-                                foreach (var item in data)
+                                var fb_dtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
+                                var jazoest = Preferences.Get(AppConstants.Jazoest, "");
+                                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                                if (fb_dtsg != null && jazoest != null && cookie != null)
                                 {
-                                    var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, item.Uid, cookie);
-                                    if (unFriend != null)
+                                    var num = 0;
+                                    foreach (var item in data)
                                     {
-                                        num++;
-                                        FriendsDoNotInteractData.Remove(item);
-                                        _doNotInteract.Remove(item);
+                                        var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, item.Uid, cookie);
+                                        if (unFriend != null && unFriend.Contains(item.Uid))
+                                        {
+                                            num++;
+                                            FriendsDoNotInteractData.Remove(item);
+                                            _doNotInteract.Remove(item);
+                                        }
                                     }
+                                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                        $"Bạn đã xóa {num} thanh cong !", "OK");
                                 }
-                                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                                    $"Bạn đã xóa {num} thanh cong !", "OK");
                             }
                         }
                     }
@@ -173,13 +154,11 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             }
         }
 
-        private async Task StartFillterFriend()
+        private async Task StartFillterFriend(string token, string cookie, string fbdtsg)
         {
             try
             {
-                var token = Preferences.Get(AppConstants.TokenFaceook, "");
-                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                if (!string.IsNullOrWhiteSpace(token) && !string.IsNullOrWhiteSpace(cookie))
+                if (!string.IsNullOrWhiteSpace(token) && !string.IsNullOrWhiteSpace(cookie) && !string.IsNullOrWhiteSpace(fbdtsg))
                 {
                     var data = await _facebookService.GetInfoUser("name,picture", token);
                     if (data != null)
@@ -189,11 +168,11 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                         AvatarFacebook = data.picture?.data?.url?.Replace("\"", "");
                     }
 
-                    await CheckFriendsReaction();
+                    await CheckFriendsReaction(token, fbdtsg);
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000021, Resource._1000040, "OK");
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000021, Resource._1000041, "OK");
                 }
             }
             catch (Exception e)
@@ -203,7 +182,6 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             finally
             {
                 IsLoading = false;
-                _isConnectfb = false;
             }
         }
 
@@ -220,22 +198,22 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                         FriendsDoNotInteractData = new ObservableCollection<FriendsDoNotInteractModel>();
                         if (fillter.Id == -1)
                         {
-                            _doNotInteract.ForEach(model =>
+                            foreach (var model in _doNotInteract)
                             {
                                 model.IsSelected = false;
                                 FriendsDoNotInteractData.Add(model);
-                            });
+                            }
                         }
                         else
                         {
-                            _doNotInteract.ForEach(model =>
+                            foreach (var model in _doNotInteract)
                             {
                                 if ((model.Comment + model.Reaction) <= fillter.Id)
                                 {
                                     model.IsSelected = true;
                                     FriendsDoNotInteractData.Add(model);
                                 }
-                            });
+                            }
                         }
                     }
                 }
@@ -250,35 +228,66 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             }
         }
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            base.OnNavigatedFrom(parameters);
-            MessagingCenter.Unsubscribe<App>(this, AppConstants.GetokenDone);
-            MessagingCenter.Unsubscribe<App>(this, AppConstants.GetCookieDone);
-        }
-
         private async void ConnectFacebook()
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(IdFacebook))
                 {
-                    if (_isConnectfb) return;
-                    _isConnectfb = true;
+                    if (IsLoading) return;
                     IsLoading = true;
-                    IsvisibleWebView = true;
-                    UriFacebook = AppConstants.UriLoginFacebook;
-                    Preferences.Remove(AppConstants.CookieFacebook);
-                    Preferences.Remove(AppConstants.TokenFaceook);
-                    Preferences.Remove(AppConstants.Fb_Dtsg);
-                    Preferences.Remove(AppConstants.Jazoest);
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-                    IsLoading = false;
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                        "Để sử dụng tính năng này các bạn cần tắt tính năng bảo mật 2 lớp trên facebook của mình !!",
+                        "OK");
+                    var token = Preferences.Get(AppConstants.TokenFaceook, "");
+                    var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                    var fbdtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
+                    var isCheckData = await CheckCookieAndToken(token, cookie);
+                    if (isCheckData)
+                    {
+                        await StartFillterFriend(token, cookie, fbdtsg);
+                    }
+                    else
+                    {
+                        _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (result) =>
+                         {
+                             token = Preferences.Get(AppConstants.TokenFaceook, "");
+                             cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                             fbdtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
+                             await StartFillterFriend(token, cookie, fbdtsg);
+                         });
+                    }
                 }
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
+            }
+            finally { IsLoading = false; }
+        }
+
+        private async Task<bool> CheckCookieAndToken(string token, string cookie)
+        {
+            try
+            {
+                var isCookie = await _facebookService.CheckCookie(cookie);
+                if (!isCookie)
+                {
+                    return false;
+                }
+
+                var friends = await GetAllFriend(token, "1");
+                if (friends == null || friends.data == null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return false;
             }
         }
 
@@ -288,12 +297,12 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             IsLoading = true;
         }
 
-        private async Task<bool> GetFriendReaction()
+        private async Task<bool> GetFriendReaction(string fbdtsg)
         {
             try
             {
                 var q = "node(" + IdFacebook + "){timeline_feed_units.first(300).after(){page_info,edges{node{id,creation_time,feedback{reactors{nodes{id}},commenters{nodes{id}}}}}}}";
-                var data = await _facebookService.GetFriendsDoNotInteract(Preferences.Get(AppConstants.Fb_Dtsg, ""), q);
+                var data = await _facebookService.GetFriendsDoNotInteract(fbdtsg, q);
                 if (data != null)
                 {
                     var obj = JsonConvert.DeserializeObject<Dictionary<string, ReactionModel>>(data);
@@ -339,11 +348,11 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             }
         }
 
-        private async Task<FriendsModel> GetAllFriend()
+        private async Task<FriendsModel> GetAllFriend(string token, string numberFriends)
         {
             try
             {
-                var data = await _facebookService.GetAllFriend("5000", Preferences.Get(AppConstants.TokenFaceook, ""));
+                var data = await _facebookService.GetAllFriend(numberFriends, token);
                 return data;
             }
             catch (Exception e)
@@ -354,70 +363,73 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             return null;
         }
 
-        private async Task CheckFriendsReaction()
+        private async Task CheckFriendsReaction(string token, string fbdtsg)
         {
             try
             {
 
-                var reac = await GetFriendReaction();
+                var reac = await GetFriendReaction(fbdtsg);
                 if (reac)
                 {
-                    _doNotInteract = new List<FriendsDoNotInteractModel>();
-                    var datax = _reaction.Split('-');
-                    var datay = _comment.Split('-');
-                    var allFriend = await GetAllFriend();
-                    var data = allFriend.data;
-                    var lenght = allFriend.data.Length;
-                    var countFriendNoReaction = 0;
-                    for (int i = 0; i < lenght; i++)
+                    var allFriend = await GetAllFriend(token, "5000");
+                    if (allFriend != null)
                     {
-                        var cx = 0;
-                        var bl = 0;
-                        var idx = allFriend.data[i].id;
-                        if (_reaction.Contains(idx))
+                        _doNotInteract = new List<FriendsDoNotInteractModel>();
+                        var datax = _reaction.Split('-');
+                        var datay = _comment.Split('-');
+                        var data = allFriend.data;
+                        var lenght = allFriend.data.Length;
+                        var countFriendNoReaction = 0;
+                        for (int i = 0; i < lenght; i++)
                         {
-                            foreach (var item in datax)
+                            var cx = 0;
+                            var bl = 0;
+                            var idx = allFriend.data[i].id;
+                            if (_reaction.Contains(idx))
                             {
-                                if (idx == item)
+                                foreach (var item in datax)
                                 {
-                                    cx++;
+                                    if (idx == item)
+                                    {
+                                        cx++;
+                                    }
                                 }
                             }
-                        }
 
-                        if (_comment.Contains(idx))
-                        {
-                            foreach (var item in datay)
+                            if (_comment.Contains(idx))
                             {
-                                if (item == idx)
+                                foreach (var item in datay)
                                 {
-                                    bl++;
+                                    if (item == idx)
+                                    {
+                                        bl++;
+                                    }
                                 }
                             }
-                        }
 
 
-                        var friend = new FriendsDoNotInteractModel
-                        {
-                            Id = i + 1 + "",
-                            Uid = data[i].id,
-                            Name = data[i].name,
-                            Reaction = cx,
-                            Comment = bl,
-                            Status = Resource._1000096,
-                        };
-                        if (cx == 0 && bl == 0)
-                        {
-                            countFriendNoReaction++;
+                            var friend = new FriendsDoNotInteractModel
+                            {
+                                Id = i + 1 + "",
+                                Uid = data[i].id,
+                                Name = data[i].name,
+                                Reaction = cx,
+                                Comment = bl,
+                                Status = Resource._1000096,
+                                Picture = data[i]?.picture?.data?.url,
+                            };
+                            if (cx == 0 && bl == 0)
+                            {
+                                countFriendNoReaction++;
+                            }
+                            _doNotInteract.Add(friend);
                         }
-                        _doNotInteract.Add(friend);
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            FriendsDoNotInteractData = new ObservableCollection<FriendsDoNotInteractModel>(_doNotInteract);
+                            NotifillterDone = string.Format(Resource._1000097, countFriendNoReaction, lenght);
+                        });
                     }
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        FriendsDoNotInteractData = new ObservableCollection<FriendsDoNotInteractModel>(_doNotInteract);
-                        NotifillterDone = string.Format(Resource._1000097, countFriendNoReaction, lenght);
-                    });
-
                 }
             }
             catch (Exception e)

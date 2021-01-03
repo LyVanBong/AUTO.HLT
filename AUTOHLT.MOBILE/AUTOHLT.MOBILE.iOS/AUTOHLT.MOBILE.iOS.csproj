@@ -188,6 +188,7 @@
     <BundleResource Include="Resources\Default-Portrait@2x.png" />
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default@2x.png" />
+    <BundleResource Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -244,20 +245,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AUTOHLT.MOBILE\AUTOHLT.MOBILE.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{06B8432C-E5D9-436D-A7B8-336D3B7B6D76}</Project>
       <Name>AUTOHLT.MOBILE</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\launcher_foreground.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </BundleResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using AUTOHLT.MOBILE.DependencyServices;
+﻿using AUTOHLT.MOBILE.DependencyServices;
 using AUTOHLT.MOBILE.iOS.DependencyServices;
 using Foundation;
 using Microsoft.AppCenter.Crashes;
+using System;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(ClearCookies))]
@@ -15,13 +14,9 @@ namespace AUTOHLT.MOBILE.iOS.DependencyServices
         {
             try
             {
-                var CookieStorage = NSHttpCookieStorage.SharedStorage;
-                if (CookieStorage.Cookies.Any())
-                {
-                    foreach (var cookie in CookieStorage.Cookies)
-                        CookieStorage.DeleteCookie(cookie);
-                }
-
+                NSHttpCookieStorage cookieStorage = NSHttpCookieStorage.SharedStorage;
+                foreach (var cookie in cookieStorage.Cookies)
+                    cookieStorage.DeleteCookie(cookie);
                 return true;
             }
             catch (Exception e)
