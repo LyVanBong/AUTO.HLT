@@ -202,14 +202,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private string _idProductSecurityFb = "ae1274f0-a779-4601-b59f-8bf9b3e5cdf7";
         private ITelegramService _telegramService;
         private BadgeType _badgeType;
-        private string _idProductAddFriends = "82ea2831-60b3-4cf4-9828-be58c1c51a62";
-
-        public BadgeType BadgeType
-        {
-            get => _badgeType;
-            set => SetProperty(ref _badgeType, value);
-        }
-
+        private string _idProductAddFriends = "85e7192b-7a30-45ff-b327-bd9c25c8dfcb";
+        
         public BadgeType BadgeType
         {
             get => _badgeType;
