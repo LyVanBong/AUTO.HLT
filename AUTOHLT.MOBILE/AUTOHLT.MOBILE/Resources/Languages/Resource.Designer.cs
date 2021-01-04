@@ -1004,5 +1004,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000104", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic heart drop.
+        /// </summary>
+        internal static string _1000105 {
+            get {
+                return ResourceManager.GetString("1000105", resourceCulture);
+            }
+        }
     }
 }

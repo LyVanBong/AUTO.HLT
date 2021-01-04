@@ -19,6 +19,7 @@
     <None Remove="Resources\Fonts\RobotoRegular.ttf" />
     <None Remove="Resources\Images\icon_account.png" />
     <None Remove="Resources\Images\icon_add_friends.png" />
+    <None Remove="Resources\Images\icon_auto_boot_hear.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_comments.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
@@ -33,6 +34,7 @@
     <None Remove="Resources\Images\icon_like_page.png" />
     <None Remove="Resources\Images\icon_like_product.png" />
     <None Remove="Resources\Images\icon_notification.png" />
+    <None Remove="Resources\Images\icon_pokes.png" />
     <None Remove="Resources\Images\icon_poke_face.png" />
     <None Remove="Resources\Images\icon_revenue.png" />
     <None Remove="Resources\Images\icon_security_fb.png" />
@@ -56,6 +58,7 @@
     <EmbeddedResource Include="Resources\Fonts\RobotoRegular.ttf" />
     <EmbeddedResource Include="Resources\Images\icon_account.png" />
     <EmbeddedResource Include="Resources\Images\icon_add_friends.png" />
+    <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
@@ -70,6 +73,7 @@
     <EmbeddedResource Include="Resources\Images\icon_like_page.png" />
     <EmbeddedResource Include="Resources\Images\icon_like_product.png" />
     <EmbeddedResource Include="Resources\Images\icon_notification.png" />
+    <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
     <EmbeddedResource Include="Resources\Images\icon_poke_face.png" />
     <EmbeddedResource Include="Resources\Images\icon_revenue.png" />
     <EmbeddedResource Include="Resources\Images\icon_security_fb.png" />

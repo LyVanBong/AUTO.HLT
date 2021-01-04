@@ -537,4 +537,8 @@
     <value>Filter friends</value>
     <comment>Lọc bạn bè</comment>
   </data>
+  <data name="1000105" xml:space="preserve">
+    <value>Automatic heart drop</value>
+    <comment>Tự động thả tim</comment>
+  </data>
 </root>

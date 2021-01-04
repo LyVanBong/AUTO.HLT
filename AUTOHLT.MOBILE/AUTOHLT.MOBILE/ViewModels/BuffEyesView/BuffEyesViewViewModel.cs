@@ -163,6 +163,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
                                                 "OK");
                                             await InitializeData();
+                                            await _productService.AddHistoryUseService(product.ID,"Tăng mặt livestream",user.ID,"0",DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"));
                                         }
                                         else
                                         {
@@ -225,7 +226,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
                                 {
                                     var endDate = DateTime.Parse(obj.DateCreate);
                                     var totalDay = (DateTime.Now - endDate).TotalDays;
-                                    var number = double.Parse(item.Number);
+                                    var number = double.Parse(item.EndDate);
                                     if (totalDay <= number)
                                     {
                                         item.IsRegisterProduct = true;
