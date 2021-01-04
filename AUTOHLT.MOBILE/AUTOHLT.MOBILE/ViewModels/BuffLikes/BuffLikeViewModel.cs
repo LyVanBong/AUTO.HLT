@@ -192,7 +192,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                                 {
                                     var endDate = DateTime.Parse(obj.DateCreate);
                                     var totalDay = (DateTime.Now - endDate).TotalDays;
-                                    var number = double.Parse(item.Number);
+                                    var number = double.Parse(item.EndDate);
                                     if (totalDay <= number)
                                     {
                                         item.IsRegisterProduct = true;

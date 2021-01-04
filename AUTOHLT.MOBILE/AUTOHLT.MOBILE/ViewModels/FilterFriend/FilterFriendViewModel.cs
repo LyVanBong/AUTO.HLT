@@ -236,9 +236,6 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                 {
                     if (IsLoading) return;
                     IsLoading = true;
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                        "Để sử dụng tính năng này các bạn cần tắt tính năng bảo mật 2 lớp trên facebook của mình !!",
-                        "OK");
                     var token = Preferences.Get(AppConstants.TokenFaceook, "");
                     var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
                     var fbdtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");

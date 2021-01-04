@@ -69,8 +69,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     },
                     new ServiceModel
                     {
-                        Icon = "icon_Interactive.png",
-                        TitleService = Resource._1000026,
+                        Icon = "icon_auto_boot_hear.png",
+                        TitleService = Resource._1000105,
                         TypeService = 3,
                         BadgeView = "Hot",
                         UserRole = "2",

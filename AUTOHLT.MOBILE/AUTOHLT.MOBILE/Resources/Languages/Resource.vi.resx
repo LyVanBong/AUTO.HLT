@@ -537,4 +537,8 @@
     <value>Lọc bạn bè</value>
     <comment>Lọc bạn bè</comment>
   </data>
+  <data name="1000105" xml:space="preserve">
+    <value>Tự động thả tim</value>
+    <comment>Tự động thả tim</comment>
+  </data>
 </root>
