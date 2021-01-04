@@ -84,15 +84,20 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
                 if (user != null)
                 {
                     _userModel = user;
-                    var data = await _userService.GetMoneyUser(user.UserName);
+                    var data = await _userService.GetMoneyUser(_userModel.UserName);
                     if (data != null && data.Code > 0)
                     {
-                        var myPrice = int.Parse(data.Data);
+                        var money = data.Data.Replace(".0000", "");
+                        var myPrice = int.Parse(money);
                         var priceInput = int.Parse(AmountMoney);
                         if (myPrice < priceInput)
                         {
                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000048, "OK");
                             AmountMoney = myPrice + "";
+                        }
+                        else
+                        {
+                            AmountMoney = "";
                         }
                     }
                     else

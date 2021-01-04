@@ -147,45 +147,49 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             {
                 var amout = long.Parse(Amount);
                 var user = await _database.GetAccountUser();
-                if (amout > 0 && amout <= long.Parse(user.Price))
+                if (user != null && user.UserName != null)
                 {
-                    var data = long.Parse(user.Price) - amout;
-                    var update = await _userService.SetMoneyUser(user.UserName, data + "");
-                    if (update != null && update.Code > 0)
+                    var money = long.Parse(user.Price.Replace(".0000",""));
+                    if (amout > 0 && amout <= money)
                     {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                        Number = "";
-                        var myMoney = await _userService.GetMoneyUser(_userName);
-                        if (myMoney != null && myMoney.Code > 0)
+                        var data = money - amout;
+                        var update = await _userService.SetMoneyUser(user.UserName, data + "");
+                        if (update != null && update.Code > 0)
                         {
-                            UserMoney = myMoney.Data.Replace(".0000", "");
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                            //Number = "";
+                            var myMoney = await _userService.GetMoneyUser(_userName);
+                            if (myMoney != null && myMoney.Code > 0)
+                            {
+                                UserMoney = myMoney.Data.Replace(".0000", "");
+                            }
+                            else
+                            {
+                                if (RequestClose != null)
+                                    RequestClose(null);
+                            }
+
+                            var num = long.Parse(Number) * long.Parse(NumberService);
+                            var historyService = await _productService.AddHistoryUseService(_idProduct, Title, _userName,
+                                num + "", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
+                            var message = $"{Title}\n" +
+                                          $"Số lượng: {Number}\n" +
+                                          $"Nội dung: {Content}\n" +
+                                          $"Id người dùng dịch vụ: {user.ID}\n" +
+                                          $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                            var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                message);
                         }
                         else
                         {
-                            if (RequestClose != null)
-                                RequestClose(null);
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
                         }
-
-                        var num = long.Parse(Number) * long.Parse(NumberService);
-                        var historyService = await _productService.AddHistoryUseService(_idProduct, Title, _userName,
-                            num + "", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
-                        var message = $"{Title}\n" +
-                                      $"Số lượng: {Number}\n" +
-                                      $"Nội dung: {Content}\n" +
-                                      $"Id người dùng dịch vụ: {user.ID}\n" +
-                                      $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
-                        var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                            message);
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
+                        //Number = "";
                     }
-                }
-                else
-                {
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
-                    Number = "";
                 }
             }
         }
