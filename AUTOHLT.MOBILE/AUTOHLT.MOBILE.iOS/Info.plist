@@ -9,7 +9,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -55,17 +54,10 @@
 	<string>Bsoft</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
+		<string>lyft</string>
+		<string>fb</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The library I use requires this permission</string>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>lyft</string>
-    <string>fb</string>
-  </array>
 </dict>
 </plist>
