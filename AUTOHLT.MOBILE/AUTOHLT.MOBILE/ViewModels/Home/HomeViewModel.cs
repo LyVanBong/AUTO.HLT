@@ -209,13 +209,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             get => _badgeType;
             set => SetProperty(ref _badgeType, value);
         }
-
-        public BadgeType BadgeType
-        {
-            get => _badgeType;
-            set => SetProperty(ref _badgeType, value);
-        }
-
         public int HeightFreeService
         {
             get => _heightFreeService;
