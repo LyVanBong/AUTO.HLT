@@ -178,7 +178,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
                 if (data != null && data.Code > 0 && data.Data.Any())
                 {
                     var product = new List<ProductModel>();
-                    var lsProduct = data.Data;
+                    var lsProduct = data.Data.ToList();
                     foreach (var item in lsProduct)
                     {
                         if (item.GroupProduct == "1")

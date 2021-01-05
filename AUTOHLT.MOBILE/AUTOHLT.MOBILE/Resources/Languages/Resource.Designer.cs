@@ -1013,5 +1013,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000105", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pokes friends.
+        /// </summary>
+        internal static string _1000106 {
+            get {
+                return ResourceManager.GetString("1000106", resourceCulture);
+            }
+        }
     }
 }

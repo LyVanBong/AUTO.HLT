@@ -1,14 +1,18 @@
 ﻿using Acr.UserDialogs;
+using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
 using AUTOHLT.MOBILE.Models.Home;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Product;
+using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.Views.AddFullFriend;
 using AUTOHLT.MOBILE.Views.BuffLikePage;
 using AUTOHLT.MOBILE.Views.BuffSub;
 using AUTOHLT.MOBILE.Views.FilterFriend;
+using AUTOHLT.MOBILE.Views.Pokes;
 using AUTOHLT.MOBILE.Views.SecurityFb;
 using AUTOHLT.MOBILE.Views.SuportCustumer;
 using AUTOHLT.MOBILE.Views.UnLockFb;
@@ -18,22 +22,18 @@ using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using RestSharp;
+using Syncfusion.XForms.BadgeView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Services.Product;
-using AUTOHLT.MOBILE.Services.Telegram;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
-using AUTOHLT.MOBILE.Configurations;
-using Syncfusion.XForms.BadgeView;
 
 namespace AUTOHLT.MOBILE.ViewModels.Home
 {
@@ -95,6 +95,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         Icon = "icon_like_page.png",
                         TitleService = Resource._1000080,
                         TypeService = 6,
+                        UserRole = "2",
+                    },
+                    new ServiceModel
+                    {
+                        Icon = "icon_pokes.png",
+                        TitleService = Resource._1000106,
+                        TypeService = 19,
                         UserRole = "2",
                     },
                     new ServiceModel
@@ -195,6 +202,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {16,"ChangePasswordPage" },
             {17,"" },
             {18,"AccountInformationPage" },
+            {19,nameof(PokesPage) },
         };
         private string[] _paraDialogSheet = new string[]
             {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè"};
