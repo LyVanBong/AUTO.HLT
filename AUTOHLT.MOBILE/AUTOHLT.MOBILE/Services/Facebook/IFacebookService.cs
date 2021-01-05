@@ -10,7 +10,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
         /// </summary>
         /// <param name="cookie"></param>
         /// <returns></returns>
-        Task<string> PokesFriends(string cookie,string uri);
+        Task<string> PokesFriends(string cookie, string dom_id_replace, string is_hide, string poke_target, string redirect_url, string ext, string hash);
         /// <summary>
         /// Lấy dữ liệu danh sách bạn bè chọc
         /// </summary>

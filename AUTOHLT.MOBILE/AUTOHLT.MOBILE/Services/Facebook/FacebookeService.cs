@@ -17,11 +17,20 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             _restSharpService = restSharpService;
         }
 
-        public async Task<string> PokesFriends(string cookie, string uri)
+        public async Task<string> PokesFriends(string cookie, string dom_id_replace,string is_hide,string poke_target,string redirect_url,string ext,string hash)
         {
             try
             {
-                var html = await _restSharpService.PostAsync(uri, null, cookie);
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("dom_id_replace",dom_id_replace),
+                    new RequestParameter("is_hide",is_hide),
+                    new RequestParameter("poke_target",poke_target),
+                    new RequestParameter("redirect_url",redirect_url),
+                    new RequestParameter("ext",ext),
+                    new RequestParameter("hash",hash),
+                };
+                var html = await _restSharpService.GetAsync("https://d.facebook.com/pokes/inline/", para, cookie);
                 return html;
             }
             catch (Exception)
