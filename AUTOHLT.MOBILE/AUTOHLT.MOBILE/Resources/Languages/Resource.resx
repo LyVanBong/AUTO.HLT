@@ -541,4 +541,8 @@
     <value>Automatic heart drop</value>
     <comment>Tự động thả tim</comment>
   </data>
+  <data name="1000106" xml:space="preserve">
+    <value>Pokes friends</value>
+    <comment>Chọc bạn bè</comment>
+  </data>
 </root>

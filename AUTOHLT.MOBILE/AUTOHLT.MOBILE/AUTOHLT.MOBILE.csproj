@@ -35,9 +35,11 @@
     <None Remove="Resources\Images\icon_like_product.png" />
     <None Remove="Resources\Images\icon_notification.png" />
     <None Remove="Resources\Images\icon_pokes.png" />
+    <None Remove="Resources\Images\icon_pokes_user.png" />
     <None Remove="Resources\Images\icon_poke_face.png" />
     <None Remove="Resources\Images\icon_revenue.png" />
     <None Remove="Resources\Images\icon_security_fb.png" />
+    <None Remove="Resources\Images\icon_select_all_pokes.png" />
     <None Remove="Resources\Images\icon_service.png" />
     <None Remove="Resources\Images\icon_settings.png" />
     <None Remove="Resources\Images\icon_share.png" />
@@ -74,9 +76,11 @@
     <EmbeddedResource Include="Resources\Images\icon_like_product.png" />
     <EmbeddedResource Include="Resources\Images\icon_notification.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
+    <EmbeddedResource Include="Resources\Images\icon_pokes_user.png" />
     <EmbeddedResource Include="Resources\Images\icon_poke_face.png" />
     <EmbeddedResource Include="Resources\Images\icon_revenue.png" />
     <EmbeddedResource Include="Resources\Images\icon_security_fb.png" />
+    <EmbeddedResource Include="Resources\Images\icon_select_all_pokes.png" />
     <EmbeddedResource Include="Resources\Images\icon_service.png" />
     <EmbeddedResource Include="Resources\Images\icon_settings.png" />
     <EmbeddedResource Include="Resources\Images\icon_share.png" />
@@ -168,6 +172,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\SignUpPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pokes\PokesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RechargeCustomers\RechargeCustomersPage.xaml">

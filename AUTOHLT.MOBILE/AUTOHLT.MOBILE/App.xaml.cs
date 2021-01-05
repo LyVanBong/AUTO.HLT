@@ -22,6 +22,7 @@ using AUTOHLT.MOBILE.ViewModels.FilterFriend;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Interactive;
 using AUTOHLT.MOBILE.ViewModels.Login;
+using AUTOHLT.MOBILE.ViewModels.Pokes;
 using AUTOHLT.MOBILE.ViewModels.RechargeCustomers;
 using AUTOHLT.MOBILE.ViewModels.SecurityFb;
 using AUTOHLT.MOBILE.ViewModels.SuportCustumer;
@@ -39,6 +40,7 @@ using AUTOHLT.MOBILE.Views.FilterFriend;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Interactive;
 using AUTOHLT.MOBILE.Views.Login;
+using AUTOHLT.MOBILE.Views.Pokes;
 using AUTOHLT.MOBILE.Views.RechargeCustomers;
 using AUTOHLT.MOBILE.Views.SecurityFb;
 using AUTOHLT.MOBILE.Views.SuportCustumer;
@@ -104,6 +106,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<BuffSubPage, BuffLikePageViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
             containerRegistry.RegisterForNavigation<FilterFriendPage, FilterFriendViewModel>();
