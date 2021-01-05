@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.Product;
@@ -20,7 +12,14 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
-using Unity.Injection;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -97,7 +96,12 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                 if (obj != null)
                 {
                     var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                    var html = await _facebookService.PokesFriends(cookie, obj.UriPokes);
+                    var poke_target = obj.UId;
+                    var extRegex = new Regex(@"ext=(.*?)&");
+                    var ext = extRegex.Match(obj.UriPokes).Groups[1].Value;
+                    var hashRegex = new Regex(@"hash=(.*?);");
+                    var hash = hashRegex.Match(obj.UriPokes+";").Groups[1].Value;
+                    var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
                     if (html.Contains(obj.FullName))
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} thành công !",
@@ -115,13 +119,18 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                     if (PokesData.Any())
                     {
                         var data = PokesData.Where(x => x.IsPokes).ToList();
-                        if (data!= null && data.Any())
+                        if (data != null && data.Any())
                         {
                             var total = 0;
                             var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                            
                             foreach (var item in data)
                             {
-                                var html = await _facebookService.PokesFriends(cookie, item.UriPokes);
+                                var ext = Regex.Match(item.UriPokes, @"ext=(.*?)&").Groups[1].Value;
+                                var hash = Regex.Match(item.UriPokes + ";", @"hash=(.*?);").Groups[1].Value;
+                                var poke_target = item.UId;
+                                await Task.Delay(TimeSpan.FromMilliseconds(1500));
+                                var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
                                 if (html.Contains(item.FullName))
                                 {
                                     total++;

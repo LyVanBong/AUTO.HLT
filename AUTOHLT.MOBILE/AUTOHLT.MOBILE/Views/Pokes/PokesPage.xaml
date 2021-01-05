@@ -13,7 +13,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
-            RowDefinitions="40,25,40,*"
+            RowDefinitions="40,35,40,*"
             RowSpacing="0">
             <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000106}" />
 
