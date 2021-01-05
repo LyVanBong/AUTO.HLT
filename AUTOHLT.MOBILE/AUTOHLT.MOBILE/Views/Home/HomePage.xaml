@@ -281,7 +281,7 @@
                                 <Label
                                     Grid.Row="1"
                                     FontAttributes="Bold"
-                                    FontSize="13"
+                                    FontSize="10"
                                     HorizontalOptions="Center"
                                     Text="{Binding TitleService}"
                                     VerticalOptions="Center" />

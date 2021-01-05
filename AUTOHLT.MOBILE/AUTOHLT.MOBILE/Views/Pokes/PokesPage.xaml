@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.Pokes.PokesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
+    xmlns:effectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    BackgroundColor="{StaticResource HeaderHome}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            RowDefinitions="40,25,40,*"
+            RowSpacing="0">
+            <controls:NavigationView Grid.Row="0" Text="{markupExtensions:Translate 1000106}" />
+
+            <Label
+                Grid.Row="1"
+                Margin="10,0"
+                Text="Danh sách bạn bè có thể chọc" />
+
+            <StackLayout
+                Grid.Row="2"
+                Margin="0"
+                Padding="0"
+                Orientation="Horizontal"
+                Spacing="0">
+                <Button
+                    Margin="10,0"
+                    BackgroundColor="#dff3e3"
+                    BorderColor="#c9cbff"
+                    BorderWidth="1"
+                    Command="{Binding PokesFriendCommand}"
+                    CornerRadius="10"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Chọc toàn bộ" />
+                <Image
+                    Margin="10,0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="End"
+                    Source="{markupExtensions:ImageResource icon_select_all_pokes.png}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectAllFriendsCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+
+            <customRenderer:CustomCollectionViewRenderer
+                x:Name="Lscollection"
+                Grid.Row="3"
+                Margin="10"
+                ItemsSource="{Binding PokesData}">
+                <customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                <customRenderer:CustomCollectionViewRenderer.ItemTemplate>
+                    <DataTemplate>
+                        <effectsView:SfEffectsView
+                            Margin="0"
+                            Padding="5"
+                            BackgroundColor="#e8efeb"
+                            CornerRadius="15">
+                            <Grid
+                                Margin="3"
+                                Padding="0"
+                                ColumnDefinitions="60,*,30"
+                                ColumnSpacing="0"
+                                RowDefinitions="25,35"
+                                RowSpacing="0">
+                                <Image
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Margin="10"
+                                    Source="{markupExtensions:ImageResource icon_pokes_user.png}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="10,0"
+                                    Padding="0"
+                                    Text="{Binding FullName}" />
+                                <Button
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,3"
+                                    Padding="0"
+                                    BackgroundColor="#fff"
+                                    BorderColor="#c9cbff"
+                                    BorderWidth="1"
+                                    Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.PokesFriendCommand}"
+                                    CommandParameter="{Binding .}"
+                                    CornerRadius="10"
+                                    FontSize="10"
+                                    Text="Pokes" />
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    IsChecked="{Binding IsPokes}"
+                                    Color="#00303f" />
+                            </Grid>
+                        </effectsView:SfEffectsView>
+                    </DataTemplate>
+                </customRenderer:CustomCollectionViewRenderer.ItemTemplate>
+            </customRenderer:CustomCollectionViewRenderer>
+
+            <controls:LoadingView
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                IsVisible="{Binding IsLoading}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

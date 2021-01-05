@@ -17,6 +17,32 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             _restSharpService = restSharpService;
         }
 
+        public async Task<string> PokesFriends(string cookie, string uri)
+        {
+            try
+            {
+                var html = await _restSharpService.PostAsync(uri, null, cookie);
+                return html;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> GetPokesFriends(string cookie, string showOutgoing)
+        {
+            try
+            {
+                var html = await _restSharpService.GetAsync($"https://d.facebook.com/pokes/?show_outgoing={showOutgoing}", null, cookie);
+                return html;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> CheckCookie(string cookie)
         {
             try

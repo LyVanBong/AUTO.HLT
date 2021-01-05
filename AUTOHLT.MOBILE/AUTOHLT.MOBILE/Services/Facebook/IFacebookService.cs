@@ -6,6 +6,19 @@ namespace AUTOHLT.MOBILE.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// Choc ban be
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        Task<string> PokesFriends(string cookie,string uri);
+        /// <summary>
+        /// Lấy dữ liệu danh sách bạn bè chọc
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="showOutgoing">0 la choc , 1 la da choc</param>
+        /// <returns></returns>
+        Task<string> GetPokesFriends(string cookie, string showOutgoing);
+        /// <summary>
         /// Kiểm tra cookie còn sông hay đã chết
         /// </summary>
         /// <param name="cookie">cookie</param>
