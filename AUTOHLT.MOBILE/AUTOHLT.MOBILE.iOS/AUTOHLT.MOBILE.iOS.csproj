@@ -119,6 +119,7 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <InterfaceDefinition Include="Resources\Launch Screen.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="AppIcon.xcassets\AppIcons.appiconset\120.png">
