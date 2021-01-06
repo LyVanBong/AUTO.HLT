@@ -100,13 +100,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                     var extRegex = new Regex(@"ext=(.*?)&");
                     var ext = extRegex.Match(obj.UriPokes).Groups[1].Value;
                     var hashRegex = new Regex(@"hash=(.*?);");
-                    var hash = hashRegex.Match(obj.UriPokes+";").Groups[1].Value;
+                    var hash = hashRegex.Match(obj.UriPokes + ";").Groups[1].Value;
                     var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
                     if (html.Contains(obj.FullName))
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} thành công !",
                               "OK");
-                        PokesData.Remove(obj);
+                        await UseServiceProduct();
                     }
                     else
                     {
@@ -123,19 +123,23 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                         {
                             var total = 0;
                             var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                            
-                            foreach (var item in data)
+                            var countData = data.Count;
+                            for (int i = 0; i < countData; i++)
                             {
-                                var ext = Regex.Match(item.UriPokes, @"ext=(.*?)&").Groups[1].Value;
-                                var hash = Regex.Match(item.UriPokes + ";", @"hash=(.*?);").Groups[1].Value;
-                                var poke_target = item.UId;
-                                await Task.Delay(TimeSpan.FromMilliseconds(1500));
-                                var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
-                                if (html.Contains(item.FullName))
+                                var item = PokesData.FirstOrDefault(x => x.UId == data[i].UId);
+                                if (item != null && item.UId != null)
                                 {
-                                    total++;
-                                    PokesData.Remove(item);
+                                    var ext = Regex.Match(item.UriPokes, @"ext=(.*?)&").Groups[1].Value;
+                                    var hash = Regex.Match(item.UriPokes + ";", @"hash=(.*?);").Groups[1].Value;
+                                    var poke_target = item.UId;
+                                    await Task.Delay(TimeSpan.FromMilliseconds(1500));
+                                    var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
+                                    if (html.Contains(item.FullName))
+                                    {
+                                        total++;
+                                    }
                                 }
+                                await UseServiceProduct();
                             }
                             await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {total} bạn bè thành công !",
                                 "OK");
