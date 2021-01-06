@@ -43,7 +43,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
         {
             try
             {
-                var html = await _restSharpService.GetAsync($"https://d.facebook.com/pokes/?show_outgoing={showOutgoing}", null, cookie);
+                var html = await _restSharpService.GetAsync($"https://d.facebook.com/pokes", null, cookie);
                 return html;
             }
             catch (Exception)
