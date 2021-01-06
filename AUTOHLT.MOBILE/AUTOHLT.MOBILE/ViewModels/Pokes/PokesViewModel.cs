@@ -106,7 +106,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} thành công !",
                               "OK");
-                        await UseServiceProduct();
+                        PokesData.Remove(obj);
                     }
                     else
                     {
@@ -137,9 +137,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                                     if (html.Contains(item.FullName))
                                     {
                                         total++;
+                                        PokesData.Remove(item);
                                     }
                                 }
-                                await UseServiceProduct();
                             }
                             await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {total} bạn bè thành công !",
                                 "OK");
@@ -324,7 +324,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                             UId = uidReg.Match(data)?.Groups[1]?.Value,
                             FullName = regexName.Match(data)?.Groups[1]?.Value,
                             Avatar = regexAvatar.Match(data)?.Groups[1]?.Value,
-                            UriPokes = "https://d.facebook.com/pokes/inline/?dom_id_replace" + regexUri.Match(data)?.Groups[1]?.Value,
+                            UriPokes = "https://m.facebook.com/pokes/inline/?dom_id_replace" + regexUri.Match(data)?.Groups[1]?.Value,
                             IsPokes = false,
                         });
                     }

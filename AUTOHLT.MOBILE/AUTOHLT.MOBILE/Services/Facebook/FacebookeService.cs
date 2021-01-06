@@ -30,7 +30,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
                     new RequestParameter("ext",ext),
                     new RequestParameter("hash",hash),
                 };
-                var html = await _restSharpService.GetAsync("https://d.facebook.com/pokes/inline/", para, cookie);
+                var html = await _restSharpService.GetAsync("https://m.facebook.com/pokes/inline/", para, cookie);
                 return html;
             }
             catch (Exception)
