@@ -1,34 +1,38 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentView x:Class="AUTOHLT.MOBILE.Controls.NavigationView"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:prism="http://prismlibrary.com"
-             Margin="0"
-             Padding="0"
-             BackgroundColor="{StaticResource HeaderHome}"
-             HeightRequest="40"
-             HorizontalOptions="FillAndExpand"
-             VerticalOptions="FillAndExpand"
-             mc:Ignorable="d">
+<ContentView
+    x:Class="AUTOHLT.MOBILE.Controls.NavigationView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com"
+    Margin="0"
+    Padding="0"
+    BackgroundColor="{StaticResource HeaderHome}"
+    HeightRequest="40"
+    HorizontalOptions="FillAndExpand"
+    VerticalOptions="FillAndExpand"
+    mc:Ignorable="d">
     <ContentView.Content>
-        <Grid Margin="0"
-              Padding="0"
-              ColumnDefinitions="50,*">
-            <Label x:Name="TextTitle"
-                   Grid.Column="1"
-                   Grid.ColumnSpan="2"
-                   Style="{StaticResource TitleNavigation}" />
-            <Label Grid.Column="0"
-                   BackgroundColor="Transparent"
-                   FontFamily="Awesome5ProSolid"
-                   FontSize="30"
-                   HorizontalOptions="Center"
-                   Text="{x:Static icon:FontAwesome5ProSolid.ChevronLeft}"
-                   TextColor="#fff"
-                   VerticalOptions="Center">
+        <Grid
+            Margin="0"
+            Padding="0"
+            ColumnDefinitions="50,*">
+            <Label
+                x:Name="TextTitle"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource TitleNavigation}" />
+            <Label
+                Grid.Column="0"
+                BackgroundColor="Transparent"
+                FontFamily="Awesome5ProSolid"
+                FontSize="30"
+                HorizontalOptions="Center"
+                Text="{x:Static icon:FontAwesome5ProSolid.ChevronLeft}"
+                TextColor="#fff"
+                VerticalOptions="Center">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{prism:GoBack}" />
                 </Label.GestureRecognizers>

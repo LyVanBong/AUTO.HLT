@@ -15,6 +15,40 @@ namespace AUTOHLT.MOBILE.Services.User
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<string>> CheckExistNumberPhone(string number)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("numberPhone",number),
+                };
+                var data = await _requestProvider.GetAsync<string>("user/CheckNumberPhone", para);
+                return data;
+            }
+            catch (Exception )
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseModel<string>> SendOtp(string number)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("numberPhone",number),
+                };
+                var data = await _requestProvider.GetAsync<string>("user/SENDSMSOTP", para);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseModel<string>> SetMoneyUser(string userName, string price)
         {
             try

@@ -5,7 +5,10 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp;
+using Prism.Services.Dialogs;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.Login
@@ -28,6 +31,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         private bool _hasErrorPass;
         private bool _hasErrorConfirmPass;
         private IPageDialogService _pageDialogService;
+        private IDialogService _dialogService;
         public bool HasErrorConfirmPass
         {
             get => _hasErrorConfirmPass;
@@ -68,7 +72,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         public string Password
         {
             get => _password;
-            set=>SetProperty(ref _password, value);
+            set => SetProperty(ref _password, value);
         }
 
         public string ConfirmPassword
@@ -109,8 +113,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             set => SetProperty(ref _isLoading, value);
         }
 
-        public SignUpViewModel(INavigationService navigationService, ILoginService loginService, IUserService userService, IPageDialogService pageDialogService) : base(navigationService)
+        public SignUpViewModel(INavigationService navigationService, ILoginService loginService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
         {
+            _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _userService = userService;
             _loginService = loginService;
@@ -166,8 +171,71 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                         }
                         break;
                     case 3:
+                        if (PhoneNumber != null)
+                        {
+                            if (PhoneNumber.Length == 10)
+                            {
+                                var regex = new Regex(@"(0[1-9])+([0-9]{8})\b", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+                                var matchCollection = regex.Matches(PhoneNumber);
+                                if (matchCollection.Count>0)
+                                {
+                                    var phone = matchCollection[0]?.Value;
+                                    if (string.IsNullOrWhiteSpace(phone))
+                                    {
+                                        await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                            "Bạn vui lòng nhập số điện thoại vào!", "OK");
+                                        PhoneNumber = "";
+                                    }
+                                    else
+                                    {
+                                        var checkPhone = await _userService.CheckExistNumberPhone(PhoneNumber);
+                                        if (checkPhone != null && checkPhone.Code > 0)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                                checkPhone?.Message, "OK");
+                                            PhoneNumber = "";
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    PhoneNumber = "";
+                                }
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                    "Số điện thoại không hợp lệ", "OK");
+                                PhoneNumber = "";
+                            }
+                        }
                         break;
                     case 4:
+                        if (Email != null)
+                        {
+                            Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+                            MatchCollection matchCollection = regex.Matches(Email);
+                            if (matchCollection.Count>0)
+                            {
+                                var email = matchCollection[0]?.Value;
+                                if (string.IsNullOrWhiteSpace(email))
+                                {
+                                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                        "Bạn vui lòng nhập email vào!", "OK");
+                                    Email = "";
+                                }
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                                    "Bạn vui lòng nhập email vào!", "OK");
+                                Email = "";
+                            }
+                        }
                         break;
                 }
                 CheckDataEnableSignUp();
@@ -207,17 +275,33 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, Email, Age, IsMale);
-                if (data != null && data.Code > 0)
+                var parameters = new DialogParameters
                 {
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                    Password = ConfirmPassword = Age = Email = PhoneNumber = "";
-                }
-                else
+                    { "NumberPhone", PhoneNumber+"" },
+                };
+                _dialogService.ShowDialog(nameof(OtpDialog),parameters, async (result) =>
                 {
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                    Password = ConfirmPassword = null;
-                }
+                    var otp = result.Parameters.GetValue<string>("OtpSms");
+                    if (otp=="1")
+                    {
+                        var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, Email, Age, IsMale);
+                        if (data != null && data.Code > 0)
+                        {
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                            Password = ConfirmPassword = Age = Email = PhoneNumber = "";
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                            Password = ConfirmPassword = null;
+                        }
+                    }else if (otp=="0")
+                    {
+                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                        Password = ConfirmPassword = null;
+                    }
+                });
+
             }
             catch (Exception e)
             {
