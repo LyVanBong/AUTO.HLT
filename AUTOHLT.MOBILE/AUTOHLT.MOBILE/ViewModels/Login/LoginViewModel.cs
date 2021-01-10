@@ -152,45 +152,45 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         private async Task DoLogin(string pass)
         {
-            if (UserName == "khachhang")
+            var data = await _loginService.Login(UserName, pass);
+            if (data != null)
             {
-                await NavigationService.NavigateAsync(nameof(HomePageF));
-            }
-            else
-            {
-                var data = await _loginService.Login(UserName, pass);
-                if (data != null)
+                if (data.Code > 0 && data.Data != null)
                 {
-                    if (data.Code > 0 && data.Data != null)
+                    if (IsCheckSavePassword)
                     {
-                        if (IsCheckSavePassword)
-                        {
-                            Preferences.Set(nameof(IsCheckSavePassword), true);
-                            var user = data.Data;
-                            user.Price = user.Price.Replace(".0000", "");
-                            await _databaseService.UpdateAccountUser(user);
-                        }
-                        else
-                        {
-                            Preferences.Set(nameof(IsCheckSavePassword), false);
-                        }
-
-                        var para = new NavigationParameters();
-                        para.Add(AppConstants.LoginApp, "LoginApp");
-                        await NavigationService.NavigateAsync(nameof(HomePage), para, true, true);
+                        Preferences.Set(nameof(IsCheckSavePassword), true);
+                        var user = data.Data;
+                        user.Price = user.Price.Replace(".0000", "");
+                        await _databaseService.UpdateAccountUser(user);
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
+                        Preferences.Set(nameof(IsCheckSavePassword), false);
+                    }
+
+                    if (UserName == "khachhang")
+                    {
+                        await NavigationService.NavigateAsync(nameof(HomePageF));
+                    }
+                    else
+                    {
+                        var para = new NavigationParameters();
+                        para.Add(AppConstants.LoginApp, "LoginApp");
+                        await NavigationService.NavigateAsync(nameof(HomePage), para, true, true);
                     }
                 }
                 else
                 {
                     await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
                 }
-
-                Password = "";
             }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
+            }
+
+            Password = "";
         }
 
         private void SignUpAccount()
@@ -198,6 +198,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             if (IsLoading) return;
             IsLoading = true;
             NavigationService.NavigateAsync(nameof(SignUpPage), null, true, true);
+            IsLoading = false;
         }
     }
 }

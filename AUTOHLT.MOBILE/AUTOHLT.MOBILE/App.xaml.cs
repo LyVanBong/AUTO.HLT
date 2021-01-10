@@ -106,6 +106,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<WebviewPage, WebviewViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<BuffSubPage, BuffLikePageViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
