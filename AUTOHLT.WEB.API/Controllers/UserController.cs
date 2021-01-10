@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace AUTOHLT.WEB.API.Controllers
 {
@@ -15,6 +17,77 @@ namespace AUTOHLT.WEB.API.Controllers
         public UserController()
         {
             _entities = new bsoft_autohltEntities();
+        }
+
+        /// <summary>
+        /// gửi mã otp cho khách hàng
+        /// </summary>
+        /// <param name="numberPhone"></param>
+        /// <returns></returns>
+        [Route("SENDSMSOTP")]
+        [HttpGet]
+        public IHttpActionResult SendSMSOTP(string numberPhone)
+        {
+            try
+            {
+                var accountSid = "AC4d6de5131f81e2513f1cbfd87763fa4e";
+                var authToken = "ff4bc7950141c8a938e6f856805a6762";
+                TwilioClient.Init(accountSid, authToken);
+                var phone = $"+84{numberPhone.Remove(0, 1)}";
+                var random = new Random();
+                var pin = random.Next(100000, 999999);
+                var message = MessageResource.Create(
+                    body: $"{pin} la ma xac thuc AUTOHLT cua ban",
+                    from: new Twilio.Types.PhoneNumber("+15108248672"),
+                    to: new Twilio.Types.PhoneNumber(phone)
+                );
+                
+                return Ok(new ResponseModel<int>
+                {
+                    Code = 1111,
+                    Message = "Xác thực thành công",
+                    Data = pin
+                });
+            }
+            catch (Exception )
+            {
+                return Ok(new ResponseModel<string>
+                {
+                    Code = -1111,
+                    Message = "Xác thực lỗi",
+                    Data = ""
+                });
+            }
+        }
+        /// <summary>
+        /// Kiểm tra xem số điện thoại đã tồn tại chưa
+        /// </summary>
+        /// <param name="numberPhone"></param>
+        /// <returns></returns>
+        [Route("CheckNumberPhone")]
+        [HttpGet]
+        public IHttpActionResult CheckNumberPhone(string numberPhone)
+        {
+            var data = _entities.CheckNumberPhone(numberPhone);
+            if (data != null)
+            {
+                var num = data.SingleOrDefault();
+                if (num != null)
+                {
+                    return Ok(new ResponseModel<string>()
+                    {
+                        Message = $"{num} đã được đăng ký bằng một tài khoản khác",
+                        Code = -555,
+                        Data = num
+                    });
+                }
+            }
+            return Ok(new ResponseModel<string>()
+            {
+                Message = $"Bạn có thể sử dụng {numberPhone} này để đăng ký tài khoản",
+                Code = 555,
+                Data = ""
+            });
         }
 
         /// <summary>
