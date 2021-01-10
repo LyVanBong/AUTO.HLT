@@ -7,6 +7,18 @@ namespace AUTOHLT.MOBILE.Services.User
     public interface IUserService
     {
         /// <summary>
+        /// Kiem su ton tai cua sdt
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> CheckExistNumberPhone(string number);
+        /// <summary>
+        /// gui ma otp
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> SendOtp(string number);
+        /// <summary>
         /// Nap tien cho user
         /// </summary>
         /// <param name="userName"></param>
