@@ -56,6 +56,7 @@ using Syncfusion.Licensing;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
+using ContentPage = AUTOHLT.MOBILE.Views.FakeUpApp.ContentPage;
 
 namespace AUTOHLT.MOBILE
 {
@@ -108,7 +109,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
-            containerRegistry.RegisterForNavigation<WebviewPage, WebviewViewModel>();
+            containerRegistry.RegisterForNavigation<ContentPage, ContentViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<BuffSubPage, BuffLikePageViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
