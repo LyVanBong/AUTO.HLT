@@ -7,7 +7,7 @@ using Xamarin.Forms.Xaml;
 namespace AUTOHLT.MOBILE.Views.FakeUpApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePageF : ContentPage
+    public partial class HomePageF : Xamarin.Forms.ContentPage
     {
         public HomePageF()
         {
