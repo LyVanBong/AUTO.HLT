@@ -43,16 +43,18 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
 
         private void ClosePopupConnectFacebook()
         {
-            ClosePopup();
+            ClosePopup("0");
         }
 
         public bool CanCloseDialog() => true;
 
-        private void ClosePopup()
+        private void ClosePopup(string para)
         {
             if (RequestClose != null)
             {
-                RequestClose(null);
+                var paramater = new DialogParameters();
+                paramater.Add("ConnectFacebookDone",para);
+                RequestClose(paramater);
             }
         }
 
@@ -76,7 +78,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
             IsVisibleWebview = true;
             MessagingCenter.Subscribe<App>(this, AppConstants.GetokenDone, (message) =>
             {
-                ClosePopup();
+                ClosePopup("1");
             });
             MessagingCenter.Subscribe<App>(this, AppConstants.GetCookieDone, (message) =>
             {

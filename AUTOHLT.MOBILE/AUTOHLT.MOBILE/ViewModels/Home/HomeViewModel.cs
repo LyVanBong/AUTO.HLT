@@ -103,6 +103,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         TitleService = Resource._1000106,
                         TypeService = 19,
                         UserRole = "2",
+                        BadgeView = "Free",
+                        BadgeType = BadgeType.Warning
                     },
                     new ServiceModel
                     {
@@ -123,8 +125,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         Icon = "icon_filter_friends.png",
                         TitleService = Resource._1000083,
                         TypeService = -1,
-                        BadgeView = "Free",
                         UserRole = "2",
+                        BadgeView = "Free",
                         BadgeType = BadgeType.Warning
                     },
                     new ServiceModel
@@ -211,7 +213,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private ITelegramService _telegramService;
         private BadgeType _badgeType;
         private string _idProductAddFriends = "85e7192b-7a30-45ff-b327-bd9c25c8dfcb";
-        
+
         public BadgeType BadgeType
         {
             get => _badgeType;
@@ -353,7 +355,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 name = "";
                 prices = -1;
             }
-            if (prices>0)
+            if (prices > 0)
             {
                 var user = await _databaseService.GetAccountUser();
                 if (user != null)

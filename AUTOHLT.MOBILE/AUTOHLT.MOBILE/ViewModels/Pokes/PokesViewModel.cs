@@ -93,56 +93,54 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                if (obj != null)
+                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                var paraFb = await _facebookService.GetParamaterFacebook(cookie);
+                var fbDtsg = Regex.Match(paraFb, @"><input type=""hidden"" name=""fb_dtsg"" value=""(.*?)""")?.Groups[1]?.Value;
+                var jazoest = Regex.Match(paraFb, @"/><input type=""hidden"" name=""jazoest"" value=""(.*?)""")?.Groups[1]?.Value;
+                if (string.IsNullOrWhiteSpace(cookie) && string.IsNullOrWhiteSpace(fbDtsg) && string.IsNullOrWhiteSpace(jazoest))
                 {
-                    var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                    var poke_target = obj.UId;
-                    var extRegex = new Regex(@"ext=(.*?)&");
-                    var ext = extRegex.Match(obj.UriPokes).Groups[1].Value;
-                    var hashRegex = new Regex(@"hash=(.*?);");
-                    var hash = hashRegex.Match(obj.UriPokes + ";").Groups[1].Value;
-                    var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
-                    if (html.Contains(obj.FullName))
+                    var result = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                        "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
+                    if (result)
                     {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} thành công !",
-                              "OK");
-                        PokesData.Remove(obj);
-                    }
-                    else
-                    {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000021, Resource._1000041,
-                            "OK");
+                        _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
+                        {
+                            await UseServiceProduct();
+                        });
                     }
                 }
                 else
                 {
-                    if (PokesData.Any())
+                    if (obj != null)
                     {
-                        var data = PokesData.Where(x => x.IsPokes).ToList();
-                        if (data != null && data.Any())
+                        var res = await PokesMyFriend(obj, cookie, fbDtsg, jazoest);
+                        if (res)
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} thành công !",
+                                "OK");
+                        else
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} lỗi !",
+                                "OK");
+                    }
+                    else
+                    {
+                        if (PokesData.Any())
                         {
-                            var total = 0;
-                            var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                            var countData = data.Count;
-                            for (int i = 0; i < countData; i++)
+                            var data = PokesData.Where(x => x.IsPokes).ToList();
+                            if (data.Any())
                             {
-                                var item = PokesData.FirstOrDefault(x => x.UId == data[i].UId);
-                                if (item != null && item.UId != null)
+                                var total = 0;
+                                foreach (var item in data)
                                 {
-                                    var ext = Regex.Match(item.UriPokes, @"ext=(.*?)&").Groups[1].Value;
-                                    var hash = Regex.Match(item.UriPokes + ";", @"hash=(.*?);").Groups[1].Value;
-                                    var poke_target = item.UId;
-                                    await Task.Delay(TimeSpan.FromMilliseconds(1500));
-                                    var html = await _facebookService.PokesFriends(cookie, "u_0_a", "0", poke_target, "/pokes/", ext, hash);
-                                    if (html.Contains(item.FullName))
+                                    var res = await PokesMyFriend(item, cookie, fbDtsg, jazoest);
+                                    if (res)
                                     {
                                         total++;
                                         PokesData.Remove(item);
                                     }
                                 }
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {total} bạn bè thành công !",
+                                    "OK");
                             }
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {total} bạn bè thành công !",
-                                "OK");
                         }
                     }
                 }
@@ -154,6 +152,26 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             finally
             {
                 IsLoading = false;
+            }
+        }
+
+        private async Task<bool> PokesMyFriend(PokesFriendsModel obj, string cookie, string fbDtsg, string jazoest)
+        {
+            try
+            {
+                var pokeFr = await _facebookService.PokesFriends(cookie, obj.UId, obj.Ext, obj.Hash, fbDtsg, jazoest,obj.DomIdReplace);
+                if (pokeFr.Contains("mbasic_logout_button"))
+                {
+                    PokesData.Remove(obj);
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return false;
             }
         }
 
@@ -173,49 +191,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
         {
             try
             {
-                var product = await _productService.GetAllProduct();
-                if (product != null && product.Code > 0 && product.Data != null && product.Data.Any())
-                {
-                    var user = await _databaseService.GetAccountUser();
-                    if (user != null && user.UserName != null)
-                    {
-                        var pokes = product.Data.Where(x => x.GroupProduct == "9").ToList();
-                        var regisProdduct = await _productService.GetListRegisterProductForUser(user.ID);
-                        if (regisProdduct != null && regisProdduct.Code > 0 && regisProdduct.Data != null &&
-                            regisProdduct.Data.Any())
-                        {
-                            var regis = regisProdduct.Data.ToList();
-                            foreach (var item in pokes)
-                            {
-                                var obj = regis.FirstOrDefault(x => x.ID_ProductType == item.ID);
-                                if (obj != null && obj.DateCreate != null)
-                                {
-                                    var date = (DateTime.Now - DateTime.Parse(obj.DateCreate)).TotalDays;
-                                    var endDate = double.Parse(item.EndDate);
-                                    if (date <= endDate)
-                                    {
-                                        await UseServiceProduct();
-                                        return;
-                                    }
-                                }
-                            }
-
-                            await RegisterProduct(pokes, user);
-                        }
-                        else
-                        {
-                            await RegisterProduct(pokes, user);
-                        }
-                    }
-                    else
-                    {
-                        await NavigationService.GoBackAsync();
-                    }
-                }
-                else
-                {
-                    await NavigationService.GoBackAsync();
-                }
+                await UseServiceProduct();
             }
             catch (Exception e)
             {
@@ -227,79 +203,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             }
 
         }
-
-        private async Task RegisterProduct(List<ProductModel> pokes, UserModel user)
-        {
-            try
-            {
-                if (pokes != null && pokes.Any())
-                {
-                    var result =
-                        await _pageDialogService.DisplayActionSheetAsync("Bạn đăng ký gọi ?", "Cancel", null,
-                            _packetPokesFriends);
-                    if (_packetPokesFriends.Contains(result))
-                    {
-                        foreach (var item in pokes)
-                        {
-                            if (result.Contains(item.EndDate))
-                            {
-                                var price = long.Parse(item.Price);
-                                var res = await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"bạn đăng ký {result} chọc bạn bè với giá {string.Format(new CultureInfo("en-US"), "{0:0,0}", price)} VND !", "OK", "Cancel");
-                                if (res)
-                                {
-                                    var registerProduct = await _productService.RegisterProduct(item.ID, user.ID);
-                                    if (registerProduct != null && registerProduct.Code > 0 && registerProduct.Data != null)
-                                    {
-                                        var money = await _userService.GetMoneyUser(user.UserName);
-                                        if (money != null && money.Code > 0 && money.Data != null)
-                                        {
-                                            var myMoney = long.Parse(money.Data.Replace(".0000", ""));
-                                            if (price <= myMoney)
-                                            {
-                                                var updateUser = await _userService.SetMoneyUser(user.UserName, myMoney - price + "");
-                                                if (updateUser != null && updateUser.Code > 0)
-                                                {
-                                                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040,
-                                                        "OK");
-                                                }
-                                                else
-                                                {
-                                                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041,
-                                                        "OK");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, "Số dư hiện tại của bạn không đủ để thực hiện giao dịch này !",
-                                                       "OK");
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    await NavigationService.GoBackAsync();
-                                }
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        await NavigationService.GoBackAsync();
-                    }
-                }
-                else
-                {
-                    await NavigationService.GoBackAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-        }
-
         private async Task UseServiceProduct()
         {
             try
@@ -309,24 +212,21 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                 {
                     var lsPokes = new List<PokesFriendsModel>();
                     var htmlPokes = await _facebookService.GetPokesFriends(cookie, "0");
-                    Regex regex = new Regex(@"(<div class=""br"" id=""poke_live_item_).*?(</div></div></div><div class=""cl""></div></div></div></div></div>)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+                    Regex regex = new Regex(@"<div class=""bt bu""><div><div class=""by"">(.*?)<div class=""cm""></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
                     MatchCollection matchCollection = regex.Matches(htmlPokes);
                     foreach (Match match in matchCollection)
                     {
                         var data = match.Value;
-                        var uidReg = new Regex(@"<div class=""br"" id=""poke_live_item_(.*?)"">");
-                        var regexName = new Regex(@"<a class=""cc"" href=""/+[a-zA-Z0-9\.]+"">(.*?)</a>");
-                        var regexAvatar = new Regex(@"<img src=""(.*?)"" class=""bz s"" alt=""");
-                        var regexUri = new Regex(@"/pokes/inline/\?dom_id_replace(.*?)""");
-
-                        lsPokes.Add(new PokesFriendsModel
-                        {
-                            UId = uidReg.Match(data)?.Groups[1]?.Value,
-                            FullName = regexName.Match(data)?.Groups[1]?.Value,
-                            Avatar = regexAvatar.Match(data)?.Groups[1]?.Value,
-                            UriPokes = "https://m.facebook.com/pokes/inline/?dom_id_replace" + regexUri.Match(data)?.Groups[1]?.Value,
-                            IsPokes = false,
-                        });
+                        var poke = new PokesFriendsModel();
+                        poke.FullName = Regex.Match(data, @"<a class=""cd"" href=""/+[a-zA-Z0-9\._\?=]+"">(.*?)</a>")
+                            ?.Groups[1]?.Value;
+                        poke.IsPokes = false;
+                        var uri = Regex.Match(data, @"/pokes/inline/\?dom_id_replace(.*?)""")?.Groups[1]?.Value;
+                        poke.Ext = Regex.Match(uri, @";ext=(.*?)&")?.Groups[1]?.Value;
+                        poke.Hash = Regex.Match($"{uri}\"", @";hash=(.*?)""")?.Groups[1]?.Value;
+                        poke.UId = Regex.Match(uri, @";poke_target=(.*?)&")?.Groups[1]?.Value;
+                        poke.DomIdReplace = Regex.Match(uri, @"=(.*?)&amp;is_hide")?.Groups[1]?.Value;
+                        lsPokes.Add(poke);
                     }
 
                     PokesData = new ObservableCollection<PokesFriendsModel>(lsPokes);
@@ -339,7 +239,25 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                     {
                         _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
                         {
-                            await UseServiceProduct();
+                            if (res.Parameters != null)
+                            {
+                                var para = res.Parameters.GetValue<string>("ConnectFacebookDone");
+                                if (para == null)
+                                {
+                                    await NavigationService.GoBackAsync();
+                                }
+                                else
+                                {
+                                    if (para=="0")
+                                    {
+                                        await NavigationService.GoBackAsync();
+                                    }
+                                    else if (para == "1")
+                                    {
+                                        await UseServiceProduct();
+                                    }
+                                }
+                            }
                         });
                     }
                 }

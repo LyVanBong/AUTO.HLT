@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.ChangePassword;
 using AUTOHLT.MOBILE.Views.FakeUpApp;
@@ -14,10 +15,12 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
     public class HomeFViewModel : ViewModelBase
     {
         private IPageDialogService _pageDialogService;
+        private IDatabaseService _databaseService;
         public ICommand NavigationCommand { get; private set; }
         public ICommand LogoutCommand { get; private set; }
-        public HomeFViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService)
+        public HomeFViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
         {
+            _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             LogoutCommand = new Command(Logout);
             NavigationCommand = new Command<string>(NavigationApp);
@@ -79,6 +82,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
 
         private async void Logout()
         {
+            await _databaseService.DeleteAccontUser();
             await NavigationService.NavigateAsync("/LoginPage");
         }
     }

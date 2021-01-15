@@ -17,20 +17,34 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             _restSharpService = restSharpService;
         }
 
-        public async Task<string> PokesFriends(string cookie, string dom_id_replace,string is_hide,string poke_target,string redirect_url,string ext,string hash)
+        public async Task<string> GetParamaterFacebook(string cookie)
+        {
+            try
+            {
+                var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
+                if (html == null || html.Contains("sign_up"))
+                    return "";
+                else
+
+                    return html;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> PokesFriends(string cookie, string poke_target, string ext, string hash, string fb_dtsg, string jazoest, string dom_id_replace)
         {
             try
             {
                 var para = new List<RequestParameter>
                 {
-                    new RequestParameter("dom_id_replace",dom_id_replace),
-                    new RequestParameter("is_hide",is_hide),
-                    new RequestParameter("poke_target",poke_target),
-                    new RequestParameter("redirect_url",redirect_url),
-                    new RequestParameter("ext",ext),
-                    new RequestParameter("hash",hash),
+                    new RequestParameter("fb_dtsg",fb_dtsg),
+                    new RequestParameter("jazoest",jazoest)
                 };
-                var html = await _restSharpService.GetAsync("https://m.facebook.com/pokes/inline/", para, cookie);
+                var uri = $"https://m.facebook.com/pokes/inline/?dom_id_replace={dom_id_replace}&is_hide=0&poke_target={poke_target}&ext={ext}&hash={hash}";
+                var html = await _restSharpService.PostAsync(uri, para, cookie);
                 return html;
             }
             catch (Exception)
@@ -39,11 +53,11 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             }
         }
 
-        public async Task<string> GetPokesFriends(string cookie, string showOutgoing)
+        public async Task<string> GetPokesFriends(string cookie, string showOutgoing = "0")
         {
             try
             {
-                var html = await _restSharpService.GetAsync($"https://d.facebook.com/pokes", null, cookie);
+                var html = await _restSharpService.GetAsync($"https://m.facebook.com/pokes/?show_outgoing={showOutgoing}", null, cookie);
                 return html;
             }
             catch (Exception)
@@ -57,9 +71,16 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             try
             {
                 var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
-                if (html == null || html.Contains("sign_up"))
+                if (html == null)
                     return false;
-                return true;
+                else
+                {
+                    if (html.Contains("mbasic_logout_button"))
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
             catch (Exception)
             {
