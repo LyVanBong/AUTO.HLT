@@ -1,8 +1,6 @@
 ﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Models.Facebook;
-using AUTOHLT.MOBILE.Models.Product;
-using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
@@ -15,11 +13,12 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Helpers;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -159,7 +158,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
         {
             try
             {
-                var pokeFr = await _facebookService.PokesFriends(cookie, obj.UId, obj.Ext, obj.Hash, fbDtsg, jazoest,obj.DomIdReplace);
+                var pokeFr = await _facebookService.PokesFriends(cookie, obj.UId, obj.Ext, obj.Hash, fbDtsg, jazoest, obj.DomIdReplace);
                 if (pokeFr.Contains("mbasic_logout_button"))
                 {
                     PokesData.Remove(obj);
@@ -210,6 +209,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                 var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
                 if (await _facebookService.CheckCookie(cookie))
                 {
+                    new Thread(async () => await FacebookHelper.UseServiceFacebookFree("Pokes")).Start();
                     var lsPokes = new List<PokesFriendsModel>();
                     var htmlPokes = await _facebookService.GetPokesFriends(cookie, "0");
                     Regex regex = new Regex(@"<div class=""bt bu""><div><div class=""by"">(.*?)<div class=""cm""></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
@@ -248,7 +248,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                                 }
                                 else
                                 {
-                                    if (para=="0")
+                                    if (para == "0")
                                     {
                                         await NavigationService.GoBackAsync();
                                     }

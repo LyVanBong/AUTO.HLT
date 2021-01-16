@@ -3,49 +3,65 @@
     public class AppConstants
     {
         /// <summary>
+        /// id user
+        /// </summary>
+        public static string IdUser = "IdUser";
+
+        /// <summary>
         /// key lưu Jazoest
         /// </summary>
         public static string Jazoest = "jazoest";
+
         /// <summary>
         /// message thông báo đã get token done
         /// </summary>
         public static string GetokenDone = "GetokenDone";
+
         /// <summary>
         /// message thông báo đã get cookie done
         /// </summary>
         public static string GetCookieDone = "GetCookieDone";
+
         /// <summary>
         /// key luu Fb_Dtsg
         /// </summary>
         public static string Fb_Dtsg = "fb_dtsg";
+
         /// <summary>
         /// key lưu token fb
         /// </summary>
         public static string TokenFaceook = "TokenFaceook";
+
         /// <summary>
         /// key lưu cookie fb
         /// </summary>
         public static string CookieFacebook = "CookieFacebook";
+
         /// <summary>
         /// host api facebook
         /// </summary>
         public static string ApiGraphFacebook = "https://graph.facebook.com/";
+
         /// <summary>
         /// Uri đăng nhập facebook
         /// </summary>
         public static string UriLoginFacebook = "https://d.facebook.com/";
+
         /// <summary>
         /// Uri dùng để get token facebook
         /// </summary>
         public static string UriGetTokenFacebook = "https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed";
+
         /// <summary>
         /// số tổng đài hố trợ khách hàng
         /// </summary>
         public static string NumberPhoneAdmin = "0824726888";
+
         /// <summary>
         /// key xác nhận chuyển từ app => home
         /// </summary>
         public static string LoginApp = "LoginApp";
+
         /// <summary>
         /// id group chat list cong viec
         /// </summary>

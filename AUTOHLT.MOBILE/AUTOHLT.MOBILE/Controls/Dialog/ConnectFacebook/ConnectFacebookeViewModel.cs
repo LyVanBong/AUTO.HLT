@@ -1,10 +1,10 @@
-﻿using Prism.Mvvm;
+﻿using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.DependencyServices;
+using Microsoft.AppCenter.Crashes;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.DependencyServices;
-using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
@@ -28,6 +28,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
         }
 
         public ICommand CloseCommand { get; private set; }
+
         public string UriFacebook
         {
             get => _uriFacebook;
@@ -53,7 +54,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
             if (RequestClose != null)
             {
                 var paramater = new DialogParameters();
-                paramater.Add("ConnectFacebookDone",para);
+                paramater.Add("ConnectFacebookDone", para);
                 RequestClose(paramater);
             }
         }

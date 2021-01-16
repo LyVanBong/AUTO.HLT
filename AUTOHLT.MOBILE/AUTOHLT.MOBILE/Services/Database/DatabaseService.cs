@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.User;
 using Microsoft.AppCenter.Crashes;
 using Realms;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.Database
 {

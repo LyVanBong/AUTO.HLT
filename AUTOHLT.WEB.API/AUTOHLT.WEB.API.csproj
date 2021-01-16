@@ -125,6 +125,7 @@
     <Compile Include="Controllers\RegisterProductController.cs" />
     <Compile Include="Controllers\ServiceUseHistoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserFacebookController.cs" />
     <Compile Include="Database\AutoHLTDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -143,10 +144,16 @@
     <Compile Include="Database\GetAllHistoryUserSevice_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\GetAllIDTypeFacebook_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\GetAllProductType_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\GetAllTransferMoney_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\GetAllUserFacebook_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\GetAllUser_Result.cs">
@@ -188,6 +195,7 @@
     <Compile Include="Models\TransferModel.cs" />
     <Compile Include="Models\UpdateProductModel.cs" />
     <Compile Include="Models\UpdateUserModel.cs" />
+    <Compile Include="Models\UserFacebookModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

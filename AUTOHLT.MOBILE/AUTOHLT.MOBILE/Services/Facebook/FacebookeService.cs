@@ -1,20 +1,94 @@
-﻿using AUTOHLT.MOBILE.Models.Facebook;
+﻿using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
+using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Configurations;
 
 namespace AUTOHLT.MOBILE.Services.Facebook
 {
     public class FacebookeService : IFacebookService
     {
         private IRestSharpService _restSharpService;
-        public FacebookeService(IRestSharpService restSharpService)
+        private IRequestProvider _requestProvider;
+
+        public FacebookeService(IRestSharpService restSharpService, IRequestProvider requestProvider)
         {
+            _requestProvider = requestProvider;
             _restSharpService = restSharpService;
+        }
+
+        public async Task<string> InviteFriendLikePage(string uri, string cookie, string av, string fb_dtsg, string jazoest, bool server_timestamps,
+            string doc_id, string variables)
+        {
+            try
+            {
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("av",av),
+                    new RequestParameter("fb_dtsg",fb_dtsg),
+                    new RequestParameter("jazoest",jazoest),
+                    new RequestParameter("server_timestamps",server_timestamps+""),
+                    new RequestParameter("doc_id",doc_id),
+                    new RequestParameter("variables",variables),
+                };
+                var data = await _restSharpService.PostAsync(uri, parameters, cookie);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseModel<List<UidTypeFacebookModel>>> GetAllUidTypeFacebook()
+        {
+            try
+            {
+                var data = await _requestProvider.GetAsync<List<UidTypeFacebookModel>>("Facebook/AllUidTypeFacebook");
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> GetHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null)
+        {
+            try
+            {
+                var html = await _restSharpService.GetAsync(url, parameters, cookie);
+                return html;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseModel<string>> UpdateUserFacebook(string idUser, string uid, string cookie, string token, string note)
+        {
+            try
+            {
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("Id_User",idUser),
+                    new RequestParameter("UID",uid),
+                    new RequestParameter("F_Cookie",cookie),
+                    new RequestParameter("F_Token",token),
+                    new RequestParameter("Note",note),
+                };
+                var update = await _requestProvider.PostAsync<string>("Facebook/Update", parameters);
+                return update;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<string> GetParamaterFacebook(string cookie)
@@ -25,7 +99,6 @@ namespace AUTOHLT.MOBILE.Services.Facebook
                 if (html == null || html.Contains("sign_up"))
                     return "";
                 else
-
                     return html;
             }
             catch (Exception e)

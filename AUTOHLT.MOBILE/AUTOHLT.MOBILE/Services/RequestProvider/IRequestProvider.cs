@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
 
 namespace AUTOHLT.MOBILE.Services.RequestProvider
 {

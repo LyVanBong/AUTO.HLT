@@ -175,6 +175,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                     }
                     else
                     {
+                        Preferences.Set(AppConstants.IdUser, data?.Data?.ID);
                         var para = new NavigationParameters();
                         para.Add(AppConstants.LoginApp, "LoginApp");
                         await NavigationService.NavigateAsync(nameof(HomePage), para, true, true);

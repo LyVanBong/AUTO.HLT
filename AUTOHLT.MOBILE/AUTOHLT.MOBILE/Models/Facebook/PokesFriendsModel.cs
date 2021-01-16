@@ -7,6 +7,7 @@ namespace AUTOHLT.MOBILE.Models.Facebook
         private bool _isPokes;
         public string UId { get; set; }
         public string FullName { get; set; }
+
         public bool IsPokes
         {
             get => _isPokes;

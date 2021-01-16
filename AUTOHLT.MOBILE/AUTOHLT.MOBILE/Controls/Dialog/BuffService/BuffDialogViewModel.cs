@@ -149,7 +149,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                 var user = await _database.GetAccountUser();
                 if (user != null && user.UserName != null)
                 {
-                    var money = long.Parse(user.Price.Replace(".0000",""));
+                    var money = long.Parse(user.Price.Replace(".0000", ""));
                     if (amout > 0 && amout <= money)
                     {
                         var data = money - amout;

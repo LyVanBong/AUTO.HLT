@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using Syncfusion.XForms.BadgeView;
+﻿using Syncfusion.XForms.BadgeView;
+using System.Reflection;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Models.Home

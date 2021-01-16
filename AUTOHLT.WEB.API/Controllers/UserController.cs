@@ -41,7 +41,7 @@ namespace AUTOHLT.WEB.API.Controllers
                     from: new Twilio.Types.PhoneNumber("+15108248672"),
                     to: new Twilio.Types.PhoneNumber(phone)
                 );
-                
+
                 return Ok(new ResponseModel<int>
                 {
                     Code = 1111,
@@ -49,7 +49,7 @@ namespace AUTOHLT.WEB.API.Controllers
                     Data = pin
                 });
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return Ok(new ResponseModel<string>
                 {
@@ -59,6 +59,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 });
             }
         }
+
         /// <summary>
         /// Kiểm tra xem số điện thoại đã tồn tại chưa
         /// </summary>

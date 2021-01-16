@@ -33,11 +33,18 @@
           <Parameter Name="Id_receive" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="TransferType" Type="int" Mode="In" />
         </Function>
+        <Function Name="AddUIDTypeFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Uid" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Type" Type="int" Mode="In" />
+        </Function>
         <Function Name="CheckNumberPhone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NumberPhone" Type="varchar" Mode="In" />
         </Function>
         <Function Name="CheckUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteIDTypeFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Uid" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="DeleteProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
@@ -48,11 +55,16 @@
         <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="DeleteUserFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UID" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAllHistoryUserSevice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllIDTypeFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTransferMoney" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllUserFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetHistoryService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id_user" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -146,6 +158,13 @@
           <Parameter Name="Age" Type="varchar" Mode="In" />
           <Parameter Name="Price" Type="money" Mode="In" />
           <Parameter Name="IdDevice" Type="text" Mode="In" />
+        </Function>
+        <Function Name="UpdateUserFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_User" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="UID" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Cookie" Type="ntext" Mode="In" />
+          <Parameter Name="Token" Type="ntext" Mode="In" />
+          <Parameter Name="Note" Type="ntext" Mode="In" />
         </Function>
         <Function Name="UserInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
@@ -303,15 +322,34 @@
             <Parameter Name="Price" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="CheckNumberPhone" ReturnType="Collection(String)">
-            <Parameter Name="NumberPhone" Mode="In" Type="String" />
+          <Parameter Name="NumberPhone" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetVersionApp" ReturnType="Collection(String)">
-            <Parameter Name="IdVersion" Mode="In" Type="Int32" />
+          <Parameter Name="IdVersion" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateAppVersion">
             <Parameter Name="VersionApp" Mode="In" Type="String" />
             <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeleteUserFacebook">
+          <Parameter Name="UID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllUserFacebook" ReturnType="Collection(bsoft_autohltModel.GetAllUserFacebook_Result)" />
+          <FunctionImport Name="UpdateUserFacebook">
+            <Parameter Name="Id_User" Mode="In" Type="Guid" />
+            <Parameter Name="UID" Mode="In" Type="String" />
+            <Parameter Name="Cookie" Mode="In" Type="String" />
+            <Parameter Name="Token" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddUIDTypeFacebook">
+            <Parameter Name="Uid" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteIDTypeFacebook">
+            <Parameter Name="Uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllIDTypeFacebook" ReturnType="Collection(bsoft_autohltModel.GetAllIDTypeFacebook_Result)" />
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -412,6 +450,20 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllUserFacebook_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="Guid" Name="Id_User" Nullable="false" />
+          <Property Type="String" Name="UID" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="F_Cookie" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="F_Token" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="GetAllIDTypeFacebook_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="UID" Nullable="false" />
+          <Property Type="Int32" Name="UIDType" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -587,6 +639,32 @@
           <FunctionImportMapping FunctionImportName="CheckNumberPhone" FunctionName="bsoft_autohltModel.Store.CheckNumberPhone" />
           <FunctionImportMapping FunctionImportName="GetVersionApp" FunctionName="bsoft_autohltModel.Store.GetVersionApp" />
           <FunctionImportMapping FunctionImportName="UpdateAppVersion" FunctionName="bsoft_autohltModel.Store.UpdateAppVersion" />
+          <FunctionImportMapping FunctionImportName="DeleteUserFacebook" FunctionName="bsoft_autohltModel.Store.DeleteUserFacebook" />
+          <FunctionImportMapping FunctionImportName="GetAllUserFacebook" FunctionName="bsoft_autohltModel.Store.GetAllUserFacebook">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllUserFacebook_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="F_Cookie" ColumnName="F_Cookie" />
+                <ScalarProperty Name="F_Token" ColumnName="F_Token" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateUserFacebook" FunctionName="bsoft_autohltModel.Store.UpdateUserFacebook" />
+          <FunctionImportMapping FunctionImportName="AddUIDTypeFacebook" FunctionName="bsoft_autohltModel.Store.AddUIDTypeFacebook" />
+          <FunctionImportMapping FunctionImportName="DeleteIDTypeFacebook" FunctionName="bsoft_autohltModel.Store.DeleteIDTypeFacebook" />
+          <FunctionImportMapping FunctionImportName="GetAllIDTypeFacebook" FunctionName="bsoft_autohltModel.Store.GetAllIDTypeFacebook">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllIDTypeFacebook_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UIDType" ColumnName="UIDType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -2,11 +2,11 @@
 <ContentView
     x:Class="AUTOHLT.MOBILE.Controls.NavigationView"
     xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:prism="http://prismlibrary.com"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:prism="http://prismlibrary.com"
     Margin="0"
     Padding="0"
     BackgroundColor="{StaticResource HeaderHome}"
@@ -34,7 +34,8 @@
                 TextColor="#fff"
                 VerticalOptions="Center">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{prism:GoBack}" />
+                    <TapGestureRecognizer
+                        Command="{prism:GoBack}" />
                 </Label.GestureRecognizers>
             </Label>
         </Grid>

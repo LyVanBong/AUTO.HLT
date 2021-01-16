@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Services.User;
+﻿using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp
@@ -30,6 +30,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp
         }
 
         public ICommand UseServiceCommand { get; private set; }
+
         public string VeryCode
         {
             get => _veryCode;
@@ -58,7 +59,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp
                         VeryCode = "";
                     }
 
-                    if (_coutSubmit ==2)
+                    if (_coutSubmit == 2)
                     {
                         ClosePopup("0");
                     }
@@ -81,14 +82,13 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp
             if (RequestClose != null)
             {
                 var pa = new DialogParameters();
-                pa.Add("OtpSms",para);
+                pa.Add("OtpSms", para);
                 RequestClose(pa);
             }
         }
 
         public void OnDialogClosed()
         {
-
         }
 
         public async void OnDialogOpened(IDialogParameters parameters)

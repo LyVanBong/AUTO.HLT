@@ -542,5 +542,71 @@ namespace AUTOHLT.WEB.API.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAppVersion", versionAppParameter, idParameter);
         }
+    
+        public virtual int DeleteUserFacebook(string uID)
+        {
+            var uIDParameter = uID != null ?
+                new ObjectParameter("UID", uID) :
+                new ObjectParameter("UID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserFacebook", uIDParameter);
+        }
+    
+        public virtual ObjectResult<GetAllUserFacebook_Result> GetAllUserFacebook()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUserFacebook_Result>("GetAllUserFacebook");
+        }
+    
+        public virtual int UpdateUserFacebook(Nullable<System.Guid> id_User, string uID, string cookie, string token, string note)
+        {
+            var id_UserParameter = id_User.HasValue ?
+                new ObjectParameter("Id_User", id_User) :
+                new ObjectParameter("Id_User", typeof(System.Guid));
+    
+            var uIDParameter = uID != null ?
+                new ObjectParameter("UID", uID) :
+                new ObjectParameter("UID", typeof(string));
+    
+            var cookieParameter = cookie != null ?
+                new ObjectParameter("Cookie", cookie) :
+                new ObjectParameter("Cookie", typeof(string));
+    
+            var tokenParameter = token != null ?
+                new ObjectParameter("Token", token) :
+                new ObjectParameter("Token", typeof(string));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserFacebook", id_UserParameter, uIDParameter, cookieParameter, tokenParameter, noteParameter);
+        }
+    
+        public virtual int AddUIDTypeFacebook(string uid, Nullable<int> type)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("Uid", uid) :
+                new ObjectParameter("Uid", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddUIDTypeFacebook", uidParameter, typeParameter);
+        }
+    
+        public virtual int DeleteIDTypeFacebook(string uid)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("Uid", uid) :
+                new ObjectParameter("Uid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteIDTypeFacebook", uidParameter);
+        }
+    
+        public virtual ObjectResult<GetAllIDTypeFacebook_Result> GetAllIDTypeFacebook()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllIDTypeFacebook_Result>("GetAllIDTypeFacebook");
+        }
     }
 }

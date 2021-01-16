@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
+﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Services.RequestProvider;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.HistoryService
 {
@@ -12,6 +12,7 @@ namespace AUTOHLT.MOBILE.Services.HistoryService
         {
             _requestProvider = requestProvider;
         }
+
         public Task<ResponseModel<string>> AddLog(string idProduct, string content, string idUser, string number, string dateCreate)
         {
             throw new System.NotImplementedException();

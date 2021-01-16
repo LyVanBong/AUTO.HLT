@@ -2,12 +2,12 @@
 <Frame
     x:Class="AUTOHLT.MOBILE.Controls.Dialog.BuffService.BuffDialog"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     xmlns:xaml="http://prismlibrary.com"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     Margin="0"
     Padding="0"
     xaml:DialogLayout.CloseOnBackgroundTapped="False"
@@ -25,10 +25,17 @@
         RowDefinitions="40,40,60,200,40,65,*"
         RowSpacing="0">
         <Grid.Resources>
-            <Style TargetType="textInputLayout:SfTextInputLayout">
-                <Setter Property="ContainerType" Value="Outlined" />
-                <Setter Property="Margin" Value="10,0" />
-                <Setter Property="OutlineCornerRadius" Value="5" />
+            <Style
+                TargetType="textInputLayout:SfTextInputLayout">
+                <Setter
+                    Property="ContainerType"
+                    Value="Outlined" />
+                <Setter
+                    Property="Margin"
+                    Value="10,0" />
+                <Setter
+                    Property="OutlineCornerRadius"
+                    Value="5" />
             </Style>
         </Grid.Resources>
         <BoxView
@@ -56,7 +63,8 @@
             TextColor="{StaticResource Gray-White}"
             VerticalOptions="CenterAndExpand">
             <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
+                <TapGestureRecognizer
+                    Command="{Binding ClosePopupCommand}" />
             </Label.GestureRecognizers>
         </Label>
         <Label
@@ -67,10 +75,14 @@
             VerticalOptions="CenterAndExpand">
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="{markupExtensions:Translate 1000066}" />
-                    <Span Text=": " />
-                    <Span Text="{Binding UserMoney, Converter={StaticResource StringToPrice}}" />
-                    <Span Text=" VND" />
+                    <Span
+                        Text="{markupExtensions:Translate 1000066}" />
+                    <Span
+                        Text=": " />
+                    <Span
+                        Text="{Binding UserMoney, Converter={StaticResource StringToPrice}}" />
+                    <Span
+                        Text=" VND" />
                 </FormattedString>
             </Label.FormattedText>
         </Label>
@@ -95,11 +107,17 @@
                 </Entry.Behaviors>
             </Entry>
             <textInputLayout:SfTextInputLayout.TrailingView>
-                <Label FontAttributes="Bold" VerticalOptions="CenterAndExpand">
+                <Label
+                    FontAttributes="Bold"
+                    VerticalOptions="CenterAndExpand">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span FontSize="8" Text="x" />
-                            <Span FontSize="8" Text="{Binding NumberService}" />
+                            <Span
+                                FontSize="8"
+                                Text="x" />
+                            <Span
+                                FontSize="8"
+                                Text="{Binding NumberService}" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -144,10 +162,14 @@
             VerticalOptions="CenterAndExpand">
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="{markupExtensions:Translate 1000065}" />
-                    <Span Text=": " />
-                    <Span Text="{Binding Amount, Converter={StaticResource StringToPrice}}" />
-                    <Span Text=" VND" />
+                    <Span
+                        Text="{markupExtensions:Translate 1000065}" />
+                    <Span
+                        Text=": " />
+                    <Span
+                        Text="{Binding Amount, Converter={StaticResource StringToPrice}}" />
+                    <Span
+                        Text=" VND" />
                 </FormattedString>
             </Label.FormattedText>
         </Label>

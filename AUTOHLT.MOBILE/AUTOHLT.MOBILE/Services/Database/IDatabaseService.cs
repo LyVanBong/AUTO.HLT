@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.User;
+﻿using AUTOHLT.MOBILE.Models.User;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.Database
 {
@@ -10,6 +10,7 @@ namespace AUTOHLT.MOBILE.Services.Database
         /// </summary>
         /// <returns></returns>
         void RemoveDatabaseLocal();
+
         /// <summary>
         /// Lưu tài khoản người dùng vào database local
         /// </summary>

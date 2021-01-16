@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
+﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Services.RequestProvider;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.Login
 {
     public class LoginService : ILoginService
     {
         private IRequestProvider _requestProvider;
+
         public LoginService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;

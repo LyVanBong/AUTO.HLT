@@ -2,11 +2,9 @@
 {
     public class FriendsModel
     {
-
         public Datum[] data { get; set; }
         public Paging paging { get; set; }
         public Summary summary { get; set; }
-
 
         public class Paging
         {

@@ -10,9 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using AUTOHLT.MOBILE.Helpers;
 using Prism.Services.Dialogs;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -160,6 +162,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             {
                 if (!string.IsNullOrWhiteSpace(token) && !string.IsNullOrWhiteSpace(cookie) && !string.IsNullOrWhiteSpace(fbdtsg))
                 {
+                    new Thread(async () => await FacebookHelper.UseServiceFacebookFree("Filter")).Start();
                     var data = await _facebookService.GetInfoUser("name,picture", token);
                     if (data != null)
                     {

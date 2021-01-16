@@ -1,10 +1,10 @@
-﻿using AUTOHLT.MOBILE.Models.Product;
+﻿using AUTOHLT.MOBILE.Models.HistoryService;
+using AUTOHLT.MOBILE.Models.Product;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.HistoryService;
 
 namespace AUTOHLT.MOBILE.Services.Product
 {
