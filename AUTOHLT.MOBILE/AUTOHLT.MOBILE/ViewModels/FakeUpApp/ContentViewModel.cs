@@ -36,7 +36,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
             set => SetProperty(ref _uriWebApp, value);
         }
 
-        public ContentViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService,IPageDialogService pageDialogService) : base(navigationService)
+        public ContentViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService) : base(navigationService)
         {
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
@@ -49,7 +49,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
             try
             {
                 await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                    $"Bạn đã nhận được {obj.Price} điểm thưởng vào tài khoản vào lúc {DateTime.Now.ToString("F")} chúc bạn một ngày làm việc tốt lành !!!",
+                    $"Bạn đã hoàn thành {obj.EndDate} ngày làm nhiệm vụ {Title}, điểm thưởng sẽ được thêm vào tài khoản vào lúc {DateTime.Now.ToString("F")} chúc bạn một ngày làm việc tốt lành !!!",
                     "OK");
             }
             catch (Exception e)

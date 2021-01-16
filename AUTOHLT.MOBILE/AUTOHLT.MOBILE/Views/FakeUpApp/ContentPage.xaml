@@ -68,7 +68,7 @@
                                 Margin="3"
                                 Padding="0"
                                 ColumnDefinitions="*,80"
-                                RowDefinitions="40,20,20">
+                                RowDefinitions="30,30,30">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.UseServiceCommand}" CommandParameter="{Binding .}" />
                                 </Grid.GestureRecognizers>
@@ -91,8 +91,9 @@
                                 <Label Grid.Row="2" Grid.Column="0">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding Price, Converter={StaticResource StringToPrice}}" />
-                                            <Span Text=" Điểm" />
+                                            <Span
+                                                Text="{Binding EndDate}" />
+                                            <Span Text=" Ngày hoàn thành" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
