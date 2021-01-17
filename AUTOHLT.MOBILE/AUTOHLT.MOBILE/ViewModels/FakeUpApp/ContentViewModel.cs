@@ -80,15 +80,41 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
                     var lsProduct = data.Data.ToList();
                     foreach (var item in lsProduct)
                     {
-
-                        item.TitleProduct = $"Buff {item.Number} {Title} / {Resource._1000088} {Resource._1000089} {item.EndDate} {Resource._1000088}";
-                        item.Icon = UriWebApp;
+                        switch (item.GroupProduct)
+                        {
+                            case "1":
+                                item.Icon = "icon_like.png";
+                                break;
+                            case "2":
+                                item.Icon = "icon_view.png";
+                                break;
+                            case "3":
+                                item.Icon = "icon_auto_boot_hear.png";
+                                break;
+                            case "4":
+                                item.Icon = "icon_add_friends.png";
+                                break;
+                            case "5":
+                                item.Icon = "icon_like_page.png";
+                                break;
+                            case "6":
+                                item.Icon = "icon_follow.png";
+                                break;
+                            case "7":
+                                item.Icon = "icon_unlock.png";
+                                break;
+                            case "8":
+                                item.Icon = "icon_security_fb.png";
+                                break;
+                            case "9":
+                                item.Icon = "icon_pokes.png";
+                                break;
+                        }
                         product.Add(item);
-
                     }
 
                     var random = new Random();
-                    ProductData = new ObservableCollection<ProductModel>(product.Where(x => x.GroupProduct == $"{random.Next(1, 9)}"));
+                    ProductData = new ObservableCollection<ProductModel>(product);
                 }
             }
             catch (Exception e)

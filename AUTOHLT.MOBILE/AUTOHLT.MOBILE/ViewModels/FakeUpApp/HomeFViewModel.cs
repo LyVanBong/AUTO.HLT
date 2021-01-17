@@ -1,12 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.ChangePassword;
-using AUTOHLT.MOBILE.Views.FakeUpApp;
 using Prism.Navigation;
 using Prism.Services;
+using System.Windows.Input;
+using AUTOHLT.MOBILE.Resources.Languages;
+using AUTOHLT.MOBILE.Views.FakeUpApp;
+using AUTOHLT.MOBILE.Views.FilterFriend;
+using AUTOHLT.MOBILE.Views.Pokes;
+using AUTOHLT.MOBILE.Views.SuportCustumer;
+using AUTOHLT.MOBILE.Views.Transfers;
+using AUTOHLT.MOBILE.Views.UnLockFb;
 using Xamarin.Forms;
 using ContentPage = AUTOHLT.MOBILE.Views.FakeUpApp.ContentPage;
 
@@ -34,15 +39,15 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
                 case "0":
                     para.Add("Title", "Truyển dữ liệu");
                     para.Add("Uri", "icon_transfer.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    await NavigationService.NavigateAsync(nameof(TransferPage), para);
                     break;
                 case "1":
                     await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
                     break;
                 case "2":
-                    para.Add("Title", "Thông báo");
-                    para.Add("Uri", @"icon_notification.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                        $"Bạn đã hoàn thành 100 ngày làm nhiệm vụ {Title}, điểm thưởng sẽ được thêm vào tài khoản vào lúc {DateTime.Now.ToString("F")} chúc bạn một ngày làm việc tốt lành !!!",
+                        "OK");
                     break;
                 case "3":
                     await NavigationService.NavigateAsync(nameof(AccountInformationPage));
@@ -55,27 +60,25 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
                 case "5":
                     para.Add("Title", "Buff view");
                     para.Add("Uri", @"icon_view.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    await NavigationService.NavigateAsync(nameof(PokesPage), para);
                     break;
                 case "6":
                     para.Add("Title", "Buff share");
                     para.Add("Uri", @"icon_share.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    await NavigationService.NavigateAsync(nameof(FilterFriendPage), para);
                     break;
                 case "7":
                     para.Add("Title", "Buff comment");
                     para.Add("Uri", @"icon_comments.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    await NavigationService.NavigateAsync(nameof(UnLockFbPage), para);
                     break;
                 case "8":
                     para.Add("Title", "Buff follow");
                     para.Add("Uri", @"icon_follow.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    await NavigationService.NavigateAsync(nameof(SuportCustumerPage), para);
                     break;
                 case "9":
-                    para.Add("Title", "Tương tác");
-                    para.Add("Uri", @"icon_Interactive.png");
-                    await NavigationService.NavigateAsync(nameof(ContentPage), para);
+                    Logout();
                     break;
             }
         }

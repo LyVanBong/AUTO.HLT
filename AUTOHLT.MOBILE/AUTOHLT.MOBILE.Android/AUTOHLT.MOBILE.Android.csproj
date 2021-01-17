@@ -103,6 +103,9 @@
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
       <Version>18.4.0.34</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Cards">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
       <Version>18.4.0.34</Version>
     </PackageReference>
@@ -110,6 +113,9 @@
       <Version>18.4.0.34</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>18.4.0.34</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">

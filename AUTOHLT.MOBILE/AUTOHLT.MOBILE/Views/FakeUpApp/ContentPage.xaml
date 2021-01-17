@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:badgeView="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
     xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
     xmlns:effectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
@@ -14,38 +15,16 @@
         <Grid
             Margin="0"
             Padding="0"
+            BackgroundColor="#fff"
             ColumnDefinitions="*,40"
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <BoxView
+            <controls:NavigationView
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                BackgroundColor="{StaticResource HeaderHome}" />
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                FontAttributes="Bold"
-                FontSize="16"
-                HorizontalOptions="Center"
-                Text="{Binding Title}"
-                TextColor="#fff"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Row="0"
-                Grid.Column="1"
-                BackgroundColor="{StaticResource HeaderHome}"
-                FontFamily="Awesome5ProSolid"
-                FontSize="25"
-                HorizontalOptions="CenterAndExpand"
-                Text="{x:Static icon:FontAwesome5ProSolid.Times}"
-                TextColor="{StaticResource Gray-White}"
-                VerticalOptions="CenterAndExpand">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{prism:GoBack}" />
-                </Label.GestureRecognizers>
-            </Label>
+                Text="Buff like" />
             <customRenderer:CustomCollectionViewRenderer
                 x:Name="Lscollection"
                 Grid.Row="1"
@@ -62,48 +41,30 @@
                         <effectsView:SfEffectsView
                             Margin="0"
                             Padding="5"
-                            BackgroundColor="{Binding ColorBg}"
+                            BackgroundColor="#d4e2d4"
                             CornerRadius="15">
                             <Grid
                                 Margin="3"
                                 Padding="0"
-                                ColumnDefinitions="*,80"
-                                RowDefinitions="30,30,30">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.UseServiceCommand}" CommandParameter="{Binding .}" />
-                                </Grid.GestureRecognizers>
-                                <Label
-                                    Grid.Row="0"
+                                ColumnDefinitions="110,*"
+                                RowDefinitions="20,30,30,50">
+                                <BoxView
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
                                     Grid.Column="0"
-                                    Text="{Binding TitleProduct}"
-                                    VerticalOptions="Center" />
-                                <Label Grid.Row="1" Grid.Column="0">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{markupExtensions:Translate 1000085}" />
-                                            <Span Text=" " />
-                                            <Span Text="{Binding Number}" />
-                                            <Span Text=" " />
-                                            <Span Text="{markupExtensions:Translate 1000086}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <Label Grid.Row="2" Grid.Column="0">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span
-                                                Text="{Binding EndDate}" />
-                                            <Span Text=" Ngày hoàn thành" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
+                                    Grid.ColumnSpan="2"
+                                    BackgroundColor="#86aba1"
+                                    CornerRadius="20" />
                                 <badgeView:SfBadgeView
                                     Grid.Row="0"
-                                    Grid.RowSpan="3"
-                                    Grid.Column="1"
-                                    Margin="5"
+                                    Grid.RowSpan="4"
+                                    Grid.Column="0"
+                                    Margin="0"
                                     Padding="0"
-                                    BadgeText="{Binding BadgeView}">
+                                    BackgroundColor="#fff"
+                                    BadgeText="{Binding BadgeView}"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand">
                                     <badgeView:SfBadgeView.BadgeSettings>
                                         <badgeView:BadgeSetting
                                             BadgeAnimation="Scale"
@@ -116,6 +77,26 @@
                                         <Image Source="{Binding IconLike}" />
                                     </badgeView:SfBadgeView.Content>
                                 </badgeView:SfBadgeView>
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding ProductName}"
+                                    TextColor="#fff"
+                                    VerticalOptions="CenterAndExpand" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="{Binding ProductContent}"
+                                    TextColor="#fff"
+                                    VerticalOptions="CenterAndExpand" />
+                                <Button
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.UseServiceCommand}"
+                                    CommandParameter="{Binding .}"
+                                    CornerRadius="10"
+                                    Text="Chọn" />
                             </Grid>
                         </effectsView:SfEffectsView>
                     </DataTemplate>
