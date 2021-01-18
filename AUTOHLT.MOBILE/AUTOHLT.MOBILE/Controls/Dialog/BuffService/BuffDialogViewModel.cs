@@ -204,6 +204,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         {
             if (parameters != null)
             {
+                Number = "1000";
                 TextSubmit = parameters.GetValue<string>("ServiceName");
                 Title = Resource._1000058 + " " + TextSubmit;
                 _idProduct = parameters.GetValue<string>("IdProduct");

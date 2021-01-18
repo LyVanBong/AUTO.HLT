@@ -17,110 +17,50 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
 {
     public class ContentViewModel : ViewModelBase
     {
-        private string _uriWebApp;
-        private ObservableCollection<ProductModel> _productData;
-        private IDatabaseService _databaseService;
-        private IProductService _productService;
-        private IPageDialogService _pageDialogService;
-
-        public ICommand UseServiceCommand { get; private set; }
-        public ObservableCollection<ProductModel> ProductData
-        {
-            get => _productData;
-            set => SetProperty(ref _productData, value);
-        }
-
-        public string UriWebApp
-        {
-            get => _uriWebApp;
-            set => SetProperty(ref _uriWebApp, value);
-        }
-
+        public ObservableCollection<SunburstModel> DataSource { get; set; }
         public ContentViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService) : base(navigationService)
         {
-            _pageDialogService = pageDialogService;
-            _databaseService = databaseService;
-            _productService = productService;
-            UseServiceCommand = new Command<ProductModel>(UseService);
+            this.DataSource = new ObservableCollection<SunburstModel>
+            {
+                new SunburstModel { Country = "USA", JobDescription = "Sales", JobGroup="Executive", EmployeesCount = 50 },
+                new SunburstModel { Country = "USA", JobDescription = "Sales", JobGroup = "Analyst", EmployeesCount = 40 },
+                new SunburstModel { Country = "USA", JobDescription = "Marketing", EmployeesCount = 40 },
+                new SunburstModel { Country = "USA", JobDescription = "Technical", JobGroup = "Testers", EmployeesCount = 35 },
+                new SunburstModel { Country = "USA", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Windows", EmployeesCount = 175 },
+                new SunburstModel { Country = "USA", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Web", EmployeesCount = 70 },
+                new SunburstModel { Country = "USA", JobDescription = "Management", EmployeesCount = 40 },
+                new SunburstModel { Country = "USA", JobDescription = "Accounts", EmployeesCount = 60 },
+
+                new SunburstModel { Country = "India", JobDescription = "Technical", JobGroup = "Testers", EmployeesCount = 33 },
+                new SunburstModel { Country = "India", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Windows", EmployeesCount = 125 },
+                new SunburstModel { Country = "India", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Web", EmployeesCount = 60 },
+                new SunburstModel { Country = "India", JobDescription = "HR Executives", EmployeesCount = 70 },
+                new SunburstModel { Country = "India", JobDescription = "Accounts", EmployeesCount = 45 },
+
+                new SunburstModel { Country = "Germany", JobDescription = "Sales", JobGroup = "Executive", EmployeesCount = 30 },
+                new SunburstModel { Country = "Germany", JobDescription = "Sales", JobGroup = "Analyst", EmployeesCount = 40 },
+                new SunburstModel { Country = "Germany", JobDescription = "Marketing", EmployeesCount = 50 },
+                new SunburstModel { Country = "Germany", JobDescription = "Technical", JobGroup = "Testers", EmployeesCount = 40 },
+                new SunburstModel { Country = "Germany", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Windows", EmployeesCount = 65 },
+                new SunburstModel { Country = "Germany", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Web", EmployeesCount = 27 },
+                new SunburstModel { Country = "Germany", JobDescription = "Management", EmployeesCount = 33 },
+                new SunburstModel { Country = "Germany", JobDescription = "Accounts", EmployeesCount = 55 },
+
+                new SunburstModel { Country = "UK", JobDescription = "Technical", JobGroup = "Testers", EmployeesCount = 25 },
+                new SunburstModel { Country = "UK", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Windows", EmployeesCount = 96 },
+                new SunburstModel { Country = "UK", JobDescription = "Technical", JobGroup = "Developers", JobRole = "Web", EmployeesCount = 55 },
+                new SunburstModel { Country = "UK", JobDescription = "HR Executives", EmployeesCount = 60 },
+                new SunburstModel { Country = "UK", JobDescription = "Accounts", EmployeesCount = 30 }
+            };
         }
 
-        private async void UseService(ProductModel obj)
-        {
-            try
-            {
-                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                    $"Bạn đã hoàn thành {obj.EndDate} ngày làm nhiệm vụ {Title}, điểm thưởng sẽ được thêm vào tài khoản vào lúc {DateTime.Now.ToString("F")} chúc bạn một ngày làm việc tốt lành !!!",
-                    "OK");
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-        }
-
-        public override async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-            if (parameters != null)
-            {
-                Title = parameters["Title"].ToString();
-                UriWebApp = parameters["Uri"].ToString();
-            }
-
-            await InitializeData();
-        }
-        private async Task InitializeData()
-        {
-            try
-            {
-                var data = await _productService.GetAllProduct();
-                if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
-                {
-                    var product = new List<ProductModel>();
-                    var lsProduct = data.Data.ToList();
-                    foreach (var item in lsProduct)
-                    {
-                        switch (item.GroupProduct)
-                        {
-                            case "1":
-                                item.Icon = "icon_like.png";
-                                break;
-                            case "2":
-                                item.Icon = "icon_view.png";
-                                break;
-                            case "3":
-                                item.Icon = "icon_auto_boot_hear.png";
-                                break;
-                            case "4":
-                                item.Icon = "icon_add_friends.png";
-                                break;
-                            case "5":
-                                item.Icon = "icon_like_page.png";
-                                break;
-                            case "6":
-                                item.Icon = "icon_follow.png";
-                                break;
-                            case "7":
-                                item.Icon = "icon_unlock.png";
-                                break;
-                            case "8":
-                                item.Icon = "icon_security_fb.png";
-                                break;
-                            case "9":
-                                item.Icon = "icon_pokes.png";
-                                break;
-                        }
-                        product.Add(item);
-                    }
-
-                    var random = new Random();
-                    ProductData = new ObservableCollection<ProductModel>(product);
-                }
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-        }
+    }
+    public class SunburstModel
+    {
+        public string JobDescription { get; set; }
+        public string JobGroup { get; set; }
+        public string JobRole { get; set; }
+        public double EmployeesCount { get; set; }
+        public string Country { get; set; }
     }
 }

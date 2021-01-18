@@ -106,22 +106,6 @@
                         EventName="Unfocused" />
                 </Entry.Behaviors>
             </Entry>
-            <textInputLayout:SfTextInputLayout.TrailingView>
-                <Label
-                    FontAttributes="Bold"
-                    VerticalOptions="CenterAndExpand">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span
-                                FontSize="8"
-                                Text="x" />
-                            <Span
-                                FontSize="8"
-                                Text="{Binding NumberService}" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </textInputLayout:SfTextInputLayout.TrailingView>
             <textInputLayout:SfTextInputLayout.LeadingView>
                 <Label
                     FontFamily="Awesome5ProSolid"

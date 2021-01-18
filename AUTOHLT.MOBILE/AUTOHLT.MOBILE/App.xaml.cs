@@ -109,6 +109,13 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<FContentPage2, FContentPage2ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage4, FContentPage4ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage5, FContentPage5ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage6, FContentPage6ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage8, FContentPage8ViewModel>();
             containerRegistry.RegisterForNavigation<ContentPage, ContentViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<BuffSubPage, BuffLikePageViewModel>();

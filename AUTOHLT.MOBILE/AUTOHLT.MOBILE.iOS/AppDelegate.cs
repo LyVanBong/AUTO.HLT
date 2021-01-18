@@ -3,11 +3,18 @@ using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfCalendar.XForms.iOS;
+using Syncfusion.SfChart.XForms.iOS.Renderers;
 using Syncfusion.SfDataGrid.XForms.iOS;
+using Syncfusion.SfGauge.XForms.iOS;
+using Syncfusion.SfSunburstChart.XForms.iOS;
+using Syncfusion.SfTreeMap.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.iOS.DataForm;
 using Syncfusion.XForms.iOS.Graphics;
 using Syncfusion.XForms.iOS.MaskedEdit;
+using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
@@ -52,11 +59,16 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
+            new SfTreeMapRenderer();
+            SfDataFormRenderer.Init();
+            SfGaugeRenderer.Init();
+            SfChartRenderer.Init();
+            SfCalendarRenderer.Init();
             // Add the below line if you are using SfLinearProgressBar.
-            Syncfusion.XForms.iOS.ProgressBar.SfLinearProgressBarRenderer.Init();
-
+            SfLinearProgressBarRenderer.Init();
+            SfSunburstChartRenderer.Init();
             // Add the below line if you are using SfCircularProgressBar.  
-            Syncfusion.XForms.iOS.ProgressBar.SfCircularProgressBarRenderer.Init();
+            SfCircularProgressBarRenderer.Init();
             SfBadgeViewRenderer.Init();
             FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();

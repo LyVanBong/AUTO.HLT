@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.FakeUpApp.FContentPage6"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:xForms="clr-namespace:Syncfusion.SfTreeMap.XForms;assembly=Syncfusion.SfTreeMap.XForms"
+    BackgroundColor="{StaticResource HeaderHome}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="#fff"
+            ColumnSpacing="0"
+            RowDefinitions="40,*"
+            RowSpacing="0">
+            <controls:NavigationView Grid.Row="0" Text="Tuong tac" />
+            <xForms:SfTreeMap
+                x:Name="treeMap"
+                Grid.Row="1"
+                ColorValuePath="Growth"
+                DataSource="{Binding PopulationDetails}"
+                LayoutType="Squarified"
+                ShowTooltip="True"
+                WeightValuePath="Population">
+                <xForms:SfTreeMap.LeafItemSettings>
+                    <xForms:LeafItemSettings
+                        BorderColor="#A9D9F7"
+                        Gap="2"
+                        LabelPath="Country"
+                        OverflowMode="Wrap" />
+                </xForms:SfTreeMap.LeafItemSettings>
+                <xForms:SfTreeMap.Levels>
+                    <xForms:TreeMapFlatLevel
+                        GroupGap=" 5"
+                        GroupPath="Continent"
+                        HeaderHeight="20"
+                        ShowHeader="true">
+                        <xForms:TreeMapFlatLevel.HeaderStyle>
+                            <xForms:Style Color="Black" />
+                        </xForms:TreeMapFlatLevel.HeaderStyle>
+                    </xForms:TreeMapFlatLevel>
+                </xForms:SfTreeMap.Levels>
+
+                <xForms:SfTreeMap.LegendSettings>
+                    <xForms:LegendSettings ShowLegend="True" Size="700,45">
+                        <xForms:LegendSettings.LabelStyle>
+                            <xForms:Style Color="Black" />
+                        </xForms:LegendSettings.LabelStyle>
+                    </xForms:LegendSettings>
+                </xForms:SfTreeMap.LegendSettings>
+
+                <xForms:SfTreeMap.LeafItemColorMapping>
+                    <xForms:RangeColorMapping>
+                        <xForms:RangeColorMapping.Ranges>
+                            <xForms:Range
+                                LegendLabel="1 % Growth"
+                                Color="#77D8D8"
+                                From="0"
+                                To="1" />
+                            <xForms:Range
+                                LegendLabel="2 % Growth"
+                                Color="#AED960"
+                                From="0"
+                                To="2" />
+                            <xForms:Range
+                                LegendLabel="3 % Growth"
+                                Color="#FFAF51"
+                                From="0"
+                                To="3" />
+                            <xForms:Range
+                                LegendLabel="4 % Growth"
+                                Color="#F3D240"
+                                From="0"
+                                To="4" />
+                        </xForms:RangeColorMapping.Ranges>
+                    </xForms:RangeColorMapping>
+                </xForms:SfTreeMap.LeafItemColorMapping>
+
+            </xForms:SfTreeMap>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

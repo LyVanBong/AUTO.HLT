@@ -108,7 +108,7 @@
                             Grid.Column="0"
                             FontSize="12"
                             HorizontalOptions="CenterAndExpand"
-                            Text="{markupExtensions:Translate 1000019}" />
+                            Text="Chọc bạn bè" />
                         <Label
                             Grid.Row="2"
                             Grid.Column="1"
@@ -130,7 +130,7 @@
                         <Image
                             Grid.Row="1"
                             Grid.Column="0"
-                            Source="{markupExtensions:ImageResource icon_transfer.png}" />
+                            Source="{markupExtensions:ImageResource icon_pokes.png}" />
                         <Image
                             Grid.Row="1"
                             Grid.Column="1"

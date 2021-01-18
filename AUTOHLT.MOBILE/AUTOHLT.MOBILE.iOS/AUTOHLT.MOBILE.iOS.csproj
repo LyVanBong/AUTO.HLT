@@ -228,10 +228,25 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
       <Version>18.4.0.34</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfBarcode">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>18.4.0.34</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfCalendar">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfChart">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfGauge">
       <Version>18.4.0.34</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
@@ -241,6 +256,12 @@
       <Version>18.4.0.34</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfSunburstChart">
+      <Version>18.4.0.34</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfTreeMap">
       <Version>18.4.0.34</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
@@ -259,7 +280,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

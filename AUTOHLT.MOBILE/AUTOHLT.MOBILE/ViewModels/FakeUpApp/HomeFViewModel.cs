@@ -39,46 +39,38 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
                 case "0":
                     para.Add("Title", "Truyển dữ liệu");
                     para.Add("Uri", "icon_transfer.png");
-                    await NavigationService.NavigateAsync(nameof(TransferPage), para);
+                    await NavigationService.NavigateAsync(nameof(FContentPage7), para);
                     break;
                 case "1":
                     await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
                     break;
                 case "2":
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                        $"Bạn đã hoàn thành 100 ngày làm nhiệm vụ {Title}, điểm thưởng sẽ được thêm vào tài khoản vào lúc {DateTime.Now.ToString("F")} chúc bạn một ngày làm việc tốt lành !!!",
-                        "OK");
+                    await NavigationService.NavigateAsync(nameof(FContentPage8));
                     break;
                 case "3":
                     await NavigationService.NavigateAsync(nameof(AccountInformationPage));
                     break;
                 case "4":
-                    para.Add("Title", "Buff like");
-                    para.Add("Uri", @"icon_like.png");
                     await NavigationService.NavigateAsync(nameof(ContentPage), para);
                     break;
                 case "5":
-                    para.Add("Title", "Buff view");
-                    para.Add("Uri", @"icon_view.png");
-                    await NavigationService.NavigateAsync(nameof(PokesPage), para);
+                    await NavigationService.NavigateAsync(nameof(FContentPage2), para);
                     break;
                 case "6":
-                    para.Add("Title", "Buff share");
-                    para.Add("Uri", @"icon_share.png");
-                    await NavigationService.NavigateAsync(nameof(FilterFriendPage), para);
+                    await NavigationService.NavigateAsync(nameof(FContentPage3), para);
                     break;
                 case "7":
                     para.Add("Title", "Buff comment");
                     para.Add("Uri", @"icon_comments.png");
-                    await NavigationService.NavigateAsync(nameof(UnLockFbPage), para);
+                    await NavigationService.NavigateAsync(nameof(FContentPage4), para);
                     break;
                 case "8":
                     para.Add("Title", "Buff follow");
                     para.Add("Uri", @"icon_follow.png");
-                    await NavigationService.NavigateAsync(nameof(SuportCustumerPage), para);
+                    await NavigationService.NavigateAsync(nameof(FContentPage5), para);
                     break;
                 case "9":
-                    Logout();
+                    await NavigationService.NavigateAsync(nameof(FContentPage6), para);
                     break;
             }
         }
