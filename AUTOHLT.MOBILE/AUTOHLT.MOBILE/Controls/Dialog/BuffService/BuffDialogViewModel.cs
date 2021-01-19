@@ -121,7 +121,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             {
                 if (Number == null) return;
                 var res = (long.Parse(Price) / long.Parse(NumberService)) *
-                          (long.Parse(Number) * long.Parse(NumberService));
+                          (long.Parse(Number));
                 if (res > int.Parse(UserMoney))
                 {
                     var a = int.Parse(UserMoney) / int.Parse(Price);
@@ -204,7 +204,6 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         {
             if (parameters != null)
             {
-                Number = "1000";
                 TextSubmit = parameters.GetValue<string>("ServiceName");
                 Title = Resource._1000058 + " " + TextSubmit;
                 _idProduct = parameters.GetValue<string>("IdProduct");
