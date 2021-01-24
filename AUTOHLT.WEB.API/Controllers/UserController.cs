@@ -3,6 +3,7 @@ using AUTOHLT.WEB.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
@@ -342,16 +343,20 @@ namespace AUTOHLT.WEB.API.Controllers
         {
             if (accountModel != null)
             {
-                var data = _entities.RegistrationAccount(accountModel.UserName, accountModel.Password,
-                    accountModel.Name, accountModel.NumberPhone, accountModel.Email, accountModel.Sex,
-                    accountModel.Age, accountModel.DateCreate);
-                if (data > 0)
-                    return Ok(new ResponseModel<int>
-                    {
-                        Code = 1,
-                        Data = data,
-                        Message = "Đăng ký tài khoản thành công"
-                    });
+                var userName = Regex.Match(accountModel?.UserName, @"^[a-zA-Z0-9]+(?:[_.]?[a-zA-Z0-9])*$")?.Value;
+                if (!string.IsNullOrWhiteSpace(userName))
+                {
+                    var data = _entities.RegistrationAccount(accountModel.UserName, accountModel.Password,
+                        accountModel.Name, accountModel.NumberPhone, accountModel.Email, accountModel.Sex,
+                        accountModel.Age, accountModel.DateCreate);
+                    if (data > 0)
+                        return Ok(new ResponseModel<int>
+                        {
+                            Code = 1,
+                            Data = data,
+                            Message = "Đăng ký tài khoản thành công"
+                        });
+                }
             }
             return Ok(new ResponseModel<string>
             {
