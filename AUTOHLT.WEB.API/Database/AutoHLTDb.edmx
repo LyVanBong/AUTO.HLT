@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="bsoft_autohltModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bsoft_autohltModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="AddNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Content" Type="text" Mode="In" />
           <Parameter Name="Id_send" Type="uniqueidentifier" Mode="In" />
@@ -347,7 +347,7 @@
             <Parameter Name="Type" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteIDTypeFacebook">
-            <Parameter Name="Uid" Mode="In" Type="String" />
+          <Parameter Name="Uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllIDTypeFacebook" ReturnType="Collection(bsoft_autohltModel.GetAllIDTypeFacebook_Result)" />
         </EntityContainer>
