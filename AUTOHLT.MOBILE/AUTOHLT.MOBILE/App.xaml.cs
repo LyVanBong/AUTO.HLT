@@ -29,6 +29,7 @@ using AUTOHLT.MOBILE.ViewModels.SecurityFb;
 using AUTOHLT.MOBILE.ViewModels.SuportCustumer;
 using AUTOHLT.MOBILE.ViewModels.Transfers;
 using AUTOHLT.MOBILE.ViewModels.UnLockFb;
+using AUTOHLT.MOBILE.ViewModels.VipInteraction;
 using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.AddFullFriend;
 using AUTOHLT.MOBILE.Views.BuffEyesView;
@@ -47,6 +48,7 @@ using AUTOHLT.MOBILE.Views.SecurityFb;
 using AUTOHLT.MOBILE.Views.SuportCustumer;
 using AUTOHLT.MOBILE.Views.Transfers;
 using AUTOHLT.MOBILE.Views.UnLockFb;
+using AUTOHLT.MOBILE.Views.VipInteraction;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -109,6 +111,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<VipInteractionPage, VipInteractionViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage2, FContentPage2ViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage4, FContentPage4ViewModel>();

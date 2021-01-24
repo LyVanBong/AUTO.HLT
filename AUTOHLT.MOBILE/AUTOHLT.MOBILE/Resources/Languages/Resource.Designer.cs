@@ -1022,5 +1022,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000106", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vip Interaction.
+        /// </summary>
+        internal static string _1000107 {
+            get {
+                return ResourceManager.GetString("1000107", resourceCulture);
+            }
+        }
     }
 }

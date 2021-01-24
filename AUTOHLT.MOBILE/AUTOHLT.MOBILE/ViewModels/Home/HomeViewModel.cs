@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Views.VipInteraction;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
@@ -59,6 +60,15 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         TitleService = Resource._1000076,
                         TypeService = 1,
                         UserRole = "2",
+                    },
+                    new ServiceModel
+                    {
+                        Icon = "icon_Interactive.png",
+                        TitleService = Resource._1000107,
+                        TypeService = 20,
+                        BadgeView = "Hot",
+                        UserRole = "2",
+                        BadgeType = BadgeType.Error
                     },
                     new ServiceModel
                     {
@@ -205,6 +215,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {17,"" },
             {18,"AccountInformationPage" },
             {19,nameof(PokesPage) },
+            {20,nameof(VipInteractionPage) },
         };
         private string[] _paraDialogSheet = new string[]
             {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè"};
