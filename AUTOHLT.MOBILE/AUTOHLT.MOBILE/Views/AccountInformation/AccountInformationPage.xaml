@@ -60,7 +60,7 @@
                 Hint="{markupExtensions:Translate 1000014}">
                 <Entry
                     ClearButtonVisibility="WhileEditing"
-                    Keyboard="Numeric"
+                    IsReadOnly="True"
                     Text="{Binding PhoneNumber}">
                     <Entry.Behaviors>
                         <behaviors:EventToCommandBehavior

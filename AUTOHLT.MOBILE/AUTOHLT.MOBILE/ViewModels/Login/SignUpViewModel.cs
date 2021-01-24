@@ -135,14 +135,24 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                     case 0:
                         if (!string.IsNullOrWhiteSpace(UserName))
                         {
-                            var data = await _userService.CheckExistAccount(userName: UserName);
-                            if (data != null && data.Code < 0)
+                            var userName = Regex.Match(UserName, @"^[a-zA-Z0-9]+(?:[_.]?[a-zA-Z0-9])*$")?.Value;
+                            if (!string.IsNullOrWhiteSpace(userName))
                             {
-                                HasErrorEmail = true;
+                                var data = await _userService.CheckExistAccount(userName: userName);
+                                if (data != null && data.Code < 0)
+                                {
+                                    UserName = "";
+                                    HasErrorEmail = true;
+                                }
+                                else
+                                {
+                                    HasErrorEmail = false;
+                                }
                             }
                             else
                             {
-                                HasErrorEmail = false;
+                                UserName = "";
+                                HasErrorEmail = true;
                             }
                         }
                         break;
@@ -214,29 +224,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             }
                         }
                         break;
-                    case 4:
-                        if (Email != null)
-                        {
-                            Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
-                            MatchCollection matchCollection = regex.Matches(Email);
-                            if (matchCollection.Count>0)
-                            {
-                                var email = matchCollection[0]?.Value;
-                                if (string.IsNullOrWhiteSpace(email))
-                                {
-                                    await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                                        "Bạn vui lòng nhập email vào!", "OK");
-                                    Email = "";
-                                }
-                            }
-                            else
-                            {
-                                await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                                    "Bạn vui lòng nhập email vào!", "OK");
-                                Email = "";
-                            }
-                        }
-                        break;
                 }
                 CheckDataEnableSignUp();
             }
@@ -248,7 +235,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         private void CheckDataEnableSignUp()
         {
-            if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(PhoneNumber) &&
+            if (!string.IsNullOrWhiteSpace(PhoneNumber) &&
                 !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Password) &&
                 !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(UserName))
             {
@@ -269,7 +256,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             NavigationService.NavigateAsync("/LoginPage", para, true, true);
         }
 
-        private async void SignUpAccount()
+        private void SignUpAccount()
         {
             try
             {
@@ -284,7 +271,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                     var otp = result.Parameters.GetValue<string>("OtpSms");
                     if (otp=="1")
                     {
-                        var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, Email, Age, IsMale);
+                        var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, $"{UserName}@autohlt.com", Age, IsMale);
                         if (data != null && data.Code > 0)
                         {
                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
@@ -300,6 +287,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
                         Password = ConfirmPassword = null;
                     }
+
+                    IsEnableSignUp = false;
                 });
 
             }

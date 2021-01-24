@@ -110,25 +110,9 @@
                         </Entry.Behaviors>
                     </Entry>
                 </textInputLayout:SfTextInputLayout>
-                <textInputLayout:SfTextInputLayout
-                    Grid.Row="7"
-                    FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000001}">
-                    <Entry
-                        ClearButtonVisibility="WhileEditing"
-                        Keyboard="Email"
-                        Text="{Binding Email}">
-                        <Entry.Behaviors>
-                            <behaviors:EventToCommandBehavior
-                                Command="{Binding UnfocusedCommand}"
-                                CommandParameter="4"
-                                EventName="Unfocused" />
-                        </Entry.Behaviors>
-                    </Entry>
-                </textInputLayout:SfTextInputLayout>
 
                 <Button
-                    Grid.Row="8"
+                    Grid.Row="7"
                     Margin="20,5"
                     Padding="0"
                     BackgroundColor="{StaticResource Gray-White}"
@@ -140,7 +124,7 @@
                     IsEnabled="{Binding IsEnableSignUp}"
                     Text="{markupExtensions:Translate 1000002}" />
                 <Label
-                    Grid.Row="10"
+                    Grid.Row="8"
                     Margin="20,0"
                     Padding="0">
                     <Label.FormattedText>
@@ -157,7 +141,7 @@
                 </Label>
                 <controls:LoadingView
                     Grid.Row="0"
-                    Grid.RowSpan="11"
+                    Grid.RowSpan="10"
                     IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>
