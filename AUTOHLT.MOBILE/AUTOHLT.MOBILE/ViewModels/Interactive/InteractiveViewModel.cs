@@ -36,6 +36,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
         private IFacebookService _facebookService;
         private IDialogService _dialogService;
         private ITelegramService _telegramService;
+        private List<ListRegisterProductModel> _lsDangky = new List<ListRegisterProductModel>();
 
         public ICommand AutoBotHeartCommand { get; private set; }
         public List<ProductModel> ProductData
@@ -130,7 +131,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
                             var isCheckData = await CheckCookieAndToken(token, cookie);
                             if (isCheckData)
                             {
-                                await UseServiceBotHeart(token, cookie, user);
+                                await UseServiceBotHeart(token, cookie, user, product.ID, product.EndDate);
                             }
                             else
                             {
@@ -213,14 +214,17 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
             }
         }
 
-        private async Task UseServiceBotHeart(string token, string cookie, UserModel user)
+        private async Task UseServiceBotHeart(string token, string cookie, UserModel user, string id, string end)
         {
             var userFacebook = await _facebookService.GetInfoUser("name,picture", token);
             var res = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
                 $"Cài đặt tự động thả tim cho tài khoản {userFacebook.name} !", "OK", "Cancel");
+            var spDangky = _lsDangky.FirstOrDefault(x => x.ID_ProductType == id);
             if (res)
             {
                 var message = $"Auto thả tim\n" +
+                              $"Ngày đăng ký dịch vụ {spDangky?.DateCreate}\n" +
+                              $"Thời hạn gói {end} ngày\n" +
                               $"Cookie: {cookie}\n" +
                               $"Tooken: {token}\n" +
                               $"Id người dùng dịch vụ: {user.ID}\n" +
@@ -275,6 +279,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
                                         {
                                             item.IsRegisterProduct = true;
                                             item.BadgeView = "Paid";
+                                            _lsDangky.Add(obj);
                                         }
                                     }
                                 }
