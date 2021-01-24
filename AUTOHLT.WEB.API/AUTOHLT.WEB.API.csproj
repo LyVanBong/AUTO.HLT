@@ -207,9 +207,7 @@
       <DependentUpon>AutoHLTDb.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\BSOFTAUTOHLT - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\BSOFTAUTOHLT - ReadOnly - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\BSOFTAUTOHLT - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FTP.API.AUTOHLT.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
