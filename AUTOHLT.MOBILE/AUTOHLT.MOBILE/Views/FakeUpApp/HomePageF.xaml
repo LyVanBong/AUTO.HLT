@@ -22,7 +22,7 @@
                     Grid.Row="0"
                     Grid.RowSpan="7"
                     Aspect="AspectFit"
-                    Source="{markupExtensions:ImageResource logo.png}" />
+                    Source="{markupExtensions:ImageResource hinhnen.jpg}" />
                 <BoxView
                     Grid.Row="0"
                     Grid.RowSpan="2"

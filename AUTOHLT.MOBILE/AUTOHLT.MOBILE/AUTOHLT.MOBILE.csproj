@@ -17,6 +17,7 @@
     <None Remove="Resources\Fonts\FontAwesome5ProRegular400.otf" />
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <None Remove="Resources\Fonts\RobotoRegular.ttf" />
+    <None Remove="Resources\Images\hinhnen.jpg" />
     <None Remove="Resources\Images\icon_account.png" />
     <None Remove="Resources\Images\icon_add_friends.png" />
     <None Remove="Resources\Images\icon_agency.png" />
@@ -59,6 +60,7 @@
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProRegular400.otf" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <EmbeddedResource Include="Resources\Fonts\RobotoRegular.ttf" />
+    <EmbeddedResource Include="Resources\Images\hinhnen.jpg" />
     <EmbeddedResource Include="Resources\Images\icon_account.png" />
     <EmbeddedResource Include="Resources\Images\icon_add_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_agency.png" />
