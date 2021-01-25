@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.Views.TopUp.TopUpPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    BackgroundColor="{StaticResource HeaderHome}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            RowDefinitions="40,50,40,40,40,40,40"
+            RowSpacing="0">
+            <controls:NavigationView Grid.Row="0" Text="NẠP TIỀN" />
+            <Label
+                Grid.Row="1"
+                FontSize="25"
+                HorizontalOptions="CenterAndExpand"
+                Text="Thông tin chuyển khoản"
+                TextColor="Red" />
+            <Label
+                Grid.Row="2"
+                Margin="20,0,0,0"
+                FontSize="16"
+                HorizontalOptions="StartAndExpand"
+                Text="Chủ tài khoản :  NGUYỄN VĂN HÀ"
+                TextColor="Black" />
+            <Label
+                Grid.Row="3"
+                Margin="20,0,0,0"
+                FontSize="16"
+                HorizontalOptions="StartAndExpand"
+                Text="Tên ngân hàng :  Techcombank"
+                TextColor="Black" />
+            <Label
+                Grid.Row="4"
+                Margin="20,0,0,0"
+                FontSize="16"
+                HorizontalOptions="StartAndExpand"
+                Text="Số tài khoản :  19029335160026"
+                TextColor="Black" />
+            <Label
+                Grid.Row="5"
+                Margin="20,0,0,0"
+                FontSize="16"
+                HorizontalOptions="StartAndExpand"
+                Text="Nội dung :  Tài khoản _ autohlt"
+                TextColor="Black" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

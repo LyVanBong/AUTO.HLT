@@ -228,6 +228,9 @@
     <EmbeddedResource Update="Views\SuportCustumer\SuportCustomerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\TopUp\TopUpPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\UnLockFb\UnLockFbPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -253,6 +256,7 @@
   <ItemGroup>
     <Folder Include="ViewModels\BuffSub\" />
     <Folder Include="ViewModels\Agency\" />
+    <Folder Include="ViewModels\TopUp\" />
     <Folder Include="ViewModels\UnLockFb\" />
   </ItemGroup>
 

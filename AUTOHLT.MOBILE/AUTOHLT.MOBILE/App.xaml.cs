@@ -113,6 +113,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<Views.TopUp.TopUpPage, ViewModels.TopUp.TopUpViewModel>();
             containerRegistry.RegisterForNavigation<AgencyPage, AgencyViewModel>();
             containerRegistry.RegisterForNavigation<VipInteractionPage, VipInteractionViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage2, FContentPage2ViewModel>();

@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Views.Agency;
+using AUTOHLT.MOBILE.Views.TopUp;
 using AUTOHLT.MOBILE.Views.VipInteraction;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -236,6 +237,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private BadgeType _badgeType;
         private string _idProductAddFriends = "85e7192b-7a30-45ff-b327-bd9c25c8dfcb";
 
+
+        public ICommand TopUpMoneyCommand { get; private set; }
         public BadgeType BadgeType
         {
             get => _badgeType;
@@ -291,6 +294,26 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             LogoutCommand = new Command(LogoutAccount);
             BuffServiceCommand = new Command<string>(BuffService);
             NavigationCommand = new Command<Object>(NavigationPageService);
+            TopUpMoneyCommand = new Command(TopUpMoney);
+        }
+
+        private void TopUpMoney()
+        {
+            try
+            {
+                if (IsLoading) return;
+                IsLoading = true;
+
+                NavigationService.NavigateAsync(nameof(TopUpPage));
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         private async void NavigationPageService(Object obj)

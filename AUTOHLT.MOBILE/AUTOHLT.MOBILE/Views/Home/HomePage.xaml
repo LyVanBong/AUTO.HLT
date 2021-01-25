@@ -94,21 +94,42 @@
                             <Setter Property="Aspect" Value="AspectFit" />
                         </Style>
                     </Grid.Resources>
-                    <Label
+                    <badge:SfBadgeView
                         Grid.Row="0"
                         Grid.Column="0"
-                        FontSize="16"
-                        HorizontalOptions="FillAndExpand"
-                        TextColor="{StaticResource Gray-800}"
-                        VerticalOptions="CenterAndExpand">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span FontFamily="Awesome5ProSolid" Text="{x:Static icon:FontAwesome5ProSolid.MoneyCheckAlt}" />
-                                <Span Text=" " />
-                                <Span Text="{markupExtensions:Translate 1000018}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        Grid.ColumnSpan="2"
+                        Margin="0"
+                        Padding="0"
+                        BadgeText="Nạp tiền">
+                        <badge:SfBadgeView.BadgeSettings>
+                            <badge:BadgeSetting
+                                BadgeAnimation="Scale"
+                                BadgePosition="TopLeft"
+                                BadgeType="Success"
+                                CornerRadius="5"
+                                FontSize="10"
+                                TextPadding="2" />
+                        </badge:SfBadgeView.BadgeSettings>
+                        <badge:SfBadgeView.Content>
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="FillAndExpand"
+                                TextColor="{StaticResource Gray-800}"
+                                VerticalOptions="CenterAndExpand">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span FontFamily="Awesome5ProSolid" Text="{x:Static icon:FontAwesome5ProSolid.MoneyCheckAlt}" />
+                                        <Span Text=" " />
+                                        <Span Text="{markupExtensions:Translate 1000018}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </badge:SfBadgeView.Content>
+                        <badge:SfBadgeView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TopUpMoneyCommand}" />
+                        </badge:SfBadgeView.GestureRecognizers>
+                    </badge:SfBadgeView>
+
                     <Label
                         Grid.Row="0"
                         Grid.Column="1"
