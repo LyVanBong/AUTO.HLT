@@ -259,27 +259,24 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
                     {
                         if (item.GroupProduct == "10")
                         {
-                            if (item.ID == "9bee69fe-7841-44b9-81ea-31e71c0dcfae" || item.ID == "fc38b6ce-0f17-40fe-b0b4-8bf16a6d2eb1" || item.ID == "722dd9a4-18d5-41e5-9c5d-e8a4895bdb3a")
+                            item.Icon = "icon_Interactive.png";
+                            if (_regis != null && _regis.Any())
                             {
-                                item.Icon = "icon_Interactive.png";
-                                if (_regis != null && _regis.Any())
+                                var obj = _regis.FirstOrDefault(x => x.ID_ProductType == item.ID);
+                                if (obj != null)
                                 {
-                                    var obj = _regis.FirstOrDefault(x => x.ID_ProductType == item.ID);
-                                    if (obj != null)
+                                    var endDate = DateTime.Parse(obj.DateCreate);
+                                    var totalDay = (DateTime.Now - endDate).TotalDays;
+                                    var number = double.Parse(item.EndDate);
+                                    if (totalDay <= number)
                                     {
-                                        var endDate = DateTime.Parse(obj.DateCreate);
-                                        var totalDay = (DateTime.Now - endDate).TotalDays;
-                                        var number = double.Parse(item.EndDate);
-                                        if (totalDay <= number)
-                                        {
-                                            item.IsRegisterProduct = true;
-                                            item.BadgeView = "Paid";
-                                            _lsDangky.Add(obj);
-                                        }
+                                        item.IsRegisterProduct = true;
+                                        item.BadgeView = "Paid";
+                                        _lsDangky.Add(obj);
                                     }
                                 }
-                                product.Add(item);
                             }
+                            product.Add(item);
                         }
                     }
 

@@ -37,7 +37,7 @@
                                 Margin="3"
                                 Padding="0"
                                 ColumnDefinitions="*,80"
-                                RowDefinitions="30,30"
+                                RowDefinitions="Auto,30"
                                 RowSpacing="0">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference Lscollection}, Path=BindingContext.AutoBotHeartCommand}" CommandParameter="{Binding .}" />
@@ -47,6 +47,7 @@
                                     Grid.Column="0"
                                     Margin="0"
                                     Padding="0"
+                                    MaxLines="2"
                                     Text="{Binding ProductContent}"
                                     VerticalOptions="CenterAndExpand" />
                                 <Label
