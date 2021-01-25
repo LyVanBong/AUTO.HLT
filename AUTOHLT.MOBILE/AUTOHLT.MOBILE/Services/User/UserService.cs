@@ -1,5 +1,4 @@
 ﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
-using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,26 @@ namespace AUTOHLT.MOBILE.Services.User
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<string>> ThemGioiThieu(string userGioiThieu, string userDuocGioiThieu, int discount, string note)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("UserGioiThieu",userGioiThieu),
+                    new RequestParameter("UserDuocGioiThieu",userDuocGioiThieu),
+                    new RequestParameter("Discount",discount+""),
+                    new RequestParameter("Note",note),
+                };
+                var data = await _requestProvider.PostAsync<string>("user/ThemNguoiGioiThieu", para);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseModel<string>> CheckExistNumberPhone(string number)
         {
             try
@@ -26,7 +45,7 @@ namespace AUTOHLT.MOBILE.Services.User
                 var data = await _requestProvider.GetAsync<string>("user/CheckNumberPhone", para);
                 return data;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
@@ -61,7 +80,7 @@ namespace AUTOHLT.MOBILE.Services.User
                 var data = await _requestProvider.PutAsync<string>("user/SetMoney", para);
                 return data;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }

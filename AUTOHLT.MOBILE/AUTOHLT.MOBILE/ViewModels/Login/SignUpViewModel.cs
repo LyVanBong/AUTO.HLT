@@ -8,6 +8,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp;
+using AUTOHLT.MOBILE.Services.Telegram;
 using Prism.Services.Dialogs;
 using Xamarin.Forms;
 
@@ -32,6 +33,15 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         private bool _hasErrorConfirmPass;
         private IPageDialogService _pageDialogService;
         private IDialogService _dialogService;
+        private ITelegramService _telegramService;
+        private string _nguoiGioiThieu;
+
+        public string NguoiGioiThieu
+        {
+            get => _nguoiGioiThieu;
+            set => SetProperty(ref _nguoiGioiThieu, value);
+        }
+
         public bool HasErrorConfirmPass
         {
             get => _hasErrorConfirmPass;
@@ -113,8 +123,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             set => SetProperty(ref _isLoading, value);
         }
 
-        public SignUpViewModel(INavigationService navigationService, ILoginService loginService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
+        public SignUpViewModel(INavigationService navigationService, ILoginService loginService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, ITelegramService telegramService) : base(navigationService)
         {
+            _telegramService = telegramService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _userService = userService;
@@ -187,7 +198,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             {
                                 var regex = new Regex(@"(0[1-9])+([0-9]{8})\b", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
                                 var matchCollection = regex.Matches(PhoneNumber);
-                                if (matchCollection.Count>0)
+                                if (matchCollection.Count > 0)
                                 {
                                     var phone = matchCollection[0]?.Value;
                                     if (string.IsNullOrWhiteSpace(phone))
@@ -221,6 +232,25 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                                 await _pageDialogService.DisplayAlertAsync(Resource._1000021,
                                     "Số điện thoại không hợp lệ", "OK");
                                 PhoneNumber = "";
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (!string.IsNullOrWhiteSpace(NguoiGioiThieu))
+                        {
+                            var nguoigt = Regex.Match(NguoiGioiThieu, @"^[a-zA-Z0-9]+(?:[_.]?[a-zA-Z0-9])*$")?.Value;
+                            if (!string.IsNullOrWhiteSpace(nguoigt))
+                            {
+                                var data = await _userService.CheckExistAccount(userName: nguoigt);
+                                if (data != null && data.Code > 0)
+                                {
+                                    NguoiGioiThieu = "";
+
+                                }
+                            }
+                            else
+                            {
+                                NguoiGioiThieu = "";
                             }
                         }
                         break;
@@ -266,30 +296,35 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                 {
                     { "NumberPhone", PhoneNumber+"" },
                 };
-                _dialogService.ShowDialog(nameof(OtpDialog),parameters, async (result) =>
-                {
-                    var otp = result.Parameters.GetValue<string>("OtpSms");
-                    if (otp=="1")
-                    {
-                        var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, $"{UserName}@autohlt.com", Age, IsMale);
-                        if (data != null && data.Code > 0)
-                        {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                            Password = ConfirmPassword = Age = Email = PhoneNumber = "";
-                        }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
-                            Password = ConfirmPassword = null;
-                        }
-                    }else if (otp=="0")
-                    {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
-                        Password = ConfirmPassword = null;
-                    }
+                _dialogService.ShowDialog(nameof(OtpDialog), parameters, async (result) =>
+                 {
+                     var otp = result.Parameters.GetValue<string>("OtpSms");
+                     if (otp == "1")
+                     {
+                         var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, $"{UserName}@autohlt.com", Age, IsMale);
+                         if (data != null && data.Code > 0)
+                         {
+                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                             var mess = $"Tài khoản mới \"{UserName}\" đăng ký thành công với người giới thiệu \"{NguoiGioiThieu}\" lúc {DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy")}";
+                             await _telegramService.SendMessageToTelegram("-453517974", mess);
+                             if (NguoiGioiThieu != null)
+                                 await _userService.ThemGioiThieu(NguoiGioiThieu, UserName, 0, "khi dang ky tai khoan moi");
+                             Password = ConfirmPassword = Age = Email = PhoneNumber = "";
+                         }
+                         else
+                         {
+                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                             Password = ConfirmPassword = null;
+                         }
+                     }
+                     else if (otp == "0")
+                     {
+                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                         Password = ConfirmPassword = null;
+                     }
 
-                    IsEnableSignUp = false;
-                });
+                     IsEnableSignUp = false;
+                 });
 
             }
             catch (Exception e)

@@ -608,5 +608,35 @@ namespace AUTOHLT.WEB.API.Database
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllIDTypeFacebook_Result>("GetAllIDTypeFacebook");
         }
+    
+        public virtual int ThemNguoiGioiThieu(string userGioiThieu, string userDuocGioiThieu, Nullable<int> discount, string note)
+        {
+            var userGioiThieuParameter = userGioiThieu != null ?
+                new ObjectParameter("UserGioiThieu", userGioiThieu) :
+                new ObjectParameter("UserGioiThieu", typeof(string));
+    
+            var userDuocGioiThieuParameter = userDuocGioiThieu != null ?
+                new ObjectParameter("UserDuocGioiThieu", userDuocGioiThieu) :
+                new ObjectParameter("UserDuocGioiThieu", typeof(string));
+    
+            var discountParameter = discount.HasValue ?
+                new ObjectParameter("Discount", discount) :
+                new ObjectParameter("Discount", typeof(int));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ThemNguoiGioiThieu", userGioiThieuParameter, userDuocGioiThieuParameter, discountParameter, noteParameter);
+        }
+    
+        public virtual ObjectResult<GetAllNguoiGioiThieu_Result> GetAllNguoiGioiThieu(string userGioiThieu)
+        {
+            var userGioiThieuParameter = userGioiThieu != null ?
+                new ObjectParameter("UserGioiThieu", userGioiThieu) :
+                new ObjectParameter("UserGioiThieu", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllNguoiGioiThieu_Result>("GetAllNguoiGioiThieu", userGioiThieuParameter);
+        }
     }
 }

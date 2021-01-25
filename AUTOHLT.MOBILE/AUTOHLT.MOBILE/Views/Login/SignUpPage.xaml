@@ -14,7 +14,7 @@
             Margin="0"
             Padding="0"
             VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="10,100,70,70,70,70,70,70,60,20,50" RowSpacing="0">
+            <Grid RowDefinitions="10,100,70,70,70,70,70,70,70,60,20,50" RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
                         <Setter Property="ContainerType" Value="Outlined" />
@@ -111,8 +111,25 @@
                     </Entry>
                 </textInputLayout:SfTextInputLayout>
 
-                <Button
+                <textInputLayout:SfTextInputLayout
                     Grid.Row="7"
+                    FocusedColor="{StaticResource BtLogin}"
+                    Hint="Tài khoản giới thiệu (nếu có)">
+                    <Entry
+                        ClearButtonVisibility="WhileEditing"
+                        Keyboard="Email"
+                        Text="{Binding NguoiGioiThieu}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+                                Command="{Binding UnfocusedCommand}"
+                                CommandParameter="4"
+                                EventName="Unfocused" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </textInputLayout:SfTextInputLayout>
+
+                <Button
+                    Grid.Row="8"
                     Margin="20,5"
                     Padding="0"
                     BackgroundColor="{StaticResource Gray-White}"
@@ -124,7 +141,7 @@
                     IsEnabled="{Binding IsEnableSignUp}"
                     Text="{markupExtensions:Translate 1000002}" />
                 <Label
-                    Grid.Row="8"
+                    Grid.Row="9"
                     Margin="20,0"
                     Padding="0">
                     <Label.FormattedText>
@@ -141,7 +158,7 @@
                 </Label>
                 <controls:LoadingView
                     Grid.Row="0"
-                    Grid.RowSpan="10"
+                    Grid.RowSpan="11"
                     IsVisible="{Binding IsLoading}" />
             </Grid>
         </ScrollView>

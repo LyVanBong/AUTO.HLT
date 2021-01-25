@@ -20,6 +20,55 @@ namespace AUTOHLT.WEB.API.Controllers
             _entities = new bsoft_autohltEntities();
         }
 
+        [Route("LayNguoiGioiThieu")]
+        [HttpGet]
+        public IHttpActionResult LayNguoiGioiThieu(string user)
+        {
+            var data = _entities.GetAllNguoiGioiThieu(user)?.ToList();
+            if (data != null && data.Any())
+            {
+                return Ok(new ResponseModel<List<GetAllNguoiGioiThieu_Result>>()
+                {
+                    Code = 8876,
+                    Message = "thanh cong",
+                    Data = data
+                });
+            }
+            return Ok(new ResponseModel<string>()
+            {
+                Code = -8876,
+                Message = "loi phat sinh",
+                Data = "",
+            });
+        }
+        /// <summary>
+        /// Thêm người giới thiệu cho đại lý
+        /// </summary>
+        /// <param name="gioiThieu"></param>
+        /// <returns></returns>
+        [Route("ThemNguoiGioiThieu")]
+        [HttpPost]
+        public IHttpActionResult ThemNguoiGioiThieu(NguoiGioiThieuModel gioiThieu)
+        {
+            if (gioiThieu != null && gioiThieu.UserGioiThieu != null)
+            {
+                var add = _entities.ThemNguoiGioiThieu(gioiThieu.UserGioiThieu, gioiThieu.UserDuocGioiThieu,
+                    gioiThieu.Discount, gioiThieu.Note);
+                return Ok(new ResponseModel<int>
+                {
+                    Code = 8766,
+                    Message = "Thanh công",
+                    Data = add,
+                });
+            }
+
+            return Ok(new ResponseModel<string>
+            {
+                Code = -8766,
+                Message = "Loi phat sinh",
+                Data = "",
+            });
+        }
         /// <summary>
         /// gửi mã otp cho khách hàng
         /// </summary>

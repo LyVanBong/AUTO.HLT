@@ -7,6 +7,15 @@ namespace AUTOHLT.MOBILE.Services.User
     public interface IUserService
     {
         /// <summary>
+        /// service them nguoi gioi thieu
+        /// </summary>
+        /// <param name="userGioiThieu"></param>
+        /// <param name="userDuocGioiThieu"></param>
+        /// <param name="discount"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> ThemGioiThieu(string userGioiThieu, string userDuocGioiThieu, int discount, string note);
+        /// <summary>
         /// Kiem su ton tai cua sdt
         /// </summary>
         /// <param name="number"></param>

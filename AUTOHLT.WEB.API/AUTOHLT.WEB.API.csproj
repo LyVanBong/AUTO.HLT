@@ -147,6 +147,9 @@
     <Compile Include="Database\GetAllIDTypeFacebook_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\GetAllNguoiGioiThieu_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\GetAllProductType_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
@@ -187,6 +190,7 @@
     <Compile Include="Models\AddTransferModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MoneyModel.cs" />
+    <Compile Include="Models\NguoiGioiThieuModel.cs" />
     <Compile Include="Models\ProductTypeModel.cs" />
     <Compile Include="Models\RegisterProductModel.cs" />
     <Compile Include="Models\RegistrationAccountModel.cs" />

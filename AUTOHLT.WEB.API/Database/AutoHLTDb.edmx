@@ -61,6 +61,9 @@
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAllHistoryUserSevice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllIDTypeFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllNguoiGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserGioiThieu" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetAllProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTransferMoney" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -131,6 +134,12 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ThemNguoiGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserGioiThieu" Type="varchar" Mode="In" />
+          <Parameter Name="UserDuocGioiThieu" Type="varchar" Mode="In" />
+          <Parameter Name="Discount" Type="int" Mode="In" />
+          <Parameter Name="Note" Type="ntext" Mode="In" />
+        </Function>
         <Function Name="UpdateAppVersion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VersionApp" Type="varchar" Mode="In" />
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -350,6 +359,15 @@
           <Parameter Name="Uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllIDTypeFacebook" ReturnType="Collection(bsoft_autohltModel.GetAllIDTypeFacebook_Result)" />
+          <FunctionImport Name="ThemNguoiGioiThieu">
+            <Parameter Name="UserGioiThieu" Mode="In" Type="String" />
+            <Parameter Name="UserDuocGioiThieu" Mode="In" Type="String" />
+            <Parameter Name="Discount" Mode="In" Type="Int32" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllNguoiGioiThieu" ReturnType="Collection(bsoft_autohltModel.GetAllNguoiGioiThieu_Result)">
+            <Parameter Name="UserGioiThieu" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -464,6 +482,14 @@
           <Property Type="Guid" Name="ID" Nullable="false" />
           <Property Type="String" Name="UID" Nullable="false" />
           <Property Type="Int32" Name="UIDType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllNguoiGioiThieu_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserGioiThieu" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UserDuocGioiThieu" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="DisCount" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -662,6 +688,19 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="UIDType" ColumnName="UIDType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ThemNguoiGioiThieu" FunctionName="bsoft_autohltModel.Store.ThemNguoiGioiThieu" />
+          <FunctionImportMapping FunctionImportName="GetAllNguoiGioiThieu" FunctionName="bsoft_autohltModel.Store.GetAllNguoiGioiThieu">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllNguoiGioiThieu_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserGioiThieu" ColumnName="UserGioiThieu" />
+                <ScalarProperty Name="UserDuocGioiThieu" ColumnName="UserDuocGioiThieu" />
+                <ScalarProperty Name="DisCount" ColumnName="DisCount" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
