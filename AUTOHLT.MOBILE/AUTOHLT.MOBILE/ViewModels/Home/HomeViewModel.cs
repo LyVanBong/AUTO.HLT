@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Views.Agency;
 using AUTOHLT.MOBILE.Views.VipInteraction;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -79,19 +80,19 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     },
                     new ServiceModel
                     {
+                        Icon = "icon_add_friends.png",
+                        TitleService = Resource._1000078,
+                        TypeService = 4,
+                        UserRole = "2",
+                    },
+                    new ServiceModel
+                    {
                         Icon = "icon_auto_boot_hear.png",
                         TitleService = Resource._1000105,
                         TypeService = 3,
                         BadgeView = "Hot",
                         UserRole = "2",
                         BadgeType = BadgeType.Error
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_add_friends.png",
-                        TitleService = Resource._1000078,
-                        TypeService = 4,
-                        UserRole = "2",
                     },
                     new ServiceModel
                     {
@@ -145,6 +146,15 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         TitleService = Resource._1000084,
                         TypeService = 0,
                         BadgeView = "Support",
+                        UserRole = "2",
+                    },
+                    new ServiceModel
+                    {
+                        Icon = "icon_agency.png",
+                        TitleService = "Đăng ký đại lý",
+                        TypeService = 21,
+                        BadgeView = "Register",
+                        BadgeType = BadgeType.Info,
                         UserRole = "2",
                     },
                     new ServiceModel
@@ -216,6 +226,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {18,"AccountInformationPage" },
             {19,nameof(PokesPage) },
             {20,nameof(VipInteractionPage) },
+            {21,nameof(AgencyPage) },
         };
         private string[] _paraDialogSheet = new string[]
             {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè"};

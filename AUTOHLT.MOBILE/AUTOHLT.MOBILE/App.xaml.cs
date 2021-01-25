@@ -14,6 +14,7 @@ using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.ViewModels.AccountInformation;
 using AUTOHLT.MOBILE.ViewModels.AddFullFriend;
+using AUTOHLT.MOBILE.ViewModels.Agency;
 using AUTOHLT.MOBILE.ViewModels.BuffEyesView;
 using AUTOHLT.MOBILE.ViewModels.BuffLikePage;
 using AUTOHLT.MOBILE.ViewModels.BuffLikes;
@@ -32,6 +33,7 @@ using AUTOHLT.MOBILE.ViewModels.UnLockFb;
 using AUTOHLT.MOBILE.ViewModels.VipInteraction;
 using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.AddFullFriend;
+using AUTOHLT.MOBILE.Views.Agency;
 using AUTOHLT.MOBILE.Views.BuffEyesView;
 using AUTOHLT.MOBILE.Views.BuffLikePage;
 using AUTOHLT.MOBILE.Views.BuffLikes;
@@ -111,6 +113,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<AgencyPage, AgencyViewModel>();
             containerRegistry.RegisterForNavigation<VipInteractionPage, VipInteractionViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage2, FContentPage2ViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();

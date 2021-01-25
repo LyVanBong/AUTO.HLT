@@ -19,6 +19,7 @@
     <None Remove="Resources\Fonts\RobotoRegular.ttf" />
     <None Remove="Resources\Images\icon_account.png" />
     <None Remove="Resources\Images\icon_add_friends.png" />
+    <None Remove="Resources\Images\icon_agency.png" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_comments.png" />
@@ -60,6 +61,7 @@
     <EmbeddedResource Include="Resources\Fonts\RobotoRegular.ttf" />
     <EmbeddedResource Include="Resources\Images\icon_account.png" />
     <EmbeddedResource Include="Resources\Images\icon_add_friends.png" />
+    <EmbeddedResource Include="Resources\Images\icon_agency.png" />
     <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />
@@ -152,6 +154,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AddFullFriend\AddFullFriendPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Agency\AgencyPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\BuffEyesView\BuffEyesViewPage.xaml">
@@ -247,6 +252,7 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\BuffSub\" />
+    <Folder Include="ViewModels\Agency\" />
     <Folder Include="ViewModels\UnLockFb\" />
   </ItemGroup>
 

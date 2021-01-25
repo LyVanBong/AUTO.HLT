@@ -157,28 +157,35 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (data.Code > 0 && data.Data != null)
                 {
-                    if (IsCheckSavePassword)
+                    if (data.Data.IsActive)
                     {
-                        Preferences.Set(nameof(IsCheckSavePassword), true);
-                        var user = data.Data;
-                        user.Price = user.Price.Replace(".0000", "");
-                        await _databaseService.UpdateAccountUser(user);
-                    }
-                    else
-                    {
-                        Preferences.Set(nameof(IsCheckSavePassword), false);
-                    }
+                        if (IsCheckSavePassword)
+                        {
+                            Preferences.Set(nameof(IsCheckSavePassword), true);
+                            var user = data.Data;
+                            user.Price = user.Price.Replace(".0000", "");
+                            await _databaseService.UpdateAccountUser(user);
+                        }
+                        else
+                        {
+                            Preferences.Set(nameof(IsCheckSavePassword), false);
+                        }
 
-                    if (UserName == "khachhang")
-                    {
-                        await NavigationService.NavigateAsync(nameof(HomePageF));
+                        if (UserName == "khachhang")
+                        {
+                            await NavigationService.NavigateAsync(nameof(HomePageF));
+                        }
+                        else
+                        {
+                            Preferences.Set(AppConstants.IdUser, data?.Data?.ID);
+                            var para = new NavigationParameters();
+                            para.Add(AppConstants.LoginApp, "LoginApp");
+                            await NavigationService.NavigateAsync(nameof(HomePage), para, true, true);
+                        }
                     }
                     else
                     {
-                        Preferences.Set(AppConstants.IdUser, data?.Data?.ID);
-                        var para = new NavigationParameters();
-                        para.Add(AppConstants.LoginApp, "LoginApp");
-                        await NavigationService.NavigateAsync(nameof(HomePage), para, true, true);
+                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, "Tài khoản đã bị khóa vui long liên hệ với admin qua số 0824726888 để được hỗ trợ !", "OK");
                     }
                 }
                 else
