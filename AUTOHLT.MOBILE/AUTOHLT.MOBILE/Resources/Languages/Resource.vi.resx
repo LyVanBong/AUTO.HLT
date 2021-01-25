@@ -549,4 +549,8 @@
     <value>Tương tác Vip</value>
     <comment>Tương tác Vip</comment>
   </data>
+  <data name="1000108" xml:space="preserve">
+    <value>Bạn mua dịch vụ {0} với giá {2} VND</value>
+    <comment>Bạn mua dịch vụ {0} với giá {2} VND</comment>
+  </data>
 </root>

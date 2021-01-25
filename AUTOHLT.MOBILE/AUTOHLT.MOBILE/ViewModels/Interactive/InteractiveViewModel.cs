@@ -158,11 +158,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
                                 var price = long.Parse(product.Price);
                                 if (money >= price)
                                 {
-                                    var messager = string.Format(Resource._1000057,
-                                        string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Number)),
-                                        "Like",
-                                        $"{Resource._1000089} {product.EndDate} {Resource._1000088}",
-                                        string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Price)));
+                                    var messager = $"Bạn mua dịch vụ auto thả tim trong {product.EndDate} ngày với giá {string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(product.Price))} VND";
+
                                     var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, messager,
                                         "OK",
                                         "Cancel");

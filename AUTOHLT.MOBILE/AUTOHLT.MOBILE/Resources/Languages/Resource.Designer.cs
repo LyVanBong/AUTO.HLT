@@ -1031,5 +1031,14 @@ namespace AUTOHLT.MOBILE.Resources.Languages {
                 return ResourceManager.GetString("1000107", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You buy service {0} for {1} VND.
+        /// </summary>
+        internal static string _1000108 {
+            get {
+                return ResourceManager.GetString("1000108", resourceCulture);
+            }
+        }
     }
 }
