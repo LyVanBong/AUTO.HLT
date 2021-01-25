@@ -147,8 +147,8 @@ namespace AUTOHLT.MOBILE
         protected override void OnStart()
         {
             base.OnStart();
-            AppCenter.Start("android=35b692dd-cd98-46b3-8d02-539662fc9d1a;" +
-                            "ios=96a350f3-9856-4888-aad8-db6bcc10590f;",
+            AppCenter.Start("android=56d7dd9c-0c31-4519-b53c-2dd43107075b;" +
+                            "ios=0fc2b766-98ac-48ee-95dc-b310b43e1331;",
                 typeof(Analytics), typeof(Crashes));
             AppCenter.LogLevel = LogLevel.Verbose;
         }
