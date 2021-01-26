@@ -2,10 +2,10 @@
 <Frame
     x:Class="AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp.OtpDialog"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:xaml="http://prismlibrary.com"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:xaml="http://prismlibrary.com"
     Padding="0"
     xaml:DialogLayout.CloseOnBackgroundTapped="False"
     xaml:DialogLayout.RelativeHeightRequest=".5"
@@ -19,22 +19,13 @@
         Padding="0"
         RowDefinitions="40,Auto,Auto,60,65,*">
         <Grid.Resources>
-            <Style
-                TargetType="textInputLayout:SfTextInputLayout">
-                <Setter
-                    Property="ContainerType"
-                    Value="Outlined" />
-                <Setter
-                    Property="Margin"
-                    Value="10,5" />
-                <Setter
-                    Property="OutlineCornerRadius"
-                    Value="5" />
+            <Style TargetType="textInputLayout:SfTextInputLayout">
+                <Setter Property="ContainerType" Value="Outlined" />
+                <Setter Property="Margin" Value="10,5" />
+                <Setter Property="OutlineCornerRadius" Value="5" />
             </Style>
         </Grid.Resources>
-        <BoxView
-            Grid.Row="0"
-            BackgroundColor="{StaticResource HeaderHome}" />
+        <BoxView Grid.Row="0" BackgroundColor="{StaticResource HeaderHome}" />
         <Label
             Grid.Row="0"
             BackgroundColor="{StaticResource HeaderHome}"
@@ -89,7 +80,9 @@
             Text="Xác thực" />
         <progressBar:SfCircularProgressBar
             Grid.Row="5"
+            HeightRequest="60"
             Maximum="120"
-            Progress="{Binding ProgressBar}" />
+            Progress="{Binding ProgressBar}"
+            WidthRequest="60" />
     </Grid>
 </Frame>

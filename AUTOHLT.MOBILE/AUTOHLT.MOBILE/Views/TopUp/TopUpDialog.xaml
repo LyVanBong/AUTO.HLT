@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Frame
+    x:Class="AUTOHLT.MOBILE.Views.TopUp.TopUpDialog"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:xaml="http://prismlibrary.com"
+    Padding="0"
+    xaml:DialogLayout.CloseOnBackgroundTapped="False"
+    xaml:DialogLayout.RelativeHeightRequest=".7"
+    xaml:DialogLayout.RelativeWidthRequest=".9"
+    BackgroundColor="{StaticResource Gray-White}"
+    BorderColor="{StaticResource Gray-600}"
+    CornerRadius="20"
+    HasShadow="True">
+    <Grid
+        BackgroundColor="White"
+        ColumnDefinitions="*,60"
+        RowDefinitions="40,50,40,40,40,40,*">
+        <BoxView
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0"
+            BackgroundColor="{StaticResource HeaderHome}" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            BackgroundColor="{StaticResource HeaderHome}"
+            HorizontalOptions="CenterAndExpand"
+            Text="Nạp Tiền"
+            TextColor="{StaticResource Gray-White}"
+            VerticalOptions="CenterAndExpand" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            BackgroundColor="{StaticResource HeaderHome}"
+            FontFamily="Awesome5ProSolid"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{x:Static icon:FontAwesome5ProSolid.Times}"
+            TextColor="{StaticResource Gray-White}"
+            VerticalOptions="CenterAndExpand">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="Thông tin chuyển khoản"
+            TextColor="Red" />
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,0,0,0"
+            FontSize="16"
+            HorizontalOptions="StartAndExpand"
+            Text="Chủ tài khoản :  NGUYỄN VĂN HÀ"
+            TextColor="Black" />
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,0,0,0"
+            FontSize="16"
+            HorizontalOptions="StartAndExpand"
+            Text="Tên ngân hàng :  Techcombank"
+            TextColor="Black" />
+        <Label
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,0,0,0"
+            FontSize="16"
+            HorizontalOptions="StartAndExpand"
+            Text="Số tài khoản :  19029335160028"
+            TextColor="Black" />
+        <Label
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,0,0,0"
+            FontSize="16"
+            HorizontalOptions="StartAndExpand"
+            Text="Nội dung :  Tên tài khoản _ autohlt"
+            TextColor="Black" />
+        <Label
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,0,20,0">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span
+                        FontSize="13"
+                        Text="Chú ý : Sau khi bạn chuyển khoản.hệ thống tự động cộng tiền và tài khoản của bạn trong vòng 15p"
+                        TextColor="#eb596e" />
+                    <Span Text="&#10;" />
+                    <Span
+                        FontSize="13"
+                        Text="Phát sinh lỗi vui lòng gọi hotline : "
+                        TextColor="#eb596e" />
+                    <Span
+                        FontSize="14"
+                        Text="0824726888"
+                        TextColor="#23689b"
+                        TextDecorations="Underline">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </Grid>
+</Frame>

@@ -304,7 +304,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 if (IsLoading) return;
                 IsLoading = true;
 
-                NavigationService.NavigateAsync(nameof(TopUpPage));
+                _dialogService.ShowDialog(nameof(TopUpDialog));
             }
             catch (Exception e)
             {
@@ -336,7 +336,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     if (para != null)
                         key = int.Parse(para);
                 }
-
+                
                 if (key == 4)
                 {
                     await AddFriends();

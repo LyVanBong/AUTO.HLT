@@ -28,6 +28,7 @@ using AUTOHLT.MOBILE.ViewModels.Pokes;
 using AUTOHLT.MOBILE.ViewModels.RechargeCustomers;
 using AUTOHLT.MOBILE.ViewModels.SecurityFb;
 using AUTOHLT.MOBILE.ViewModels.SuportCustumer;
+using AUTOHLT.MOBILE.ViewModels.TopUp;
 using AUTOHLT.MOBILE.ViewModels.Transfers;
 using AUTOHLT.MOBILE.ViewModels.UnLockFb;
 using AUTOHLT.MOBILE.ViewModels.VipInteraction;
@@ -48,6 +49,7 @@ using AUTOHLT.MOBILE.Views.Pokes;
 using AUTOHLT.MOBILE.Views.RechargeCustomers;
 using AUTOHLT.MOBILE.Views.SecurityFb;
 using AUTOHLT.MOBILE.Views.SuportCustumer;
+using AUTOHLT.MOBILE.Views.TopUp;
 using AUTOHLT.MOBILE.Views.Transfers;
 using AUTOHLT.MOBILE.Views.UnLockFb;
 using AUTOHLT.MOBILE.Views.VipInteraction;
@@ -84,6 +86,7 @@ namespace AUTOHLT.MOBILE
         {
             #region Registering the Dialog service
 
+            containerRegistry.RegisterDialog<TopUpDialog, TopUpDialogViewModel>();
             containerRegistry.RegisterDialog<OtpDialog, OtpViewModel>();
             containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookeViewModel>();
             containerRegistry.RegisterDialog<BuffDialog, BuffDialogViewModel>();
