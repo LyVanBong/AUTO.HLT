@@ -1,10 +1,13 @@
 ﻿using AUTOHLT.WEB.API.Database;
 using AUTOHLT.WEB.API.Models;
+using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Http;
+using Newtonsoft.Json;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
@@ -14,6 +17,8 @@ namespace AUTOHLT.WEB.API.Controllers
     public class UserController : ApiController
     {
         private bsoft_autohltEntities _entities;
+        private string _accountSid = "AC4d6de5131f81e2513f1cbfd87763fa4e";
+        private string _authToken = "ff4bc7950141c8a938e6f856805a6762";
 
         public UserController()
         {
@@ -69,6 +74,27 @@ namespace AUTOHLT.WEB.API.Controllers
                 Data = "",
             });
         }
+
+        /// <summary>
+        /// kiểm tra số dư api gửi sms
+        /// </summary>
+        /// <returns></returns>
+        [Route("CheckBalanceTwilio")]
+        [HttpGet]
+        public IHttpActionResult CheckBalanceTwilioClient()
+        {
+            var client = new RestClient("https://api.twilio.com/2010-04-01/Accounts/AC4d6de5131f81e2513f1cbfd87763fa4e/Balance.json");
+            client.Authenticator = new HttpBasicAuthenticator(_accountSid, _authToken);
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            return Ok(new ResponseModel<BalanceTwilioModel>
+            {
+                Code = 56590,
+                Message = "Lấy số dư của api gửi sms",
+                Data = string.IsNullOrWhiteSpace(response.Content) ? null : JsonConvert.DeserializeObject<BalanceTwilioModel>(response.Content)
+            });
+        }
         /// <summary>
         /// gửi mã otp cho khách hàng
         /// </summary>
@@ -80,14 +106,12 @@ namespace AUTOHLT.WEB.API.Controllers
         {
             try
             {
-                var accountSid = "AC4d6de5131f81e2513f1cbfd87763fa4e";
-                var authToken = "ff4bc7950141c8a938e6f856805a6762";
-                TwilioClient.Init(accountSid, authToken);
+                TwilioClient.Init(_accountSid, _authToken);
                 var phone = $"+84{numberPhone.Remove(0, 1)}";
                 var random = new Random();
                 var pin = random.Next(100000, 999999);
                 var message = MessageResource.Create(
-                    body: $"{pin} la ma xac thuc AUTOHLT cua ban",
+                    body: $"AUTOHLT: Nhap ma OTP {pin} de xac thuc tai khoan AUTOHLT cua ban luc {DateTime.Now.ToString("hh:mm:ss dd-MM-YYYY")}.",
                     from: new Twilio.Types.PhoneNumber("+15108248672"),
                     to: new Twilio.Types.PhoneNumber(phone)
                 );
