@@ -3,6 +3,7 @@
 @using Newtonsoft.Json
 @using RestSharp
 @using System.Net
+@using System.Globalization
 
 <nav class="navbar navbar-light bg-light justify-content-between">
     <a class="navbar-brand">Danh sách người dùng</a>
@@ -14,6 +15,8 @@
 
 <div class="alert alert-primary text-lg-center" role="alert">
     Tổng số tài khoản : @_totalUser
+    <br/>
+    Tổng số dư trong hệ thông : @_sumPrice VND
 </div>
 
 <table class="table table-hover">
@@ -50,7 +53,7 @@
     private string _uriUser = "http://api.autohlt.com/api/v1/user/getalluser";
     private List<InfoUser> _dataSourceInfoUsers = new List<InfoUser>();
     private int _totalUser;
-
+    private string _sumPrice;
     public List<InfoUser> DataUser { get; set; }
     protected override async Task OnInitializedAsync()
     {
@@ -86,13 +89,16 @@
         {
             _dataSourceInfoUsers = new List<InfoUser>(data.Data.OrderByDescending(x => x.DateCreate));
             var i = 1;
+            var sum = 0.0;
             foreach (var user in _dataSourceInfoUsers)
             {
                 user.Stt = i;
                 i++;
+                sum += user.Price;
             }
             DataUser = new List<InfoUser>(_dataSourceInfoUsers);
-            _totalUser = i-1;
+            _totalUser = i - 1;
+            _sumPrice = string.Format(new CultureInfo("en-US"), "{0:0,0}", sum);
         }
     }
 
