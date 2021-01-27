@@ -111,7 +111,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 var random = new Random();
                 var pin = random.Next(100000, 999999);
                 var message = MessageResource.Create(
-                    body: $"AUTOHLT: Nhap ma OTP {pin} de xac thuc tai khoan AUTOHLT cua ban luc {DateTime.Now.ToString("hh:mm:ss dd-MM-YYYY")}.",
+                    body: $"AUTOHLT: Nhap ma OTP {pin} de xac thuc tai khoan AUTOHLT cua ban luc {DateTime.Now.ToString("hh:mm:ss dd-MM-yyyy")}.",
                     from: new Twilio.Types.PhoneNumber("+15108248672"),
                     to: new Twilio.Types.PhoneNumber(phone)
                 );
