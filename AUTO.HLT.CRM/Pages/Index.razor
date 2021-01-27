@@ -1,9 +1,13 @@
 ﻿@page "/"
 @using RestSharp
+@using AUTO.HLT.CRM.Models.BalanceTwilio
+@using Newtonsoft.Json
 
 <div class="card">
     <div class="card-body">
-        This is some text within a card body.
+        <span class="text-info">Bây giờ là : @DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")</span>
+        <hr/>
+        <span class="text-primary">Bây giờ là : @_balance?.Data?.balance @_balance?.Data?.currency</span>
     </div>
 </div>
 
@@ -11,6 +15,7 @@
 @code
 {
     private string _uriUser = "http://api.autohlt.com/api/v1/user/CheckBalanceTwilio";
+    private BalanceTwilioModel _balance = new BalanceTwilioModel();
     protected override async Task OnInitializedAsync()
     {
         await InitData();
@@ -24,4 +29,9 @@
 
         var response = await client.ExecuteAsync(request);
         var html = response?.Content;
-    } }
+        if (!string.IsNullOrWhiteSpace(html))
+        {
+            _balance = JsonConvert.DeserializeObject<BalanceTwilioModel>(html);
+        }
+    }
+}

@@ -19,6 +19,7 @@
     <Folder Include="App_Data\Images\" />
     <Folder Include="Areas\" />
     <Folder Include="Data\" />
+    <Folder Include="Models\BalanceTwilio\" />
     <Folder Include="Models\User\" />
   </ItemGroup>
 
