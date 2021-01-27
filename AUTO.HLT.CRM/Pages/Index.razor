@@ -1,3 +1,27 @@
 ﻿@page "/"
+@using RestSharp
 
-<div class="alert-info">AUTOHLT CRM</div>
+<div class="card">
+    <div class="card-body">
+        This is some text within a card body.
+    </div>
+</div>
+
+
+@code
+{
+    private string _uriUser = "http://api.autohlt.com/api/v1/user/CheckBalanceTwilio";
+    protected override async Task OnInitializedAsync()
+    {
+        await InitData();
+    }
+
+    private async Task InitData()
+    {
+        var client = new RestClient();
+        client.BaseUrl = new Uri(_uriUser);
+        var request = new RestRequest(Method.GET);
+
+        var response = await client.ExecuteAsync(request);
+        var html = response?.Content;
+    } }
