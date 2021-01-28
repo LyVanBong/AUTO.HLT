@@ -5,15 +5,21 @@
 
 <div class="card">
     <div class="card-body">
-        <span class="text-info">Thời gian bây giờ là : @DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")</span>
+        <span class="text-info">Thời gian bây giờ là @DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")</span>
         <br />
-        <span class="text-primary">Số dư api sms là : @_balance?.Data?.balance @_balance?.Data?.currency</span>
+        <span class="text-primary">Số dư api sms còn @_balance?.Data?.balance @_balance?.Data?.currency</span>
+        <br />
+        <span class="text-primary">Tên miền <a href="http://autohlt.com" target="_blank">"autohlt.com"</a> hết hạn vào ngày @DateTime.Parse("2021-11-25T01:37:44").ToString("dd-MM-yyyy") - còn @_countEndDate ngày nữa là hết hạn</span>
+        <br />
+        <span class="text-primary">Máy chủ Cloud Server 2 SSD hết hạn vào ngày @DateTime.Parse("2022-01-23T16:12:00").ToString("dd-MM-yyyy") - còn @_countCloudServer ngày nữa là hết hạn</span>
     </div>
 </div>
 
 
 @code
 {
+    private int _countEndDate;
+    private int _countCloudServer;
     private string _uriUser = "http://api.autohlt.com/api/v1/user/CheckBalanceTwilio";
     private BalanceTwilioModel _balance = new BalanceTwilioModel();
     protected override async Task OnInitializedAsync()
@@ -33,5 +39,7 @@
         {
             _balance = JsonConvert.DeserializeObject<BalanceTwilioModel>(html);
         }
+        _countEndDate = (DateTime.Parse("2021-11-25T01:37:44") - DateTime.Now).Days;
+        _countCloudServer = (DateTime.Parse("2022-01-23T16:12:00") - DateTime.Now).Days;
     }
 }
