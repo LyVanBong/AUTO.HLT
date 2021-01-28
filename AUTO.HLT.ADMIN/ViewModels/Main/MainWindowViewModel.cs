@@ -1,8 +1,10 @@
 ﻿using AUTO.HLT.ADMIN.Models.Facebook;
 using AUTO.HLT.ADMIN.Models.RequestProviderModel;
 using AUTO.HLT.ADMIN.Services.Facebook;
+using AUTO.HLT.ADMIN.Views.AddWork;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Input;
+using AUTO.HLT.ADMIN.Views.AutoHltCrm;
+using AUTO.HLT.ADMIN.Views.CheckWork;
 
 namespace AUTO.HLT.ADMIN.ViewModels.Main
 {
@@ -18,19 +22,14 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
     {
         private IFacebookService _facebookService;
         private string _title = "AUTOHLT ADMIN";
-        private string _comment;
+        private IRegionManager _regionManager;
 
         private string[] _cmtEmojis = new string[]
         {
             ":)",":(",":p",":D",":o",";)","8-)",":*","<3","^_^",":v","(y)",":3"
         };
 
-        public string Comment
-        {
-            get => _comment;
-            set => SetProperty(ref _comment, value);
-        }
-
+        public ICommand UseFeatureCommand { get; private set; }
         public string Title
         {
             get { return _title; }
@@ -38,11 +37,30 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         }
 
         public ICommand AutoLikeCommand { get; private set; }
-        public MainWindowViewModel(IFacebookService facebookService)
+        public MainWindowViewModel(IFacebookService facebookService, IRegionManager regionManager)
         {
+            _regionManager = regionManager;
             _facebookService = facebookService;
-            AutoLikeCommand = new DelegateCommand(UseService);
+            UseFeatureCommand = new DelegateCommand<string>(UseFeature);
         }
+
+        private void UseFeature(string key)
+        {
+            var path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            switch (key)
+            {
+                case "0":
+                    _regionManager.RequestNavigate("ContentRegion", nameof(AddWorkView));
+                    break;
+                case "1":
+                    _regionManager.RequestNavigate("ContentRegion", nameof(CheckWorkView));
+                    break;
+                case "2":
+                    _regionManager.RequestNavigate("ContentRegion", nameof(AutoHltCrmView));
+                    break;
+            }
+        }
+
         private async Task<FriendsModel> GetAllFriend(string token, string numberFriends)
         {
             try
