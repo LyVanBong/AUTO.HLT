@@ -1,7 +1,11 @@
-﻿using AUTO.HLT.ADMIN.Views;
+﻿using AUTO.HLT.ADMIN.Views.Main;
 using Prism.Ioc;
-using Prism.Modularity;
 using System.Windows;
+using AUTO.HLT.ADMIN.Services.Facebook;
+using AUTO.HLT.ADMIN.Services.RequestProvider;
+using AUTO.HLT.ADMIN.Services.RestSharp;
+using AUTO.HLT.ADMIN.Views.Login;
+using AUTOHLT.MOBILE.Services.RestSharp;
 
 namespace AUTO.HLT.ADMIN
 {
@@ -17,7 +21,9 @@ namespace AUTO.HLT.ADMIN
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.Register<IFacebookService, FacebookeService>();
+            containerRegistry.Register<IRestSharpService, RestSharpService>();
+            containerRegistry.Register<IRequestProvider, RequestProvider>();
         }
     }
 }
