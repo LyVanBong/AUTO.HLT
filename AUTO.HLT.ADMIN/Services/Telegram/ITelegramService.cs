@@ -1,7 +1,7 @@
-﻿using AUTOHLT.MOBILE.Models.Telegram;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using AUTOHLT.MOBILE.Models.Telegram;
 
-namespace AUTOHLT.MOBILE.Services.Telegram
+namespace AUTO.HLT.ADMIN.Services.Telegram
 {
     public interface ITelegramService
     {

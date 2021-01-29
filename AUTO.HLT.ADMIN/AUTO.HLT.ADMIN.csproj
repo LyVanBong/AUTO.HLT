@@ -16,6 +16,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -57,6 +57,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -75,6 +77,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Databases\AdminDb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminDb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\AdminDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\AdminDb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\GetAllHistoryAutoLikeCommentAvatar_Result.cs">
+      <DependentUpon>AdminDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\GetAllUserAutoLikeComment_Result.cs">
+      <DependentUpon>AdminDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AddWork\WorkModel.cs" />
     <Compile Include="Models\Facebook\FillterFriendModel.cs" />
     <Compile Include="Models\Facebook\FriendsDoNotInteractModel.cs" />
@@ -85,16 +108,20 @@
     <Compile Include="Models\Facebook\UidTypeFacebookModel.cs" />
     <Compile Include="Models\RequestProviderModel\RequestParameter.cs" />
     <Compile Include="Models\RequestProviderModel\ResponseModel.cs" />
+    <Compile Include="Models\Telegram\TelegramModel.cs" />
     <Compile Include="Services\Facebook\FacebookeService.cs" />
     <Compile Include="Services\Facebook\IFacebookService.cs" />
     <Compile Include="Services\RequestProvider\IRequestProvider.cs" />
     <Compile Include="Services\RequestProvider\RequestProvider.cs" />
     <Compile Include="Services\RestSharp\IRestSharpService.cs" />
     <Compile Include="Services\RestSharp\RestSharpService.cs" />
+    <Compile Include="Services\Telegram\ITelegramService.cs" />
+    <Compile Include="Services\Telegram\TelegramService.cs" />
     <Compile Include="ViewModels\AddWork\AddWorkViewModel.cs" />
     <Compile Include="ViewModels\AutoHltCrm\AutoHltCrmViewModel.cs" />
     <Compile Include="ViewModels\CheckWork\CheckWorkViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginWindowViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AddWork\AddWorkView.xaml.cs">
       <DependentUpon>AddWorkView.xaml</DependentUpon>
     </Compile>
@@ -154,6 +181,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Databases\AdminDb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AdminDb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Databases\AdminDb.edmx.diagram">
+      <DependentUpon>AdminDb.edmx</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -162,6 +197,9 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
       <Version>86.0.241</Version>
+    </PackageReference>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -191,6 +229,28 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutohltAdmin.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AutohltAdmin_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>AutohltAdmin.mdf</DependentUpon>
+    </Content>
+    <Content Include="Databases\AdminDb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdminDb.edmx</DependentUpon>
+      <LastGenOutput>AdminDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Databases\AdminDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdminDb.edmx</DependentUpon>
+      <LastGenOutput>AdminDb.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

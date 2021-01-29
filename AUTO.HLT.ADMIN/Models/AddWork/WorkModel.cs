@@ -8,6 +8,6 @@ namespace AUTO.HLT.ADMIN.Models.AddWork
         public DateTime DateCreate { get; set; }
         public int EndDate { get; set; }
         public string Cookie { get; set; }
-        public string Tooken { get; set; }
+        public string Token { get; set; }
     }
 }

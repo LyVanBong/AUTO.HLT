@@ -12,6 +12,7 @@ using AUTO.HLT.ADMIN.Views.Main;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using Prism.Ioc;
 using System.Windows;
+using AUTO.HLT.ADMIN.Services.Telegram;
 using CefSharp;
 using CefSharp.Wpf;
 
@@ -30,6 +31,7 @@ namespace AUTO.HLT.ADMIN
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IFacebookService, FacebookeService>();
+            containerRegistry.Register<ITelegramService, TelegramService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
             containerRegistry.Register<IRequestProvider, RequestProvider>();
 

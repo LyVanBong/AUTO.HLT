@@ -5,23 +5,35 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AUTO.HLT.ADMIN.Views.AddWork"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="#fff"
+    Background="Transparent"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="70" />
             <RowDefinition Height="70" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
 
         <Label
             Grid.Row="0"
@@ -44,6 +56,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Margin="5"
+            DisplayDate="{Binding TodayTime}"
             Text="{Binding DateCreate}" />
         <Label
             Grid.Row="1"
@@ -65,7 +78,7 @@
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Margin="5"
-            Text="{Binding Id}" />
+            Text="{Binding Cookie}" />
         <Label
             Grid.Row="3"
             Grid.Column="0"
@@ -76,7 +89,7 @@
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Margin="5"
-            Text="{Binding Id}" />
+            Text="{Binding Token}" />
         <Button
             Grid.Row="4"
             Grid.Column="0"
@@ -84,5 +97,31 @@
             Margin="5"
             Command="{Binding SaveAndRunWorkCommand}"
             Content="Save and Run" />
+        <TextBox
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Text="{Binding SearchUser}" />
+        <Button
+            Grid.Row="5"
+            Grid.Column="3"
+            Command="{Binding SearchUserAutoCommand}"
+            Content="Tìm kiếm" />
+        <DataGrid
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding DataUserAutoLikeCommentAvatar}"
+            SelectedItem="{Binding ItemUserAuto}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="ID User" />
+                <DataGridTextColumn Binding="{Binding DateCreate}" Header="Ngày đăng ký" />
+                <DataGridTextColumn Binding="{Binding EndDate}" Header="Thời hạn" />
+                <DataGridTextColumn Binding="{Binding F_Cookie}" Header="Cookie" />
+                <DataGridTextColumn Binding="{Binding F_Tooken}" Header="Token" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

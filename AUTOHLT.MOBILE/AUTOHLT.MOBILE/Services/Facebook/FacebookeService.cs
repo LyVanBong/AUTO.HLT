@@ -101,7 +101,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
                 else
                     return html;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
