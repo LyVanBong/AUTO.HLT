@@ -7,6 +7,7 @@ namespace AUTO.HLT.ADMIN.ViewModels
     {
         private string _title;
         protected IRegionManager RegionManager { get; private set; }
+
         public string Title
         {
             get { return _title; }
@@ -17,9 +18,9 @@ namespace AUTO.HLT.ADMIN.ViewModels
         {
             RegionManager = regionManager;
         }
+
         public virtual void OnNavigatedTo(NavigationContext navigationContext)
         {
-
         }
 
         public virtual bool IsNavigationTarget(NavigationContext navigationContext)
@@ -29,7 +30,6 @@ namespace AUTO.HLT.ADMIN.ViewModels
 
         public virtual void OnNavigatedFrom(NavigationContext navigationContext)
         {
-
         }
     }
 }

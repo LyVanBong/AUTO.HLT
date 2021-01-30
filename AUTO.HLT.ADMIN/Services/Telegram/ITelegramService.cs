@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.Telegram;
+﻿using AUTOHLT.MOBILE.Models.Telegram;
+using System.Threading.Tasks;
 
 namespace AUTO.HLT.ADMIN.Services.Telegram
 {

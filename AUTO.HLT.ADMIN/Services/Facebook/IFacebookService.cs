@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTO.HLT.ADMIN.Models.Facebook;
+﻿using AUTO.HLT.ADMIN.Models.Facebook;
 using AUTO.HLT.ADMIN.Models.RequestProviderModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.HLT.ADMIN.Services.Facebook
 {
@@ -15,6 +15,7 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
         /// <param name="parameters"></param>
         /// <returns></returns>
         Task<string> PostHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null);
+
         /// <summary>
         /// service gửi lời mời like page
         /// </summary>

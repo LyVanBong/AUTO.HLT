@@ -13,10 +13,10 @@ namespace AUTO.HLT.ADMIN.Databases
     
     public partial class GetAllUserAutoLikeComment_Result
     {
-        public System.Guid Id { get; set; }
-        public System.DateTime DateCreate { get; set; }
-        public int EndDate { get; set; }
+        public string Id { get; set; }
+        public System.DateTime RegistrationDate { get; set; }
+        public int ExpiredTime { get; set; }
         public string F_Cookie { get; set; }
-        public string F_Tooken { get; set; }
+        public string F_Token { get; set; }
     }
 }

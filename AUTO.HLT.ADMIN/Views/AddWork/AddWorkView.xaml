@@ -1,9 +1,8 @@
 ﻿<UserControl
     x:Class="AUTO.HLT.ADMIN.Views.AddWork.AddWorkView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:AUTO.HLT.ADMIN.Views.AddWork"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="Transparent"
     mc:Ignorable="d">
@@ -117,10 +116,10 @@
             SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="ID User" />
-                <DataGridTextColumn Binding="{Binding DateCreate}" Header="Ngày đăng ký" />
-                <DataGridTextColumn Binding="{Binding EndDate}" Header="Thời hạn" />
+                <DataGridTextColumn Binding="{Binding RegistrationDate}" Header="Ngày đăng ký" />
+                <DataGridTextColumn Binding="{Binding ExpiredTime}" Header="Thời hạn" />
                 <DataGridTextColumn Binding="{Binding F_Cookie}" Header="Cookie" />
-                <DataGridTextColumn Binding="{Binding F_Tooken}" Header="Token" />
+                <DataGridTextColumn Binding="{Binding F_Token}" Header="Token" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

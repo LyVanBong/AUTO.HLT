@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.Telegram;
+﻿using AUTOHLT.MOBILE.Models.Telegram;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace AUTO.HLT.ADMIN.Services.Telegram
 {
@@ -11,6 +11,7 @@ namespace AUTO.HLT.ADMIN.Services.Telegram
     {
         private string _tokenToAccessTelegram = "1413742738:AAGV-0OMyWCO4h_PRzq3JQfWkKj-PxYur_M";
         private string _uriApiTelegram = "https://api.telegram.org/bot";
+
         public async Task<TelegramModel> SendMessageToTelegram(string idChat, string message, string token = null)
         {
             try

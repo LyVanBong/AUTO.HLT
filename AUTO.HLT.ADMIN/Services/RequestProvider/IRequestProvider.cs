@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AUTO.HLT.ADMIN.Models.RequestProviderModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AUTO.HLT.ADMIN.Models.RequestProviderModel;
 
 namespace AUTO.HLT.ADMIN.Services.RequestProvider
 {

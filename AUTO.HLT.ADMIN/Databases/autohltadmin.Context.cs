@@ -14,99 +14,90 @@ namespace AUTO.HLT.ADMIN.Databases
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
-    public partial class AutohltAdminEntities : DbContext
+
+    public partial class bsoft_autohltEntities : DbContext
     {
-        public AutohltAdminEntities()
-            : base("name=AutohltAdminEntities")
+        public bsoft_autohltEntities()
+            : base("name=bsoft_autohltEntities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-    
-        public virtual int DeleteUserAutoLikeComment(Nullable<System.Guid> id)
+
+
+        public virtual int AddHistoryAutoLikeComment(string id, string uId, string name, string avatar, string typeAuto, string uId_Friend, string name_Friend, string avatar_Friend)
         {
-            var idParameter = id.HasValue ?
+            var idParameter = id != null ?
                 new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(System.Guid));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserAutoLikeComment", idParameter);
+                new ObjectParameter("Id", typeof(string));
+
+            var uIdParameter = uId != null ?
+                new ObjectParameter("UId", uId) :
+                new ObjectParameter("UId", typeof(string));
+
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+
+            var avatarParameter = avatar != null ?
+                new ObjectParameter("Avatar", avatar) :
+                new ObjectParameter("Avatar", typeof(string));
+
+            var typeAutoParameter = typeAuto != null ?
+                new ObjectParameter("TypeAuto", typeAuto) :
+                new ObjectParameter("TypeAuto", typeof(string));
+
+            var uId_FriendParameter = uId_Friend != null ?
+                new ObjectParameter("UId_Friend", uId_Friend) :
+                new ObjectParameter("UId_Friend", typeof(string));
+
+            var name_FriendParameter = name_Friend != null ?
+                new ObjectParameter("Name_Friend", name_Friend) :
+                new ObjectParameter("Name_Friend", typeof(string));
+
+            var avatar_FriendParameter = avatar_Friend != null ?
+                new ObjectParameter("Avatar_Friend", avatar_Friend) :
+                new ObjectParameter("Avatar_Friend", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddHistoryAutoLikeComment", idParameter, uIdParameter, nameParameter, avatarParameter, typeAutoParameter, uId_FriendParameter, name_FriendParameter, avatar_FriendParameter);
         }
-    
+
+        public virtual ObjectResult<GetAllHistoryAutoLikeCommentAvatar_Result> GetAllHistoryAutoLikeCommentAvatar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllHistoryAutoLikeCommentAvatar_Result>("GetAllHistoryAutoLikeCommentAvatar");
+        }
+
         public virtual ObjectResult<GetAllUserAutoLikeComment_Result> GetAllUserAutoLikeComment()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUserAutoLikeComment_Result>("GetAllUserAutoLikeComment");
         }
-    
-        public virtual int UpdateUserAutoLikeComment(Nullable<System.Guid> id, Nullable<System.DateTime> dateCreate, Nullable<int> endDate, string f_Cookie, string f_Tooken)
+
+        public virtual int UpdateUserAutoLikeComment(string id, Nullable<System.DateTime> registrationDate, Nullable<int> expiredTime, string f_Cookie, string f_Tooken)
         {
-            var idParameter = id.HasValue ?
+            var idParameter = id != null ?
                 new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(System.Guid));
-    
-            var dateCreateParameter = dateCreate.HasValue ?
-                new ObjectParameter("DateCreate", dateCreate) :
-                new ObjectParameter("DateCreate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(int));
-    
+                new ObjectParameter("Id", typeof(string));
+
+            var registrationDateParameter = registrationDate.HasValue ?
+                new ObjectParameter("RegistrationDate", registrationDate) :
+                new ObjectParameter("RegistrationDate", typeof(DateTime));
+
+            var expiredTimeParameter = expiredTime.HasValue ?
+                new ObjectParameter("ExpiredTime", expiredTime) :
+                new ObjectParameter("ExpiredTime", typeof(int));
+
             var f_CookieParameter = f_Cookie != null ?
                 new ObjectParameter("F_Cookie", f_Cookie) :
                 new ObjectParameter("F_Cookie", typeof(string));
-    
+
             var f_TookenParameter = f_Tooken != null ?
                 new ObjectParameter("F_Tooken", f_Tooken) :
                 new ObjectParameter("F_Tooken", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserAutoLikeComment", idParameter, dateCreateParameter, endDateParameter, f_CookieParameter, f_TookenParameter);
-        }
-    
-        public virtual int AddHistoryAutoLikeComment(Nullable<System.Guid> id, string uId, string name, string avatar, string typeAuto, string uId_Friend, string name_Friend, string avatar_Friend)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(System.Guid));
-    
-            var uIdParameter = uId != null ?
-                new ObjectParameter("UId", uId) :
-                new ObjectParameter("UId", typeof(string));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            var avatarParameter = avatar != null ?
-                new ObjectParameter("Avatar", avatar) :
-                new ObjectParameter("Avatar", typeof(string));
-    
-            var typeAutoParameter = typeAuto != null ?
-                new ObjectParameter("TypeAuto", typeAuto) :
-                new ObjectParameter("TypeAuto", typeof(string));
-    
-            var uId_FriendParameter = uId_Friend != null ?
-                new ObjectParameter("UId_Friend", uId_Friend) :
-                new ObjectParameter("UId_Friend", typeof(string));
-    
-            var name_FriendParameter = name_Friend != null ?
-                new ObjectParameter("Name_Friend", name_Friend) :
-                new ObjectParameter("Name_Friend", typeof(string));
-    
-            var avatar_FriendParameter = avatar_Friend != null ?
-                new ObjectParameter("Avatar_Friend", avatar_Friend) :
-                new ObjectParameter("Avatar_Friend", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddHistoryAutoLikeComment", idParameter, uIdParameter, nameParameter, avatarParameter, typeAutoParameter, uId_FriendParameter, name_FriendParameter, avatar_FriendParameter);
-        }
-    
-        public virtual ObjectResult<GetAllHistoryAutoLikeCommentAvatar_Result> GetAllHistoryAutoLikeCommentAvatar()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllHistoryAutoLikeCommentAvatar_Result>("GetAllHistoryAutoLikeCommentAvatar");
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserAutoLikeComment", idParameter, registrationDateParameter, expiredTimeParameter, f_CookieParameter, f_TookenParameter);
         }
     }
 }

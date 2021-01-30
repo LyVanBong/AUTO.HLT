@@ -1,14 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using AUTO.HLT.ADMIN.Databases;
-using Prism.Common;
+﻿using AUTO.HLT.ADMIN.Databases;
 using Prism.Regions;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AUTO.HLT.ADMIN.ViewModels.CheckWork
 {
     public class CheckWorkViewModel : ViewModelBase
     {
-        private AutohltAdminEntities _dbAdminEntities;
+        private bsoft_autohltEntities _dbAdminEntities;
         private ObservableCollection<GetAllHistoryAutoLikeCommentAvatar_Result> _dataHistoryAuto;
 
         public ObservableCollection<GetAllHistoryAutoLikeCommentAvatar_Result> DataHistoryAuto
@@ -19,7 +18,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.CheckWork
 
         public CheckWorkViewModel(IRegionManager regionManager) : base(regionManager)
         {
-            _dbAdminEntities = new AutohltAdminEntities();
+            _dbAdminEntities = new bsoft_autohltEntities();
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)

@@ -13,11 +13,13 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
     {
         private IRestClient _client;
         private IRestRequest _request;
+
         public RestSharpService()
         {
             _client = new RestClient();
             _client.Timeout = -1;
         }
+
         private void CreateClients(string uri, Method method = Method.GET)
         {
             try
@@ -30,6 +32,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 throw;
             }
         }
+
         /// <summary>
         /// them du lieu chuyen vao request
         /// </summary>
@@ -48,6 +51,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 throw;
             }
         }
+
         /// <summary>
         /// them cookie
         /// </summary>
@@ -85,6 +89,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
                 throw;
             }
         }
+
         public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try

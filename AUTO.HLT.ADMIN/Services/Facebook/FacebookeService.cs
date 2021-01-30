@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTO.HLT.ADMIN.Models.Facebook;
+﻿using AUTO.HLT.ADMIN.Models.Facebook;
 using AUTO.HLT.ADMIN.Models.RequestProviderModel;
 using AUTO.HLT.ADMIN.Services.RequestProvider;
 using AUTO.HLT.ADMIN.Services.RestSharp;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.HLT.ADMIN.Services.Facebook
 {

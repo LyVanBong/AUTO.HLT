@@ -1,11 +1,11 @@
-﻿using System;
+﻿using AUTO.HLT.ADMIN.Models.RequestProviderModel;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AUTO.HLT.ADMIN.Models.RequestProviderModel;
-using Newtonsoft.Json;
-using RestSharp;
 
 namespace AUTO.HLT.ADMIN.Services.RequestProvider
 {

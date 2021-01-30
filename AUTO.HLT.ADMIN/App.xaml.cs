@@ -1,20 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using AUTO.HLT.ADMIN.Services.Facebook;
+﻿using AUTO.HLT.ADMIN.Services.Facebook;
 using AUTO.HLT.ADMIN.Services.RequestProvider;
 using AUTO.HLT.ADMIN.Services.RestSharp;
+using AUTO.HLT.ADMIN.Services.Telegram;
 using AUTO.HLT.ADMIN.Views.AddWork;
 using AUTO.HLT.ADMIN.Views.AutoHltCrm;
 using AUTO.HLT.ADMIN.Views.CheckWork;
 using AUTO.HLT.ADMIN.Views.Main;
 using AUTOHLT.MOBILE.Services.RestSharp;
-using Prism.Ioc;
-using System.Windows;
-using AUTO.HLT.ADMIN.Services.Telegram;
 using CefSharp;
 using CefSharp.Wpf;
+using Prism.Ioc;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace AUTO.HLT.ADMIN
 {
@@ -40,7 +40,7 @@ namespace AUTO.HLT.ADMIN
             containerRegistry.RegisterForNavigation<CheckWorkView>();
         }
 
-        #region Khởi tạo cefsharp 
+        #region Khởi tạo cefsharp
 
         public App()
         {
@@ -51,6 +51,7 @@ namespace AUTO.HLT.ADMIN
             // attribute so the assembly rolver has time to do it's thing.
             InitializeCefSharp();
         }
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void InitializeCefSharp()
         {
@@ -84,6 +85,6 @@ namespace AUTO.HLT.ADMIN
             return null;
         }
 
-        #endregion
+        #endregion Khởi tạo cefsharp
     }
 }

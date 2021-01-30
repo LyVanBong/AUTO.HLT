@@ -13,7 +13,7 @@ namespace AUTO.HLT.ADMIN.Databases
     
     public partial class GetAllHistoryAutoLikeCommentAvatar_Result
     {
-        public System.Guid Id { get; set; }
+        public string ID { get; set; }
         public string UId { get; set; }
         public string Name { get; set; }
         public string Avatar { get; set; }
