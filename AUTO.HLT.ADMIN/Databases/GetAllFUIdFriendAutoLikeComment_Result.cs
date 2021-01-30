@@ -11,16 +11,9 @@ namespace AUTO.HLT.ADMIN.Databases
 {
     using System;
     
-    public partial class GetAllUserAutoLikeComment_Result
+    public partial class GetAllFUIdFriendAutoLikeComment_Result
     {
         public string Id { get; set; }
-        public System.DateTime RegistrationDate { get; set; }
-        public int ExpiredTime { get; set; }
-        public string F_Cookie { get; set; }
-        public string F_Token { get; set; }
-        public string UId { get; set; }
-        public string Name { get; set; }
-        public string Picture { get; set; }
-        public Nullable<bool> IsRunWork { get; set; }
+        public string UId_Friend { get; set; }
     }
 }

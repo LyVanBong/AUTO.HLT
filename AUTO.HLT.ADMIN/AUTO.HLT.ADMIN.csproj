@@ -92,6 +92,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>autohltadmin.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Databases\GetAllFUIdFriendAutoLikeComment_Result.cs">
+      <DependentUpon>autohltadmin.tt</DependentUpon>
+    </Compile>
     <Compile Include="Databases\GetAllHistoryAutoLikeCommentAvatar_Result.cs">
       <DependentUpon>autohltadmin.tt</DependentUpon>
     </Compile>

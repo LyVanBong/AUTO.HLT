@@ -5,6 +5,10 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="bsoft_autohltModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="AddFUIdFriendAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+          <Parameter Name="UId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="AddHistoryAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="varchar(max)" Mode="In" />
           <Parameter Name="UId" Type="varchar" Mode="In" />
@@ -15,8 +19,28 @@
           <Parameter Name="Name_Friend" Type="nvarchar" Mode="In" />
           <Parameter Name="Avatar_Friend" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="DeleteAutoLikeCmtAvatar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteFUIdFriendAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllFUIdFriendAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetAllHistoryAutoLikeCommentAvatar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUserAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateAutoLikeCmtAvatarInfoFace" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+          <Parameter Name="UId" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Picture" Type="text" Mode="In" />
+          <Parameter Name="IsRunWork" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="UpdateAutoLikeCmtAvatarInfoFaceRun" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+          <Parameter Name="IsRunWork" Type="bit" Mode="In" />
+        </Function>
         <Function Name="UpdateUserAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="varchar" Mode="In" />
           <Parameter Name="RegistrationDate" Type="datetime" Mode="In" />
@@ -50,6 +74,30 @@
             <Parameter Name="F_Cookie" Mode="In" Type="String" />
             <Parameter Name="F_Tooken" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AddFUIdFriendAutoLikeComment">
+            <Parameter Name="Id" Mode="In" Type="String" />
+            <Parameter Name="UId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteAutoLikeCmtAvatar">
+          <Parameter Name="Id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteFUIdFriendAutoLikeComment">
+          <Parameter Name="Id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllFUIdFriendAutoLikeComment" ReturnType="Collection(bsoft_autohltModel.GetAllFUIdFriendAutoLikeComment_Result)">
+          <Parameter Name="Id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateAutoLikeCmtAvatarInfoFace">
+            <Parameter Name="Id" Mode="In" Type="String" />
+            <Parameter Name="UId" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Picture" Mode="In" Type="String" />
+            <Parameter Name="IsRunWork" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateAutoLikeCmtAvatarInfoFaceRun">
+            <Parameter Name="Id" Mode="In" Type="String" />
+            <Parameter Name="IsRunWork" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllHistoryAutoLikeCommentAvatar_Result">
           <Property Type="String" Name="ID" Nullable="false" />
@@ -68,6 +116,14 @@
           <Property Type="Int32" Name="ExpiredTime" Nullable="false" />
           <Property Type="String" Name="F_Cookie" Nullable="false" MaxLength="Max" />
           <Property Type="String" Name="F_Token" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="UId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Picture" Nullable="true" />
+          <Property Type="Boolean" Name="IsRunWork" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllFUIdFriendAutoLikeComment_Result">
+          <Property Type="String" Name="Id" Nullable="true" />
+          <Property Type="String" Name="UId_Friend" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -99,10 +155,27 @@
                 <ScalarProperty Name="ExpiredTime" ColumnName="ExpiredTime" />
                 <ScalarProperty Name="F_Cookie" ColumnName="F_Cookie" />
                 <ScalarProperty Name="F_Token" ColumnName="F_Token" />
+                <ScalarProperty Name="UId" ColumnName="UId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="IsRunWork" ColumnName="IsRunWork" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateUserAutoLikeComment" FunctionName="bsoft_autohltModel.Store.UpdateUserAutoLikeComment" />
+          <FunctionImportMapping FunctionImportName="AddFUIdFriendAutoLikeComment" FunctionName="bsoft_autohltModel.Store.AddFUIdFriendAutoLikeComment" />
+          <FunctionImportMapping FunctionImportName="DeleteAutoLikeCmtAvatar" FunctionName="bsoft_autohltModel.Store.DeleteAutoLikeCmtAvatar" />
+          <FunctionImportMapping FunctionImportName="DeleteFUIdFriendAutoLikeComment" FunctionName="bsoft_autohltModel.Store.DeleteFUIdFriendAutoLikeComment" />
+          <FunctionImportMapping FunctionImportName="GetAllFUIdFriendAutoLikeComment" FunctionName="bsoft_autohltModel.Store.GetAllFUIdFriendAutoLikeComment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetAllFUIdFriendAutoLikeComment_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UId_Friend" ColumnName="UId_Friend" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateAutoLikeCmtAvatarInfoFace" FunctionName="bsoft_autohltModel.Store.UpdateAutoLikeCmtAvatarInfoFace" />
+          <FunctionImportMapping FunctionImportName="UpdateAutoLikeCmtAvatarInfoFaceRun" FunctionName="bsoft_autohltModel.Store.UpdateAutoLikeCmtAvatarInfoFaceRun" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

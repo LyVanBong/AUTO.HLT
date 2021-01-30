@@ -14,90 +14,168 @@ namespace AUTO.HLT.ADMIN.Databases
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class bsoft_autohltEntities : DbContext
     {
         public bsoft_autohltEntities()
             : base("name=bsoft_autohltEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
-
+    
+    
         public virtual int AddHistoryAutoLikeComment(string id, string uId, string name, string avatar, string typeAuto, string uId_Friend, string name_Friend, string avatar_Friend)
         {
             var idParameter = id != null ?
                 new ObjectParameter("Id", id) :
                 new ObjectParameter("Id", typeof(string));
-
+    
             var uIdParameter = uId != null ?
                 new ObjectParameter("UId", uId) :
                 new ObjectParameter("UId", typeof(string));
-
+    
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
                 new ObjectParameter("Name", typeof(string));
-
+    
             var avatarParameter = avatar != null ?
                 new ObjectParameter("Avatar", avatar) :
                 new ObjectParameter("Avatar", typeof(string));
-
+    
             var typeAutoParameter = typeAuto != null ?
                 new ObjectParameter("TypeAuto", typeAuto) :
                 new ObjectParameter("TypeAuto", typeof(string));
-
+    
             var uId_FriendParameter = uId_Friend != null ?
                 new ObjectParameter("UId_Friend", uId_Friend) :
                 new ObjectParameter("UId_Friend", typeof(string));
-
+    
             var name_FriendParameter = name_Friend != null ?
                 new ObjectParameter("Name_Friend", name_Friend) :
                 new ObjectParameter("Name_Friend", typeof(string));
-
+    
             var avatar_FriendParameter = avatar_Friend != null ?
                 new ObjectParameter("Avatar_Friend", avatar_Friend) :
                 new ObjectParameter("Avatar_Friend", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddHistoryAutoLikeComment", idParameter, uIdParameter, nameParameter, avatarParameter, typeAutoParameter, uId_FriendParameter, name_FriendParameter, avatar_FriendParameter);
         }
-
+    
         public virtual ObjectResult<GetAllHistoryAutoLikeCommentAvatar_Result> GetAllHistoryAutoLikeCommentAvatar()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllHistoryAutoLikeCommentAvatar_Result>("GetAllHistoryAutoLikeCommentAvatar");
         }
-
+    
         public virtual ObjectResult<GetAllUserAutoLikeComment_Result> GetAllUserAutoLikeComment()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUserAutoLikeComment_Result>("GetAllUserAutoLikeComment");
         }
-
+    
         public virtual int UpdateUserAutoLikeComment(string id, Nullable<System.DateTime> registrationDate, Nullable<int> expiredTime, string f_Cookie, string f_Tooken)
         {
             var idParameter = id != null ?
                 new ObjectParameter("Id", id) :
                 new ObjectParameter("Id", typeof(string));
-
+    
             var registrationDateParameter = registrationDate.HasValue ?
                 new ObjectParameter("RegistrationDate", registrationDate) :
-                new ObjectParameter("RegistrationDate", typeof(DateTime));
-
+                new ObjectParameter("RegistrationDate", typeof(System.DateTime));
+    
             var expiredTimeParameter = expiredTime.HasValue ?
                 new ObjectParameter("ExpiredTime", expiredTime) :
                 new ObjectParameter("ExpiredTime", typeof(int));
-
+    
             var f_CookieParameter = f_Cookie != null ?
                 new ObjectParameter("F_Cookie", f_Cookie) :
                 new ObjectParameter("F_Cookie", typeof(string));
-
+    
             var f_TookenParameter = f_Tooken != null ?
                 new ObjectParameter("F_Tooken", f_Tooken) :
                 new ObjectParameter("F_Tooken", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserAutoLikeComment", idParameter, registrationDateParameter, expiredTimeParameter, f_CookieParameter, f_TookenParameter);
+        }
+    
+        public virtual int AddFUIdFriendAutoLikeComment(string id, string uId)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var uIdParameter = uId != null ?
+                new ObjectParameter("UId", uId) :
+                new ObjectParameter("UId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddFUIdFriendAutoLikeComment", idParameter, uIdParameter);
+        }
+    
+        public virtual int DeleteAutoLikeCmtAvatar(string id)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteAutoLikeCmtAvatar", idParameter);
+        }
+    
+        public virtual int DeleteFUIdFriendAutoLikeComment(string id)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteFUIdFriendAutoLikeComment", idParameter);
+        }
+    
+        public virtual ObjectResult<GetAllFUIdFriendAutoLikeComment_Result> GetAllFUIdFriendAutoLikeComment(string id)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllFUIdFriendAutoLikeComment_Result>("GetAllFUIdFriendAutoLikeComment", idParameter);
+        }
+    
+        public virtual int UpdateAutoLikeCmtAvatarInfoFace(string id, string uId, string name, string picture, Nullable<bool> isRunWork)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var uIdParameter = uId != null ?
+                new ObjectParameter("UId", uId) :
+                new ObjectParameter("UId", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var pictureParameter = picture != null ?
+                new ObjectParameter("Picture", picture) :
+                new ObjectParameter("Picture", typeof(string));
+    
+            var isRunWorkParameter = isRunWork.HasValue ?
+                new ObjectParameter("IsRunWork", isRunWork) :
+                new ObjectParameter("IsRunWork", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAutoLikeCmtAvatarInfoFace", idParameter, uIdParameter, nameParameter, pictureParameter, isRunWorkParameter);
+        }
+    
+        public virtual int UpdateAutoLikeCmtAvatarInfoFaceRun(string id, Nullable<bool> isRunWork)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var isRunWorkParameter = isRunWork.HasValue ?
+                new ObjectParameter("IsRunWork", isRunWork) :
+                new ObjectParameter("IsRunWork", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAutoLikeCmtAvatarInfoFaceRun", idParameter, isRunWorkParameter);
         }
     }
 }

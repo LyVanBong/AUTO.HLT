@@ -43,6 +43,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         private ITelegramService _telegramService;
         private string _idChatWork = "-537876883";
 
+        public ICommand DeleteWorkCommand { get; private set; }
         public string SearchUser
         {
             get => _searchUser;
@@ -114,6 +115,29 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             SaveAndRunWorkCommand = new DelegateCommand(SaveAndRunWork);
             _dbAdminEntities = new bsoft_autohltEntities();
             SearchUserAutoCommand = new DelegateCommand(SearchUserAuto);
+            DeleteWorkCommand = new DelegateCommand(DeleteWork);
+        }
+
+        private void DeleteWork()
+        {
+            if (!string.IsNullOrWhiteSpace(Id))
+            {
+                var dele = _dbAdminEntities.DeleteAutoLikeCmtAvatar(Id);
+                if (dele > 0)
+                {
+                    Id = EndDate = Token = Cookie = "";
+                }
+                else
+                {
+                    MessageBox.Show("Xóa tài khoản lỗi !", "Thông báo", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nhập tài khoản cần xóa !", "Thông báo", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
         }
 
         private void SearchUserAuto()
@@ -254,9 +278,20 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         {
                             try
                             {
+                                _dbAdminEntities.UpdateAutoLikeCmtAvatarInfoFace(obj.Id, infoFace.id, infoFace.name,
+                                    infoFace?.picture?.data?.url, true);
                                 var totalFriend = 0;
+                                var dataUidFriend = _dbAdminEntities.GetAllFUIdFriendAutoLikeComment(obj?.Id);
                                 foreach (var uid in data)
                                 {
+                                    if (dataUidFriend != null && dataUidFriend.Any())
+                                    {
+                                        var fu = dataUidFriend.FirstOrDefault(x => x.Id == obj.Id);
+                                        if (fu != null && fu.Id != null)
+                                        {
+                                            continue;
+                                        }
+                                    }
                                     var urlface = $"https://d.facebook.com/{uid.id}";
                                     if (await CheckCookieAndToken(token, cookie))
                                     {
@@ -291,7 +326,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                     }
 
                                     totalFriend++;
-                                    if (totalFriend % 20 ==0)
+                                    if (totalFriend % 20 == 0)
                                     {
                                         await Task.Delay(TimeSpan.FromMilliseconds(random.Next(7200000, 7500000)));
                                     }
@@ -301,14 +336,17 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                     }
                                 }
 
+                                _dbAdminEntities.DeleteFUIdFriendAutoLikeComment(obj?.Id);
                                 await _telegramService.SendMessageToTelegram(_idChatWork,
                                     $"Đã thực hiện auto like và comment {totalFriend} của ID {obj.Id} \n UID facebooke {infoFace.id} - {infoFace.name} \n vào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")} ");
+                                _dbAdminEntities.UpdateAutoLikeCmtAvatarInfoFaceRun(obj?.Id, false);
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show($"Lỗi : {e.Message} \n Lỗi id {obj.Id}", "thong bao",
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Information);
+                                _dbAdminEntities.UpdateAutoLikeCmtAvatarInfoFaceRun(obj?.Id, false);
                             }
                         }
                     }
