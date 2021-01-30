@@ -208,10 +208,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             }
             catch (Exception)
             {
-                throw;
+                return null;
             }
-
-            return null;
         }
 
         private async Task<bool> CheckCookieAndToken(string token, string cookie)
@@ -232,7 +230,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -293,8 +291,14 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                     }
 
                                     totalFriend++;
-                                    // sau mỗi lần thực hiện nhiệm vụ sẽ tạm nghỉ từ 5 - 10 phút rồi làm tiếp
-                                    //await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
+                                    if (totalFriend % 20 ==0)
+                                    {
+                                        await Task.Delay(TimeSpan.FromMilliseconds(random.Next(7200000, 7500000)));
+                                    }
+                                    else
+                                    {
+                                        await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
+                                    }
                                 }
 
                                 await _telegramService.SendMessageToTelegram(_idChatWork,
@@ -315,7 +319,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         return;
                     }
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(100000, 400000)));
+                    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(1800000, 2000000)));
                 }
             }
             catch (Exception e)
