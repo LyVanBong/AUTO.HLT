@@ -148,8 +148,6 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             {
                 if (int.TryParse(EndDate, out var result))
                 {
-                    var update =
-                            _dbAdminEntities.UpdateUserAutoLikeComment(Id, DateCreate, result, Cookie, Token);
                     var data = new GetAllUserAutoLikeComment_Result()
                     {
                         RegistrationDate = DateCreate,
@@ -158,10 +156,15 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         F_Token = Token,
                         Id = Id
                     };
-                    GetDataUserAuto();
-                    var thread = new Thread(() => RunWorkAutoLikeAndComment(data));
-                    thread.IsBackground = true;
-                    thread.Start();
+                    if ((DateTime.Now - data.RegistrationDate).TotalDays < data.ExpiredTime)
+                    {
+                        var update =
+                            _dbAdminEntities.UpdateUserAutoLikeComment(Id, DateCreate, result, Cookie, Token);
+                        GetDataUserAuto();
+                        var thread = new Thread(() => RunWorkAutoLikeAndComment(data));
+                        thread.IsBackground = true;
+                        thread.Start();
+                    }
                 }
                 else
                 {
