@@ -9,6 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="70" />
             <RowDefinition Height="70" />
             <RowDefinition Height="40" />
@@ -32,88 +33,101 @@
                 </Style>
             </ResourceDictionary>
         </Grid.Resources>
-
         <Label
             Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Margin="5"
+            Content="Thêm công việc" />
+        <Label
+            Grid.Row="1"
             Grid.Column="0"
             Margin="5"
             Content="ID" />
         <TextBox
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Margin="5"
             Text="{Binding Id}" />
 
         <Label
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             Margin="5"
             Content="Ngày đăng ký" />
         <DatePicker
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             Margin="5"
             DisplayDate="{Binding TodayTime}"
             SelectedDate="{Binding DateCreate}" />
         <Label
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="2"
             Margin="5"
             Content="Thời hạn" />
         <TextBox
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="3"
             Margin="5"
             Text="{Binding EndDate}" />
         <Label
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Margin="5"
             Content="Cookie" />
         <TextBox
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Margin="5"
             Text="{Binding Cookie}" />
         <Label
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             Margin="5"
             Content="Token" />
         <TextBox
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Margin="5"
             Text="{Binding Token}" />
-        <Button
-            Grid.Row="4"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="5"
-            Command="{Binding SaveAndRunWorkCommand}"
-            Content="Save and Run" />
-        <Button
-            Grid.Row="4"
-            Grid.Column="2"
-            Grid.ColumnSpan="2"
-            Margin="5"
-            Command="{Binding DeleteWorkCommand}"
-            Content="Xóa" />
-        <TextBox
+        <StackPanel
             Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                Width="200"
+                Margin="5"
+                Command="{Binding SaveAndRunWorkCommand}"
+                Content="Save and Run" />
+            <Button
+                Width="200"
+                Margin="5"
+                Command="{Binding RunWorkAllCommand}"
+                Content="Run All" />
+            <Button
+                Width="200"
+                Margin="5"
+                Command="{Binding DeleteWorkCommand}"
+                Content="Xóa" />
+        </StackPanel>
+        <TextBox
+            Grid.Row="6"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Text="{Binding SearchUser}" />
         <Button
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="3"
             Command="{Binding SearchUserAutoCommand}"
             Content="Tìm kiếm" />
         <DataGrid
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="0"
             Grid.ColumnSpan="4"
             AutoGenerateColumns="False"

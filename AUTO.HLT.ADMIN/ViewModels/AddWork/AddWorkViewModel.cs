@@ -43,6 +43,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         private ITelegramService _telegramService;
         private string _idChatWork = "-537876883";
 
+
+        public ICommand RunWorkAllCommand { get; private set; }
         public ICommand DeleteWorkCommand { get; private set; }
         public string SearchUser
         {
@@ -116,6 +118,31 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             _dbAdminEntities = new bsoft_autohltEntities();
             SearchUserAutoCommand = new DelegateCommand(SearchUserAuto);
             DeleteWorkCommand = new DelegateCommand(DeleteWork);
+            RunWorkAllCommand = new DelegateCommand(RunWorkAll);
+        }
+
+        private void RunWorkAll()
+        {
+            if (DataUserAutoLikeCommentAvatar != null && DataUserAutoLikeCommentAvatar.Any())
+            {
+                var countWork = 0;
+                foreach (var data in DataUserAutoLikeCommentAvatar)
+                {
+                    if (data.IsRunWork == true)
+                        continue;
+                    var thread = new Thread(() => RunWorkAutoLikeAndComment(data));
+                    thread.IsBackground = true;
+                    thread.Start();
+                    countWork++;
+                }
+
+                MessageBox.Show("Thanh cong", "Thong bao", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Chua co cong viec nao de thuc hien", "Thong bao", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            GetDataUserAuto();
         }
 
         private void DeleteWork()
@@ -126,6 +153,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                 if (dele > 0)
                 {
                     Id = EndDate = Token = Cookie = "";
+                    GetDataUserAuto();
                 }
                 else
                 {
