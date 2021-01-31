@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using AUTOHLT.MOBILE.Configurations;
+using Microsoft.AppCenter.Crashes;
+using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
@@ -25,6 +23,17 @@ namespace AUTOHLT.MOBILE.Views.BuffLikes
             var safeInsets = On<iOS>().SafeAreaInsets();
             safeInsets.Bottom = -20;
             Padding = safeInsets;
+        }
+        private async void TapGestureRecognizerHDSD_OnTapped(object sender, EventArgs e)
+        {
+            try
+            {
+                await Browser.OpenAsync(AppConstants.HdTangLike);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
     }
 }

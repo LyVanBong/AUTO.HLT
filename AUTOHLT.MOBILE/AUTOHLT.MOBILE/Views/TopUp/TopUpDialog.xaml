@@ -122,7 +122,6 @@
             Grid.Row="7"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Margin="20,0,20,0"
             HorizontalOptions="CenterAndExpand"
             HorizontalTextAlignment="Center">
             <Label.FormattedText>
@@ -150,7 +149,6 @@
                         Text="XEM VIDEO"
                         TextColor="#eb596e"
                         TextDecorations="Underline" />
-                    <Span Text="&#10;" />
                 </FormattedString>
             </Label.FormattedText>
             <Label.GestureRecognizers>
