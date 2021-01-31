@@ -128,11 +128,9 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                 var countWork = 0;
                 foreach (var data in DataUserAutoLikeCommentAvatar)
                 {
-                    if (data.IsRunWork == true)
-                        continue;
-                    var thread = new Thread(() => RunWorkAutoLikeAndComment(data));
-                    thread.IsBackground = true;
-                    thread.Start();
+                    //if (data.IsRunWork == true)
+                    //    continue;
+                    new Thread(() => RunWorkAutoLikeAndComment(data)).Start();
                     countWork++;
                 }
 
@@ -213,9 +211,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         var update =
                             _dbAdminEntities.UpdateUserAutoLikeComment(Id, DateCreate, result, Cookie, Token);
                         GetDataUserAuto();
-                        var thread = new Thread(() => RunWorkAutoLikeAndComment(data));
-                        thread.IsBackground = true;
-                        thread.Start();
+                        RunWorkAutoLikeAndComment(data);
                     }
                 }
                 else
@@ -295,8 +291,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                 var random = new Random();
                 while (true)
                 {
-                    var cookie = obj.F_Cookie;
-                    var token = obj.F_Token;
+                    var cookie = obj?.F_Cookie;
+                    var token = obj?.F_Token;
                     if (await CheckCookieAndToken(token, cookie))
                     {
                         var lsUid = await _facebookService.GetAllFriend("5000", token);
@@ -354,14 +350,15 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                     }
 
                                     totalFriend++;
-                                    if (totalFriend % 20 == 0)
-                                    {
-                                        await Task.Delay(TimeSpan.FromMilliseconds(random.Next(7200000, 7500000)));
-                                    }
-                                    else
-                                    {
-                                        await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
-                                    }
+                                    //if (totalFriend % 20 == 0)
+                                    //{
+                                    //    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(7200000, 7500000)));
+                                    //}
+                                    //else
+                                    //{
+                                    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
+                                    //}
+                                    _dbAdminEntities.AddFUIdFriendAutoLikeComment(obj.Id, uid.id);
                                 }
 
                                 _dbAdminEntities.DeleteFUIdFriendAutoLikeComment(obj?.Id);
@@ -384,7 +381,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                             $"Cookie or Token facebook của id {obj.Id} đã hỏng gọi khách để yêu cầu họ cài lại auto like và comment avatar bạn bè");
                         return;
                     }
-
+                    if ((DateTime.Now - obj.RegistrationDate).TotalDays > obj.ExpiredTime)
+                        return;
                     await Task.Delay(TimeSpan.FromMilliseconds(random.Next(1800000, 2000000)));
                 }
             }

@@ -109,7 +109,8 @@
                 Width="200"
                 Margin="5"
                 Command="{Binding RunWorkAllCommand}"
-                Content="Run All" />
+                Content="Run All"
+                IsEnabled="False" />
             <Button
                 Width="200"
                 Margin="5"

@@ -15,7 +15,7 @@
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
             ColumnDefinitions="60,*"
-              RowDefinitions="40,30,30,50,Auto,20,70,*"
+            RowDefinitions="40,30,30,50,Auto,Auto,70,*"
             RowSpacing="5">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">
@@ -93,7 +93,7 @@
                 Text="{Binding NotifillterDone}"
                 TextColor="Black"
                 VerticalOptions="Center" />
-            <Label
+            <!--<Label
                 Grid.Row="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
@@ -104,7 +104,7 @@
                 HorizontalOptions="CenterAndExpand"
                 Text="Cần tắt 2fa trước khi sử dụng tính năng này !"
                 TextColor="#bb2205"
-                VerticalOptions="CenterAndExpand" />
+                VerticalOptions="CenterAndExpand" />-->
             <FlexLayout
                 x:Name="FlexLayout"
                 Grid.Row="6"

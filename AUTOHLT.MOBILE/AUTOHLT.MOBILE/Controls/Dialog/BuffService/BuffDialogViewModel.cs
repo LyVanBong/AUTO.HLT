@@ -116,6 +116,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             UseServiceCommand = new Command(UseService);
             UnfocusedCommand = new Command<string>(Unfocused);
             ClosePopupCommand = new Command(ClosePopup);
+            IsLoading = true;
         }
 
         private void ClosePopup()
@@ -136,7 +137,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                 if (res > long.Parse(UserMoney))
                 {
                     _pageDialogService.DisplayAlertAsync(Resource._1000021, "Số dư không đủ !", "OK");
-                    Number ="";
+                    Number = "";
                 }
                 else
                 {
@@ -223,42 +224,55 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
 
         public async void OnDialogOpened(IDialogParameters parameters)
         {
-            if (parameters != null)
+            try
             {
-                TextSubmit = parameters.GetValue<string>("ServiceName");
-                Title = Resource._1000058 + " " + TextSubmit;
-                _idProduct = parameters.GetValue<string>("IdProduct");
-                _userName = parameters.GetValue<string>("UserName");
-                var service = parameters.GetValue<string>("Service");
-                var myMoney = await _userService.GetMoneyUser(_userName);
-                if (myMoney != null && myMoney.Code > 0)
+                if (parameters != null)
                 {
-                    UserMoney = myMoney.Data.Replace(".0000", "");
-                }
-                else
-                {
-                    if (RequestClose != null)
-                        RequestClose(null);
-                }
-                var data = await _productService.GetAllProduct();
-                if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
-                {
-                    _productModel = data.Data.ToList().FirstOrDefault(x => x.ID == _idProduct);
-                    if (_productModel != null)
+                    TextSubmit = parameters.GetValue<string>("ServiceName");
+                    Title = Resource._1000058 + " " + TextSubmit;
+                    _idProduct = parameters.GetValue<string>("IdProduct");
+                    _userName = parameters.GetValue<string>("UserName");
+                    var service = parameters.GetValue<string>("Service");
+                    var myMoney = await _userService.GetMoneyUser(_userName);
+                    if (myMoney != null && myMoney.Code > 0)
                     {
-                        Price = _productModel.Price;
-                        NumberService = _productModel.Number;
-                        NoteService = string.Format(Resource._1000090, string.Format(new CultureInfo("en-US"), "{0:0,0}",
-                                decimal.Parse(_productModel.Number)), service,
-                            string.Format(new CultureInfo("en-US"), "{0:0,0}",
-                                decimal.Parse(_productModel.Price)));
+                        UserMoney = myMoney.Data.Replace(".0000", "");
                     }
                     else
                     {
                         if (RequestClose != null)
                             RequestClose(null);
                     }
+
+                    var data = await _productService.GetAllProduct();
+                    if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
+                    {
+                        _productModel = data.Data.ToList().FirstOrDefault(x => x.ID == _idProduct);
+                        if (_productModel != null)
+                        {
+                            Price = _productModel.Price;
+                            NumberService = _productModel.Number;
+                            NoteService = string.Format(Resource._1000090, string.Format(new CultureInfo("en-US"),
+                                    "{0:0,0}",
+                                    decimal.Parse(_productModel.Number)), service,
+                                string.Format(new CultureInfo("en-US"), "{0:0,0}",
+                                    decimal.Parse(_productModel.Price)));
+                        }
+                        else
+                        {
+                            if (RequestClose != null)
+                                RequestClose(null);
+                        }
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
