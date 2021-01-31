@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-    BackgroundColor="{StaticResource HeaderHome}">
+    BackgroundColor="Crimson">
     <ContentPage.Content>
         <ScrollView
             Margin="0"
@@ -26,7 +26,7 @@
                 <BoxView
                     Grid.Row="0"
                     Grid.RowSpan="2"
-                    BackgroundColor="{StaticResource HeaderHome}"
+                    BackgroundColor="Crimson"
                     CornerRadius="{OnPlatform Android='0,0,50,50',
                                               iOS='0,0,30,30'}" />
                 <StackLayout

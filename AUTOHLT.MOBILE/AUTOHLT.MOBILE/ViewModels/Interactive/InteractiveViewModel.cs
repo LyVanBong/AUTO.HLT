@@ -139,7 +139,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
                                     "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
                                 if (result)
                                 {
-                                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
+                                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null,  (res) =>
                                     {
                                         AutoBotHeart(product);
                                     });

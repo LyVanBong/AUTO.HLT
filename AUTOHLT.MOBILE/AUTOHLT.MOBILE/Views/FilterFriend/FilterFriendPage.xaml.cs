@@ -10,7 +10,6 @@ namespace AUTOHLT.MOBILE.Views.FilterFriend
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FilterFriendPage : ContentPage
     {
-        private string _jsData;
         public FilterFriendPage()
         {
             InitializeComponent();

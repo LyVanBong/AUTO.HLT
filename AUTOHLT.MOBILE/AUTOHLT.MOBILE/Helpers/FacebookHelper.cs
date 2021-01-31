@@ -101,7 +101,6 @@ namespace AUTOHLT.MOBILE.Helpers
                 var data = Regex.Match(html, @"origin=page_profile.*?""")?.Value;
                 if (!string.IsNullOrWhiteSpace(data))
                 {
-                    var fan = "";
                     var id = item.UID;
                     var origin = Regex.Match(data, @"origin=(.*?)&")?.Groups[1]?.Value;
                     var pageSuggestionsOnLiking = Regex.Match(data, @"pageSuggestionsOnLiking=(.*?)&")?.Groups[1]?.Value;

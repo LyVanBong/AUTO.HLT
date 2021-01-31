@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Prism.Navigation;
+﻿using Prism.Navigation;
 using Syncfusion.XForms.Buttons;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
@@ -13,14 +10,14 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
         private string fromText = "";
         public string FromText
         {
-            get { return fromText; }
-            set { fromText = value; NotifyPropertyChanged("FromText"); }
+            get => fromText;
+            set => SetProperty(ref fromText, value);
         }
         private string toText = "";
         public string ToText
         {
-            get { return toText; }
-            set { toText = value; NotifyPropertyChanged("ToText"); }
+            get => toText;
+            set => SetProperty(ref toText, value);
         }
         public FContentPage8ViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -34,15 +31,6 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
                        ResetViewButton,
                        GoViewButton
                     };
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
         private ObservableCollection<SfSegmentItem> itemCollection = new ObservableCollection<SfSegmentItem>();
