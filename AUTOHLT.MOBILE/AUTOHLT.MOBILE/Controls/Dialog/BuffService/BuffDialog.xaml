@@ -3,6 +3,7 @@
     x:Class="AUTOHLT.MOBILE.Controls.Dialog.BuffService.BuffDialog"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     xmlns:prism="http://prismlibrary.com"
@@ -85,6 +86,7 @@
             <Entry
                 ClearButtonVisibility="WhileEditing"
                 Keyboard="Numeric"
+                MaxLength="6"
                 ReturnType="Next"
                 Text="{Binding Number}"
                 TextColor="Black">
@@ -112,7 +114,8 @@
             <Editor
                 HeightRequest="160"
                 Keyboard="Text"
-                Text="{Binding Content}">
+                Text="{Binding Content}"
+                TextColor="Black">
                 <Editor.Behaviors>
                     <prism:EventToCommandBehavior
                         Command="{Binding UnfocusedCommand}"
@@ -163,5 +166,11 @@
             Margin="10"
             Padding="0"
             Text="{Binding NoteService}" />
+        <controls:LoadingView
+            Grid.Row="0"
+            Grid.RowSpan="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsLoading}" />
     </Grid>
 </Frame>

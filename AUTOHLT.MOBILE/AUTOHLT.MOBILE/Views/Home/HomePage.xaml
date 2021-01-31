@@ -134,7 +134,8 @@
                                             <TapGestureRecognizer Command="{Binding ShowMyMoneyCommand}" />
                                         </Span.GestureRecognizers>
                                     </Span>
-                                    <Span FontSize="16" Text="{Binding MoneyUser, Converter={StaticResource StringToPrice}}" />
+                                    <Span Text=" " />
+                                    <Span FontSize="16" Text="{Binding MoneyUser, Converter={StaticResource StringToMyMoney}}" />
                                     <Span Text=" " />
                                     <Span
                                         FontFamily="Awesome5ProSolid"

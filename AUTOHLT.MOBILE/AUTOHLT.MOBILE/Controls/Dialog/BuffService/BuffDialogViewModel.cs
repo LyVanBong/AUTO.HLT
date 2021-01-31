@@ -13,6 +13,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
@@ -36,6 +37,14 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         private ITelegramService _telegramService;
         private string _noteService;
         private string _numberService;
+        private bool _isLoading;
+
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
 
         public string NumberService
         {
@@ -117,16 +126,17 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
 
         private void Unfocused(string key)
         {
+            if (IsLoading) return;
+            IsLoading = true;
             if (key == "0")
             {
                 if (Number == null) return;
                 var res = (long.Parse(Price) / long.Parse(NumberService)) *
                           (long.Parse(Number));
-                if (res > int.Parse(UserMoney))
+                if (res > long.Parse(UserMoney))
                 {
-                    var a = int.Parse(UserMoney) / int.Parse(Price);
-                    Amount = a * int.Parse(Price) + "";
-                    Number = a + "";
+                    _pageDialogService.DisplayAlertAsync(Resource._1000021, "Số dư không đủ !", "OK");
+                    Number ="";
                 }
                 else
                 {
@@ -139,58 +149,69 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             }
             else
                 IsEnabledLogin = false;
+
+            IsLoading = false;
         }
 
         private async void UseService()
         {
-            if (!string.IsNullOrWhiteSpace(Number) && !string.IsNullOrWhiteSpace(Content))
+            try
             {
-                var amout = long.Parse(Amount);
-                var user = await _database.GetAccountUser();
-                if (user != null && user.UserName != null)
+                if (IsLoading)
                 {
-                    var money = long.Parse(user.Price.Replace(".0000", ""));
-                    if (amout > 0 && amout <= money)
+                    return;
+                }
+
+                IsLoading = true;
+                if (!string.IsNullOrWhiteSpace(Number) && !string.IsNullOrWhiteSpace(Content))
+                {
+                    var amout = long.Parse(Amount);
+                    var user = await _database.GetAccountUser();
+                    var userName = user?.UserName;
+                    var idAccount = user?.ID;
+                    if (user != null && user.UserName != null)
                     {
-                        var data = money - amout;
-                        var update = await _userService.SetMoneyUser(user.UserName, data + "");
-                        if (update != null && update.Code > 0)
+                        var money = long.Parse(user.Price.Replace(".0000", ""));
+                        if (amout > 0 && amout <= money)
                         {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                            //Number = "";
-                            var myMoney = await _userService.GetMoneyUser(_userName);
-                            if (myMoney != null && myMoney.Code > 0)
+                            var data = money - amout;
+                            var update = await _userService.SetMoneyUser(_userName, data + "");
+                            if (update != null && update.Code > 0)
                             {
-                                UserMoney = myMoney.Data.Replace(".0000", "");
+                                var num = long.Parse(Number) * long.Parse(NumberService);
+                                var historyService = await _productService.AddHistoryUseService(_idProduct, Title,
+                                    _userName,
+                                    num + "", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
+                                var message = $"{Title}\n" +
+                                              $"Số lượng: {Number}\n" +
+                                              $"Nội dung: {Content}\n" +
+                                              $"Id người dùng dịch vụ: {user.ID}\n" +
+                                              $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                                var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                    message);
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
                             }
                             else
                             {
-                                if (RequestClose != null)
-                                    RequestClose(null);
+                                await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
                             }
-
-                            var num = long.Parse(Number) * long.Parse(NumberService);
-                            var historyService = await _productService.AddHistoryUseService(_idProduct, Title, _userName,
-                                num + "", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
-                            var message = $"{Title}\n" +
-                                          $"Số lượng: {Number}\n" +
-                                          $"Nội dung: {Content}\n" +
-                                          $"Id người dùng dịch vụ: {user.ID}\n" +
-                                          $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
-                            var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                message);
                         }
                         else
                         {
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                            await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
+                            //Number = "";
                         }
                     }
-                    else
-                    {
-                        await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
-                        //Number = "";
-                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+                ClosePopup();
             }
         }
 
