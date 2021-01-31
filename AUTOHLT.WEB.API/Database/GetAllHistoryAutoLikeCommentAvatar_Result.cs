@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AUTO.HLT.ADMIN.Databases
+namespace AUTOHLT.WEB.API.Database
 {
     using System;
     

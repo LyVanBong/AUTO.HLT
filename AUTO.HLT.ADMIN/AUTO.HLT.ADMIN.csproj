@@ -77,30 +77,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Databases\autohltadmin.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>autohltadmin.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Databases\autohltadmin.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>autohltadmin.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Databases\autohltadmin.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>autohltadmin.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Databases\GetAllFUIdFriendAutoLikeComment_Result.cs">
-      <DependentUpon>autohltadmin.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Databases\GetAllHistoryAutoLikeCommentAvatar_Result.cs">
-      <DependentUpon>autohltadmin.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Databases\GetAllUserAutoLikeComment_Result.cs">
-      <DependentUpon>autohltadmin.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AddWork\WorkModel.cs" />
     <Compile Include="Models\Facebook\FillterFriendModel.cs" />
     <Compile Include="Models\Facebook\FriendsDoNotInteractModel.cs" />
@@ -185,13 +161,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="App.Config" />
-    <EntityDeploy Include="Databases\autohltadmin.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>autohltadmin.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Databases\autohltadmin.edmx.diagram">
-      <DependentUpon>autohltadmin.edmx</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -235,18 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Databases\autohltadmin.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>autohltadmin.edmx</DependentUpon>
-      <LastGenOutput>autohltadmin.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Databases\autohltadmin.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>autohltadmin.edmx</DependentUpon>
-      <LastGenOutput>autohltadmin.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

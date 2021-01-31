@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AutoLikeCommentAvatarController.cs" />
     <Compile Include="Controllers\MoneyTransferHistoryController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
@@ -144,6 +145,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AutoHLTDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Database\GetAllFUIdFriendAutoLikeComment_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\GetAllHistoryAutoLikeCommentAvatar_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\GetAllHistoryUserSevice_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
@@ -157,6 +164,9 @@
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\GetAllTransferMoney_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\GetAllUserAutoLikeComment_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\GetAllUserFacebook_Result.cs">
@@ -191,6 +201,7 @@
     </Compile>
     <Compile Include="Models\AddNotificationModel.cs" />
     <Compile Include="Models\AddTransferModel.cs" />
+    <Compile Include="Models\AdduserAutoLikeCommentModel.cs" />
     <Compile Include="Models\BalanceTwilioModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MoneyModel.cs" />
