@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Resources.Fonts;
 using AUTOHLT.MOBILE.Views.Agency;
 using AUTOHLT.MOBILE.Views.TopUp;
 using AUTOHLT.MOBILE.Views.VipInteraction;
@@ -236,7 +237,15 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private ITelegramService _telegramService;
         private BadgeType _badgeType;
         private string _idProductAddFriends = "85e7192b-7a30-45ff-b327-bd9c25c8dfcb";
+        private string _dataMyMoney;
+        private string _iconShowMoney;
 
+        public ICommand ShowMyMoneyCommand { get; private set; }
+        public string IconShowMoney
+        {
+            get => _iconShowMoney;
+            set => SetProperty(ref _iconShowMoney, value);
+        }
 
         public ICommand TopUpMoneyCommand { get; private set; }
         public BadgeType BadgeType
@@ -295,6 +304,29 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             BuffServiceCommand = new Command<string>(BuffService);
             NavigationCommand = new Command<Object>(NavigationPageService);
             TopUpMoneyCommand = new Command(TopUpMoney);
+            ShowMyMoneyCommand = new Command(ShowMyMoney);
+        }
+
+        private void ShowMyMoney()
+        {
+            try
+            {
+                if (Preferences.Get("IsShowMoney", false))
+                {
+                    Preferences.Set("IsShowMoney", false);
+                    IconShowMoney = FontAwesome5DuotoneSolid.EyeSlashSecondary;
+                }
+                else
+                {
+                    Preferences.Set("IsShowMoney", true);
+                    IconShowMoney = FontAwesome5DuotoneSolid.EyeSecondary;
+                }
+                FormatMoney();
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private void TopUpMoney()
@@ -336,7 +368,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     if (para != null)
                         key = int.Parse(para);
                 }
-                
+
                 if (key == 4)
                 {
                     await AddFriends();
@@ -447,11 +479,11 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                                             {
                                                 if (dataMoneyUser.Code > 0)
                                                 {
-                                                    MoneyUser = dataMoneyUser.Data.Replace(".0000", "");
+                                                    _dataMyMoney = dataMoneyUser.Data.Replace(".0000", "");
                                                 }
                                                 else
                                                 {
-                                                    MoneyUser = "0";
+                                                    _dataMyMoney = "0";
                                                 }
                                             }
                                         }
@@ -526,11 +558,11 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                                         {
                                             if (dataMoneyUser.Code > 0)
                                             {
-                                                MoneyUser = dataMoneyUser.Data.Replace(".0000", "");
+                                                _dataMyMoney = dataMoneyUser.Data.Replace(".0000", "");
                                             }
                                             else
                                             {
-                                                MoneyUser = "0";
+                                                _dataMyMoney = "0";
                                             }
                                         }
                                     }
@@ -590,9 +622,69 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
             await InitializeDataHome();
+            FormatMoney();
         }
+
+        private void FormatMoney()
+        {
+            try
+            {
+                if (!Preferences.ContainsKey("IsShowMoney"))
+                {
+                    Preferences.Set("IsShowMoney", false);
+                    IconShowMoney = FontAwesome5DuotoneSolid.EyeSlashSecondary;
+                    var moneyHiden = string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(_dataMyMoney)).ToCharArray();
+                    var str = "";
+                    foreach (var item in moneyHiden)
+                    {
+                        if (item == ',')
+                        {
+                            str += " ";
+                        }
+                        else
+                        {
+                            str += "*";
+                        }
+
+                        MoneyUser = str;
+                    }
+                }
+                else
+                {
+                    if (Preferences.Get("IsShowMoney", false))
+                    {
+                        IconShowMoney = FontAwesome5DuotoneSolid.EyeSecondary;
+                        MoneyUser = _dataMyMoney;
+                    }
+                    else
+                    {
+                        IconShowMoney = FontAwesome5DuotoneSolid.EyeSlashSecondary;
+                        var moneyHiden = string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(_dataMyMoney))
+                            .ToCharArray();
+                        var str = "";
+                        foreach (var item in moneyHiden)
+                        {
+                            if (item == ',')
+                            {
+                                str += " ";
+                            }
+                            else
+                            {
+                                str += "*";
+                            }
+
+                            MoneyUser = str;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+
         /// <summary>
         /// hàm khởi tạo dữ liệu ban đầu cho trang home
         /// </summary>
@@ -613,11 +705,11 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 {
                     if (money.Code > 0)
                     {
-                        MoneyUser = money.Data.Replace(".0000", "");
+                        _dataMyMoney = money.Data.Replace(".0000", "");
                     }
                     else
                     {
-                        MoneyUser = "0";
+                        _dataMyMoney = "0";
                     }
                 }
                 if (ServiceData != null && ServiceData.Any()) return;
