@@ -9,6 +9,10 @@
           <Parameter Name="Id" Type="varchar" Mode="In" />
           <Parameter Name="UId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="AddHDSD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Url" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Note" Type="ntext" Mode="In" />
+        </Function>
         <Function Name="AddHistoryAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="varchar(max)" Mode="In" />
           <Parameter Name="UId" Type="varchar" Mode="In" />
@@ -63,6 +67,9 @@
         <Function Name="DeleteFUIdFriendAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="DeleteHDSD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteIDTypeFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Uid" Type="varchar(max)" Mode="In" />
         </Function>
@@ -93,6 +100,7 @@
         <Function Name="GetAllUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUserAutoLikeComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUserFacebook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDataHDSD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetHistoryService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id_user" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -426,13 +434,13 @@
             <Parameter Name="Avatar_Friend" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteAutoLikeCmtAvatar">
-            <Parameter Name="Id" Mode="In" Type="String" />
+          <Parameter Name="Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteFUIdFriendAutoLikeComment">
-            <Parameter Name="Id" Mode="In" Type="String" />
+          <Parameter Name="Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllFUIdFriendAutoLikeComment" ReturnType="Collection(bsoft_autohltModel.GetAllFUIdFriendAutoLikeComment_Result)">
-            <Parameter Name="Id" Mode="In" Type="String" />
+          <Parameter Name="Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllHistoryAutoLikeCommentAvatar" ReturnType="Collection(bsoft_autohltModel.GetAllHistoryAutoLikeCommentAvatar_Result)" />
           <FunctionImport Name="GetAllUserAutoLikeComment" ReturnType="Collection(bsoft_autohltModel.GetAllUserAutoLikeComment_Result)" />
@@ -454,6 +462,14 @@
             <Parameter Name="F_Cookie" Mode="In" Type="String" />
             <Parameter Name="F_Tooken" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AddHDSD">
+            <Parameter Name="Url" Mode="In" Type="String" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteHDSD">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetDataHDSD" ReturnType="Collection(bsoft_autohltModel.GetDataHDSD_Result)" />
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -602,6 +618,11 @@
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Picture" Nullable="true" />
           <Property Type="Boolean" Name="IsRunWork" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetDataHDSD_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Url" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -861,6 +882,17 @@
           <FunctionImportMapping FunctionImportName="UpdateAutoLikeCmtAvatarInfoFace" FunctionName="bsoft_autohltModel.Store.UpdateAutoLikeCmtAvatarInfoFace" />
           <FunctionImportMapping FunctionImportName="UpdateAutoLikeCmtAvatarInfoFaceRun" FunctionName="bsoft_autohltModel.Store.UpdateAutoLikeCmtAvatarInfoFaceRun" />
           <FunctionImportMapping FunctionImportName="UpdateUserAutoLikeComment" FunctionName="bsoft_autohltModel.Store.UpdateUserAutoLikeComment" />
+          <FunctionImportMapping FunctionImportName="AddHDSD" FunctionName="bsoft_autohltModel.Store.AddHDSD" />
+          <FunctionImportMapping FunctionImportName="DeleteHDSD" FunctionName="bsoft_autohltModel.Store.DeleteHDSD" />
+          <FunctionImportMapping FunctionImportName="GetDataHDSD" FunctionName="bsoft_autohltModel.Store.GetDataHDSD">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.GetDataHDSD_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

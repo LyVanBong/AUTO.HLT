@@ -788,5 +788,32 @@ namespace AUTOHLT.WEB.API.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserAutoLikeComment", idParameter, registrationDateParameter, expiredTimeParameter, f_CookieParameter, f_TookenParameter);
         }
+    
+        public virtual int AddHDSD(string url, string note)
+        {
+            var urlParameter = url != null ?
+                new ObjectParameter("Url", url) :
+                new ObjectParameter("Url", typeof(string));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddHDSD", urlParameter, noteParameter);
+        }
+    
+        public virtual int DeleteHDSD(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteHDSD", idParameter);
+        }
+    
+        public virtual ObjectResult<GetDataHDSD_Result> GetDataHDSD()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDataHDSD_Result>("GetDataHDSD");
+        }
     }
 }

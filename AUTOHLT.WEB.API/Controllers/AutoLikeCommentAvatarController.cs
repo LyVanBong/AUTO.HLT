@@ -69,7 +69,7 @@ namespace AUTOHLT.WEB.API.Controllers
             return Ok(new ResponseModel<string>()
             {
                 Code = -37463,
-                Message = "thanh cong",
+                Message = "Loi",
                 Data = null
             });
         }

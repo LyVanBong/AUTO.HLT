@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AutoLikeCommentAvatarController.cs" />
+    <Compile Include="Controllers\HuongDanSuDungController.cs" />
     <Compile Include="Controllers\MoneyTransferHistoryController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProductTypeController.cs" />
@@ -175,6 +176,9 @@
     <Compile Include="Database\GetAllUser_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\GetDataHDSD_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\GetHistoryService_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
@@ -203,6 +207,7 @@
     <Compile Include="Models\AddTransferModel.cs" />
     <Compile Include="Models\AdduserAutoLikeCommentModel.cs" />
     <Compile Include="Models\BalanceTwilioModel.cs" />
+    <Compile Include="Models\HuongDanSuDungModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MoneyModel.cs" />
     <Compile Include="Models\NguoiGioiThieuModel.cs" />
