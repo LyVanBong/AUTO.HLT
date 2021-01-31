@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using AUTOHLT.MOBILE.Configurations;
+using System;
+using Microsoft.AppCenter.Crashes;
+using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
 
 namespace AUTOHLT.MOBILE.Views.TopUp
@@ -19,7 +16,26 @@ namespace AUTOHLT.MOBILE.Views.TopUp
 
         private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
         {
-           Xamarin.Essentials.PhoneDialer.Open("0824726888");
+            try
+            {
+                PhoneDialer.Open("0824726888");
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        private async void TapGestureRecognizerHDSD_OnTapped(object sender, EventArgs e)
+        {
+            try
+            {
+                await Browser.OpenAsync(AppConstants.HdNapTien);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
     }
 }

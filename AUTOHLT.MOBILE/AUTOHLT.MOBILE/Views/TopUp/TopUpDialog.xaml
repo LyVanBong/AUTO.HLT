@@ -17,7 +17,7 @@
     <Grid
         BackgroundColor="White"
         ColumnDefinitions="*,60"
-        RowDefinitions="40,50,40,40,40,40,*">
+        RowDefinitions="40,50,40,40,40,40,Auto,*">
         <BoxView
             Grid.Row="0"
             Grid.Column="0"
@@ -117,6 +117,45 @@
                     </Span>
                 </FormattedString>
             </Label.FormattedText>
+        </Label>
+        <Label
+            Grid.Row="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,0,20,0"
+            HorizontalOptions="CenterAndExpand"
+            HorizontalTextAlignment="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="&#10;" />
+                    <Span
+                        FontFamily="Awesome5DuotoneSolid"
+                        FontSize="20"
+                        Text="{x:Static icon:FontAwesome5DuotoneSolid.BookAltPrimary}"
+                        TextColor="#1a508b" />
+                    <Span Text=" " />
+                    <Span
+                        FontSize="20"
+                        Text="HƯỚNG DẪN SỬ DỤNG"
+                        TextColor="#111d5e" />
+                    <Span Text="&#10;" />
+                    <Span
+                        FontFamily="Awesome5DuotoneSolid"
+                        FontSize="15"
+                        Text="{x:Static icon:FontAwesome5DuotoneSolid.PlaySecondary}"
+                        TextColor="#eb596e" />
+                    <Span Text=" " />
+                    <Span
+                        FontSize="15"
+                        Text="XEM VIDEO"
+                        TextColor="#eb596e"
+                        TextDecorations="Underline" />
+                    <Span Text="&#10;" />
+                </FormattedString>
+            </Label.FormattedText>
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizerHDSD_OnTapped" />
+            </Label.GestureRecognizers>
         </Label>
     </Grid>
 </Frame>

@@ -2,6 +2,21 @@
 {
     public static class AppConstants
     {
+        public const string HdNapTien = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdChuyenTien = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTangLike = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTuongTacVip = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTangMat = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTangBanBe = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTuDongThaTim = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTangTheoDoi = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdTangLikePage = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdChocBanbe = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdMoKhoaFb = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdBaoMatFb = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdLocBanBe = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdHoTro = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+        public const string HdDangKyDayLy = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         /// <summary>
         /// id user
         /// </summary>
