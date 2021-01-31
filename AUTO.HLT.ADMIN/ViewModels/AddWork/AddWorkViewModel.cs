@@ -388,7 +388,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     await Task.Delay(TimeSpan.FromMilliseconds(random.Next(1800000, 2000000)));
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 await _telegramService.SendMessageToTelegram(_idChatWork, $"ID {obj.Id} loi vui long kiem tra lai");
             }
