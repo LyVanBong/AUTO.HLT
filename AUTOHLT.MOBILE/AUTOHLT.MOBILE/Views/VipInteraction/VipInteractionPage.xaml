@@ -51,7 +51,7 @@
                     </FormattedString>
                 </Label.FormattedText>
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizerHDSD_OnTapped" />
+                    <TapGestureRecognizer Command="{Binding HDSDCommand}" />
                 </Label.GestureRecognizers>
             </Label>
 

@@ -12,6 +12,7 @@ using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
+using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
@@ -37,7 +38,9 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
         private IDialogService _dialogService;
         private ITelegramService _telegramService;
         private List<ListRegisterProductModel> _lsDangky = new List<ListRegisterProductModel>();
+        private IGuideService _guideService;
 
+        public ICommand HDSDCommand { get; private set; }
         public ICommand AutoBotHeartCommand { get; private set; }
         public List<ProductModel> ProductData
         {
@@ -50,8 +53,9 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
             get => _isLoading;
             set => SetProperty(ref _isLoading, value);
         }
-        public VipInteractionViewModel(INavigationService navigationService, IDatabaseService databaseService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IFacebookService facebookService, IDialogService dialogService, ITelegramService telegramService) : base(navigationService)
+        public VipInteractionViewModel(INavigationService navigationService, IDatabaseService databaseService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IFacebookService facebookService, IDialogService dialogService, ITelegramService telegramService,IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _telegramService = telegramService;
             _dialogService = dialogService;
             _facebookService = facebookService;
@@ -60,7 +64,22 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
             _productService = productService;
             _databaseService = databaseService;
             AutoBotHeartCommand = new Command<ProductModel>(AutoBotHeart);
+            HDSDCommand = new Command(HDSDApp);
         }
+
+        private async void HDSDApp()
+        {
+            try
+            {
+                var data =await _guideService.GetGuide(10);
+                await Browser.OpenAsync(data?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
         /// <summary>
         /// lay danh sach ban be
         /// </summary>

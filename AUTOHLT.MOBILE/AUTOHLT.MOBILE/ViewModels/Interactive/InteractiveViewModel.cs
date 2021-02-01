@@ -17,6 +17,7 @@ using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Facebook;
+using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Telegram;
 using Prism.Services;
 using Prism.Services.Dialogs;
@@ -37,7 +38,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
         private IDialogService _dialogService;
         private ITelegramService _telegramService;
         private List<ListRegisterProductModel> _lsDangky = new List<ListRegisterProductModel>();
-
+        private IGuideService _guideService;
+        public ICommand HDSDCommand { get; private set; }
         public ICommand AutoBotHeartCommand { get; private set; }
         public List<ProductModel> ProductData
         {
@@ -51,8 +53,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
             set => SetProperty(ref _isLoading, value);
         }
 
-        public InteractiveViewModel(INavigationService navigationService, IDatabaseService databaseService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IFacebookService facebookService, IDialogService dialogService, ITelegramService telegramService) : base(navigationService)
+        public InteractiveViewModel(INavigationService navigationService, IDatabaseService databaseService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IFacebookService facebookService, IDialogService dialogService, ITelegramService telegramService, IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _telegramService = telegramService;
             _dialogService = dialogService;
             _facebookService = facebookService;
@@ -61,7 +64,23 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
             _productService = productService;
             _databaseService = databaseService;
             AutoBotHeartCommand = new Command<ProductModel>(AutoBotHeart);
+            HDSDCommand = new Command(HDSDApp);
         }
+
+        private async void HDSDApp()
+        {
+            try
+            {
+                var data = await _guideService.GetGuide(1);
+
+                await Browser.OpenAsync(data?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
         /// <summary>
         /// lay danh sach ban be
         /// </summary>
@@ -139,10 +158,10 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
                                     "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
                                 if (result)
                                 {
-                                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null,  (res) =>
-                                    {
-                                        AutoBotHeart(product);
-                                    });
+                                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, (res) =>
+                                   {
+                                       AutoBotHeart(product);
+                                   });
                                 }
                             }
                         }

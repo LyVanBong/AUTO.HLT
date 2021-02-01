@@ -87,9 +87,45 @@
                 IsEnabled="{Binding IsEnabledButton}"
                 Text="Đăng ký đại lý" />
 
+            <Label
+                Grid.Row="4"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="&#10;" />
+                        <Span
+                            FontFamily="Awesome5DuotoneSolid"
+                            FontSize="20"
+                            Text="{x:Static icon:FontAwesome5DuotoneSolid.BookAltPrimary}"
+                            TextColor="#1a508b" />
+                        <Span Text=" " />
+                        <Span
+                            FontSize="20"
+                            Text="HƯỚNG DẪN SỬ DỤNG"
+                            TextColor="#111d5e" />
+                        <Span Text="&#10;" />
+                        <Span
+                            FontFamily="Awesome5DuotoneSolid"
+                            FontSize="15"
+                            Text="{x:Static icon:FontAwesome5DuotoneSolid.PlaySecondary}"
+                            TextColor="#eb596e" />
+                        <Span Text=" " />
+                        <Span
+                            FontSize="15"
+                            Text="XEM VIDEO"
+                            TextColor="#eb596e"
+                            TextDecorations="Underline" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HDSDCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="4"
+                Grid.RowSpan="5"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

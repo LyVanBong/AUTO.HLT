@@ -4,6 +4,7 @@ using Acr.UserDialogs;
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Telegram;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
@@ -21,7 +22,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Agency
         private string _content;
         private bool _isEnabledButton;
         private IPageDialogService _pageDialogService;
-
+        private IGuideService _guideService;
+        public ICommand HDSDCommand { get; private set; }
         public ICommand SuportCustomerCommand { get; private set; }
         public bool IsEnabledButton
         {
@@ -43,15 +45,31 @@ namespace AUTOHLT.MOBILE.ViewModels.Agency
             set => SetProperty(ref _isLoading, value);
         }
 
-        public AgencyViewModel(INavigationService navigationService, IDatabaseService databaseService, ITelegramService telegramService, IPageDialogService pageDialogService) : base(navigationService)
+        public AgencyViewModel(INavigationService navigationService, IDatabaseService databaseService, ITelegramService telegramService, IPageDialogService pageDialogService,IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             _telegramService = telegramService;
             CallAdminCommand = new Command(CallAdmin);
             UnfocusedCommand = new Command(Unfocused);
             SuportCustomerCommand = new Command(SuportCustomer);
+            HDSDCommand = new Command(HDSDApp);
         }
+
+        private async void HDSDApp()
+        {
+            try
+            {
+                var data = await _guideService.GetGuide(6);
+                await Browser.OpenAsync(data?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
         private async void SuportCustomer()
         {
             try

@@ -14,6 +14,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Services.Guide;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
@@ -32,7 +34,7 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
         private IDialogService _dialogService;
         private List<ListRegisterProductModel> _regis;
         private List<ProductModel> _productData;
-
+        private IGuideService _guideService;
         public List<ProductModel> ProductData
         {
             get => _productData;
@@ -81,8 +83,10 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffEyesViewViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService, IDialogService dialogService) : base(navigationService)
+        public ICommand HDSDCommand { get; private set; }
+        public BuffEyesViewViewModel(INavigationService navigationService, IProductService productService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService, IDialogService dialogService,IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _dialogService = dialogService;
             _userService = userService;
             _pageDialogService = pageDialogService;
@@ -90,8 +94,20 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffEyesView
             _productService = productService;
             IsLoading = true;
             BuffViewEyeCommand = new Command<ProductModel>(BuffViewEye);
+            HDSDCommand = new Command(HDSDApp);
         }
-
+        private async void HDSDApp()
+        {
+            try
+            {
+                var data = await _guideService.GetGuide(2);
+                await Browser.OpenAsync(data?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
         private async void BuffViewEye(ProductModel product)
         {
             try

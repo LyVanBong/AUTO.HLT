@@ -13,7 +13,10 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Models.Guide;
+using AUTOHLT.MOBILE.Services.Guide;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
@@ -38,8 +41,9 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
         private string _noteService;
         private string _numberService;
         private bool _isLoading;
-
-
+        private IGuideService _guideService;
+        public ICommand HDSDCommand { get; private set; }
+        private GuideModel _guide;
         public bool IsLoading
         {
             get => _isLoading;
@@ -106,8 +110,9 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             set => SetProperty(ref _number, value);
         }
 
-        public BuffDialogViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService) : base(navigationService)
+        public BuffDialogViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService,IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _telegramService = telegramService;
             _database = databaseService;
             _pageDialogService = pageDialogService;
@@ -117,6 +122,28 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             UnfocusedCommand = new Command<string>(Unfocused);
             ClosePopupCommand = new Command(ClosePopup);
             IsLoading = true;
+            HDSDCommand = new Command(HDSDApp);
+        }
+
+        private async void HDSDApp()
+        {
+            try
+            {
+                // sub
+                if (_idProduct== "1ad3c424-5333-46b0-a0e8-5c31a6dbb161")
+                {
+                    _guide = await _guideService.GetGuide(7);
+                }
+                else // like
+                {
+                    _guide = await _guideService.GetGuide(8);
+                }
+                await Browser.OpenAsync(_guide?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
 
         private void ClosePopup()

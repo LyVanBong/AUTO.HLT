@@ -6,7 +6,7 @@ using AUTOHLT.WEB.API.Models;
 
 namespace AUTOHLT.WEB.API.Controllers
 {
-    [RoutePrefix("HDSD")]
+    [RoutePrefix("api/v1/HDSD")]
     public class HuongDanSuDungController : ApiController
     {
         private bsoft_autohltEntities _entities;

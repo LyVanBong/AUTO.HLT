@@ -15,6 +15,9 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Services.Guide;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
@@ -29,6 +32,8 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
         private List<ListRegisterProductModel> _regis;
         private IPageDialogService _pageDialogService;
         private IDialogService _dialogService;
+        private IGuideService _guideService;
+        public ICommand HDSDCommand { get; private set; }
 
         public ICommand BuffLikeCommand { get; private set; }
         public ObservableCollection<ProductModel> ProductData
@@ -43,14 +48,29 @@ namespace AUTOHLT.MOBILE.ViewModels.BuffLikes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IDatabaseService databaseService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
+        public BuffLikeViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IDatabaseService databaseService, IPageDialogService pageDialogService, IDialogService dialogService,IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             _userService = userService;
             _productService = productService;
             BuffLikeCommand = new Command<ProductModel>(BuffLike);
+            HDSDCommand = new Command(HDSDApp);
+        }
+
+        private async void HDSDApp()
+        {
+            try
+            {
+                var data = await _guideService.GetGuide(5);
+                await Browser.OpenAsync(data?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
 
         private async void BuffLike(ProductModel obj)

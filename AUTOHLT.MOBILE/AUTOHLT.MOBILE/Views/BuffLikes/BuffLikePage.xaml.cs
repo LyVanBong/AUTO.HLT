@@ -24,16 +24,5 @@ namespace AUTOHLT.MOBILE.Views.BuffLikes
             safeInsets.Bottom = -20;
             Padding = safeInsets;
         }
-        private async void TapGestureRecognizerHDSD_OnTapped(object sender, EventArgs e)
-        {
-            try
-            {
-                await Browser.OpenAsync(AppConstants.HdTangLike);
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex);
-            }
-        }
     }
 }

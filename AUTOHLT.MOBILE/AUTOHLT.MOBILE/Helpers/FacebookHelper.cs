@@ -30,7 +30,7 @@ namespace AUTOHLT.MOBILE.Helpers
         {
             try
             {
-                var myApp = Application.Current as App;
+                var myApp =Application.Current as App;
                 if (myApp != null)
                 {
                     var facebook = myApp.Container.Resolve<IFacebookService>();

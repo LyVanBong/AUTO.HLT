@@ -5,6 +5,7 @@ using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
+using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.HistoryService;
 using AUTOHLT.MOBILE.Services.Login;
 using AUTOHLT.MOBILE.Services.Product;
@@ -96,6 +97,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register Service
 
+            containerRegistry.Register<IGuideService, GuideService>();
             containerRegistry.Register<IFacebookService, FacebookeService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
             containerRegistry.Register<ITelegramService, TelegramService>();
