@@ -1,5 +1,4 @@
-﻿using AUTO.HLT.ADMIN.Databases;
-using AUTO.HLT.ADMIN.Models.AddWork;
+﻿using AUTO.HLT.ADMIN.Models.AddWork;
 using AUTO.HLT.ADMIN.Models.Facebook;
 using AUTO.HLT.ADMIN.Models.RequestProviderModel;
 using AUTO.HLT.ADMIN.Services.Facebook;
@@ -16,6 +15,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Input;
+using AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar;
+using AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar;
 
 namespace AUTO.HLT.ADMIN.ViewModels.AddWork
 {
@@ -28,11 +29,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         private string _cookie;
         private string _token;
         private DateTime _todayTime;
-        private bsoft_autohltEntities _dbAdminEntities;
-        private ObservableCollection<GetAllUserAutoLikeComment_Result> _dataUserAutoLikeCommentAvatar;
-        private GetAllUserAutoLikeComment_Result _itemUserAuto;
         private string _searchUser;
-        private List<GetAllUserAutoLikeComment_Result> _dataUser = new List<GetAllUserAutoLikeComment_Result>();
         private IFacebookService _facebookService;
 
         private string[] _cmtEmojis = new string[]
@@ -42,6 +39,9 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
 
         private ITelegramService _telegramService;
         private string _idChatWork = "-537876883";
+        private IAutoAvatarService _autoAvatarService;
+        private UserAutoModel _itemUserAuto;
+        private ObservableCollection<UserAutoModel> _dataUserAutoLikeCommentAvatar;
 
 
         public ICommand RunWorkAllCommand { get; private set; }
@@ -53,18 +53,6 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         }
 
         public ICommand SearchUserAutoCommand { get; private set; }
-
-        public GetAllUserAutoLikeComment_Result ItemUserAuto
-        {
-            get => _itemUserAuto;
-            set => SetProperty(ref _itemUserAuto, value, SelectItemUserAuto);
-        }
-
-        public ObservableCollection<GetAllUserAutoLikeComment_Result> DataUserAutoLikeCommentAvatar
-        {
-            get => _dataUserAutoLikeCommentAvatar;
-            set => SetProperty(ref _dataUserAutoLikeCommentAvatar, value);
-        }
 
         public DateTime TodayTime
         {
@@ -110,12 +98,26 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             set => SetProperty(ref _work, value);
         }
 
-        public AddWorkViewModel(IRegionManager regionManager, IFacebookService facebookService, ITelegramService telegramService) : base(regionManager)
+        public ObservableCollection<UserAutoModel> DataUserAutoLikeCommentAvatar
         {
+            get => _dataUserAutoLikeCommentAvatar;
+            set => SetProperty(ref _dataUserAutoLikeCommentAvatar, value);
+        }
+
+        public List<UserAutoModel> _dataUser { get; set; }
+
+        public UserAutoModel ItemUserAuto
+        {
+            get => _itemUserAuto;
+            set => SetProperty(ref _itemUserAuto, value, SelectItemUserAuto);
+        }
+
+        public AddWorkViewModel(IRegionManager regionManager, IFacebookService facebookService, ITelegramService telegramService, IAutoAvatarService autoAvatarService) : base(regionManager)
+        {
+            _autoAvatarService = autoAvatarService;
             _telegramService = telegramService;
             _facebookService = facebookService;
             SaveAndRunWorkCommand = new DelegateCommand(SaveAndRunWork);
-            _dbAdminEntities = new bsoft_autohltEntities();
             SearchUserAutoCommand = new DelegateCommand(SearchUserAuto);
             DeleteWorkCommand = new DelegateCommand(DeleteWork);
             RunWorkAllCommand = new DelegateCommand(RunWorkAll);
@@ -128,10 +130,11 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                 var countWork = 0;
                 foreach (var data in DataUserAutoLikeCommentAvatar)
                 {
-                    //if (data.IsRunWork == true)
-                    //    continue;
-                    new Thread(() => RunWorkAutoLikeAndComment(data)).Start();
-                    countWork++;
+                    if ((DateTime.Now - data.RegistrationDate).TotalDays < data.ExpiredTime)
+                    {
+                        new Thread(() => RunWorkAutoLikeAndComment(data)).Start();
+                        countWork++;
+                    }
                 }
 
                 MessageBox.Show("Thanh cong", "Thong bao", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -143,12 +146,12 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             GetDataUserAuto();
         }
 
-        private void DeleteWork()
+        private async void DeleteWork()
         {
             if (!string.IsNullOrWhiteSpace(Id))
             {
-                var dele = _dbAdminEntities.DeleteAutoLikeCmtAvatar(Id);
-                if (dele > 0)
+                var dele = await _autoAvatarService.DeleteUserAuto(Id);
+                if (dele != null && dele.Code > 0 && dele.Data != null)
                 {
                     Id = EndDate = Token = Cookie = "";
                     GetDataUserAuto();
@@ -170,7 +173,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         {
             if (!string.IsNullOrWhiteSpace(SearchUser))
             {
-                DataUserAutoLikeCommentAvatar = new ObservableCollection<GetAllUserAutoLikeComment_Result>(_dataUser.Where(x => x.Id == SearchUser));
+                DataUserAutoLikeCommentAvatar = new ObservableCollection<UserAutoModel>(_dataUser.Where(x => x.Id == SearchUser));
             }
             else
             {
@@ -192,13 +195,13 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             }
         }
 
-        private void SaveAndRunWork()
+        private async void SaveAndRunWork()
         {
             if (!string.IsNullOrWhiteSpace(Id) && !string.IsNullOrWhiteSpace(EndDate) && !string.IsNullOrWhiteSpace(Cookie) && !string.IsNullOrWhiteSpace(Token))
             {
                 if (int.TryParse(EndDate, out var result))
                 {
-                    var data = new GetAllUserAutoLikeComment_Result()
+                    var data = new UserAutoModel()
                     {
                         RegistrationDate = DateCreate,
                         ExpiredTime = result,
@@ -208,8 +211,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     };
                     if ((DateTime.Now - data.RegistrationDate).TotalDays < data.ExpiredTime)
                     {
-                        var update =
-                            _dbAdminEntities.UpdateUserAutoLikeComment(Id, DateCreate, result, Cookie, Token);
+                        var update = await _autoAvatarService.AddUserAuto(data.Id, data.RegistrationDate.ToString(), data.ExpiredTime + "", data.F_Cookie, data.F_Token);
                         GetDataUserAuto();
                         RunWorkAutoLikeAndComment(data);
                     }
@@ -227,17 +229,21 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             }
         }
 
-        private async void RunWorkAutoLikeAndComment(GetAllUserAutoLikeComment_Result data)
+        private async void RunWorkAutoLikeAndComment(UserAutoModel data)
         {
             await _telegramService.SendMessageToTelegram(_idChatWork, $"Bắt đầu chạy auto like và comment cho ID {data.Id}\nVào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")}");
             UseService(data);
         }
 
-        private void GetDataUserAuto()
+        private async void GetDataUserAuto()
         {
-            _dataUser = _dbAdminEntities.GetAllUserAutoLikeComment().ToList();
-            DataUserAutoLikeCommentAvatar =
-                new ObservableCollection<GetAllUserAutoLikeComment_Result>(_dataUser);
+            var data = await _autoAvatarService.GetAllUserAuto();
+            if (data != null && data.Code > 0 && data.Data != null)
+            {
+                _dataUser = data.Data;
+                DataUserAutoLikeCommentAvatar =
+                    new ObservableCollection<UserAutoModel>(_dataUser);
+            }
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -284,7 +290,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             }
         }
 
-        private async void UseService(GetAllUserAutoLikeComment_Result obj)
+        private async void UseService(UserAutoModel obj)
         {
             try
             {
@@ -302,15 +308,16 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         {
                             try
                             {
-                                _dbAdminEntities.UpdateAutoLikeCmtAvatarInfoFace(obj.Id, infoFace.id, infoFace.name,
-                                    infoFace?.picture?.data?.url, true);
+                                var updateInfFace = await _autoAvatarService.UpdateUserFaceInfo(obj?.Id, infoFace?.id, infoFace?.name,
+                                            infoFace?.picture?.data?.url, true);
                                 var totalFriend = 0;
-                                var dataUidFriend = _dbAdminEntities.GetAllFUIdFriendAutoLikeComment(obj?.Id);
+                                var dataUidFriend = await _autoAvatarService.GetUIdFacebook(obj.Id);
                                 foreach (var uid in data)
                                 {
-                                    if (dataUidFriend != null && dataUidFriend.Any())
+                                    if (dataUidFriend != null && dataUidFriend.Code > 0 && dataUidFriend.Data != null)
                                     {
-                                        var fu = dataUidFriend.FirstOrDefault(x => x.Id == obj.Id);
+                                        var dataUid = dataUidFriend.Data;
+                                        var fu = dataUid.FirstOrDefault(x => x.Id == obj.Id);
                                         if (fu != null && fu.Id != null)
                                         {
                                             continue;
@@ -358,20 +365,18 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                     //{
                                     await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
                                     //}
-                                    _dbAdminEntities.AddFUIdFriendAutoLikeComment(obj.Id, uid.id);
+                                    await _autoAvatarService.AddUidFacebook(obj.Id, uid.id);
                                 }
 
-                                _dbAdminEntities.DeleteFUIdFriendAutoLikeComment(obj?.Id);
+                                await _autoAvatarService.DeleteUserAuto(obj?.Id);
                                 await _telegramService.SendMessageToTelegram(_idChatWork,
                                     $"Đã thực hiện auto like và comment {totalFriend} của ID {obj.Id} \n UID facebooke {infoFace.id} - {infoFace.name} \n vào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")} ");
-                                _dbAdminEntities.UpdateAutoLikeCmtAvatarInfoFaceRun(obj?.Id, false);
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show($"Lỗi : {e.Message} \n Lỗi id {obj.Id}", "thong bao",
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Information);
-                                _dbAdminEntities.UpdateAutoLikeCmtAvatarInfoFaceRun(obj?.Id, false);
                             }
                         }
                     }
@@ -426,7 +431,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         /// <param name="urlface"></param>
         /// <param name="cookie"></param>
         /// <returns></returns>
-        private async Task AutoComment(string htmlProfile, string urlface, string cookie, FriendsModel.Datum data, GetAllUserAutoLikeComment_Result obj, NamePictureUserModel info)
+        private async Task AutoComment(string htmlProfile, string urlface, string cookie, FriendsModel.Datum data, UserAutoModel obj, NamePictureUserModel info)
         {
             if (!string.IsNullOrWhiteSpace(htmlProfile))
             {
@@ -451,7 +456,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         var html = await _facebookService.PostHtmlFacebook(url, cookie, para);
                         try
                         {
-                            var addHis = _dbAdminEntities.AddHistoryAutoLikeComment(obj.Id, info.id, info.name,
+                            var addHis = await _autoAvatarService.AddHistoryAuto(obj.Id, info.id, info.name,
                                 info.picture.data.url, "Auto Comment Avatar", data.id, data.name, data.picture.data.url);
                         }
                         catch (Exception e)
@@ -471,7 +476,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         /// <param name="urlface"></param>
         /// <param name="cookie"></param>
         /// <returns></returns>
-        private async Task AutoLike(string htmlProfile, string urlface, string cookie, FriendsModel.Datum data, GetAllUserAutoLikeComment_Result obj, NamePictureUserModel info)
+        private async Task AutoLike(string htmlProfile, string urlface, string cookie, FriendsModel.Datum data, UserAutoModel obj, NamePictureUserModel info)
         {
             if (!string.IsNullOrWhiteSpace(htmlProfile))
             {
@@ -510,7 +515,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
 
                     try
                     {
-                        var addHis = _dbAdminEntities.AddHistoryAutoLikeComment(obj.Id, info.id, info.name,
+                        var addHis = await _autoAvatarService.AddHistoryAuto(obj.Id, info.id, info.name,
                             info.picture.data.url, "Auto like Avatar", data.id, data.name, data.picture.data.url);
                     }
                     catch (Exception e)

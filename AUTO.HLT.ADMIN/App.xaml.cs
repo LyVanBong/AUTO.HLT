@@ -15,6 +15,10 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace AUTO.HLT.ADMIN
 {
@@ -28,8 +32,16 @@ namespace AUTO.HLT.ADMIN
             return Container.Resolve<MainWindow>();
         }
 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            AppCenter.Start("31b8b4ef-97ea-42e5-a160-ec0bd1d3e307",
+                typeof(Analytics), typeof(Crashes));
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IAutoAvatarService, AutoAvatarService>();
             containerRegistry.Register<IFacebookService, FacebookeService>();
             containerRegistry.Register<ITelegramService, TelegramService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();

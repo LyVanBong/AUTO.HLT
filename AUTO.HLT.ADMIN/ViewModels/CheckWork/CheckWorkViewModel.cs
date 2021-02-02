@@ -1,37 +1,37 @@
-﻿using AUTO.HLT.ADMIN.Databases;
+﻿using AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar;
 using Prism.Commands;
 using Prism.Regions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar;
 
 namespace AUTO.HLT.ADMIN.ViewModels.CheckWork
 {
     public class CheckWorkViewModel : ViewModelBase
     {
-        private bsoft_autohltEntities _dbAdminEntities;
-        private ObservableCollection<GetAllHistoryAutoLikeCommentAvatar_Result> _dataHistoryAuto;
+        private ObservableCollection<HistoryAutoModel> _dataHistoryAuto;
         private string _searchHistory;
 
 
         public ICommand SearchHistoryCommand { get; private set; }
-        private List<GetAllHistoryAutoLikeCommentAvatar_Result> _datAllHistoryAutoLikeCommentAvatarResults;
+        private List<HistoryAutoModel> _datAllHistoryAutoLikeCommentAvatarResults;
         public string SearchHistory
         {
             get => _searchHistory;
             set => _searchHistory = value;
         }
 
-        public ObservableCollection<GetAllHistoryAutoLikeCommentAvatar_Result> DataHistoryAuto
+        public ObservableCollection<HistoryAutoModel> DataHistoryAuto
         {
             get => _dataHistoryAuto;
             set => SetProperty(ref _dataHistoryAuto, value);
         }
-
-        public CheckWorkViewModel(IRegionManager regionManager) : base(regionManager)
+        private IAutoAvatarService _autoAvatarService;
+        public CheckWorkViewModel(IRegionManager regionManager, IAutoAvatarService autoAvatarService) : base(regionManager)
         {
-            _dbAdminEntities = new bsoft_autohltEntities();
+            _autoAvatarService = autoAvatarService;
             SearchHistoryCommand = new DelegateCommand(SearchHistoryAuto);
         }
 
@@ -40,18 +40,19 @@ namespace AUTO.HLT.ADMIN.ViewModels.CheckWork
             if (SearchHistory != null)
             {
                 DataHistoryAuto =
-                    new ObservableCollection<GetAllHistoryAutoLikeCommentAvatar_Result>(
+                    new ObservableCollection<HistoryAutoModel>(
                         _datAllHistoryAutoLikeCommentAvatarResults.Where(x => x.ID == SearchHistory));
             }
         }
 
-        public override void OnNavigatedTo(NavigationContext navigationContext)
+        public override async void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
-            _datAllHistoryAutoLikeCommentAvatarResults = _dbAdminEntities.GetAllHistoryAutoLikeCommentAvatar()?.ToList();
-            if (_datAllHistoryAutoLikeCommentAvatarResults != null && _datAllHistoryAutoLikeCommentAvatarResults.Any())
+            var data = await _autoAvatarService.GetAllHistoryAuto();
+            if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
             {
-                DataHistoryAuto = new ObservableCollection<GetAllHistoryAutoLikeCommentAvatar_Result>(_datAllHistoryAutoLikeCommentAvatarResults);
+                _datAllHistoryAutoLikeCommentAvatarResults = data.Data;
+                DataHistoryAuto = new ObservableCollection<HistoryAutoModel>(_datAllHistoryAutoLikeCommentAvatarResults);
             }
         }
     }
