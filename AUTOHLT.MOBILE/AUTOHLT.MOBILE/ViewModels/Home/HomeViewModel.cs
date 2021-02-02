@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Resources.Fonts;
+using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Views.Agency;
 using AUTOHLT.MOBILE.Views.TopUp;
 using AUTOHLT.MOBILE.Views.VipInteraction;
@@ -231,7 +232,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {21,nameof(AgencyPage) },
         };
         private string[] _paraDialogSheet = new string[]
-            {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè"};
+            {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè","Xem hướng dẫn"};
         private IProductService _productService;
         private string _idProductSecurityFb = "ae1274f0-a779-4601-b59f-8bf9b3e5cdf7";
         private ITelegramService _telegramService;
@@ -239,6 +240,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private string _idProductAddFriends = "85e7192b-7a30-45ff-b327-bd9c25c8dfcb";
         private string _dataMyMoney;
         private string _iconShowMoney;
+        private IGuideService _guideService;
 
         public ICommand ShowMyMoneyCommand { get; private set; }
         public string IconShowMoney
@@ -292,8 +294,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         }
 
         public ICommand LogoutCommand { get; private set; }
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IProductService productService, ITelegramService telegramService) : base(navigationService)
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IProductService productService, ITelegramService telegramService, IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _telegramService = telegramService;
             _productService = productService;
             _dialogService = dialogService;
@@ -427,6 +430,19 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 name = _paraDialogSheet[4];
                 prices = 5;
             }
+            else if (result == _paraDialogSheet[5])
+            {
+                try
+                {
+                    var data = await _guideService.GetGuide(9);
+                    await Browser.OpenAsync(data?.Url);
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
+                return;
+            }
             else
             {
                 name = "";
@@ -525,7 +541,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     {
                         var regis = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
                             $"Bạn đăng ký gói bảo mật facebook 1 năm với giá {string.Format(new CultureInfo("en-US"), "{0:0,0}", long.Parse(securityFB.Price))} VND",
-                            "OK", "Cancel");
+                            "Đăng ký", "Xem hướng dẫn");
                         if (regis)
                         {
                             var myMoney = await _userService.GetMoneyUser(user.UserName);
@@ -584,6 +600,19 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                                     "Số dư hiện tại của bạn không đủ, vui lòng nạp thêm tiền để sử dụng dịch vụ !",
                                     "OK");
                             }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                var data = await _guideService.GetGuide(3);
+                                await Browser.OpenAsync(data?.Url);
+                            }
+                            catch (Exception ex)
+                            {
+                                Crashes.TrackError(ex);
+                            }
+                            return;
                         }
                     }
                 }

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Helpers;
+using AUTOHLT.MOBILE.Services.Guide;
 using Prism.Services.Dialogs;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -47,6 +48,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         private IPageDialogService _pageDialogService;
         private List<FriendsDoNotInteractModel> _doNotInteract;
         private IDialogService _dialogService;
+        private IGuideService _guideService;
 
         public ICommand FilterFriendsCommand { get; private set; }
         public string NotifillterDone
@@ -94,16 +96,30 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             set => SetProperty(ref _isLoading, value);
         }
 
-        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
+        public ICommand HDSDCommand { get; private set; }
+        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialogService,IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
             FilterFriendsCommand = new Command(FilterFriends);
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
+            HDSDCommand = new Command(HDSDApp);
         }
-
+        private async void HDSDApp()
+        {
+            try
+            {
+                var data = await _guideService.GetGuide(11);
+                await Browser.OpenAsync(data?.Url);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
         private async void FilterFriends()
         {
             try
