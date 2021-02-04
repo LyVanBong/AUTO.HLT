@@ -151,16 +151,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             if (!string.IsNullOrWhiteSpace(Id))
             {
                 var dele = await _autoAvatarService.DeleteUserAuto(Id);
-                if (dele != null && dele.Code > 0 && dele.Data != null)
-                {
-                    Id = EndDate = Token = Cookie = "";
-                    GetDataUserAuto();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa tài khoản lỗi !", "Thông báo", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                }
+                Id = EndDate = Token = Cookie = "";
+                DataUserAutoLikeCommentAvatar.Remove(DataUserAutoLikeCommentAvatar.FirstOrDefault(x => x.Id == Id));
             }
             else
             {
@@ -212,8 +204,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     if ((DateTime.Now - data.RegistrationDate).TotalDays < data.ExpiredTime)
                     {
                         var update = await _autoAvatarService.AddUserAuto(data.Id, data.RegistrationDate.ToString(), data.ExpiredTime + "", data.F_Cookie, data.F_Token);
-                        GetDataUserAuto();
-                        RunWorkAutoLikeAndComment(data);
+                        DataUserAutoLikeCommentAvatar.Add(data);
+                        new Thread(() => RunWorkAutoLikeAndComment(data)).Start();
                     }
                 }
                 else
@@ -357,20 +349,13 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                     }
 
                                     totalFriend++;
-                                    //if (totalFriend % 20 == 0)
-                                    //{
-                                    //    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(7200000, 7500000)));
-                                    //}
-                                    //else
-                                    //{
                                     await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
-                                    //}
                                     await _autoAvatarService.AddUidFacebook(obj.Id, uid.id);
                                 }
 
                                 await _autoAvatarService.DeleteUserAuto(obj?.Id);
                                 await _telegramService.SendMessageToTelegram(_idChatWork,
-                                    $"Đã thực hiện auto like và comment {totalFriend} của ID {obj.Id} \n UID facebooke {infoFace.id} - {infoFace.name} \n vào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")} ");
+                                    $"Đã thực hiện auto like và comment {totalFriend} bạn bè của ID {obj.Id} \n UID facebooke {infoFace.id} - {infoFace.name} \n vào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")} ");
                             }
                             catch (Exception e)
                             {

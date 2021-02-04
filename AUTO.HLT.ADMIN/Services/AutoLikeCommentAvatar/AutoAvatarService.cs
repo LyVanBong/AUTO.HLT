@@ -60,14 +60,14 @@ namespace AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar
             {
                 var para = new List<RequestParameter>
                 {
-                    new RequestParameter("ID",""),
-                    new RequestParameter("UId",""),
-                    new RequestParameter("Name",""),
-                    new RequestParameter("Avatar",""),
-                    new RequestParameter("TypeAuto",""),
-                    new RequestParameter("UId_Friend",""),
-                    new RequestParameter("Name_Friend",""),
-                    new RequestParameter("Avatar_Friend",""),
+                    new RequestParameter("ID",id),
+                    new RequestParameter("UId",uid),
+                    new RequestParameter("Name",name),
+                    new RequestParameter("Avatar",url),
+                    new RequestParameter("TypeAuto",noteAuto),
+                    new RequestParameter("UId_Friend",uidFriend),
+                    new RequestParameter("Name_Friend",nameFriend),
+                    new RequestParameter("Avatar_Friend",urlFriend),
                     new RequestParameter("DateCreate",DateTime.Now.ToString()),
                 };
                 var data = _requestProvider.PostAsync<string>("AutoLikeCommentAvatar/AddHistory", para);
