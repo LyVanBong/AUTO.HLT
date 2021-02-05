@@ -12,6 +12,6 @@ namespace AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar
         public string UId { get; set; }
         public string Name { get; set; }
         public string Picture { get; set; }
-        public bool IsRunWork { get; set; }
+        public bool? IsRunWork { get; set; }
     }
 }

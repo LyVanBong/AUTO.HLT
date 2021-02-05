@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 
 namespace AUTO.HLT.ADMIN.Services.RequestProvider
 {
@@ -31,13 +32,14 @@ namespace AUTO.HLT.ADMIN.Services.RequestProvider
                 }
 
                 var response = await _client.ExecuteAsync(_request);
-                var data = response.StatusCode == HttpStatusCode.OK
+                var data = response.IsSuccessful
                     ? JsonConvert.DeserializeObject<ResponseModel<T>>(response.Content)
-                    : default;
+                    : null;
                 return data;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
         }
