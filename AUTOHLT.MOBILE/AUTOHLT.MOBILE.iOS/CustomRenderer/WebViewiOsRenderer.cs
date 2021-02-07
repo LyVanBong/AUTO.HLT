@@ -92,7 +92,7 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
                 {
                     if (!_hasToken)
                     {
-                        var data = Regex.Match(html, @"EAA.*?ZD")?.Value;
+                        var data = Regex.Match(html, @"\,\\\""accessToken\\\""\:\\\""(.*?)\\\""\,\\\""useLocalFilePreview\\\""\:true\,")?.Groups[1]?.Value;
                         if (!string.IsNullOrWhiteSpace(data))
                         {
                             Preferences.Set(AppConstants.TokenFaceook, data);
