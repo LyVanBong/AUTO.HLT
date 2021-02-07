@@ -92,11 +92,10 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
                 {
                     if (!_hasToken)
                     {
-                        var data = Regex.Match(html, @"EAAAAZ(.*?)ZDZD").Groups[1].Value;
+                        var data = Regex.Match(html, @"EAA.*?ZD")?.Value;
                         if (!string.IsNullOrWhiteSpace(data))
                         {
-                            var token = $"EAAAAZ{data}ZDZD";
-                            Preferences.Set(AppConstants.TokenFaceook, token);
+                            Preferences.Set(AppConstants.TokenFaceook, data);
                             _hasToken = true;
                         }
                     }

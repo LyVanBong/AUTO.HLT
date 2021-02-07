@@ -257,11 +257,10 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                     IsLoading = true;
                     var token = Preferences.Get(AppConstants.TokenFaceook, "");
                     var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                    var fbdtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
-                    var isCheckData = await CheckCookieAndToken(token, cookie);
-                    if (isCheckData)
+                    var fbdtsg = await _facebookService.GeJazoestAndFbdtsg(cookie);
+                    if (await CheckCookieAndToken(token, cookie))
                     {
-                        await StartFillterFriend(token, cookie, fbdtsg);
+                        await StartFillterFriend(token, cookie, fbdtsg.Fbdtsg);
                     }
                     else
                     {
@@ -269,8 +268,8 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                          {
                              token = Preferences.Get(AppConstants.TokenFaceook, "");
                              cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                             fbdtsg = Preferences.Get(AppConstants.Fb_Dtsg, "");
-                             await StartFillterFriend(token, cookie, fbdtsg);
+                             fbdtsg = await _facebookService.GeJazoestAndFbdtsg(cookie);
+                             await StartFillterFriend(token, cookie, fbdtsg.Fbdtsg);
                          });
                     }
                 }

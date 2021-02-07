@@ -6,7 +6,9 @@ using AUTOHLT.MOBILE.Services.RestSharp;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 
 namespace AUTOHLT.MOBILE.Services.Facebook
 {
@@ -19,6 +21,22 @@ namespace AUTOHLT.MOBILE.Services.Facebook
         {
             _requestProvider = requestProvider;
             _restSharpService = restSharpService;
+        }
+
+        public async Task<(string Jazoest, string Fbdtsg)> GeJazoestAndFbdtsg(string cookie)
+        {
+            try
+            {
+                var html = await GetHtmlFacebook(AppConstants.UriLoginFacebook, cookie);
+                var jazoest = Regex.Match(html, @"/><input type=""hidden"" name=""jazoest"" value=""(.*?)"" autocomplete=""off"" /><input type=""hidden"" name=""privacyx""")?.Groups[1]?.Value;
+                var fbdtsg = Regex.Match(html, @"id=""mbasic-composer-form""><input type=""hidden"" name=""fb_dtsg"" value=""(.*?)""")?.Groups[1]?.Value;
+                return (Jazoest: jazoest, Fbdtsg: fbdtsg);
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return ("", "");
+            }
         }
 
         public async Task<string> InviteFriendLikePage(string uri, string cookie, string av, string fb_dtsg, string jazoest, bool server_timestamps,

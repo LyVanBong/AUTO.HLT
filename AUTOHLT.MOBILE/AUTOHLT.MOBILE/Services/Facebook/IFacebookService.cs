@@ -1,4 +1,5 @@
-﻿using AUTOHLT.MOBILE.Models.Facebook;
+﻿using System;
+using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,12 @@ namespace AUTOHLT.MOBILE.Services.Facebook
 {
     public interface IFacebookService
     {
+        /// <summary>
+        /// lấy jazoest và fbdtsg
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        Task<(string Jazoest, string Fbdtsg)> GeJazoestAndFbdtsg(string cookie);
         /// <summary>
         /// service gửi lời mời like page
         /// </summary>

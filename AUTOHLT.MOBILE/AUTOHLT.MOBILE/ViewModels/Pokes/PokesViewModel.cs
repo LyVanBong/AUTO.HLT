@@ -212,13 +212,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                     new Thread(async () => await FacebookHelper.UseServiceFacebookFree("Pokes")).Start();
                     var lsPokes = new List<PokesFriendsModel>();
                     var htmlPokes = await _facebookService.GetPokesFriends(cookie, "0");
-                    Regex regex = new Regex(@"<div class=""bt bu""><div><div class=""by"">(.*?)<div class=""cm""></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+                    Regex regex = new Regex(@"<div class=""br"" id="".*?></div></div><div class=""cl""></div></div></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
                     MatchCollection matchCollection = regex.Matches(htmlPokes);
                     foreach (Match match in matchCollection)
                     {
                         var data = match.Value;
                         var poke = new PokesFriendsModel();
-                        poke.FullName = Regex.Match(data, @"<a class=""cd"" href=""/+[a-zA-Z0-9\._\?=]+"">(.*?)</a>")
+                        poke.FullName = Regex.Match(data, @"<a class=""cc"" href="".*?"">(.*?)</a>")
                             ?.Groups[1]?.Value;
                         poke.IsPokes = false;
                         var uri = Regex.Match(data, @"/pokes/inline/\?dom_id_replace(.*?)""")?.Groups[1]?.Value;

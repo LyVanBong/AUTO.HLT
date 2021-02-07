@@ -138,9 +138,9 @@
                                     <Span FontSize="16" Text="{Binding MoneyUser, Converter={StaticResource StringToMyMoney}}" />
                                     <Span Text=" " />
                                     <Span
-                                        FontFamily="Awesome5ProSolid"
+                                        FontAttributes="Bold"
                                         FontSize="16"
-                                        Text="{x:Static icon:FontAwesome5ProSolid.DollarSign}" />
+                                        Text="đ" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -149,7 +149,7 @@
                             Grid.Column="1"
                             BackgroundColor="#02A802"
                             CornerRadius="5,2,2,5" />
-						<Label
+                        <Label
                             Grid.Row="0"
                             Grid.Column="1"
                             Margin="6,0"

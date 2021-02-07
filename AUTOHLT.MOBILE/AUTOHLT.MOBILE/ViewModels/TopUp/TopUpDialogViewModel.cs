@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Guide;
 using Microsoft.AppCenter.Crashes;
 using Prism.Mvvm;
@@ -13,12 +14,23 @@ namespace AUTOHLT.MOBILE.ViewModels.TopUp
     public class TopUpDialogViewModel : BindableBase, IDialogAware
     {
         private IGuideService _guideService;
+        private string _userName;
+        private IDatabaseService _databaseService;
+
         public ICommand HDSDCommand { get; private set; }
         public ICommand ClosePopupCommand { get; set; }
         public bool CanCloseDialog() => true;
+        public event Action<IDialogParameters> RequestClose;
 
-        public TopUpDialogViewModel(IGuideService guideService)
+        public string UserName
         {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
+        }
+
+        public TopUpDialogViewModel(IGuideService guideService, IDatabaseService databaseService)
+        {
+            _databaseService = databaseService;
             _guideService = guideService;
             ClosePopupCommand = new Command(ClosePopup);
             HDSDCommand = new Command(HDSDApp);
@@ -47,14 +59,13 @@ namespace AUTOHLT.MOBILE.ViewModels.TopUp
 
         public void OnDialogClosed()
         {
-            
+
         }
 
-        public void OnDialogOpened(IDialogParameters parameters)
+        public async void OnDialogOpened(IDialogParameters parameters)
         {
-            
+            var data = await _databaseService.GetAccountUser();
+            UserName = $"Nội dung chuyển khoản :  {data?.UserName} autohlt";
         }
-
-        public event Action<IDialogParameters> RequestClose;
     }
 }

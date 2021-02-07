@@ -3,8 +3,9 @@
     x:Class="AUTOHLT.MOBILE.Views.TopUp.TopUpDialog"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
+    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
     xmlns:xaml="http://prismlibrary.com"
     Padding="0"
     xaml:DialogLayout.CloseOnBackgroundTapped="False"
@@ -14,146 +15,308 @@
     BorderColor="{StaticResource Gray-600}"
     CornerRadius="20"
     HasShadow="True">
-    <Grid
-        BackgroundColor="White"
-        ColumnDefinitions="*,60"
-        RowDefinitions="40,50,40,40,40,40,Auto,*">
-        <BoxView
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="0"
-            BackgroundColor="{StaticResource HeaderHome}" />
-        <Label
-            Grid.Row="0"
-            Grid.Column="0"
-            BackgroundColor="{StaticResource HeaderHome}"
-            HorizontalOptions="CenterAndExpand"
-            Text="Nạp Tiền"
-            TextColor="{StaticResource Gray-White}"
-            VerticalOptions="CenterAndExpand" />
-        <Label
-            Grid.Row="0"
-            Grid.Column="1"
-            BackgroundColor="{StaticResource HeaderHome}"
-            FontFamily="Awesome5ProSolid"
-            FontSize="25"
-            HorizontalOptions="CenterAndExpand"
-            Text="{x:Static icon:FontAwesome5ProSolid.Times}"
-            TextColor="{StaticResource Gray-White}"
-            VerticalOptions="CenterAndExpand">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
-            </Label.GestureRecognizers>
-        </Label>
-        <Label
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            FontSize="25"
-            HorizontalOptions="CenterAndExpand"
-            Text="Thông tin chuyển khoản"
-            TextColor="Red" />
-        <Label
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="20,0,0,0"
-            FontSize="16"
-            HorizontalOptions="StartAndExpand"
-            Text="Chủ tài khoản :  NGUYỄN VĂN HÀ"
-            TextColor="Black" />
-        <Label
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="20,0,0,0"
-            FontSize="16"
-            HorizontalOptions="StartAndExpand"
-            Text="Tên ngân hàng :  Techcombank"
-            TextColor="Black" />
-        <Label
-            Grid.Row="4"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="20,0,0,0"
-            FontSize="16"
-            HorizontalOptions="StartAndExpand"
-            Text="Số tài khoản :  19029335160028"
-            TextColor="Black" />
-        <Label
-            Grid.Row="5"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="20,0,0,0"
-            FontSize="16"
-            HorizontalOptions="StartAndExpand"
-            Text="Nội dung :  Tên tài khoản _ autohlt"
-            TextColor="Black" />
-        <Label
-            Grid.Row="6"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="20,0,20,0">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span
-                        FontSize="13"
-                        Text="Chú ý : Sau khi bạn chuyển khoản.hệ thống tự động cộng tiền và tài khoản của bạn trong vòng 15p"
-                        TextColor="#eb596e" />
-                    <Span Text="&#10;" />
-                    <Span
-                        FontSize="13"
-                        Text="Phát sinh lỗi vui lòng gọi hotline : "
-                        TextColor="#eb596e" />
-                    <Span
-                        FontSize="14"
-                        Text="0824726888"
-                        TextColor="#23689b"
-                        TextDecorations="Underline">
-                        <Span.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
-                        </Span.GestureRecognizers>
-                    </Span>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-        <Label
-            Grid.Row="7"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            HorizontalOptions="CenterAndExpand"
-            HorizontalTextAlignment="Center">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="&#10;" />
-                    <Span
-                        FontFamily="Awesome5DuotoneSolid"
-                        FontSize="20"
-                        Text="{x:Static icon:FontAwesome5DuotoneSolid.BookAltPrimary}"
-                        TextColor="#1a508b" />
-                    <Span Text=" " />
-                    <Span
-                        FontSize="20"
-                        Text="HƯỚNG DẪN SỬ DỤNG"
-                        TextColor="#111d5e" />
-                    <Span Text="&#10;" />
-                    <Span
-                        FontFamily="Awesome5DuotoneSolid"
-                        FontSize="15"
-                        Text="{x:Static icon:FontAwesome5DuotoneSolid.PlaySecondary}"
-                        TextColor="#eb596e" />
-                    <Span Text=" " />
-                    <Span
-                        FontSize="15"
-                        Text="XEM VIDEO"
-                        TextColor="#eb596e"
-                        TextDecorations="Underline" />
-                </FormattedString>
-            </Label.FormattedText>
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding HDSDCommand}" />
-            </Label.GestureRecognizers>
-        </Label>
-    </Grid>
+    <ScrollView
+        Margin="0"
+        Padding="0"
+        HorizontalOptions="FillAndExpand"
+        HorizontalScrollBarVisibility="Never"
+        VerticalOptions="FillAndExpand"
+        VerticalScrollBarVisibility="Never">
+        <Grid
+            BackgroundColor="White"
+            ColumnDefinitions="*,60"
+            RowDefinitions="40,50,Auto,Auto,Auto,*">
+            <BoxView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                BackgroundColor="{StaticResource HeaderHome}" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                BackgroundColor="{StaticResource HeaderHome}"
+                HorizontalOptions="CenterAndExpand"
+                Text="Nạp Tiền"
+                TextColor="{StaticResource Gray-White}"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                BackgroundColor="{StaticResource HeaderHome}"
+                FontFamily="Awesome5ProSolid"
+                FontSize="25"
+                HorizontalOptions="CenterAndExpand"
+                Text="{x:Static icon:FontAwesome5ProSolid.Times}"
+                TextColor="{StaticResource Gray-White}"
+                VerticalOptions="CenterAndExpand">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                FontSize="25"
+                HorizontalOptions="CenterAndExpand"
+                Text="Thông tin chuyển khoản"
+                TextColor="Red" />
+
+            <views:Expander
+                x:Name="ExpanderBank"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,0"
+                BackgroundColor="#fff">
+                <views:Expander.Header>
+                    <Grid ColumnDefinitions="Auto,*,50">
+                        <Image
+                            Grid.Column="0"
+                            HeightRequest="50"
+                            Source="{markupExtensions:ImageResource icon_techcombank.png}">
+                            <Image.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderBank}, Path=IsExpanded}"
+                                    TargetType="Image"
+                                    Value="True">
+                                    <Setter Property="Image.HeightRequest" Value="20" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderBank}, Path=IsExpanded}"
+                                    TargetType="Image"
+                                    Value="False">
+                                    <Setter Property="Image.HeightRequest" Value="50" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            Text="Techcombank"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Grid.Column="2"
+                            FontFamily="Awesome5DuotoneSolid"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{x:Static icon:FontAwesome5DuotoneSolid.ArrowDownPrimary}"
+                            VerticalOptions="CenterAndExpand">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderBank}, Path=IsExpanded}"
+                                    TargetType="Label"
+                                    Value="False">
+                                    <Setter Property="Label.Text" Value="{x:Static icon:FontAwesome5DuotoneSolid.ArrowDownPrimary}" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderBank}, Path=IsExpanded}"
+                                    TargetType="Label"
+                                    Value="True">
+                                    <Setter Property="Label.Text" Value="{x:Static icon:FontAwesome5DuotoneSolid.ArrowUpPrimary}" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+                </views:Expander.Header>
+                <views:Expander.ContentTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <StackLayout.Resources>
+                                <Style TargetType="Label">
+                                    <Setter Property="Margin" Value="30,0,0,0" />
+                                </Style>
+                            </StackLayout.Resources>
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Chủ tài khoản :  NGUYỄN VĂN HÀ"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Tên ngân hàng :  Techcombank"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Số tài khoản :  19029335160028"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding UserName}"
+                                TextColor="Black" />
+                        </StackLayout>
+                    </DataTemplate>
+                </views:Expander.ContentTemplate>
+            </views:Expander>
+
+            <views:Expander
+                x:Name="ExpanderMomo"
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,20,20,0"
+                BackgroundColor="#fff">
+                <views:Expander.Header>
+                    <Grid ColumnDefinitions="Auto,*,50">
+                        <Image
+                            Grid.Column="0"
+                            HeightRequest="50"
+                            Source="{markupExtensions:ImageResource icon_momo.png}">
+                            <Image.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderMomo}, Path=IsExpanded}"
+                                    TargetType="Image"
+                                    Value="True">
+                                    <Setter Property="Image.HeightRequest" Value="20" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderMomo}, Path=IsExpanded}"
+                                    TargetType="Image"
+                                    Value="False">
+                                    <Setter Property="Image.HeightRequest" Value="50" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            Text="Ví MOMO"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Grid.Column="2"
+                            FontFamily="Awesome5DuotoneSolid"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{x:Static icon:FontAwesome5DuotoneSolid.ArrowDownPrimary}"
+                            VerticalOptions="CenterAndExpand">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderMomo}, Path=IsExpanded}"
+                                    TargetType="Label"
+                                    Value="False">
+                                    <Setter Property="Label.Text" Value="{x:Static icon:FontAwesome5DuotoneSolid.ArrowDownPrimary}" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Source={x:Reference ExpanderMomo}, Path=IsExpanded}"
+                                    TargetType="Label"
+                                    Value="True">
+                                    <Setter Property="Label.Text" Value="{x:Static icon:FontAwesome5DuotoneSolid.ArrowUpPrimary}" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+                </views:Expander.Header>
+                <views:Expander.ContentTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <StackLayout.Resources>
+                                <Style TargetType="Label">
+                                    <Setter Property="Margin" Value="30,0,0,0" />
+                                </Style>
+                            </StackLayout.Resources>
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Chủ tài khoản :  NGUYỄN VĂN HÀ"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Tên ngân hàng :  Ví MOMO"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Số tài khoản :  0961478688"
+                                TextColor="Black" />
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding UserName}"
+                                TextColor="Black" />
+                            <Button
+                                Margin="40,0"
+                                Padding="0"
+                                BackgroundColor="#AF2070"
+                                CornerRadius="10"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                Clicked="Button_OnClicked"
+                                HeightRequest="50"
+                                Text="Chuyển ngay"
+                                TextColor="#fff" />
+                        </StackLayout>
+                    </DataTemplate>
+                </views:Expander.ContentTemplate>
+            </views:Expander>
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,0,20,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            FontSize="13"
+                            Text="Chú ý : Sau khi bạn chuyển khoản.hệ thống tự động cộng tiền và tài khoản của bạn trong vòng 15p"
+                            TextColor="#eb596e" />
+                        <Span Text="&#10;" />
+                        <Span
+                            FontSize="13"
+                            Text="Phát sinh lỗi vui lòng gọi hotline : "
+                            TextColor="#eb596e" />
+                        <Span
+                            FontSize="14"
+                            Text="0824726888"
+                            TextColor="#23689b"
+                            TextDecorations="Underline">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="&#10;" />
+                        <Span
+                            FontFamily="Awesome5DuotoneSolid"
+                            FontSize="20"
+                            Text="{x:Static icon:FontAwesome5DuotoneSolid.BookAltPrimary}"
+                            TextColor="#1a508b" />
+                        <Span Text=" " />
+                        <Span
+                            FontSize="20"
+                            Text="HƯỚNG DẪN SỬ DỤNG"
+                            TextColor="#111d5e" />
+                        <Span Text="&#10;" />
+                        <Span
+                            FontFamily="Awesome5DuotoneSolid"
+                            FontSize="15"
+                            Text="{x:Static icon:FontAwesome5DuotoneSolid.PlaySecondary}"
+                            TextColor="#eb596e" />
+                        <Span Text=" " />
+                        <Span
+                            FontSize="15"
+                            Text="XEM VIDEO"
+                            TextColor="#eb596e"
+                            TextDecorations="Underline" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HDSDCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </ScrollView>
 </Frame>

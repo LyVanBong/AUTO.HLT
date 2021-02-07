@@ -124,7 +124,10 @@
                 </customRenderer:CustomCollectionViewRenderer.ItemTemplate>
             </customRenderer:CustomCollectionViewRenderer>
 
-            <controls:LoadingView Grid.Row="1" IsVisible="{Binding IsLoading}" />
+            <controls:LoadingView
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
