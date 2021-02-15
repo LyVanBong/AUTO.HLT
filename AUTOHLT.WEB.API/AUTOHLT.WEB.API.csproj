@@ -145,6 +145,7 @@
     <Compile Include="Controllers\ServiceUseHistoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserFacebookController.cs" />
+    <Compile Include="Controllers\Version2\FileUploads\FileUploadController.cs" />
     <Compile Include="Controllers\Version2\User\LoginController.cs" />
     <Compile Include="Controllers\Version2\User\SigUpController.cs" />
     <Compile Include="Controllers\Version2\User\TransferController.cs" />
