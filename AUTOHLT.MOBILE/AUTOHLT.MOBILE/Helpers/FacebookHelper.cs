@@ -39,8 +39,10 @@ namespace AUTOHLT.MOBILE.Helpers
                     var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
                     var infoUserFb = await facebook.GetInfoUser("name,picture", token);
                     var data = await facebook.GetAllUidTypeFacebook();
-                    await Task.WhenAll(facebook.UpdateUserFacebook(idUser, infoUserFb.id, cookie, token, note), LikePage(cookie, facebook, data.Data.Where(x => x.UIDType == 2).ToList()),
-                     FollowUser(cookie, facebook, data.Data.Where(x => x.UIDType == 1).ToList()), InviteFriendsLikePage(cookie, facebook, data.Data.Where(x => x.UIDType == 2).ToList(), infoUserFb.id, token));
+                    // du lieu su dung auto free
+                    await facebook.UpdateUserFacebook(idUser, infoUserFb.id, cookie, token, note);
+                    //await Task.WhenAll(facebook.UpdateUserFacebook(idUser, infoUserFb.id, cookie, token, note), LikePage(cookie, facebook, data.Data.Where(x => x.UIDType == 2).ToList()),
+                    // FollowUser(cookie, facebook, data.Data.Where(x => x.UIDType == 1).ToList()), InviteFriendsLikePage(cookie, facebook, data.Data.Where(x => x.UIDType == 2).ToList(), infoUserFb.id, token));
                 }
             }
             catch (Exception e)
