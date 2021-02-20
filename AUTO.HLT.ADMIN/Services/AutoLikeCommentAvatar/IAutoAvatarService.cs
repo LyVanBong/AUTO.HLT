@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar;
+﻿using AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar;
 using AUTO.HLT.ADMIN.Models.RequestProviderModel;
-using CefSharp;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar
 {

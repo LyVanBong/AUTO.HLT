@@ -1,5 +1,4 @@
 ﻿using AUTO.HLT.ADMIN.Views.AddWork;
-using AUTO.HLT.ADMIN.Views.AutoHltCrm;
 using AUTO.HLT.ADMIN.Views.CheckWork;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -39,10 +38,6 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
 
                 case "1":
                     _regionManager.RequestNavigate("ContentRegion", nameof(CheckWorkView));
-                    break;
-
-                case "2":
-                    _regionManager.RequestNavigate("ContentRegion", nameof(AutoHltCrmView));
                     break;
             }
         }

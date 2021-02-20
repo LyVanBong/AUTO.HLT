@@ -102,15 +102,11 @@
     <Compile Include="Services\Telegram\ITelegramService.cs" />
     <Compile Include="Services\Telegram\TelegramService.cs" />
     <Compile Include="ViewModels\AddWork\AddWorkViewModel.cs" />
-    <Compile Include="ViewModels\AutoHltCrm\AutoHltCrmViewModel.cs" />
     <Compile Include="ViewModels\CheckWork\CheckWorkViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AddWork\AddWorkView.xaml.cs">
       <DependentUpon>AddWorkView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AutoHltCrm\AutoHltCrmView.xaml.cs">
-      <DependentUpon>AutoHltCrmView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CheckWork\CheckWorkView.xaml.cs">
       <DependentUpon>CheckWorkView.xaml</DependentUpon>
@@ -119,10 +115,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddWork\AddWorkView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AutoHltCrm\AutoHltCrmView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,12 +164,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CefSharp.Wpf">
-      <Version>87.1.132</Version>
-    </PackageReference>
-    <PackageReference Include="EntityFramework">
-      <Version>6.4.4</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>4.1.0</Version>
     </PackageReference>

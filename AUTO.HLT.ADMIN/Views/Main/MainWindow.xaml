@@ -48,12 +48,12 @@
             Command="{Binding UseFeatureCommand}"
             CommandParameter="1"
             Content="Kiểm tra công việc" />
-        <Button
-            Grid.Row="3"
+        <!--<Button
+            Grid.Row="2"
             Grid.Column="0"
             Command="{Binding UseFeatureCommand}"
             CommandParameter="2"
-            Content="AUTOHLT CRM" />
+            Content="Auto Like Bài Viết" />-->
         <ContentControl
             Grid.Row="0"
             Grid.RowSpan="5"
