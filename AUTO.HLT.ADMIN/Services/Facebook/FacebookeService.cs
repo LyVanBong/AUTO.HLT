@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 
 namespace AUTO.HLT.ADMIN.Services.Facebook
 {
@@ -18,6 +19,26 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
         {
             _requestProvider = requestProvider;
             _restSharpService = restSharpService;
+        }
+
+        public async Task<PostIdMyFriendModel> GetPostIdMyFriend(string uid, string token)
+        {
+            try
+            {
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("fields","posts.limit(2)"),
+                    new RequestParameter("access_token",token),
+                };
+                var json = await _restSharpService.GetAsync($"https://graph.facebook.com/v9.0/{uid}", parameters);
+                var data = JsonConvert.DeserializeObject<PostIdMyFriendModel>(json);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
         }
 
         public async Task<string> PostHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null)

@@ -87,6 +87,7 @@
     <Compile Include="Models\Facebook\InviteFriendsLikePageModel.cs" />
     <Compile Include="Models\Facebook\NamePictureUserModel.cs" />
     <Compile Include="Models\Facebook\PokesFriendsModel.cs" />
+    <Compile Include="Models\Facebook\PostIdMyFriendModel.cs" />
     <Compile Include="Models\Facebook\UidTypeFacebookModel.cs" />
     <Compile Include="Models\RequestProviderModel\RequestParameter.cs" />
     <Compile Include="Models\RequestProviderModel\ResponseModel.cs" />

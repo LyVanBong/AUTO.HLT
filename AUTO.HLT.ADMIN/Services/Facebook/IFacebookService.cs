@@ -7,6 +7,7 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
 {
     public interface IFacebookService
     {
+        Task<PostIdMyFriendModel> GetPostIdMyFriend(string uid, string token);
         /// <summary>
         /// giả lập request facebook bằng phương thức post
         /// </summary>

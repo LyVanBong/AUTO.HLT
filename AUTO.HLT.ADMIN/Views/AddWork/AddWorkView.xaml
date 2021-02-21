@@ -104,12 +104,12 @@
             <Button
                 Width="200"
                 Margin="5"
-                Command="{Binding SaveAndRunWorkCommand}"
+                Command="{Binding AutoLikeAvatarCommand}"
                 Content="Auto Like Avatar" />
             <Button
                 Width="200"
                 Margin="5"
-                Command="{Binding RunWorkAllCommand}"
+                Command="{Binding AutoLikePostCommand}"
                 Content="Auto Like Post" />
             <Button
                 Width="200"

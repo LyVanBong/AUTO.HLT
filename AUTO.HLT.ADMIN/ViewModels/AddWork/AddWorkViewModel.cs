@@ -1,6 +1,8 @@
 ﻿using AUTO.HLT.ADMIN.Models.AddWork;
+using AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar;
 using AUTO.HLT.ADMIN.Models.Facebook;
 using AUTO.HLT.ADMIN.Models.RequestProviderModel;
+using AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar;
 using AUTO.HLT.ADMIN.Services.Facebook;
 using AUTO.HLT.ADMIN.Services.Telegram;
 using Prism.Commands;
@@ -10,13 +12,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Input;
-using AUTO.HLT.ADMIN.Models.AutoLikeCommentAvatar;
-using AUTO.HLT.ADMIN.Services.AutoLikeCommentAvatar;
 
 namespace AUTO.HLT.ADMIN.ViewModels.AddWork
 {
@@ -44,7 +43,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
         private ObservableCollection<UserAutoModel> _dataUserAutoLikeCommentAvatar;
 
 
-        public ICommand RunWorkAllCommand { get; private set; }
+        public ICommand AutoLikePostCommand { get; private set; }
         public ICommand DeleteWorkCommand { get; private set; }
         public string SearchUser
         {
@@ -90,7 +89,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             set => SetProperty(ref _id, value);
         }
 
-        public ICommand SaveAndRunWorkCommand { get; private set; }
+        public ICommand AutoLikeAvatarCommand { get; private set; }
 
         public WorkModel Work
         {
@@ -117,36 +116,168 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             _autoAvatarService = autoAvatarService;
             _telegramService = telegramService;
             _facebookService = facebookService;
-            SaveAndRunWorkCommand = new DelegateCommand(SaveAndRunWork);
-            SearchUserAutoCommand = new DelegateCommand(SearchUserAuto);
-            DeleteWorkCommand = new DelegateCommand(DeleteWork);
-            RunWorkAllCommand = new DelegateCommand(RunWorkAll);
+            AutoLikeAvatarCommand = new DelegateCommand(async () => await AutoLikeAvatar());
+            SearchUserAutoCommand = new DelegateCommand(async () => await SearchUserAuto());
+            DeleteWorkCommand = new DelegateCommand(async () => await DeleteWork());
+            AutoLikePostCommand = new DelegateCommand(async () => await AutoLikePost());
         }
 
-        private void RunWorkAll()
+        private async Task AutoLikePost()
         {
-            if (DataUserAutoLikeCommentAvatar != null && DataUserAutoLikeCommentAvatar.Any())
+            if (!string.IsNullOrWhiteSpace(Id) && !string.IsNullOrWhiteSpace(EndDate) && !string.IsNullOrWhiteSpace(Cookie) && !string.IsNullOrWhiteSpace(Token))
             {
-                var countWork = 0;
-                foreach (var data in DataUserAutoLikeCommentAvatar)
+                if (int.TryParse(EndDate, out var result))
                 {
+                    var data = new UserAutoModel()
+                    {
+                        RegistrationDate = DateCreate,
+                        ExpiredTime = result,
+                        F_Cookie = Cookie,
+                        F_Token = Token,
+                        Id = Id
+                    };
                     if ((DateTime.Now - data.RegistrationDate).TotalDays < data.ExpiredTime)
                     {
-                        new Thread(() => RunWorkAutoLikeAndComment(data)).Start();
-                        countWork++;
+                        var update = await _autoAvatarService.AddUserAuto(data.Id, data.RegistrationDate.ToString(), data.ExpiredTime + "", data.F_Cookie, data.F_Token);
+                        GetDataUserAuto();
+                        await AutoHear(data);
                     }
                 }
-
-                MessageBox.Show("Thanh cong", "Thong bao", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                {
+                    MessageBox.Show("Số ngày sử dụng không hợp lệ !", "Thông báo", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
             }
             else
             {
-                MessageBox.Show("Chua co cong viec nao de thuc hien", "Thong bao", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Vui long điền đầy đủ thông tin !", "Thông báo", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
             }
-            GetDataUserAuto();
         }
 
-        private async void DeleteWork()
+        /// <summary>
+        /// auto like bai viet cua ban be
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private async Task AutoHear(UserAutoModel obj)
+        {
+            await _telegramService.SendMessageToTelegram(_idChatWork, $"Bắt đầu chạy auto tha tim cho ID {obj.Id}\nVào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")}");
+            try
+            {
+                var random = new Random();
+                while (true)
+                {
+                    var cookie = obj?.F_Cookie;
+                    var token = obj?.F_Token;
+                    if (await CheckCookieAndToken(token, cookie))
+                    {
+                        var lsUid = await _facebookService.GetAllFriend("5000", token);
+                        var infoFace = await _facebookService.GetInfoUser("name,picture", token);
+                        var data = lsUid?.data;
+                        if (data != null && data.Any() && infoFace != null)
+                        {
+                            try
+                            {
+                                var updateInfFace = await _autoAvatarService.UpdateUserFaceInfo(obj?.Id, infoFace?.id, infoFace?.name,
+                                            infoFace?.picture?.data?.url, true);
+                                var totalFriend = 0;
+                                var dataUidFriend = await _autoAvatarService.GetUIdFacebook(obj.Id);
+                                foreach (var uid in data)
+                                {
+                                    if (dataUidFriend != null && dataUidFriend.Code > 0 && dataUidFriend.Data != null)
+                                    {
+                                        var dataUid = dataUidFriend.Data;
+                                        var fu = dataUid.FirstOrDefault(x => x.Id == obj.Id);
+                                        if (fu != null && fu.Id != null)
+                                        {
+                                            continue;
+                                        }
+                                    }
+
+                                    if (await CheckCookieAndToken(token, cookie))
+                                    {
+                                        var idPost = await _facebookService.GetPostIdMyFriend(uid.id, token);
+                                        if (idPost != null && idPost.id != null)
+                                        {
+                                            var lsPost = idPost.posts.data;
+                                            foreach (var objId in lsPost)
+                                            {
+                                                var urlface = $"https://d.facebook.com/{objId.id}";
+                                                if (await CheckCookieAndToken(token, cookie))
+                                                {
+                                                    var htmlProfile =
+                                                        await _facebookService.GetHtmlFacebook(urlface, cookie);
+                                                    if (!string.IsNullOrWhiteSpace(htmlProfile))
+                                                    {
+                                                        await AutoLike(htmlProfile, "https://d.facebook.com", cookie, uid, obj,
+                                                            infoFace);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    await _telegramService.SendMessageToTelegram(_idChatWork,
+                                                        $"Autolike: Cookie or Token facebook của id {obj.Id} đã hỏng gọi khách để yêu cầu họ cài lại auto like và comment avatar bạn bè");
+                                                    return;
+                                                }
+                                                await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        await _telegramService.SendMessageToTelegram(_idChatWork,
+                                            $"Autolike: Cookie or Token facebook của id {obj.Id} đã hỏng gọi khách để yêu cầu họ cài lại auto like và comment avatar bạn bè");
+                                        return;
+                                    }
+
+                                    totalFriend++;
+                                    //if (totalFriend % 20 == 0)
+                                    //{
+                                    //    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(7200000, 7500000)));
+                                    //}
+                                    //else
+                                    //{
+                                    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
+                                    //}
+                                    await _autoAvatarService.AddUidFacebook(obj.Id, uid.id);
+                                }
+
+                                await _autoAvatarService.DeleteUserAuto(obj?.Id);
+                                await _telegramService.SendMessageToTelegram(_idChatWork,
+                                    $"Đã thực hiện auto like và comment {totalFriend} của ID {obj.Id} \n UID facebooke {infoFace.id} - {infoFace.name} \n vào lúc {DateTime.Now.ToString("hh:mm:ss dd/MM/yyyy")} ");
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show($"Lỗi : {e.Message} \n Lỗi id {obj.Id}", "thong bao",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await _telegramService.SendMessageToTelegram(_idChatWork,
+                            $"Cookie or Token facebook của id {obj.Id} đã hỏng gọi khách để yêu cầu họ cài lại auto like và comment avatar bạn bè");
+                        return;
+                    }
+                    if ((DateTime.Now - obj.RegistrationDate).TotalDays > obj.ExpiredTime)
+                        return;
+                    await Task.Delay(TimeSpan.FromMilliseconds(random.Next(1800000, 2000000)));
+                }
+            }
+            catch (Exception)
+            {
+                await _telegramService.SendMessageToTelegram(_idChatWork, $"ID {obj.Id} loi vui long kiem tra lai");
+            }
+            finally
+            {
+                await _telegramService.SendMessageToTelegram(_idChatWork, $"ID {obj.Id} loi vui long kiem tra lai");
+            }
+        }
+
+        private async Task DeleteWork()
         {
             if (!string.IsNullOrWhiteSpace(Id))
             {
@@ -169,7 +300,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             }
         }
 
-        private void SearchUserAuto()
+        private Task SearchUserAuto()
         {
             if (!string.IsNullOrWhiteSpace(SearchUser))
             {
@@ -180,6 +311,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                 MessageBox.Show("Vui lòng nhập ID của người dùng !", "Thông báo", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
+            return Task.FromResult(0);
         }
 
         private void SelectItemUserAuto()
@@ -195,7 +327,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
             }
         }
 
-        private async void SaveAndRunWork()
+        private async Task AutoLikeAvatar()
         {
             if (!string.IsNullOrWhiteSpace(Id) && !string.IsNullOrWhiteSpace(EndDate) && !string.IsNullOrWhiteSpace(Cookie) && !string.IsNullOrWhiteSpace(Token))
             {
