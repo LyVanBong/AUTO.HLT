@@ -8,7 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-              <themesApp:LightTheme />
+                <themesApp:LightTheme />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <!--  Application resource dictionary  -->

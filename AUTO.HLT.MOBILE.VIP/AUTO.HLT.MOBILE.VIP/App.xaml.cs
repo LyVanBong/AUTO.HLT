@@ -1,5 +1,9 @@
 using AUTO.HLT.MOBILE.VIP.ViewModels;
+using AUTO.HLT.MOBILE.VIP.ViewModels.Home;
+using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
 using AUTO.HLT.MOBILE.VIP.Views;
+using AUTO.HLT.MOBILE.VIP.Views.Home;
+using AUTO.HLT.MOBILE.VIP.Views.Login;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Essentials.Implementation;
@@ -19,7 +23,7 @@ namespace AUTO.HLT.MOBILE.VIP
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("/LoginPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -27,7 +31,8 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
         }
     }
 }
