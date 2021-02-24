@@ -265,7 +265,7 @@
       <Version>18.4.0.41</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.CommunityToolkit">
-      <Version>1.0.2</Version>
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
@@ -283,7 +283,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
