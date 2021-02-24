@@ -2,13 +2,41 @@
 <ContentPage
     x:Class="AUTO.HLT.MOBILE.VIP.Views.Login.LoginPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
+    BackgroundColor="#fff">
     <ContentPage.Content>
-        <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView
+            Margin="0"
+            Padding="0"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            VerticalScrollBarVisibility="Never">
+            <Grid
+                Margin="0"
+                Padding="0"
+                BackgroundColor="#fff"
+                RowDefinitions="200,Auto,Auto"
+                RowSpacing="0">
+                <Image
+                    Grid.Row="0"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    Source="{markupExtensions:ImageResource icon_home.png}"
+                    WidthRequest="200" />
+                <Label
+                    Grid.Row="1"
+                    Margin="0,5"
+                    FontAttributes="Bold"
+                    FontSize="35"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="AUTOVIP"
+                    TextColor="{StaticResource AppBackgroud}" />
+                <BoxView
+                    Grid.Row="2"
+                    BackgroundColor="{StaticResource AppBackgroud}"
+                    HeightRequest="500" />
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
