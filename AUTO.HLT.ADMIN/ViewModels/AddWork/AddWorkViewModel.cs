@@ -211,7 +211,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                                         await _facebookService.GetHtmlFacebook(urlface, cookie);
                                                     if (!string.IsNullOrWhiteSpace(htmlProfile))
                                                     {
-                                                        await AutoLike(htmlProfile, "https://d.facebook.com", cookie, uid, obj,
+                                                        await AutoThaTim(htmlProfile, "https://d.facebook.com", cookie, uid, obj,
                                                             infoFace);
                                                     }
                                                 }
@@ -221,7 +221,6 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                                                         $"Autolike: Cookie or Token facebook của id {obj.Id} đã hỏng gọi khách để yêu cầu họ cài lại auto like và comment avatar bạn bè");
                                                     return;
                                                 }
-                                                await Task.Delay(TimeSpan.FromMilliseconds(random.Next(200000, 500000)));
                                             }
                                         }
                                     }
@@ -631,6 +630,57 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     MatchCollection matchCollection = regex.Matches(htmlReaction);
                     var ran = new Random();
                     var like = matchCollection[ran.Next(7)]?.Value;
+                    var paraLike = new List<RequestParameter>()
+            {
+                new RequestParameter("ft_ent_identifier", Regex.Match(like, @"/?ft_ent_identifier=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("reaction_type", Regex.Match(like, @"&amp;reaction_type=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("is_permalink", Regex.Match(like, @"&amp;is_permalink=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("basic_origin_uri", Regex.Match(like, @"amp;basic_origin_uri=(.*?)&")?.Groups[1]?.Value),
+                // new RequestParameter("_ft_",Regex.Match(like,@"&amp;_ft_(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("av", Regex.Match(like, @"&amp;av=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("ext", Regex.Match(like, @"&amp;ext=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("hash", Regex.Match(like, @"&amp;hash=(.*?)""")?.Groups[1]?.Value),
+            };
+                    var uriLike = $"{urlface}{Regex.Match(like, @"<a href=""(.*?)""")?.Groups[1]?.Value}";
+                    var actionLike = await _facebookService.GetHtmlFacebook(HttpUtility.HtmlDecode(uriLike), cookie);
+
+                    try
+                    {
+                        var addHis = await _autoAvatarService.AddHistoryAuto(obj.Id, info.id, info.name,
+                            info.picture.data.url, "Auto like Avatar", data.id, data.name, data.picture.data.url);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Loi: " + e.Message, "Thong bao", MessageBoxButton.OK,
+                            MessageBoxImage.Information);
+                    }
+                }
+            }
+        }
+
+        private async Task AutoThaTim(string htmlProfile, string urlface, string cookie, FriendsModel.Datum data, UserAutoModel obj, NamePictureUserModel info)
+        {
+            if (!string.IsNullOrWhiteSpace(htmlProfile))
+            {
+                var datareactions = Regex.Match(htmlProfile, @"<a href=""/reactions/picker/\?is_permalink=1.*?</a>")?.Value;
+                if (!string.IsNullOrWhiteSpace(datareactions))
+                {
+                    var reac = Regex.Match(datareactions, @"<a href=""(.*?)""")?.Groups[1]?.Value + "\"";
+                    var para = new List<RequestParameter>()
+            {
+                new RequestParameter("is_permalink", Regex.Match(reac, @"/?is_permalink=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("ft_id", Regex.Match(reac, @"&amp;ft_id=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("origin_uri", Regex.Match(reac, @"&amp;origin_uri=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("av", Regex.Match(reac, @"&amp;av=(.*?)&")?.Groups[1]?.Value),
+                new RequestParameter("refid", Regex.Match(reac, @"&amp;refid=(.*?)""")?.Groups[1]?.Value),
+            };
+                    var htmlReaction = await _facebookService.GetHtmlFacebook($"{urlface}/reactions/picker", cookie, para);
+
+                    Regex regex = new Regex(@"<a href=""/ufi/reaction/.*?</a>",
+                        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+                    MatchCollection matchCollection = regex.Matches(htmlReaction);
+                    var ran = new Random();
+                    var like = matchCollection[1]?.Value;
                     var paraLike = new List<RequestParameter>()
             {
                 new RequestParameter("ft_ent_identifier", Regex.Match(like, @"/?ft_ent_identifier=(.*?)&")?.Groups[1]?.Value),
