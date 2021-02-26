@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
@@ -140,7 +141,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     {
                         var update = await _autoAvatarService.AddUserAuto(data.Id, data.RegistrationDate.ToString(), data.ExpiredTime + "", data.F_Cookie, data.F_Token);
                         GetDataUserAuto();
-                        await AutoHear(data);
+                        new Thread(async () => await AutoHear(data)).Start();
+                        Id = EndDate = Cookie = Token = null;
                     }
                 }
                 else
@@ -344,7 +346,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     {
                         var update = await _autoAvatarService.AddUserAuto(data.Id, data.RegistrationDate.ToString(), data.ExpiredTime + "", data.F_Cookie, data.F_Token);
                         GetDataUserAuto();
-                        RunWorkAutoLikeAndComment(data);
+                        new Thread(async () => RunWorkAutoLikeAndComment(data)).Start();
+                        Id = EndDate = Cookie = Token = null;
                     }
                 }
                 else
