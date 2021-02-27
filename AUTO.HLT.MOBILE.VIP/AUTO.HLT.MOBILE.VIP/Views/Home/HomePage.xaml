@@ -8,6 +8,7 @@
         <Grid
             Margin="0"
             Padding="0"
+            BackgroundColor="#f2f2f2"
             RowDefinitions="150,40,30,*,60"
             RowSpacing="0">
             <BoxView
@@ -52,6 +53,7 @@
                 Grid.Row="3"
                 Grid.RowSpan="2"
                 Margin="5,10,5,0"
+                BackgroundColor="Transparent"
                 ItemsSource="{Binding ListItemMenus}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
@@ -64,18 +66,22 @@
                     <DataTemplate>
                         <Frame
                             Margin="0"
+                            BackgroundColor="#dff3e3"
                             BorderColor="{Binding BgColor}"
                             CornerRadius="10"
                             HasShadow="False">
                             <Grid ColumnDefinitions="64,*">
                                 <Image
                                     Grid.Column="0"
+                                    Margin="5"
+                                    BackgroundColor="Transparent"
                                     HeightRequest="64"
                                     Source="{Binding IconMenu}" />
                                 <Label
                                     Grid.Column="1"
                                     FontSize="14"
                                     Text="{Binding TitleItem}"
+                                    TextColor="#000"
                                     VerticalOptions="CenterAndExpand" />
                             </Grid>
                         </Frame>
@@ -96,8 +102,8 @@
                 Grid.Row="4"
                 Margin="0,-40,0,0"
                 Padding="0"
-                BackgroundColor="White"
-                BorderColor="#161d6f"
+                BackgroundColor="{StaticResource AppBackgroud}"
+                BorderColor="#fa1e0e"
                 CornerRadius="100"
                 HasShadow="True"
                 HeightRequest="70"
@@ -105,8 +111,8 @@
                 VerticalOptions="Start"
                 WidthRequest="70">
                 <Image
-                    Margin="2"
-                    Aspect="Fill"
+                    Margin="10"
+                    Aspect="AspectFit"
                     Source="{markupExtensions:ImageResource icon_facebook_connect.png}" />
             </Frame>
         </Grid>
