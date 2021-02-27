@@ -16,7 +16,7 @@
             Padding="0"
             BackgroundColor="{StaticResource Gray-White}"
             ColumnDefinitions="60,*"
-            RowDefinitions="40,30,30,50,Auto,Auto,70,*"
+            RowDefinitions="40,30,30,50,Auto,Auto,Auto,*"
             RowSpacing="5">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">

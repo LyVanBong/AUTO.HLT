@@ -40,7 +40,7 @@
         <Setter Property="TextColor" Value="#000" />
     </Style>
 
-    <Color x:Key="HeaderHome">#FF3F3F</Color>
+    <Color x:Key="HeaderHome">#1976D2</Color>
     <Color x:Key="BtLogin">#3282b8</Color>
     <Color x:Key="PrimaryColor">#f54e5e</Color>
     <Color x:Key="PrimaryDarkColor">#d0424f</Color>

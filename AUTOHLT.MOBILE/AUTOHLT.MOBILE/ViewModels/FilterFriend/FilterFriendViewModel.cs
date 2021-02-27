@@ -316,7 +316,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         {
             try
             {
-                var q = "node(" + IdFacebook + "){timeline_feed_units.first(300).after(){page_info,edges{node{id,creation_time,feedback{reactors{nodes{id}},commenters{nodes{id}}}}}}}";
+                var q = "node(" + IdFacebook + "){timeline_feed_units.first(100).after(){page_info,edges{node{id,creation_time,feedback{reactors{nodes{id}},commenters{nodes{id}}}}}}}";
                 var data = await _facebookService.GetFriendsDoNotInteract(fbdtsg, q);
                 if (data != null)
                 {

@@ -86,7 +86,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
                 IsLoading = true;
                 IsVisibleWebview = false;
             });
-            UriFacebook = AppConstants.UriLoginFacebook;
+            UriFacebook = AppConstants.UriLoginFacebook2;
         }
     }
 }

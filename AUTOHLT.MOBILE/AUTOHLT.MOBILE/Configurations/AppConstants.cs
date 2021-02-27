@@ -61,6 +61,7 @@
         /// Uri đăng nhập facebook
         /// </summary>
         public const string UriLoginFacebook = "https://d.facebook.com/";
+        public const string UriLoginFacebook2 = "https://m.facebook.com/";
 
         /// <summary>
         /// Uri dùng để get token facebook
