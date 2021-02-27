@@ -5,14 +5,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\icon_auto_boot_hear.png" />
+    <None Remove="Resources\Images\icon_birthday.png" />
+    <None Remove="Resources\Images\icon_customer_support.png" />
+    <None Remove="Resources\Images\icon_facebook_connect.png" />
+    <None Remove="Resources\Images\icon_filter_friends.png" />
+    <None Remove="Resources\Images\icon_follow.png" />
     <None Remove="Resources\Images\icon_home.png" />
+    <None Remove="Resources\Images\icon_home_page.png" />
+    <None Remove="Resources\Images\icon_Interactive.png" />
+    <None Remove="Resources\Images\icon_like.png" />
+    <None Remove="Resources\Images\icon_pokes.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
+    <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
+    <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
+    <EmbeddedResource Include="Resources\Images\icon_facebook_connect.png" />
+    <EmbeddedResource Include="Resources\Images\icon_filter_friends.png" />
+    <EmbeddedResource Include="Resources\Images\icon_follow.png" />
     <EmbeddedResource Include="Resources\Images\icon_home.png" />
+    <EmbeddedResource Include="Resources\Images\icon_home_page.png" />
+    <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
+    <EmbeddedResource Include="Resources\Images\icon_like.png" />
+    <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.44" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
@@ -20,7 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Resources\Languages\" />
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Resources\Svg\" />

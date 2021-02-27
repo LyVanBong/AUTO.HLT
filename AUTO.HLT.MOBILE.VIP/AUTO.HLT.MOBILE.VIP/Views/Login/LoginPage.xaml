@@ -6,43 +6,44 @@
     xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
     BackgroundColor="#fff">
     <ContentPage.Content>
-        <ScrollView
+
+        <Grid
             Margin="0"
             Padding="0"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand"
-            VerticalScrollBarVisibility="Never">
-            <Grid
+            BackgroundColor="#fff"
+            RowDefinitions="150,Auto,*"
+            RowSpacing="0">
+            <Image
+                Grid.Row="0"
+                Margin="0,10,0,0"
+                HorizontalOptions="CenterAndExpand"
+                Source="{markupExtensions:ImageResource icon_home.png}"
+                WidthRequest="200" />
+            <Label
+                Grid.Row="1"
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="35"
+                HorizontalOptions="CenterAndExpand"
+                Text="AUTOVIP"
+                TextColor="{StaticResource AppBackgroud}" />
+            <BoxView
+                Grid.Row="2"
+                BackgroundColor="{StaticResource AppBackgroud}"
+                CornerRadius="50,50,0,0" />
+            <ScrollView
+                Grid.Row="2"
                 Margin="0"
                 Padding="0"
-                BackgroundColor="#fff"
-                RowDefinitions="150,Auto,*"
-                RowSpacing="0">
-                <Image
-                    Grid.Row="0"
-                    Margin="0,10,0,0"
-                    HorizontalOptions="CenterAndExpand"
-                    Source="{markupExtensions:ImageResource icon_home.png}"
-                    WidthRequest="200" />
-                <Label
-                    Grid.Row="1"
-                    Margin="0,5"
-                    FontAttributes="Bold"
-                    FontSize="35"
-                    HorizontalOptions="CenterAndExpand"
-                    Text="AUTOVIP"
-                    TextColor="{StaticResource AppBackgroud}" />
-                <BoxView
-                    Grid.Row="2"
-                    BackgroundColor="{StaticResource AppBackgroud}"
-                    CornerRadius="40,40,0,0" />
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
                 <ContentView
-                    Grid.Row="2"
                     Margin="0"
                     Padding="0"
                     BackgroundColor="Transparent"
                     Content="{Binding ContentLoginPage}" />
-            </Grid>
-        </ScrollView>
+            </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

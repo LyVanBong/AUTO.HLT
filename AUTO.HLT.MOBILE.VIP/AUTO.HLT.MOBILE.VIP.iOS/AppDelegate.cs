@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 
@@ -22,6 +23,12 @@ namespace AUTO.HLT.MOBILE.VIP.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            #region Thư viên ngoài
+
+            SfTextInputLayoutRenderer.Init();
+
+            #endregion
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
