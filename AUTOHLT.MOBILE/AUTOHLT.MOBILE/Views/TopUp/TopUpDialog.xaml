@@ -240,10 +240,10 @@
                                 Margin="40,0"
                                 Padding="0"
                                 BackgroundColor="#AF2070"
+                                Clicked="Button_OnClicked"
                                 CornerRadius="10"
                                 FontAttributes="Bold"
                                 FontSize="18"
-                                Clicked="Button_OnClicked"
                                 HeightRequest="50"
                                 Text="Chuyển ngay"
                                 TextColor="#fff" />

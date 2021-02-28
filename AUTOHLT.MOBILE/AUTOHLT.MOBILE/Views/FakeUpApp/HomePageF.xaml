@@ -18,11 +18,16 @@
                 BackgroundColor="{StaticResource Gray-White}"
                 RowDefinitions="50,80,80,300,30,300,*"
                 RowSpacing="0">
-                <Image
+                <!--<Image
                     Grid.Row="0"
                     Grid.RowSpan="7"
                     Aspect="AspectFill"
-                    Source="{markupExtensions:ImageResource hinhnen.jpg}" />
+                    Source="{markupExtensions:ImageResource hinhnen.jpg}" />-->
+                <BoxView
+                    Grid.Row="0"
+                    Grid.RowSpan="7"
+                    Margin="0"
+                    BackgroundColor="{Binding BgColor}" />
                 <BoxView
                     Grid.Row="0"
                     Grid.RowSpan="2"

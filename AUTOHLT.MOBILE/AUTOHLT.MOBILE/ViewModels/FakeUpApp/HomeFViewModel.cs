@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.ChangePassword;
@@ -21,14 +22,31 @@ namespace AUTOHLT.MOBILE.ViewModels.FakeUpApp
     {
         private IPageDialogService _pageDialogService;
         private IDatabaseService _databaseService;
+        private Color _bgColor;
         public ICommand NavigationCommand { get; private set; }
         public ICommand LogoutCommand { get; private set; }
+
+        public Color BgColor
+        {
+            get => _bgColor;
+            set => SetProperty(ref _bgColor, value);
+        }
+
         public HomeFViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
         {
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             LogoutCommand = new Command(Logout);
             NavigationCommand = new Command<string>(NavigationApp);
+            new Thread(() =>
+            {
+                var color = new string[] { "78c4d4", "78c4d4", "fa1e0e", "763857", "28527a", "4a3933", "f14668", "f14668", "85603f", "e40017", "ff75a0", "91091e", "91091e", "0a043c", "fcd1d1" };
+                Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+                {
+                    BgColor=Color.FromHex(color[(new Random()).Next(0,14)]);
+                    return true;
+                } );
+            }).Start();
         }
 
         private async void NavigationApp(string key)
