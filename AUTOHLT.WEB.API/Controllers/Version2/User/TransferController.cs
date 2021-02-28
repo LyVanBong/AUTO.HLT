@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AUTOHLT.WEB.API.Models;
 
@@ -14,7 +15,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         /// <returns></returns>
         [HttpPut]
         [Route("transfermoney")]
-        public IHttpActionResult TransferMoney([FromBody] TransferMoneyModel transfer)
+        public async Task<IHttpActionResult> TransferMoney([FromBody] TransferMoneyModel transfer)
         {
             var veri = Verifying(Request);
             if (veri != null && veri.UserName != null)

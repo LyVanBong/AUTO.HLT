@@ -116,6 +116,9 @@
         <Function Name="ListRegisterProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="LockLicenseKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Key" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <Function Name="NotificationDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -137,6 +140,12 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="Price" Type="money" Mode="In" />
         </Function>
+        <Function Name="sp_AddLicenseKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Key" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="DateActive" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_AllLicenseKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -148,6 +157,14 @@
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_CreateLicenseKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUserCreate" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdUserAgecy" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="TypeKey" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_DeleteLicenseKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LicenseKey" Type="uniqueidentifier" Mode="In" />
         </Function>
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -161,10 +178,23 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_HistoryUseProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Key" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="sp_InfoLicenseKeyForAgecy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="sp_InfoLicenseKeyForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateHistoryUseProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="key" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="History" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ThemNguoiGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -467,9 +497,39 @@
             <Parameter Name="Note" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteHDSD">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetDataHDSD" ReturnType="Collection(bsoft_autohltModel.GetDataHDSD_Result)" />
+          <FunctionImport Name="LockLicenseKey">
+            <Parameter Name="Key" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AddLicenseKey">
+            <Parameter Name="Key" Mode="In" Type="Guid" />
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="DateActive" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AllLicenseKey" ReturnType="Collection(bsoft_autohltModel.sp_AllLicenseKey_Result)" />
+          <FunctionImport Name="sp_CreateLicenseKey">
+            <Parameter Name="IdUserCreate" Mode="In" Type="Guid" />
+            <Parameter Name="IdUserAgecy" Mode="In" Type="Guid" />
+            <Parameter Name="TypeKey" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DeleteLicenseKey">
+            <Parameter Name="LicenseKey" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="sp_HistoryUseProduct" ReturnType="Collection(String)">
+            <Parameter Name="Key" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InfoLicenseKeyForAgecy" ReturnType="Collection(bsoft_autohltModel.sp_InfoLicenseKeyForAgecy_Result)">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InfoLicenseKeyForUser" ReturnType="Collection(bsoft_autohltModel.sp_InfoLicenseKeyForUser_Result)">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateHistoryUseProduct">
+            <Parameter Name="key" Mode="In" Type="Guid" />
+            <Parameter Name="History" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -623,6 +683,31 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Url" Nullable="true" />
           <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="sp_AllLicenseKey_Result">
+          <Property Type="Guid" Name="LicenseKey" Nullable="false" />
+          <Property Type="Guid" Name="IdAgency" Nullable="true" />
+          <Property Type="DateTime" Name="DateCreateKey" Nullable="true" Precision="23" />
+          <Property Type="Guid" Name="IdUser" Nullable="true" />
+          <Property Type="Int32" Name="TypeKey" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="DateTime" Name="DateActive" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="String" Name="HistoryUseProduct" Nullable="true" />
+          <Property Type="Guid" Name="IdCreateKey" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_InfoLicenseKeyForAgecy_Result">
+          <Property Type="Guid" Name="LicenseKey" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreateKey" Nullable="true" Precision="23" />
+          <Property Type="Guid" Name="IdUser" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="DateTime" Name="DateActive" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Note" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_InfoLicenseKeyForUser_Result">
+          <Property Type="DateTime" Name="DateActive" Nullable="true" Precision="23" />
+          <Property Type="String" Name="HistoryUseProduct" Nullable="true" />
+          <Property Type="Guid" Name="LicenseKey" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -893,6 +978,49 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LockLicenseKey" FunctionName="bsoft_autohltModel.Store.LockLicenseKey" />
+          <FunctionImportMapping FunctionImportName="sp_AddLicenseKey" FunctionName="bsoft_autohltModel.Store.sp_AddLicenseKey" />
+          <FunctionImportMapping FunctionImportName="sp_AllLicenseKey" FunctionName="bsoft_autohltModel.Store.sp_AllLicenseKey">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_AllLicenseKey_Result">
+                <ScalarProperty Name="LicenseKey" ColumnName="LicenseKey" />
+                <ScalarProperty Name="IdAgency" ColumnName="IdAgency" />
+                <ScalarProperty Name="DateCreateKey" ColumnName="DateCreateKey" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="TypeKey" ColumnName="TypeKey" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateActive" ColumnName="DateActive" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="HistoryUseProduct" ColumnName="HistoryUseProduct" />
+                <ScalarProperty Name="IdCreateKey" ColumnName="IdCreateKey" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CreateLicenseKey" FunctionName="bsoft_autohltModel.Store.sp_CreateLicenseKey" />
+          <FunctionImportMapping FunctionImportName="sp_DeleteLicenseKey" FunctionName="bsoft_autohltModel.Store.sp_DeleteLicenseKey" />
+          <FunctionImportMapping FunctionImportName="sp_HistoryUseProduct" FunctionName="bsoft_autohltModel.Store.sp_HistoryUseProduct" />
+          <FunctionImportMapping FunctionImportName="sp_InfoLicenseKeyForAgecy" FunctionName="bsoft_autohltModel.Store.sp_InfoLicenseKeyForAgecy">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_InfoLicenseKeyForAgecy_Result">
+                <ScalarProperty Name="LicenseKey" ColumnName="LicenseKey" />
+                <ScalarProperty Name="DateCreateKey" ColumnName="DateCreateKey" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateActive" ColumnName="DateActive" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_InfoLicenseKeyForUser" FunctionName="bsoft_autohltModel.Store.sp_InfoLicenseKeyForUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_InfoLicenseKeyForUser_Result">
+                <ScalarProperty Name="DateActive" ColumnName="DateActive" />
+                <ScalarProperty Name="HistoryUseProduct" ColumnName="HistoryUseProduct" />
+                <ScalarProperty Name="LicenseKey" ColumnName="LicenseKey" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateHistoryUseProduct" FunctionName="bsoft_autohltModel.Store.sp_UpdateHistoryUseProduct" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

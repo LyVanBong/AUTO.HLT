@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AUTOHLT.WEB.API.Models;
 
@@ -14,7 +15,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         /// <returns></returns>
         [Route("Sigup")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody] RegistrationAccountModel accountModel)
+        public async Task<IHttpActionResult> Post([FromBody] RegistrationAccountModel accountModel)
         {
             if (accountModel != null)
             {

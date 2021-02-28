@@ -815,5 +815,102 @@ namespace AUTOHLT.WEB.API.Database
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDataHDSD_Result>("GetDataHDSD");
         }
+    
+        public virtual int LockLicenseKey(Nullable<System.Guid> key)
+        {
+            var keyParameter = key.HasValue ?
+                new ObjectParameter("Key", key) :
+                new ObjectParameter("Key", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LockLicenseKey", keyParameter);
+        }
+    
+        public virtual int sp_AddLicenseKey(Nullable<System.Guid> key, Nullable<System.Guid> idUser, Nullable<System.DateTime> dateActive)
+        {
+            var keyParameter = key.HasValue ?
+                new ObjectParameter("Key", key) :
+                new ObjectParameter("Key", typeof(System.Guid));
+    
+            var idUserParameter = idUser.HasValue ?
+                new ObjectParameter("IdUser", idUser) :
+                new ObjectParameter("IdUser", typeof(System.Guid));
+    
+            var dateActiveParameter = dateActive.HasValue ?
+                new ObjectParameter("DateActive", dateActive) :
+                new ObjectParameter("DateActive", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AddLicenseKey", keyParameter, idUserParameter, dateActiveParameter);
+        }
+    
+        public virtual ObjectResult<sp_AllLicenseKey_Result> sp_AllLicenseKey()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllLicenseKey_Result>("sp_AllLicenseKey");
+        }
+    
+        public virtual int sp_CreateLicenseKey(Nullable<System.Guid> idUserCreate, Nullable<System.Guid> idUserAgecy, Nullable<int> typeKey)
+        {
+            var idUserCreateParameter = idUserCreate.HasValue ?
+                new ObjectParameter("IdUserCreate", idUserCreate) :
+                new ObjectParameter("IdUserCreate", typeof(System.Guid));
+    
+            var idUserAgecyParameter = idUserAgecy.HasValue ?
+                new ObjectParameter("IdUserAgecy", idUserAgecy) :
+                new ObjectParameter("IdUserAgecy", typeof(System.Guid));
+    
+            var typeKeyParameter = typeKey.HasValue ?
+                new ObjectParameter("TypeKey", typeKey) :
+                new ObjectParameter("TypeKey", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CreateLicenseKey", idUserCreateParameter, idUserAgecyParameter, typeKeyParameter);
+        }
+    
+        public virtual int sp_DeleteLicenseKey(Nullable<System.Guid> licenseKey)
+        {
+            var licenseKeyParameter = licenseKey.HasValue ?
+                new ObjectParameter("LicenseKey", licenseKey) :
+                new ObjectParameter("LicenseKey", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteLicenseKey", licenseKeyParameter);
+        }
+    
+        public virtual ObjectResult<string> sp_HistoryUseProduct(Nullable<System.Guid> key)
+        {
+            var keyParameter = key.HasValue ?
+                new ObjectParameter("Key", key) :
+                new ObjectParameter("Key", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_HistoryUseProduct", keyParameter);
+        }
+    
+        public virtual ObjectResult<sp_InfoLicenseKeyForAgecy_Result> sp_InfoLicenseKeyForAgecy(Nullable<System.Guid> idUser)
+        {
+            var idUserParameter = idUser.HasValue ?
+                new ObjectParameter("IdUser", idUser) :
+                new ObjectParameter("IdUser", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_InfoLicenseKeyForAgecy_Result>("sp_InfoLicenseKeyForAgecy", idUserParameter);
+        }
+    
+        public virtual ObjectResult<sp_InfoLicenseKeyForUser_Result> sp_InfoLicenseKeyForUser(Nullable<System.Guid> idUser)
+        {
+            var idUserParameter = idUser.HasValue ?
+                new ObjectParameter("IdUser", idUser) :
+                new ObjectParameter("IdUser", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_InfoLicenseKeyForUser_Result>("sp_InfoLicenseKeyForUser", idUserParameter);
+        }
+    
+        public virtual int sp_UpdateHistoryUseProduct(Nullable<System.Guid> key, string history)
+        {
+            var keyParameter = key.HasValue ?
+                new ObjectParameter("key", key) :
+                new ObjectParameter("key", typeof(System.Guid));
+    
+            var historyParameter = history != null ?
+                new ObjectParameter("History", history) :
+                new ObjectParameter("History", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdateHistoryUseProduct", keyParameter, historyParameter);
+        }
     }
 }

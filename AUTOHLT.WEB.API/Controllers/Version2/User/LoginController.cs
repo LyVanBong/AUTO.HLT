@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AUTOHLT.WEB.API.Models;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Models;
 
 namespace AUTOHLT.WEB.API.Controllers.Version2.User
 {
@@ -10,7 +10,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
     {
         [Route("Login")]
         [HttpPost]
-        public IHttpActionResult Login([FromBody] LoginModel login)
+        public async Task<IHttpActionResult> Login([FromBody] LoginModel login)
         {
             if (login != null && login.UserName != null && login.PassWord != null)
             {
