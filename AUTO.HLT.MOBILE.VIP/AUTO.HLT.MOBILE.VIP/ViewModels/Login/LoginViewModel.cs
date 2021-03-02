@@ -7,6 +7,7 @@ using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -23,6 +24,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         private string _phoneNumber;
         private string _nguoiGioiThieu;
         private ILoginService _loginService;
+        private IPageDialogService _pageDialogService;
 
         public View ContentLoginPage
         {
@@ -76,19 +78,20 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             set => SetProperty(ref _nguoiGioiThieu, value);
         }
 
-        public LoginViewModel(INavigationService navigationService, ILoginService loginService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService) : base(navigationService)
         {
+            _pageDialogService = pageDialogService;
             _loginService = loginService;
             ContentLoginPage = new LoginView();
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
         }
 
-        public  override async void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             try
             {
-                IsSavePasswd = Preferences.Get(nameof(IsSavePasswd), true);
+                IsSavePasswd = Preferences.Get(nameof(IsSavePasswd), false);
                 if (IsSavePasswd)
                 {
                     await DoLogin(await SecureStorage.GetAsync(AppConstants.UserName), await SecureStorage.GetAsync(AppConstants.Passwd));
@@ -144,11 +147,23 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
 
                         await NavigationService.NavigateAsync("/HomePage", null, false, true);
                     }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tài khoản hoặc mật khẩu không đúng",
+                            "OK");
+                    }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin đăng nhập",
+                        "OK");
                 }
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
+                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh",
+                    "OK");
             }
         }
     }

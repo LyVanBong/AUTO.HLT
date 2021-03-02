@@ -91,7 +91,7 @@
                 </CollectionView.ItemTemplate>
                 <CollectionView.FooterTemplate>
                     <DataTemplate>
-                        <BoxView BackgroundColor="#fff" HeightRequest="100" />
+                        <BoxView BackgroundColor="#fff" HeightRequest="250" />
                     </DataTemplate>
                 </CollectionView.FooterTemplate>
             </CollectionView>
