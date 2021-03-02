@@ -18,7 +18,10 @@
                 Hint="Tên đăng nhập"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-                <Entry Text="{Binding UserName}" />
+                <Entry
+                    BackgroundColor="Transparent"
+                    Text="{Binding UserName}"
+                    TextColor="#fff" />
             </textInputLayout:SfTextInputLayout>
             <textInputLayout:SfTextInputLayout
                 Grid.Row="2"
@@ -28,7 +31,10 @@
                 Hint="Tên"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-                <Entry Text="{Binding FullName}" />
+                <Entry
+                    BackgroundColor="Transparent"
+                    Text="{Binding FullName}"
+                    TextColor="#fff" />
             </textInputLayout:SfTextInputLayout>
             <textInputLayout:SfTextInputLayout
                 Grid.Row="3"
@@ -39,7 +45,11 @@
                 Hint="Mật khẩu"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-                <Entry IsPassword="True" Text="{Binding Passwd}" />
+                <Entry
+                    BackgroundColor="Transparent"
+                    IsPassword="True"
+                    Text="{Binding Passwd}"
+                    TextColor="#fff" />
             </textInputLayout:SfTextInputLayout>
             <textInputLayout:SfTextInputLayout
                 Grid.Row="4"
@@ -49,7 +59,11 @@
                 Hint="Số điện thoại"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-                <Entry Keyboard="Numeric" Text="{Binding PhoneNumber}">
+                <Entry
+                    BackgroundColor="Transparent"
+                    Keyboard="Numeric"
+                    Text="{Binding PhoneNumber}"
+                    TextColor="#fff">
                     <Entry.Behaviors>
                         <behaviors:MaskedBehavior Mask="AAA AAAA AAA" UnMaskedCharacter="A" />
                     </Entry.Behaviors>
@@ -63,7 +77,10 @@
                 Hint="Tài khoản người giới thiệu (nếu có)"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-                <Entry Text="{Binding NguoiGioiThieu}" />
+                <Entry
+                    BackgroundColor="Transparent"
+                    Text="{Binding NguoiGioiThieu}"
+                    TextColor="#fff" />
             </textInputLayout:SfTextInputLayout>
             <Button
                 Grid.Row="6"

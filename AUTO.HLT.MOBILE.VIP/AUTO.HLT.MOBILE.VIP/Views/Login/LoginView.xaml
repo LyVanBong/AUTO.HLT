@@ -31,11 +31,12 @@
                 Hint="Mật khẩu"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-                <Entry
+				<Entry
+                    TextColor="#fff"
                     BackgroundColor="Transparent"
                     IsPassword="True"
                     Text="{Binding Passwd}"
-                    TextColor="#fff" />
+                     />
             </textInputLayout:SfTextInputLayout>
             <StackLayout
                 Grid.Row="3"

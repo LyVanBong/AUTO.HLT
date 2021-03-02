@@ -7,6 +7,7 @@ using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
@@ -25,6 +26,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         private string _nguoiGioiThieu;
         private ILoginService _loginService;
         private IPageDialogService _pageDialogService;
+        private IDatabaseService _databaseService;
 
         public View ContentLoginPage
         {
@@ -78,12 +80,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             set => SetProperty(ref _nguoiGioiThieu, value);
         }
 
-        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
         {
+            _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             _loginService = loginService;
             ContentLoginPage = new LoginView();
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
+            IsSavePasswd = true;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -91,10 +95,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             base.OnNavigatedTo(parameters);
             try
             {
-                IsSavePasswd = Preferences.Get(nameof(IsSavePasswd), false);
-                if (IsSavePasswd)
+                if (Preferences.Get(nameof(IsSavePasswd), false))
                 {
-                    await DoLogin(await SecureStorage.GetAsync(AppConstants.UserName), await SecureStorage.GetAsync(AppConstants.Passwd));
+                    var dataUser = await _databaseService.GetAccountUser();
+                    if (dataUser?.UserName != null)
+                    {
+                        UserName = dataUser.UserName;
+                        await DoLogin(UserName, dataUser.UserName);
+                    }
                 }
             }
             catch (Exception e)
@@ -108,7 +116,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             switch (key)
             {
                 case "0":
-                    await DoLogin(UserName, Passwd);
+                    if (UserName != null && Passwd != null)
+                    {
+                        await DoLogin(UserName, HashFunctionHelper.GetHashCode(Passwd, 1));
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin đăng nhập",
+                            "OK");
+                    }
                     break;
                 case "1":
                     ContentLoginPage = new SigupView();
@@ -128,41 +144,31 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         {
             try
             {
-                if (user != null && pwd != null)
+                var login = await _loginService.Login(user, pwd);
+                if (login != null && login.Code > 0 & login.Data != null)
                 {
-                    var login = await _loginService.Login(user, HashFunctionHelper.GetHashCode(Passwd, 1));
-                    if (login != null && login.Code > 0 & login.Data != null)
+                    App.UserLogin = login.Data;
+                    if (IsSavePasswd)
                     {
-                        App.UserLogin = login.Data;
-                        if (IsSavePasswd)
-                        {
-                            await SecureStorage.SetAsync(AppConstants.UserName, UserName);
-                            await SecureStorage.SetAsync(AppConstants.Passwd, Passwd);
-                            Preferences.Set(nameof(IsSavePasswd), true);
-                        }
-                        else
-                        {
-                            Preferences.Set(nameof(IsSavePasswd), false);
-                        }
-
-                        await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                        Preferences.Set(nameof(IsSavePasswd), true);
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tài khoản hoặc mật khẩu không đúng",
-                            "OK");
+                        Preferences.Set(nameof(IsSavePasswd), false);
                     }
+                    await _databaseService.SetAccountUser(login.Data);
+                    await NavigationService.NavigateAsync("/HomePage", null, false, true);
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin đăng nhập",
+                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Tài khoản hoặc mật khẩu không đúng",
                         "OK");
                 }
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
-                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh",
+                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh trong quá trình xử lý vui long thử lại",
                     "OK");
             }
         }

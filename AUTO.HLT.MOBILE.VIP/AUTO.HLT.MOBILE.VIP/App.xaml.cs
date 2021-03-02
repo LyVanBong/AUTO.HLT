@@ -1,4 +1,5 @@
 using AUTO.HLT.MOBILE.VIP.Models.Login;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
 using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
@@ -37,6 +38,7 @@ namespace AUTO.HLT.MOBILE.VIP
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
 
+            containerRegistry.Register<IDatabaseService, DatabaseService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
             containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IRequestProvider, RequestProvider>();

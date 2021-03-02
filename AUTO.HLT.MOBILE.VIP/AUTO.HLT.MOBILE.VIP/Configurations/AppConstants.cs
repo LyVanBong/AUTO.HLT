@@ -3,6 +3,10 @@
     public static class AppConstants
     {
         /// <summary>
+        /// db realm
+        /// </summary>
+        public const string RealmConfiguration = "com.bsoftgroup.auto.vip";
+        /// <summary>
         /// Khoa usser
         /// </summary>
         public const string UserName = "UserName";
