@@ -1,8 +1,14 @@
-﻿using AUTO.HLT.MOBILE.VIP.Views.Login;
+﻿using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Helpers;
+using AUTO.HLT.MOBILE.VIP.Services.Login;
+using AUTO.HLT.MOBILE.VIP.Views.Login;
+using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
@@ -16,6 +22,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         private string _fullName;
         private string _phoneNumber;
         private string _nguoiGioiThieu;
+        private ILoginService _loginService;
 
         public View ContentLoginPage
         {
@@ -69,10 +76,28 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             set => SetProperty(ref _nguoiGioiThieu, value);
         }
 
-        public LoginViewModel(INavigationService navigationService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, ILoginService loginService) : base(navigationService)
         {
+            _loginService = loginService;
             ContentLoginPage = new LoginView();
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
+        }
+
+        public  override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            try
+            {
+                IsSavePasswd = Preferences.Get(nameof(IsSavePasswd), true);
+                if (IsSavePasswd)
+                {
+                    await DoLogin(await SecureStorage.GetAsync(AppConstants.UserName), await SecureStorage.GetAsync(AppConstants.Passwd));
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private async Task FunctionExecute(string key)
@@ -80,7 +105,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             switch (key)
             {
                 case "0":
-                    await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                    await DoLogin(UserName, Passwd);
                     break;
                 case "1":
                     ContentLoginPage = new SigupView();
@@ -93,6 +118,37 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     break;
                 default:
                     break;
+            }
+        }
+
+        private async Task DoLogin(string user, string pwd)
+        {
+            try
+            {
+                if (user != null && pwd != null)
+                {
+                    var login = await _loginService.Login(user, HashFunctionHelper.GetHashCode(Passwd, 1));
+                    if (login != null && login.Code > 0 & login.Data != null)
+                    {
+                        App.UserLogin = login.Data;
+                        if (IsSavePasswd)
+                        {
+                            await SecureStorage.SetAsync(AppConstants.UserName, UserName);
+                            await SecureStorage.SetAsync(AppConstants.Passwd, Passwd);
+                            Preferences.Set(nameof(IsSavePasswd), true);
+                        }
+                        else
+                        {
+                            Preferences.Set(nameof(IsSavePasswd), false);
+                        }
+
+                        await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
             }
         }
     }
