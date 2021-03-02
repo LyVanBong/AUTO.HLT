@@ -6,6 +6,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
 {
     public interface ILoginService
     {
+
         /// <summary>
         /// api dang nhap v2
         /// </summary>

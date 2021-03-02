@@ -19,6 +19,8 @@
                 UnfocusedColor="#fff">
                 <Entry
                     BackgroundColor="Transparent"
+                    Keyboard="Plain"
+                    ReturnType="Next"
                     Text="{Binding UserName}"
                     TextColor="#fff" />
             </textInputLayout:SfTextInputLayout>
@@ -31,12 +33,15 @@
                 Hint="Mật khẩu"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
-				<Entry
-                    TextColor="#fff"
+                <Entry
                     BackgroundColor="Transparent"
                     IsPassword="True"
+                    Keyboard="Plain"
+                    ReturnCommand="{Binding FunctionExecuteCommand}"
+                    ReturnCommandParameter="0"
+                    ReturnType="Done"
                     Text="{Binding Passwd}"
-                     />
+                    TextColor="#fff" />
             </textInputLayout:SfTextInputLayout>
             <StackLayout
                 Grid.Row="3"

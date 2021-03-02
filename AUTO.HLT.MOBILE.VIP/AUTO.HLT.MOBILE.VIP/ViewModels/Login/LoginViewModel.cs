@@ -101,7 +101,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     if (dataUser?.UserName != null)
                     {
                         UserName = dataUser.UserName;
-                        await DoLogin(UserName, dataUser.UserName);
+                        await DoLogin(UserName, dataUser.Password);
                     }
                 }
             }
@@ -130,13 +130,42 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     ContentLoginPage = new SigupView();
                     break;
                 case "2":
-                    await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                    await DoSigup();
                     break;
                 case "3":
                     ContentLoginPage = new LoginView();
                     break;
+                case "4":
+                    await CheckUserName(UserName);
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private async Task CheckUserName(string userName)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+
+        private async Task DoSigup()
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh trong quá trình xử lý vui long thử lại",
+                    "OK");
             }
         }
 
