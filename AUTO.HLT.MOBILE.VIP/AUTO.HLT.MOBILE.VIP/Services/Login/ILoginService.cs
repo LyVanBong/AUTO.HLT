@@ -6,6 +6,13 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
 {
     public interface ILoginService
     {
+        Task<ResponseModel<string>> Sigup(SigupModel sigup);
+        /// <summary>
+        /// kiểm tra tồn tại của số điện thoại
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> CheckExistPhone(string phone);
         /// <summary>
         /// kiem tra ten dang nhap da ton tai chua
         /// </summary>

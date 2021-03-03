@@ -76,6 +76,10 @@
                     TextColor="#fff">
                     <Entry.Behaviors>
                         <behaviors:MaskedBehavior Mask="AAA AAAA AAA" UnMaskedCharacter="A" />
+                        <behaviors1:EventToCommandBehavior
+                            Command="{Binding FunctionExecuteCommand}"
+                            CommandParameter="5"
+                            EventName="Unfocused" />
                     </Entry.Behaviors>
                 </Entry>
             </textInputLayout:SfTextInputLayout>

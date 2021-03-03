@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="AUTO.HLT.MOBILE.VIP.Controls.Loading.LoadingView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
+    <ContentView.Content>
+        <Grid ColumnDefinitions="80,*,80" RowDefinitions="*,150,*">
+            <Frame
+                Grid.Row="1"
+                Grid.Column="1"
+                Padding="0"
+                BackgroundColor="#ffffff"
+                CornerRadius="10"
+                HasShadow="True">
+                <xForms:SfBusyIndicator
+                    x:Name="busyindicator"
+                    Title="Hệ thống đang xử lý"
+                    Margin="0"
+                    AnimationType="DoubleCircle"
+                    BackgroundColor="#ffffff"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="{StaticResource AppBackgroud}"
+                    TextSize="18"
+                    VerticalOptions="FillAndExpand"
+                    Duration="1" />
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

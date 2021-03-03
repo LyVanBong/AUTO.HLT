@@ -3,6 +3,10 @@
     public static class AppConstants
     {
         /// <summary>
+        /// khoa luu mat khau
+        /// </summary>
+        public const string SavePasswd = "IsSavePasswd";
+        /// <summary>
         /// db realm
         /// </summary>
         public const string RealmConfiguration = "com.bsoftgroup.auto.vip";

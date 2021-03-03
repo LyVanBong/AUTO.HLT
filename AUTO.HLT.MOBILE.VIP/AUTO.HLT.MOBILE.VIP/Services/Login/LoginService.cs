@@ -16,11 +16,59 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<string>> Sigup(SigupModel sigup)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("UserName",sigup.UserName),
+                    new RequestParameter("Password",sigup.Password),
+                    new RequestParameter("Name",sigup.Name),
+                    new RequestParameter("NumberPhone",sigup.NumberPhone),
+                    new RequestParameter("Email",$"{sigup.UserName}@autohlt.com"),
+                    new RequestParameter("Age",DateTime.Now.Year.ToString()),
+                    new RequestParameter("Sex","0"),
+                    new RequestParameter("DateCreate",DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss")),
+                };
+                var data = await _requestProvider.PostAsync<string>("user/Sigup", para);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
+        }
+
+        public async Task<ResponseModel<string>> CheckExistPhone(string phone)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("numberPhone",phone),
+                };
+                var data = await _requestProvider.GetAsync<string>("user/CheckExistPhone", para);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
+        }
+
         public async Task<ResponseModel<string>> CheckExistUser(string userName)
         {
             try
             {
-
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("username",userName),
+                };
+                var data = await _requestProvider.GetAsync<string>("user/CheckExistUserName", para);
+                return data;
             }
             catch (Exception e)
             {
@@ -38,12 +86,12 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
                     new RequestParameter("UserName",userName),
                     new RequestParameter("PassWord",passwd),
                 };
-                var data =await _requestProvider.PostAsync<LoginModel>("user/Login",para);
+                var data = await _requestProvider.PostAsync<LoginModel>("user/Login", para);
                 return data;
             }
             catch (Exception e)
             {
-                
+
                 Crashes.TrackError(e);
                 return null;
             }

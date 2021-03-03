@@ -7,6 +7,7 @@ using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Models.RequestProviderModel;
 using Newtonsoft.Json;
 using RestSharp;
+using Xamarin.Essentials;
 
 namespace AUTO.HLT.MOBILE.VIP.Services.RequestProvider
 {
@@ -50,9 +51,12 @@ namespace AUTO.HLT.MOBILE.VIP.Services.RequestProvider
                 uri = AppConstants.UrlBase + uri;
                 _client.BaseUrl = new Uri(uri);
                 _request = new RestRequest(method);
-                _request.AddHeader("Authorization",
-                    await Xamarin.Essentials.SecureStorage.GetAsync(AppConstants.Authorization));
-                _request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                var authen = Preferences.Get(AppConstants.Authorization, "");
+                if (!string.IsNullOrEmpty(authen))
+                {
+                    _request.AddHeader("Authorization", authen);
+                    _request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                }
             }
             catch (Exception)
             {

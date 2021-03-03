@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
@@ -27,6 +28,7 @@ namespace AUTO.HLT.MOBILE.VIP.iOS
             #region Thư viên ngoài
 
             SfTextInputLayoutRenderer.Init();
+            new SfBusyIndicatorRenderer();
 
             #endregion
             LoadApplication(new App(new iOSInitializer()));

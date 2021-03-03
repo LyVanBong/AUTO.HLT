@@ -5,8 +5,10 @@ using AUTO.HLT.MOBILE.VIP.Views.Login;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -27,6 +29,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         private ILoginService _loginService;
         private IPageDialogService _pageDialogService;
         private IDatabaseService _databaseService;
+        private bool _isLoading;
 
         public View ContentLoginPage
         {
@@ -80,6 +83,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             set => SetProperty(ref _nguoiGioiThieu, value);
         }
 
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
         public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
         {
             _databaseService = databaseService;
@@ -95,6 +104,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             base.OnNavigatedTo(parameters);
             try
             {
+                IsLoading = true;
                 if (Preferences.Get(nameof(IsSavePasswd), false))
                 {
                     var dataUser = await _databaseService.GetAccountUser();
@@ -109,10 +119,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             {
                 Crashes.TrackError(e);
             }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         private async Task FunctionExecute(string key)
         {
+            IsLoading = true;
             switch (key)
             {
                 case "0":
@@ -138,8 +153,40 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 case "4":
                     await CheckUserName(UserName);
                     break;
+                case "5":
+                    await CheckPhone(PhoneNumber);
+                    break;
                 default:
                     break;
+            }
+
+            IsLoading = false;
+        }
+
+        private async Task CheckPhone(string phoneNumber)
+        {
+            try
+            {
+                if (PhoneNumber != null)
+                {
+                    if (phoneNumber.Length==10)
+                    {
+                        var data = await _loginService.CheckExistPhone(phoneNumber.Replace(" ", ""));
+                        if (data != null && data.Code > 0)
+                        {
+                            PhoneNumber = "";
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", $"Số điện thoại {data.Data} đã được đăng ký bởi một tài khoản khác", "OK");
+                        }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", $"Số điện thoại {phoneNumber} chưa chính xác", "OK");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
             }
         }
 
@@ -147,7 +194,24 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         {
             try
             {
-
+                if (userName != null)
+                {
+                    var usr = Regex.Match(UserName, @"^[a-zA-Z0-9]+(?:[_.]?[a-zA-Z0-9])*$")?.Value;
+                    if (!string.IsNullOrWhiteSpace(usr))
+                    {
+                        var data = await _loginService.CheckExistUser(userName);
+                        if (data != null && data.Code < 0)
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", $"Tài khoản {UserName} đã tồn tại", "OK");
+                            UserName = "";
+                        }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", $"Tên đăng nhập {UserName} của bạn chứa các ký tự đặc biệt vui lòng nhập lại", "OK");
+                        UserName = "";
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -159,12 +223,33 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         {
             try
             {
-
+                if (UserName != null && FullName != null && PhoneNumber != null && Passwd != null)
+                {
+                    var sigup = await _loginService.Sigup(new SigupModel { UserName = UserName, Name = FullName, NumberPhone = PhoneNumber, Password = Passwd });
+                    if (sigup != null && sigup.Code > 0)
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản thành công",
+                            "OK");
+                        await DoLogin(UserName, HashFunctionHelper.GetHashCode(Passwd, 1));
+                        UserName = Passwd = PhoneNumber = FullName = "";
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản lỗi vui lòng thử lại",
+                            "OK");
+                        Passwd = "";
+                    }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin",
+                        "OK");
+                }
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
-                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh trong quá trình xử lý vui long thử lại",
+                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh trong quá trình xử lý vui lòng thử lại",
                     "OK");
             }
         }

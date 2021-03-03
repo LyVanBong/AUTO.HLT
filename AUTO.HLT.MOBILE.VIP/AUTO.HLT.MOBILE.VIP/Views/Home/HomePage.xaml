@@ -3,13 +3,14 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.Home.HomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP">
     <ContentPage.Content>
         <Grid
             Margin="0"
             Padding="0"
             BackgroundColor="#f2f2f2"
-            RowDefinitions="150,Auto,Auto,*,60"
+            RowDefinitions="100,Auto,Auto,*,60"
             RowSpacing="0">
             <BoxView
                 Grid.Row="0"
@@ -36,10 +37,20 @@
                 </Label.Resources>
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Ly Van Bong" />
+                        <Span Text="{Binding InfoUser.Name}" />
                         <Span Text=" (" />
-                        <Span Text="BongLV" />
+                        <Span Text="{Binding InfoUser.UserName}" />
                         <Span Text=") " />
+                        <Span
+                            FontAttributes="Bold"
+                            FontFamily="Awesome"
+                            FontSize="20"
+                            Text="{x:Static fonts:FontAwesome5ProSolid.PowerOff}"
+                            TextColor="Red">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LogoutCommant}" />
+                            </Span.GestureRecognizers>
+                        </Span>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

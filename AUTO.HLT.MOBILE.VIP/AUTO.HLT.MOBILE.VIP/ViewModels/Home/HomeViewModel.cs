@@ -1,18 +1,56 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
+using AUTO.HLT.MOBILE.VIP.Models.Login;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
 using Prism.Navigation;
+using Prism.Services;
+using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
 {
     public class HomeViewModel : ViewModelBase
     {
+        private LoginModel _infoUser;
+        private IDatabaseService _databaseService;
+        private IPageDialogService _pageDialogService;
+
         public ObservableCollection<ItemMenuModel> ListItemMenus { get; set; }
 
-        public HomeViewModel(INavigationService navigationService) : base(navigationService)
+        public LoginModel InfoUser
         {
+            get => _infoUser;
+            set => SetProperty(ref _infoUser, value);
+        }
+
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService) : base(navigationService)
+        {
+            _pageDialogService = pageDialogService;
+            _databaseService = databaseService;
             ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
+        }
+
+        public ICommand LogoutCommant { get; private set; }
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            InfoUser = await _databaseService.GetAccountUser();
+            LogoutCommant = new Command(async () => await Logout());
+        }
+
+        private async Task Logout()
+        {
+            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Bạn muỗn đăng xuất tài khoản",
+                "Ok", "Cancel"))
+            {
+                await _databaseService.DeleteAccontUser();
+                Preferences.Clear(AppConstants.SavePasswd);
+            }
         }
 
         private List<ItemMenuModel> GetItemMenu()
