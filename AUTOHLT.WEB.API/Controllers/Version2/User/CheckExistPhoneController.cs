@@ -6,7 +6,7 @@ using System.Web.Http;
 namespace AUTOHLT.WEB.API.Controllers.Version2.User
 {
     [RoutePrefix("api/version2/user")]
-    public class UserController : BaseController
+    public class CheckExistPhoneController : BaseController
     {
         /// <summary>
         /// kiem tra su ton tai cua so dien thoai
