@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AUTOHLT.WEB.API.Database;
 using AUTOHLT.WEB.API.Models;
 using AUTOHLT.WEB.API.Models.Version2.LicenseKey;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Database;
 
 namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
 {
@@ -51,6 +51,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// xoa key ban quyen
         /// </summary>
@@ -90,6 +91,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// lay toan bo key ban quyen
         /// </summary>
@@ -129,6 +131,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// lay danh sach key ban quyen theo id dai ly
         /// </summary>
@@ -168,6 +171,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// kiem tra xem tai cua cua user da duoc kich hoat key chua
         /// </summary>
@@ -218,6 +222,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// Khoa key ban quyen lai
         /// </summary>
@@ -253,6 +258,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// them khoa ban quyen
         /// </summary>
@@ -289,6 +295,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
                     Data = null
                 });
         }
+
         /// <summary>
         /// Tao khoa cho app autovip
         /// </summary>

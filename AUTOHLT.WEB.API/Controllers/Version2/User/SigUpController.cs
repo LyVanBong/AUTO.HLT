@@ -1,7 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using AUTOHLT.WEB.API.Models;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Models;
 
 namespace AUTOHLT.WEB.API.Controllers.Version2.User
 {

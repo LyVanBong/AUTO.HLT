@@ -6,6 +6,7 @@ using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Views.Login;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -27,20 +28,19 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             get => _infoUser;
             set => SetProperty(ref _infoUser, value);
         }
-
+        public ICommand LogoutCommant { get; private set; }
         public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService) : base(navigationService)
         {
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
+            LogoutCommant = new AsyncCommand(Logout);
         }
 
-        public ICommand LogoutCommant { get; private set; }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             InfoUser = await _databaseService.GetAccountUser();
-            LogoutCommant = new Command(async () => await Logout());
         }
 
         private async Task Logout()
@@ -50,6 +50,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             {
                 await _databaseService.DeleteAccontUser();
                 Preferences.Clear(AppConstants.SavePasswd);
+                await NavigationService.NavigateAsync("/LoginPage", null, false, true);
             }
         }
 

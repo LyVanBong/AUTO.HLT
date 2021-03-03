@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AUTOHLT.WEB.API.Models;
+using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Models;
 
 namespace AUTOHLT.WEB.API.Controllers.Version2.User
 {
@@ -21,7 +21,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
             if (veri != null && veri.UserName != null)
             {
                 var data = DatabaseAutohlt.UserTransfers(veri.IdUser, transfer.IdReceive, transfer.Price);
-                if (data >0)
+                if (data > 0)
                 {
                     return Ok(new ResponseModel<int>
                     {
@@ -39,6 +39,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
             });
         }
     }
+
     public class TransferMoneyModel
     {
         public Guid IdReceive { get; set; }

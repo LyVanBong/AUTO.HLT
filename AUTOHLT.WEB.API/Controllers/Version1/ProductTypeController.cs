@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace AUTOHLT.WEB.API.Controllers
+namespace AUTOHLT.WEB.API.Controllers.Version1
 {
     [RoutePrefix("api/v1/producttype")]
     public class ProductTypeController : ApiController

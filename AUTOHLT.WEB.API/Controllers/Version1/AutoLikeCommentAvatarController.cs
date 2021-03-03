@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AUTOHLT.WEB.API.Database;
+﻿using AUTOHLT.WEB.API.Database;
 using AUTOHLT.WEB.API.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
-namespace AUTOHLT.WEB.API.Controllers
+namespace AUTOHLT.WEB.API.Controllers.Version1
 {
     [RoutePrefix("api/v1/AutoLikeCommentAvatar")]
     public class AutoLikeCommentAvatarController : ApiController
     {
         private bsoft_autohltEntities _dbAutohltEntities;
+
         public AutoLikeCommentAvatarController()
         {
             _dbAutohltEntities = new bsoft_autohltEntities();
@@ -37,7 +38,6 @@ namespace AUTOHLT.WEB.API.Controllers
                 Data = null
             });
         }
-
 
         [Route("AddHistory")]
         [HttpPost]
@@ -139,6 +139,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Data = data
             });
         }
+
         /// <summary>
         /// Cập lại Thông tin user auto like comment
         /// </summary>

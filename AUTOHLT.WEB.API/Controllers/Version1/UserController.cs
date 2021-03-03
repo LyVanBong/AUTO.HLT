@@ -1,5 +1,6 @@
 ﻿using AUTOHLT.WEB.API.Database;
 using AUTOHLT.WEB.API.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
@@ -7,11 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Http;
-using Newtonsoft.Json;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace AUTOHLT.WEB.API.Controllers
+namespace AUTOHLT.WEB.API.Controllers.Version1
 {
     [RoutePrefix("api/v1/user")]
     public class UserController : ApiController
@@ -46,6 +46,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Data = "",
             });
         }
+
         /// <summary>
         /// Thêm người giới thiệu cho đại lý
         /// </summary>
@@ -95,6 +96,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 Data = string.IsNullOrWhiteSpace(response.Content) ? null : JsonConvert.DeserializeObject<BalanceTwilioModel>(response.Content)
             });
         }
+
         /// <summary>
         /// gửi mã otp cho khách hàng
         /// </summary>
@@ -112,7 +114,7 @@ namespace AUTOHLT.WEB.API.Controllers
                 var pin = random.Next(100000, 999999);
                 var message = MessageResource.Create(
                     body: $"AUTOHLT: Nhap ma OTP {pin} de xac thuc tai khoan AUTOHLT cua ban luc {DateTime.Now.ToString("hh:mm:ss dd-MM-yyyy")}.",
-                    from: new Twilio.Types.PhoneNumber("+15108248672"),
+                    @from: new Twilio.Types.PhoneNumber("+15108248672"),
                     to: new Twilio.Types.PhoneNumber(phone)
                 );
 

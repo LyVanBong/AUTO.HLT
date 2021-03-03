@@ -135,16 +135,16 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AutoLikeCommentAvatarController.cs" />
+    <Compile Include="Controllers\Version1\AutoLikeCommentAvatarController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\HuongDanSuDungController.cs" />
-    <Compile Include="Controllers\MoneyTransferHistoryController.cs" />
-    <Compile Include="Controllers\NotificationController.cs" />
-    <Compile Include="Controllers\ProductTypeController.cs" />
-    <Compile Include="Controllers\RegisterProductController.cs" />
-    <Compile Include="Controllers\ServiceUseHistoryController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UserFacebookController.cs" />
+    <Compile Include="Controllers\Version1\HuongDanSuDungController.cs" />
+    <Compile Include="Controllers\Version1\MoneyTransferHistoryController.cs" />
+    <Compile Include="Controllers\Version1\NotificationController.cs" />
+    <Compile Include="Controllers\Version1\ProductTypeController.cs" />
+    <Compile Include="Controllers\Version1\RegisterProductController.cs" />
+    <Compile Include="Controllers\Version1\ServiceUseHistoryController.cs" />
+    <Compile Include="Controllers\Version1\UserController.cs" />
+    <Compile Include="Controllers\Version1\UserFacebookController.cs" />
     <Compile Include="Controllers\Version2\FileUploads\FileUploadController.cs" />
     <Compile Include="Controllers\Version2\LicenseKey\LicenseKeyController.cs" />
     <Compile Include="Controllers\Version2\User\CheckExistUserController.cs" />

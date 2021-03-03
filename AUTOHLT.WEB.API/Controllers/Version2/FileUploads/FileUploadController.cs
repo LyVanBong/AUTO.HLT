@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,7 +17,6 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.FileUploads
             // luu 1 file
             //var file = HttpContext.Current.Request.Files.Get("Avatar");
             // file.SaveAs($"{rootPath}/{file.FileName}");
-
 
             // luu nhieu file
             var rootPath = HttpContext.Current.Server.MapPath($"~/App_Data");

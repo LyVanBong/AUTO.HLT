@@ -42,6 +42,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
                     Data = null
                 });
         }
+
         /// <summary>
         /// Thêm người giới thiệu cho đại lý
         /// </summary>

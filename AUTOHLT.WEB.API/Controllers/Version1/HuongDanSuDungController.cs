@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using AUTOHLT.WEB.API.Database;
+using AUTOHLT.WEB.API.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Database;
-using AUTOHLT.WEB.API.Models;
 
-namespace AUTOHLT.WEB.API.Controllers
+namespace AUTOHLT.WEB.API.Controllers.Version1
 {
     [RoutePrefix("api/v1/HDSD")]
     public class HuongDanSuDungController : ApiController
     {
         private bsoft_autohltEntities _entities;
+
         public HuongDanSuDungController()
         {
             _entities = new bsoft_autohltEntities();
@@ -54,7 +55,7 @@ namespace AUTOHLT.WEB.API.Controllers
         [HttpPost]
         public IHttpActionResult Add(HuongDanSuDungModel model)
         {
-            var data = _entities.AddHDSD(model.Url,model.Note);
+            var data = _entities.AddHDSD(model.Url, model.Note);
             return Ok(new ResponseModel<int>()
             {
                 Code = 4534,
