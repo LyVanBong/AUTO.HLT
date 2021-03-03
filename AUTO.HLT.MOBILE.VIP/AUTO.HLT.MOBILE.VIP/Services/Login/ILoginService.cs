@@ -6,7 +6,12 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
 {
     public interface ILoginService
     {
-
+        /// <summary>
+        /// kiem tra ten dang nhap da ton tai chua
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> CheckExistUser(string userName);
         /// <summary>
         /// api dang nhap v2
         /// </summary>

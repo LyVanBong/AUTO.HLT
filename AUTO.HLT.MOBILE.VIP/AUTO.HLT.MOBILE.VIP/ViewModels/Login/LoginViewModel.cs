@@ -186,6 +186,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                         Preferences.Set(nameof(IsSavePasswd), false);
                     }
                     await _databaseService.SetAccountUser(login.Data);
+                    Preferences.Set(AppConstants.Authorization, login.Data.Jwt);
                     await NavigationService.NavigateAsync("/HomePage", null, false, true);
                 }
                 else

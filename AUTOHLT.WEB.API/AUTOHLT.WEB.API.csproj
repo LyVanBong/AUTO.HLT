@@ -152,6 +152,7 @@
     <Compile Include="Controllers\Version2\User\LoginController.cs" />
     <Compile Include="Controllers\Version2\User\SigUpController.cs" />
     <Compile Include="Controllers\Version2\User\TransferController.cs" />
+    <Compile Include="Controllers\Version2\User\UserController.cs" />
     <Compile Include="Database\AutoHLTDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

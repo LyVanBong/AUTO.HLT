@@ -15,6 +15,20 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
         {
             _requestProvider = requestProvider;
         }
+
+        public async Task<ResponseModel<string>> CheckExistUser(string userName)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
+        }
+
         public async Task<ResponseModel<LoginModel>> Login(string userName, string passwd)
         {
             try
