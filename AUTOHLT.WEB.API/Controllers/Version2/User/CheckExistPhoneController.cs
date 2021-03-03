@@ -17,8 +17,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         [Route("CheckExistPhone")]
         public async Task<IHttpActionResult> CheckExistPhoneNumber(string numberPhone)
         {
-            var veri = Verifying(Request);
-            if (veri != null && veri.UserName != null && numberPhone != null)
+            if (numberPhone != null)
             {
                 var data = DatabaseAutohlt.CheckNumberPhone(numberPhone)?.FirstOrDefault();
                 if (data != null && data.Any())

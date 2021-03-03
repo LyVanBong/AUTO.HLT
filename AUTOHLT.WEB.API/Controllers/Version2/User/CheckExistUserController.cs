@@ -18,8 +18,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         [Route("CheckExistUserName")]
         public async Task<IHttpActionResult> CheckExistUser(string userName)
         {
-            var veri = Verifying(Request);
-            if (veri != null && veri.UserName != null && userName != null)
+            if (userName != null)
             {
                 Guid? guid = new Guid();
                 if (userName != null)
