@@ -183,26 +183,29 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
             var veri = Verifying(Request);
             if (veri != null && veri.UserName != null)
             {
-                var infoLicense = DatabaseAutohlt.sp_InfoLicenseKeyForUser(veri.IdUser)?.FirstOrDefault();
+                var infoLicense = DatabaseAutohlt.sp_InfoLicenseKeyForUser(veri.IdUser)?.ToList();
                 if (infoLicense != null)
                 {
-                    var endDate = infoLicense.DateActive?.AddYears(1);
-                    if (endDate != null && endDate >= DateTime.Now)
+                    foreach (var item in infoLicense)
                     {
-                        return Ok(new ResponseModel<sp_InfoLicenseKeyForUser_Result>()
+                        var endDate = item.DateActive?.AddYears(1);
+                        if (endDate != null && endDate >= DateTime.Now)
                         {
-                            Code = 237,
-                            Message = "Tai khoan da duoc nang cap",
-                            Data = infoLicense
-                        });
+                            return Ok(new ResponseModel<sp_InfoLicenseKeyForUser_Result>()
+                            {
+                                Code = 237,
+                                Message = "Tai khoan da duoc nang cap",
+                                Data = item
+                            });
+                        }
+
                     }
-                    else
-                        return Ok(new ResponseModel<sp_InfoLicenseKeyForUser_Result>()
-                        {
-                            Code = -237,
-                            Message = "Ban quyen da het han",
-                            Data = infoLicense
-                        });
+                    return Ok(new ResponseModel<sp_InfoLicenseKeyForUser_Result>()
+                    {
+                        Code = -237,
+                        Message = "Ban quyen da het han",
+                        Data = null,
+                    });
                 }
                 else
                 {
