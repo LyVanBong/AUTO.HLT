@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:fonts="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP">
     <ContentPage.Content>
         <Grid
@@ -54,20 +55,19 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label
+            <ContentView
                 Grid.Row="2"
-                Margin="0,5"
-                FontSize="15"
-                HorizontalOptions="CenterAndExpand"
-                Text="Miễn phí - (Nâng cấp)"
-                TextColor="#fff"
-                VerticalOptions="CenterAndExpand" />
+                Margin="0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                Content="{Binding LicenseView}" />
             <CollectionView
                 Grid.Row="3"
                 Grid.RowSpan="2"
                 Margin="5,10,5,0"
                 BackgroundColor="Transparent"
-                ItemsSource="{Binding ListItemMenus}">
+                ItemsSource="{Binding ListItemMenus}"
+                SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="15"
@@ -128,6 +128,10 @@
                     Aspect="AspectFit"
                     Source="{markupExtensions:ImageResource icon_facebook_connect.png}" />
             </Frame>
+            <loading:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="5"
+                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

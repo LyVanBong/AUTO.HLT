@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
+using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
+using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Login;
+using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -20,6 +25,10 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         private LoginModel _infoUser;
         private IDatabaseService _databaseService;
         private IPageDialogService _pageDialogService;
+        private View _licenseView;
+        private ILicenseKeyService _licenseKeyService;
+        private LicenseKeyModel _licenseKey;
+        private bool _isLoading;
 
         public ObservableCollection<ItemMenuModel> ListItemMenus { get; set; }
 
@@ -29,22 +38,116 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             set => SetProperty(ref _infoUser, value);
         }
         public ICommand LogoutCommant { get; private set; }
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService) : base(navigationService)
+
+        public View LicenseView
         {
+            get => _licenseView;
+            set => SetProperty(ref _licenseView, value);
+        }
+
+        public ICommand UpgradeAccountCommand { get; private set; }
+
+        public LicenseKeyModel LicenseKey
+        {
+            get => _licenseKey;
+            set => SetProperty(ref _licenseKey, value);
+        }
+
+        public string Key { get; set; }
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService) : base(navigationService)
+        {
+            _licenseKeyService = licenseKeyService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
             LogoutCommant = new AsyncCommand(Logout);
+            UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
+        }
+
+        private async Task UpgradeAccount(string arg)
+        {
+            try
+            {
+                if (IsLoading)
+                    return;
+                IsLoading = true;
+                switch (arg)
+                {
+                    case "0":
+                        LicenseView = new AddLicenseKeyView();
+                        break;
+                    case "1":
+                        if (Key != null)
+                        {
+                            if (await _licenseKeyService.ActiveLiceseKey(Key))
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Kích hoạt khóa thành công", "OK");
+                                await CheckLicenseKey();
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Kích hoạt khóa chưa thành công", "OK");
+                            }
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                "Bạn vui lòng điền đầy đủ thông tin", "OK");
+                        }
+
+                        break;
+                    case "2":
+                        LicenseView = new FreeView();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsLoading = true;
             InfoUser = await _databaseService.GetAccountUser();
+            await CheckLicenseKey();
+            IsLoading = false;
+        }
+
+        private async Task CheckLicenseKey()
+        {
+            LicenseKey = await _licenseKeyService.CheckLicenseForUser();
+            if (LicenseKey != null)
+            {
+                LicenseView = new VipView();
+            }
+            else
+            {
+                LicenseView = new FreeView();
+            }
         }
 
         private async Task Logout()
         {
+            if (IsLoading) return;
+            IsLoading = true;
             if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Bạn muỗn đăng xuất tài khoản",
                 "Ok", "Cancel"))
             {
@@ -52,6 +155,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                 Preferences.Clear(AppConstants.SavePasswd);
                 await NavigationService.NavigateAsync("/LoginPage", null, false, true);
             }
+
+            IsLoading = false;
         }
 
         private List<ItemMenuModel> GetItemMenu()
