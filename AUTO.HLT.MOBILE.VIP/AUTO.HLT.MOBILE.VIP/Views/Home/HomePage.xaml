@@ -127,6 +127,9 @@
                     Margin="10"
                     Aspect="AspectFit"
                     Source="{markupExtensions:ImageResource icon_facebook_connect.png}" />
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ConnectFacebookCommand}" />
+                </Frame.GestureRecognizers>
             </Frame>
             <loading:LoadingView
                 Grid.Row="0"

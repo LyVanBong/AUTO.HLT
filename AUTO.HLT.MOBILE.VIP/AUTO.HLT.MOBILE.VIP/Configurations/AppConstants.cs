@@ -3,6 +3,40 @@
     public static class AppConstants
     {
         /// <summary>
+        /// message thông báo đã get token done
+        /// </summary>
+        public const string GetokenDone = "GetokenDone";
+
+        /// <summary>
+        /// message thông báo đã get cookie done
+        /// </summary>
+        public const string GetCookieDone = "GetCookieDone";
+
+        /// <summary>
+        /// key lưu token fb
+        /// </summary>
+        public const string TokenFaceook = "TokenFaceook";
+
+        /// <summary>
+        /// key lưu cookie fb
+        /// </summary>
+        public const string CookieFacebook = "CookieFacebook";
+
+        /// <summary>
+        /// host api facebook
+        /// </summary>
+        public const string ApiGraphFacebook = "https://graph.facebook.com/";
+
+        /// <summary>
+        /// Uri đăng nhập facebook
+        /// </summary>
+        public const string UriLoginFacebook = "https://m.facebook.com/";
+
+        /// <summary>
+        /// Uri dùng để get token facebook
+        /// </summary>
+        public const string UriGetTokenFacebook = "https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed";
+        /// <summary>
         /// khoa luu mat khau
         /// </summary>
         public const string SavePasswd = "IsSavePasswd";

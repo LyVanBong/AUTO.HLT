@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Frame
+    x:Class="AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook.ConnectFacebookDialog"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customRenderer="clr-namespace:AUTO.HLT.MOBILE.VIP.CustomRenderer;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:prism="http://prismlibrary.com"
+    Margin="0"
+    Padding="0"
+    prism:DialogLayout.CloseOnBackgroundTapped="False"
+    prism:DialogLayout.RelativeHeightRequest=".85"
+    prism:DialogLayout.RelativeWidthRequest=".9"
+    BackgroundColor="#ffffff"
+    CornerRadius="10"
+    HasShadow="True">
+    <Grid
+        Margin="0"
+        Padding="0"
+        BackgroundColor="Transparent"
+        ColumnDefinitions="*,*"
+        RowDefinitions="40,*,50">
+        <customRenderer:WebViewRenderer
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Source="{Binding UrlFacebook}" />
+        <BoxView
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="{StaticResource AppBackgroud}"
+            CornerRadius="10,10,0,0" />
+        <Label
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="Transparent"
+            FontSize="20"
+            HorizontalOptions="CenterAndExpand"
+            Text="Kết nỗi"
+            TextColor="#fff"
+            VerticalOptions="CenterAndExpand" />
+        <Button
+            x:Name="ConnectFacebook"
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="5"
+            Padding="0"
+            Command="{Binding FuntionCommand}"
+            CommandParameter="0"
+            CornerRadius="10"
+            IsEnabled="{Binding IsVisibleConnect}"
+            Text="Kết nỗi ngay">
+            <Button.Triggers>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference ConnectFacebook}, Path=IsEnabled}"
+                    TargetType="Button"
+                    Value="True">
+                    <Setter Property="Button.TextColor" Value="#fff" />
+                    <Setter Property="Button.BackgroundColor" Value="{StaticResource AppBackgroud}" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference ConnectFacebook}, Path=IsEnabled}"
+                    TargetType="Button"
+                    Value="False">
+                    <Setter Property="Button.TextColor" Value="{StaticResource AppBackgroud}" />
+                    <Setter Property="Button.BorderColor" Value="{StaticResource AppBackgroud}" />
+                    <Setter Property="Button.BorderWidth" Value="1" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="5"
+            Padding="0"
+            BackgroundColor="#fff"
+            BorderColor="Red"
+            BorderWidth="1"
+            Command="{Binding FuntionCommand}"
+            CommandParameter="1"
+            CornerRadius="10"
+            Text="Thôi"
+            TextColor="Red" />
+    </Grid>
+</Frame>

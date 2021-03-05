@@ -1,3 +1,4 @@
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
@@ -38,6 +39,8 @@ namespace AUTO.HLT.MOBILE.VIP
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+            containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
 
             containerRegistry.Register<ILicenseKeyService, LicenseKeyService>();
             containerRegistry.Register<IDatabaseService, DatabaseService>();

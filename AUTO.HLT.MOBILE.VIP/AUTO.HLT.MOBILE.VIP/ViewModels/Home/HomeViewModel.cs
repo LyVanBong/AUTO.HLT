@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Configurations;
+﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
 using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
-using AUTO.HLT.MOBILE.VIP.Views.Login;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -29,6 +30,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         private ILicenseKeyService _licenseKeyService;
         private LicenseKeyModel _licenseKey;
         private bool _isLoading;
+        private IDialogService _dialogService;
 
         public ObservableCollection<ItemMenuModel> ListItemMenus { get; set; }
 
@@ -61,14 +63,26 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             set => SetProperty(ref _isLoading, value);
         }
 
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService) : base(navigationService)
+        public ICommand ConnectFacebookCommand { get; private set; }
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService, IDialogService dialogService) : base(navigationService)
         {
+            _dialogService = dialogService;
             _licenseKeyService = licenseKeyService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
             LogoutCommant = new AsyncCommand(Logout);
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
+            ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
+        }
+
+        private async Task ConnectFacebook()
+        {
+            if (IsLoading)
+                return;
+            IsLoading = true;
+            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+            IsLoading = false;
         }
 
         private async Task UpgradeAccount(string arg)

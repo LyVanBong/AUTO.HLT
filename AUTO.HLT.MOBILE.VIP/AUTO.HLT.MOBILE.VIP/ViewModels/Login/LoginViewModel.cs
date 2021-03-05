@@ -169,7 +169,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             {
                 if (PhoneNumber != null)
                 {
-                    if (phoneNumber.Length==10)
+                    if (phoneNumber.Length == 10)
                     {
                         var data = await _loginService.CheckExistPhone(phoneNumber.Replace(" ", ""));
                         if (data != null && data.Code > 0)
@@ -225,7 +225,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             {
                 if (UserName != null && FullName != null && PhoneNumber != null && Passwd != null)
                 {
-                    var sigup = await _loginService.Sigup(new SigupModel { UserName = UserName, Name = FullName, NumberPhone = PhoneNumber, Password = Passwd });
+                    var sigup = await _loginService.Sigup(new SigupModel { UserName = UserName, Name = FullName, NumberPhone = PhoneNumber.Replace(" ", ""), Password = Passwd });
                     if (sigup != null && sigup.Code > 0)
                     {
                         await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản thành công",
