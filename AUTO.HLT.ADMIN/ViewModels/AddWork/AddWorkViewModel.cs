@@ -701,7 +701,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     try
                     {
                         var addHis = await _autoAvatarService.AddHistoryAuto(obj.Id, info.id, info.name,
-                            info.picture.data.url, "Auto like Avatar", data.id, data.name, data.picture.data.url);
+                            info.picture.data.url, "Auto Tha tim", data.id, data.name, data.picture.data.url);
                     }
                     catch (Exception e)
                     {
