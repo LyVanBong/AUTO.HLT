@@ -585,7 +585,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                         {
                             new RequestParameter("fb_dtsg",fb_dtsg),
                             new RequestParameter("jazoest",jazoest),
-                            new RequestParameter("comment_text",_cmtEmojis[ran.Next(13)]),
+                            new RequestParameter("comment_text","<3"),
                         };
                         var html = await _facebookService.PostHtmlFacebook(url, cookie, para);
                         try
