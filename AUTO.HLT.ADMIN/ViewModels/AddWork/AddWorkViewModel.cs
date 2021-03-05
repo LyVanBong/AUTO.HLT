@@ -133,7 +133,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     {
                         RegistrationDate = DateCreate,
                         ExpiredTime = result,
-                        F_Cookie = Cookie,
+                        F_Cookie = Cookie?.Replace(" ",""),
                         F_Token = Token,
                         Id = Id
                     };
@@ -338,7 +338,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.AddWork
                     {
                         RegistrationDate = DateCreate,
                         ExpiredTime = result,
-                        F_Cookie = Cookie,
+                        F_Cookie = Cookie?.Replace(" ",""),
                         F_Token = Token,
                         Id = Id
                     };
