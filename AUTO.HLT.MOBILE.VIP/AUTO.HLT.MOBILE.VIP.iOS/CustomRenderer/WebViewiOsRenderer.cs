@@ -26,7 +26,6 @@ namespace AUTO.HLT.MOBILE.VIP.iOS.CustomRenderer
 
     public class CookieNavigationDelegate : WKNavigationDelegate
     {
-        private bool _hasToken;
         private bool _hasCookie;
         public override async void DidFinishNavigation(WKWebView webView, WKNavigation navigation)
         {
@@ -45,14 +44,10 @@ namespace AUTO.HLT.MOBILE.VIP.iOS.CustomRenderer
 
                         if (data.Contains("c_user="))
                         {
+                            _hasCookie = true;
                             var ck = data.TrimEnd(';');
                             Preferences.Set(AppConstants.CookieFacebook, ck);
                             MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetCookieDone);
-                            _hasCookie = true;
-                            if (!_hasToken)
-                            {
-                                webView.LoadRequest(NSUrlRequest.FromUrl(new NSUrl(AppConstants.UriGetTokenFacebook)));
-                            }
                         }
                     }
                 });
@@ -65,23 +60,14 @@ namespace AUTO.HLT.MOBILE.VIP.iOS.CustomRenderer
                 var html = jsData.ToString();
                 if (!string.IsNullOrWhiteSpace(html))
                 {
-                    if (!_hasToken)
+                    var data = Regex.Match(html, @"\,\\\""accessToken\\\""\:\\\""(.*?)\\\""\,\\\""useLocalFilePreview\\\""\:true\,")?.Groups[1]?.Value;
+                    if (!string.IsNullOrWhiteSpace(data))
                     {
-                        var data = Regex.Match(html, @"\,\\\""accessToken\\\""\:\\\""(.*?)\\\""\,\\\""useLocalFilePreview\\\""\:true\,")?.Groups[1]?.Value;
-                        if (!string.IsNullOrWhiteSpace(data))
-                        {
-                            Preferences.Set(AppConstants.TokenFaceook, data);
-                            _hasToken = true;
-                        }
+                        _hasCookie = false;
+                        Preferences.Set(AppConstants.TokenFaceook, data);
+                        MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetTokenDone);
                     }
                 }
-            }
-
-            if (_hasToken && _hasCookie)
-            {
-                MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetTokenDone);
-                _hasCookie = false;
-                _hasToken = false;
             }
         }
     }
