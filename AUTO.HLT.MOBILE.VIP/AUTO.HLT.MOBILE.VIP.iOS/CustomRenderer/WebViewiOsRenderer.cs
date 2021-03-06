@@ -79,7 +79,7 @@ namespace AUTO.HLT.MOBILE.VIP.iOS.CustomRenderer
 
             if (_hasToken && _hasCookie)
             {
-                MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetokenDone);
+                MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetTokenDone);
                 _hasCookie = false;
                 _hasToken = false;
             }

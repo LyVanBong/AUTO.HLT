@@ -30,23 +30,20 @@ namespace AUTO.HLT.MOBILE.VIP.Droid.CustomRenderer
 
     public class CookieWebview : WebViewClient
     {
-        private bool _hasToken;
         private bool _hasCookie;
-        private bool _hasFb_d;
-        private bool _hasJazoest;
-
         public override void OnPageFinished(WebView view, string url)
         {
             base.OnPageFinished(view, url);
+
             if (!_hasCookie)
             {
                 //lấy cookie tại đây
                 var cookieHeader = CookieManager.Instance?.GetCookie(url)?.Replace(" ", "");
                 if (!string.IsNullOrWhiteSpace(cookieHeader) && cookieHeader.Contains("c_user="))
                 {
+                    _hasCookie = true;
                     Preferences.Set(AppConstants.CookieFacebook, cookieHeader);
                     MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetCookieDone);
-                    _hasCookie = true;
                 }
             }
 
@@ -56,29 +53,15 @@ namespace AUTO.HLT.MOBILE.VIP.Droid.CustomRenderer
                 {
                     if (html != null)
                     {
-                        if (!_hasToken)
+                        var data = Regex.Match(html, @"\,\\\\\\\""accessToken\\\\\\\""\:\\\\\\\""(.*?)\\\\\\\""\,\\\\\\\""useLocalFilePreview\\\\\\\""\:true\,")?.Groups[1]?.Value;
+                        if (!string.IsNullOrWhiteSpace(data))
                         {
-                            var data = Regex.Match(html, @"\,\\\\\\\""accessToken\\\\\\\""\:\\\\\\\""(.*?)\\\\\\\""\,\\\\\\\""useLocalFilePreview\\\\\\\""\:true\,")?.Groups[1]?.Value;
-                            if (!string.IsNullOrWhiteSpace(data))
-                            {
-                                Preferences.Set(AppConstants.TokenFaceook, data);
-                                _hasToken = true;
-                            }
+                            _hasCookie = false;
+                            Preferences.Set(AppConstants.TokenFaceook, data);
+                            MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetTokenDone);
                         }
                     }
                 }));
-                if (!_hasToken)
-                {
-                    view.LoadUrl(AppConstants.UriGetTokenFacebook);
-                }
-            }
-            if (_hasCookie && _hasToken && _hasFb_d)
-            {
-                MessagingCenter.Send<App>((App)Application.Current, AppConstants.GetokenDone);
-                _hasCookie = false;
-                _hasToken = false;
-                _hasFb_d = false;
-                _hasJazoest = false;
             }
         }
     }

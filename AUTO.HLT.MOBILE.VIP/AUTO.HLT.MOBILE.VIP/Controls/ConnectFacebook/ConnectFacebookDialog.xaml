@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customRenderer="clr-namespace:AUTO.HLT.MOBILE.VIP.CustomRenderer;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:prism="http://prismlibrary.com"
     Margin="0"
     Padding="0"
@@ -19,12 +20,6 @@
         BackgroundColor="Transparent"
         ColumnDefinitions="*,*"
         RowDefinitions="40,*,50">
-        <customRenderer:WebViewRenderer
-            Grid.Row="0"
-            Grid.RowSpan="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Source="{Binding UrlFacebook}" />
         <BoxView
             Grid.Row="0"
             Grid.Column="0"
@@ -40,6 +35,13 @@
             Text="Kết nỗi"
             TextColor="#fff"
             VerticalOptions="CenterAndExpand" />
+        <customRenderer:WebViewRenderer
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Source="{Binding UrlFacebook}" />
+
         <Button
             x:Name="ConnectFacebook"
             Grid.Row="2"
@@ -82,5 +84,18 @@
             CornerRadius="10"
             Text="Thôi"
             TextColor="Red" />
+        <BoxView
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#fff"
+            IsVisible="{Binding IsLoading}" />
+        <loading:LoadingView
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsLoading}" />
     </Grid>
 </Frame>

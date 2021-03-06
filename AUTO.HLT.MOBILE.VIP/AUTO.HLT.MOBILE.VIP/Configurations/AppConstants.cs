@@ -3,9 +3,13 @@
     public static class AppConstants
     {
         /// <summary>
+        /// khoa lay cookie va token
+        /// </summary>
+        public const string HasCookie = "HasCookie";
+        /// <summary>
         /// message thông báo đã get token done
         /// </summary>
-        public const string GetokenDone = "GetokenDone";
+        public const string GetTokenDone = "GetTokenDone";
 
         /// <summary>
         /// message thông báo đã get cookie done
