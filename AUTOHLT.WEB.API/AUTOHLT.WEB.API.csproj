@@ -150,6 +150,7 @@
     <Compile Include="Controllers\Version2\User\CheckExistUserController.cs" />
     <Compile Include="Controllers\Version2\User\IntroducedApplicationController.cs" />
     <Compile Include="Controllers\Version2\User\LoginController.cs" />
+    <Compile Include="Controllers\Version2\User\SetRoleUserController.cs" />
     <Compile Include="Controllers\Version2\User\SigUpController.cs" />
     <Compile Include="Controllers\Version2\User\TransferController.cs" />
     <Compile Include="Controllers\Version2\User\CheckExistPhoneController.cs" />
@@ -228,32 +229,39 @@
     <Compile Include="Database\sp_InfoLicenseKeyForUser_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\sp_LayNguoiGioiThieuChoKhach_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\sp_LayTatCaGioiThieu_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\UserInformation_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AddNotificationModel.cs" />
-    <Compile Include="Models\AddTransferModel.cs" />
-    <Compile Include="Models\AdduserAutoLikeCommentModel.cs" />
-    <Compile Include="Models\BalanceTwilioModel.cs" />
-    <Compile Include="Models\HuongDanSuDungModel.cs" />
-    <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\MoneyModel.cs" />
-    <Compile Include="Models\NguoiGioiThieuModel.cs" />
-    <Compile Include="Models\ProductTypeModel.cs" />
-    <Compile Include="Models\RegisterProductModel.cs" />
-    <Compile Include="Models\RegistrationAccountModel.cs" />
+    <Compile Include="Models\Version1\AddNotificationModel.cs" />
+    <Compile Include="Models\Version1\AddTransferModel.cs" />
+    <Compile Include="Models\Version1\AdduserAutoLikeCommentModel.cs" />
+    <Compile Include="Models\Version1\BalanceTwilioModel.cs" />
+    <Compile Include="Models\Version1\HuongDanSuDungModel.cs" />
+    <Compile Include="Models\Version1\LoginModel.cs" />
+    <Compile Include="Models\Version1\MoneyModel.cs" />
+    <Compile Include="Models\Version1\NguoiGioiThieuModel.cs" />
+    <Compile Include="Models\Version1\ProductTypeModel.cs" />
+    <Compile Include="Models\Version1\RegisterProductModel.cs" />
+    <Compile Include="Models\Version1\RegistrationAccountModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
-    <Compile Include="Models\ServiceUseHistoryModel.cs" />
-    <Compile Include="Models\TransferModel.cs" />
-    <Compile Include="Models\UpdateProductModel.cs" />
-    <Compile Include="Models\UpdateUserModel.cs" />
-    <Compile Include="Models\UserFacebookModel.cs" />
+    <Compile Include="Models\Version1\ServiceUseHistoryModel.cs" />
+    <Compile Include="Models\Version1\TransferModel.cs" />
+    <Compile Include="Models\Version1\UpdateProductModel.cs" />
+    <Compile Include="Models\Version1\UpdateUserModel.cs" />
+    <Compile Include="Models\Version1\UserFacebookModel.cs" />
     <Compile Include="Models\Version2\LicenseKey\AddLicenseModel.cs" />
     <Compile Include="Models\Version2\LicenseKey\CreatekeyModel.cs" />
     <Compile Include="Models\Version2\LicenseKey\UpdateHistoryUseProductModel.cs" />
+    <Compile Include="Models\Version2\User\RoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

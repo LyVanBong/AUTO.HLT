@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AUTOHLT.WEB.API.Models
+namespace AUTOHLT.WEB.API.Models.Version1
 {
     public class RegistrationAccountModel
     {

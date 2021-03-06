@@ -912,5 +912,61 @@ namespace AUTOHLT.WEB.API.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdateHistoryUseProduct", keyParameter, historyParameter);
         }
+    
+        public virtual ObjectResult<sp_LayNguoiGioiThieuChoKhach_Result> sp_LayNguoiGioiThieuChoKhach(string userName)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LayNguoiGioiThieuChoKhach_Result>("sp_LayNguoiGioiThieuChoKhach", userNameParameter);
+        }
+    
+        public virtual ObjectResult<sp_LayTatCaGioiThieu_Result> sp_LayTatCaGioiThieu(Nullable<int> admin, string userName)
+        {
+            var adminParameter = admin.HasValue ?
+                new ObjectParameter("Admin", admin) :
+                new ObjectParameter("Admin", typeof(int));
+    
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LayTatCaGioiThieu_Result>("sp_LayTatCaGioiThieu", adminParameter, userNameParameter);
+        }
+    
+        public virtual int sp_SetRoleUser(Nullable<System.Guid> idUser, Nullable<int> role)
+        {
+            var idUserParameter = idUser.HasValue ?
+                new ObjectParameter("IdUser", idUser) :
+                new ObjectParameter("IdUser", typeof(System.Guid));
+    
+            var roleParameter = role.HasValue ?
+                new ObjectParameter("Role", role) :
+                new ObjectParameter("Role", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_SetRoleUser", idUserParameter, roleParameter);
+        }
+    
+        public virtual int sp_ThemNguoiGioiThieu(string gioiThieu, string duocGioiThieu, Nullable<int> disCount, string note)
+        {
+            var gioiThieuParameter = gioiThieu != null ?
+                new ObjectParameter("GioiThieu", gioiThieu) :
+                new ObjectParameter("GioiThieu", typeof(string));
+    
+            var duocGioiThieuParameter = duocGioiThieu != null ?
+                new ObjectParameter("DuocGioiThieu", duocGioiThieu) :
+                new ObjectParameter("DuocGioiThieu", typeof(string));
+    
+            var disCountParameter = disCount.HasValue ?
+                new ObjectParameter("DisCount", disCount) :
+                new ObjectParameter("DisCount", typeof(int));
+    
+            var noteParameter = note != null ?
+                new ObjectParameter("Note", note) :
+                new ObjectParameter("Note", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemNguoiGioiThieu", gioiThieuParameter, duocGioiThieuParameter, disCountParameter, noteParameter);
+        }
     }
 }

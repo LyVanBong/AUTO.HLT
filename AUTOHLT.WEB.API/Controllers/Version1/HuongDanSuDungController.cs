@@ -3,6 +3,7 @@ using AUTOHLT.WEB.API.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using AUTOHLT.WEB.API.Models.Version1;
 
 namespace AUTOHLT.WEB.API.Controllers.Version1
 {

@@ -187,10 +187,27 @@
         <Function Name="sp_InfoLicenseKeyForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="sp_LayNguoiGioiThieuChoKhach" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_LayTatCaGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Admin" Type="int" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_SetRoleUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Role" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ThemNguoiGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GioiThieu" Type="varchar" Mode="In" />
+          <Parameter Name="DuocGioiThieu" Type="varchar" Mode="In" />
+          <Parameter Name="DisCount" Type="int" Mode="In" />
+          <Parameter Name="Note" Type="ntext" Mode="In" />
         </Function>
         <Function Name="sp_UpdateHistoryUseProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="key" Type="uniqueidentifier" Mode="In" />
@@ -501,7 +518,7 @@
           </FunctionImport>
           <FunctionImport Name="GetDataHDSD" ReturnType="Collection(bsoft_autohltModel.GetDataHDSD_Result)" />
           <FunctionImport Name="LockLicenseKey">
-            <Parameter Name="Key" Mode="In" Type="Guid" />
+          <Parameter Name="Key" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="sp_AddLicenseKey">
             <Parameter Name="Key" Mode="In" Type="Guid" />
@@ -515,20 +532,37 @@
             <Parameter Name="TypeKey" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_DeleteLicenseKey">
-            <Parameter Name="LicenseKey" Mode="In" Type="Guid" />
+          <Parameter Name="LicenseKey" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="sp_HistoryUseProduct" ReturnType="Collection(String)">
-            <Parameter Name="Key" Mode="In" Type="Guid" />
+          <Parameter Name="Key" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="sp_InfoLicenseKeyForAgecy" ReturnType="Collection(bsoft_autohltModel.sp_InfoLicenseKeyForAgecy_Result)">
-            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          <Parameter Name="IdUser" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="sp_InfoLicenseKeyForUser" ReturnType="Collection(bsoft_autohltModel.sp_InfoLicenseKeyForUser_Result)">
-            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          <Parameter Name="IdUser" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="sp_UpdateHistoryUseProduct">
             <Parameter Name="key" Mode="In" Type="Guid" />
             <Parameter Name="History" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_LayNguoiGioiThieuChoKhach" ReturnType="Collection(bsoft_autohltModel.sp_LayNguoiGioiThieuChoKhach_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_LayTatCaGioiThieu" ReturnType="Collection(bsoft_autohltModel.sp_LayTatCaGioiThieu_Result)">
+            <Parameter Name="Admin" Mode="In" Type="Int32" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SetRoleUser">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="Role" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ThemNguoiGioiThieu">
+            <Parameter Name="GioiThieu" Mode="In" Type="String" />
+            <Parameter Name="DuocGioiThieu" Mode="In" Type="String" />
+            <Parameter Name="DisCount" Mode="In" Type="Int32" />
+            <Parameter Name="Note" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
@@ -708,6 +742,21 @@
           <Property Type="DateTime" Name="DateActive" Nullable="true" Precision="23" />
           <Property Type="String" Name="HistoryUseProduct" Nullable="true" />
           <Property Type="Guid" Name="LicenseKey" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_LayNguoiGioiThieuChoKhach_Result">
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NumberPhone" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="sp_LayTatCaGioiThieu_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserGioiThieu" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UserDuocGioiThieu" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="DisCount" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1021,6 +1070,31 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_UpdateHistoryUseProduct" FunctionName="bsoft_autohltModel.Store.sp_UpdateHistoryUseProduct" />
+          <FunctionImportMapping FunctionImportName="sp_LayNguoiGioiThieuChoKhach" FunctionName="bsoft_autohltModel.Store.sp_LayNguoiGioiThieuChoKhach">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_LayNguoiGioiThieuChoKhach_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_LayTatCaGioiThieu" FunctionName="bsoft_autohltModel.Store.sp_LayTatCaGioiThieu">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_LayTatCaGioiThieu_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserGioiThieu" ColumnName="UserGioiThieu" />
+                <ScalarProperty Name="UserDuocGioiThieu" ColumnName="UserDuocGioiThieu" />
+                <ScalarProperty Name="DisCount" ColumnName="DisCount" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SetRoleUser" FunctionName="bsoft_autohltModel.Store.sp_SetRoleUser" />
+          <FunctionImportMapping FunctionImportName="sp_ThemNguoiGioiThieu" FunctionName="bsoft_autohltModel.Store.sp_ThemNguoiGioiThieu" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

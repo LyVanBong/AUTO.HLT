@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AUTOHLT.WEB.API.Models.Version1;
 
 namespace AUTOHLT.WEB.API.Controllers.Version2.User
 {
