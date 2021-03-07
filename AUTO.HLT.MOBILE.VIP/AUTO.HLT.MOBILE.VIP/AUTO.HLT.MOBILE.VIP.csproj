@@ -21,6 +21,7 @@
     <None Remove="Resources\Images\icon_home_page.png" />
     <None Remove="Resources\Images\icon_Interactive.png" />
     <None Remove="Resources\Images\icon_like.png" />
+    <None Remove="Resources\Images\icon_manager.png" />
     <None Remove="Resources\Images\icon_pokes.png" />
     <None Remove="Resources\Images\icon_pokes_user.png" />
     <None Remove="Resources\Images\icon_select_all_pokes.png" />
@@ -38,6 +39,7 @@
     <EmbeddedResource Include="Resources\Images\icon_home_page.png" />
     <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
     <EmbeddedResource Include="Resources\Images\icon_like.png" />
+    <EmbeddedResource Include="Resources\Images\icon_manager.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes_user.png" />
     <EmbeddedResource Include="Resources\Images\icon_select_all_pokes.png" />
