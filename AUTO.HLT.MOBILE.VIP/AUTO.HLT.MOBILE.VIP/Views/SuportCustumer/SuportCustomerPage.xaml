@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.Views.SuportCustumer.SuportCustumerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
+    BackgroundColor="{StaticResource AppBackgroud}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="#fff"
+            ColumnDefinitions="*,*"
+            RowDefinitions="40,40,40,40,60,*"
+            RowSpacing="0">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Margin" Value="40,0,0,0" />
+                    <Setter Property="FontSize" Value="18" />
+                    <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="10,5" />
+                    <Setter Property="CornerRadius" Value="10" />
+                    <Setter Property="TextColor" Value="#000" />
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="BorderWidth" Value="1" />
+                    <Setter Property="BackgroundColor" Value="#fff" />
+                </Style>
+            </Grid.Resources>
+            <navigation:NavigationView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Hỗ trợ" />
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                FontSize="20"
+                Text="Thông tin hỗ trợ" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Tên: " />
+                        <Span Text="{Binding Introducetor.Name}" />
+                        <Span Text=" (" />
+                        <Span Text="{Binding Introducetor.UserName}" />
+                        <Span Text=")" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Số điện thoại: " />
+                        <Span Text="{Binding Introducetor.NumberPhone}" TextColor="{StaticResource AppBackgroud}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Button
+                Grid.Row="4"
+                Grid.Column="0"
+                BorderColor="#23689b"
+                Command="{Binding SuportCommand}"
+                CommandParameter="0"
+                Text="Liên hệ ngay" />
+            <Button
+                Grid.Row="4"
+                Grid.Column="1"
+                BorderColor="#b4aee8"
+                Command="{Binding SuportCommand}"
+                CommandParameter="1"
+                Text="Gửi tin nhăn" />
+            <loading:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding IsLoading}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

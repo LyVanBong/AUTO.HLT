@@ -20,7 +20,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
         {
             try
             {
-                var data = await _requestProvider.PostAsync<InfoIntroducetorModel>("user/ThongTinNguoiGioiThieu");
+                var data = await _requestProvider.GetAsync<InfoIntroducetorModel>("user/ThongTinNguoiGioiThieu");
                 return data;
             }
             catch (Exception e)

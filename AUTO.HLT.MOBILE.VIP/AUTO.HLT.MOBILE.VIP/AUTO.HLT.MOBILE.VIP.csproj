@@ -116,6 +116,9 @@
     <EmbeddedResource Update="Views\Pokes\PokesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\SuportCustumer\SuportCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -20,6 +20,7 @@ using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
+using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
 using Newtonsoft.Json;
 using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -112,6 +113,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     break;
                 case 4:
                     await NavigationService.NavigateAsync(nameof(FilterFriendPage));
+                    break;
+                case 8:
+                    await NavigationService.NavigateAsync(nameof(SuportCustumerPage));
                     break;
                 default:
                     break;
