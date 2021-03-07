@@ -1,12 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using AUTO.HLT.MOBILE.VIP.Configurations;
+using Prism.Mvvm;
+using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Configurations;
-using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook

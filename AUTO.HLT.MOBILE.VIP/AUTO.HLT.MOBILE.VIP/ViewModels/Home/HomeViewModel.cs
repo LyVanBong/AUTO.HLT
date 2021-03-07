@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
@@ -64,6 +65,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         }
 
         public ICommand ConnectFacebookCommand { get; private set; }
+        public ICommand UseFeatureCommand { get; private set; }
+
         public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService, IDialogService dialogService) : base(navigationService)
         {
             _dialogService = dialogService;
@@ -74,6 +77,24 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             LogoutCommant = new AsyncCommand(Logout);
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
             ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
+            UseFeatureCommand = new AsyncCommand<ItemMenuModel>(UseFeature);
+        }
+
+        private async Task UseFeature(ItemMenuModel item)
+        {
+            if (IsLoading || item == null) return;
+            IsLoading = true;
+            var id = item.Id;
+            switch (id)
+            {
+                case 1:
+                case 2:
+                    var para = new NavigationParameters();
+                    para.Add("TypeFeature", item);
+                    await NavigationService.NavigateAsync(nameof(FeaturePage), para);
+                    break;
+            }
+            IsLoading = false;
         }
 
         private async Task ConnectFacebook()

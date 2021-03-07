@@ -62,12 +62,13 @@
                 BackgroundColor="Transparent"
                 Content="{Binding LicenseView}" />
             <CollectionView
+                x:Name="CollectionView"
                 Grid.Row="3"
                 Grid.RowSpan="2"
                 Margin="5,10,5,0"
                 BackgroundColor="Transparent"
                 ItemsSource="{Binding ListItemMenus}"
-                SelectionMode="None">
+                SelectionMode="Single">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="15"
@@ -81,7 +82,7 @@
                             Margin="0"
                             BackgroundColor="#dff3e3"
                             BorderColor="{Binding BgColor}"
-                            CornerRadius="10"
+                            CornerRadius="0"
                             HasShadow="False">
                             <Grid ColumnDefinitions="64,*">
                                 <Image
@@ -97,14 +98,12 @@
                                     TextColor="#000"
                                     VerticalOptions="CenterAndExpand" />
                             </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference CollectionView}, Path=BindingContext.UseFeatureCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-                <CollectionView.FooterTemplate>
-                    <DataTemplate>
-                        <BoxView BackgroundColor="#fff" HeightRequest="250" />
-                    </DataTemplate>
-                </CollectionView.FooterTemplate>
             </CollectionView>
             <BoxView
                 Grid.Row="4"

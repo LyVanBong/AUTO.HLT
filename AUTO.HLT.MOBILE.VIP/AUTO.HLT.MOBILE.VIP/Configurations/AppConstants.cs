@@ -3,6 +3,24 @@
     public static class AppConstants
     {
         /// <summary>
+        /// uri telegram api
+        /// </summary>
+        public const string UriApiTelegram = "https://api.telegram.org/bot";
+        /// <summary>
+        /// id group chat list cong viec
+        /// </summary>
+        public const string IdChatWork = "-1001426073771";
+
+        /// <summary>
+        /// id group chat ghi log lien quan den giao dich tien
+        /// </summary>
+        public const string IdChatWMoneyHistory = "-1001153509057";
+
+        /// <summary>
+        /// token to access telegram
+        /// </summary>
+        public const string TokenToAccessTelegram = "1413742738:AAGV-0OMyWCO4h_PRzq3JQfWkKj-PxYur_M";
+        /// <summary>
         /// khoa lay cookie va token
         /// </summary>
         public const string HasCookie = "HasCookie";

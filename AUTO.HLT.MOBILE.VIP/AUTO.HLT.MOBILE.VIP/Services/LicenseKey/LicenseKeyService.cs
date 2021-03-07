@@ -15,6 +15,24 @@ namespace AUTO.HLT.MOBILE.VIP.Services.LicenseKey
         {
             _requestProvider = requestProvider;
         }
+        public async Task<ResponseModel<string>> UpdateHistory(string key, string content)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("LicenseKey",key),
+                    new RequestParameter("ContentHistory",content),
+                };
+                var data = await _requestProvider.PutAsync<string>("LicenseKey/UpdateHistoryUseProduct", para);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
+        }
 
         public async Task<bool> ActiveLiceseKey(string key)
         {

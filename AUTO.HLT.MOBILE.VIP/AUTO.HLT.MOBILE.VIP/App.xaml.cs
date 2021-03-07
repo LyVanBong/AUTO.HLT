@@ -1,12 +1,16 @@
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
 using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
+using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
+using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Login;
 using AUTOHLT.MOBILE.Services.RestSharp;
@@ -42,6 +46,8 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
 
+            containerRegistry.Register<ITelegramService, TelegramService>();
+            containerRegistry.Register<IFacebookService, FacebookeService>();
             containerRegistry.Register<ILicenseKeyService, LicenseKeyService>();
             containerRegistry.Register<IDatabaseService, DatabaseService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
@@ -51,6 +57,7 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<FeaturePage, FeatureViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
         }
