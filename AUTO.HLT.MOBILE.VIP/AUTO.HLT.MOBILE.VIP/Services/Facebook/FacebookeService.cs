@@ -9,6 +9,7 @@ using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
 using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
 {
@@ -157,25 +158,44 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
             }
         }
 
-        public async Task<bool> CheckCookie(string cookie)
+        public async Task<bool> CheckCookieAndToken()
         {
             try
             {
-                var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
-                if (html == null)
+                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                var token = Preferences.Get(AppConstants.TokenFaceook, "");
+                if (string.IsNullOrEmpty(cookie) || string.IsNullOrEmpty(token))
+                {
                     return false;
+                }
                 else
                 {
-                    if (html.Contains("mbasic_logout_button"))
+                    var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
+                    if (html == null)
+                        return false;
+                    else
                     {
-                        return true;
+                        if (html.Contains("mbasic_logout_button"))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
+
+                    var friend =await GetFrinds("1", token);
+                    if (friend == null || friend.data == null)
+                        return false;
+                    else
+                        return true;
                 }
-                return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+               Crashes.TrackError(e);
+               return false;
             }
         }
 
@@ -200,22 +220,28 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
 
         public async Task<FriendsModel> GetAllFriend(string fields, string accessToken)
         {
+            return await GetFrinds(fields, accessToken);
+        }
+
+        private async Task<FriendsModel> GetFrinds(string fields, string accessToken)
+        {
             try
             {
                 var parameters = new List<RequestParameter>
                 {
-                    new RequestParameter("fields","name,picture{url}"),
-                    new RequestParameter("limit",fields),
-                    new RequestParameter("access_token",accessToken),
+                    new RequestParameter("fields", "name,picture{url}"),
+                    new RequestParameter("limit", fields),
+                    new RequestParameter("access_token", accessToken),
                 };
                 var json = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me/friends", parameters);
                 if (json != null)
                     return JsonConvert.DeserializeObject<FriendsModel>(json);
                 return null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Crashes.TrackError(exception: e);
+                return null;
             }
         }
 

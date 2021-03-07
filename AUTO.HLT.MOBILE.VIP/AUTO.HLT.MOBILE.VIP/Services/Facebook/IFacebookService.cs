@@ -78,12 +78,11 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
         /// <summary>
         /// Kiểm tra cookie còn sông hay đã chết
         /// </summary>
-        /// <param name="cookie">cookie</param>
         /// <returns>
         /// true còn sôngs
         /// false đã tèo
         /// </returns>
-        Task<bool> CheckCookie(string cookie);
+        Task<bool> CheckCookieAndToken();
 
         /// <summary>
         /// Huy ban be khong tuong tac

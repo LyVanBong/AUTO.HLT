@@ -82,7 +82,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 else
                 {
                     var history = JsonConvert.DeserializeObject<UserServiceModel>(license.HistoryUseProduct);
-                    if (history.DateUse==DateTime.Now)
+                    if (history.DateUse.Date == DateTime.Now.Date)
                     {
                         MaxNumber = (100 - history.NumberLike) + "";
                     }
@@ -99,7 +99,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 else
                 {
                     var history = JsonConvert.DeserializeObject<UserServiceModel>(license.HistoryUseProduct);
-                    if (history.DateUse == DateTime.Now)
+                    if (history.DateUse.Date == DateTime.Now.Date)
                     {
                         MaxNumber = (2000 - history.Follow) + "";
                     }
@@ -155,7 +155,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                     else
                                     {
                                         var history = JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
-                                        if (history.DateUse==DateTime.Now)
+                                        if (history.DateUse.Date == DateTime.Now.Date)
                                         {
                                             var num = (100 - history.NumberLike) > 0 ? (100 - history.NumberLike) : 0;
                                             if (num >= number)
@@ -215,7 +215,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                     else
                                     {
                                         var history = JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
-                                        if (history.DateUse==DateTime.Now)
+                                        if (history.DateUse.Date == DateTime.Now.Date)
                                         {
                                             var num = (2000 - history.Follow) > 0 ? (2000 - history.Follow) : 0;
                                             if (num >= number)
@@ -261,7 +261,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                         else
                         {
                             await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                 "Bạn vui lòng nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
+                                 "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
                         }
                     }
                     break;
@@ -288,9 +288,19 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                     Id_Nguoi_Dung = _user.ID,
                     Noi_Dung_Yeu_Cau = Content,
                     So_Luong = number,
-                    Ghi_Chu = $"{_user.Name};{_user.UserName};{_user.NumberPhone}",
+                    Ghi_Chu = new
+                    {
+                        Ten = _user.Name,
+                        Tai_Khoan = _user.UserName,
+                        So_dien_thoai = _user.NumberPhone
+                    }
                 }, Formatting.Indented);
                 await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork, contentSend);
+                await _pageDialogService.DisplayAlertAsync("Thông báo", "Thành công", "OK");
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi vui lòng cài lại", "OK");
             }
             await CheckAcountUseService();
         }

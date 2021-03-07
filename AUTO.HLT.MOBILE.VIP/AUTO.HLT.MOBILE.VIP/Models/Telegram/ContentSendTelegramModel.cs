@@ -9,7 +9,7 @@ namespace AUTO.HLT.MOBILE.VIP.Models.Telegram
         public object Noi_Dung_Yeu_Cau { get; set; }
         public string Id_Nguoi_Dung { get; set; }
         public DateTime Thoi_Gian_Yeu_Cau => DateTime.Now;
-        public string App => "APP AUTOVIP";
+        public string App => "AUTOVIP";
         public object Ghi_Chu { get; set; }
     }
 }
