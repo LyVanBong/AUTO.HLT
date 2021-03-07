@@ -82,7 +82,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 else
                 {
                     var history = JsonConvert.DeserializeObject<UserServiceModel>(license.HistoryUseProduct);
-                    MaxNumber = (100 - history.NumberLike) + "";
+                    if (history.DateUse==DateTime.Now)
+                    {
+                        MaxNumber = (100 - history.NumberLike) + "";
+                    }
+                    else
+                    {
+                        MaxNumber = "100";
+                    }
                 }
             }
             else if (_itemMenu.Id == 2)
@@ -92,7 +99,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 else
                 {
                     var history = JsonConvert.DeserializeObject<UserServiceModel>(license.HistoryUseProduct);
-                    MaxNumber = (2000 - history.Follow) + "";
+                    if (history.DateUse == DateTime.Now)
+                    {
+                        MaxNumber = (2000 - history.Follow) + "";
+                    }
+                    else
+                    {
+                        MaxNumber = "2000";
+                    }
                 }
             }
         }
@@ -141,20 +155,40 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                     else
                                     {
                                         var history = JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
-                                        var num = (100 - history.NumberLike) > 0 ? (100 - history.NumberLike) : 0;
-                                        if (num >= number)
+                                        if (history.DateUse==DateTime.Now)
                                         {
-                                            json = JsonConvert.SerializeObject(new UserServiceModel()
+                                            var num = (100 - history.NumberLike) > 0 ? (100 - history.NumberLike) : 0;
+                                            if (num >= number)
                                             {
-                                                DateUse = DateTime.Now,
-                                                NumberLike = number + history.NumberLike,
-                                                Follow = history.Follow,
-                                            });
-                                            await UseService(info, json, number);
+                                                json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                {
+                                                    DateUse = DateTime.Now,
+                                                    NumberLike = number + history.NumberLike,
+                                                    Follow = history.Follow,
+                                                });
+                                                await UseService(info, json, number);
+                                            }
+                                            else
+                                            {
+                                                await ThongBaoKhongHopLe();
+                                            }
                                         }
                                         else
                                         {
-                                            await ThongBaoKhongHopLe();
+                                            if (number <= 100)
+                                            {
+                                                json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                {
+                                                    NumberLike = number,
+                                                    DateUse = DateTime.Now,
+                                                    Follow = 0
+                                                });
+                                                await UseService(info, json, number);
+                                            }
+                                            else
+                                            {
+                                                await ThongBaoKhongHopLe();
+                                            }
                                         }
                                     }
 
@@ -181,20 +215,40 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                     else
                                     {
                                         var history = JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
-                                        var num = (2000 - history.Follow) > 0 ? (2000 - history.Follow) : 0;
-                                        if (num >= number)
+                                        if (history.DateUse==DateTime.Now)
                                         {
-                                            json = JsonConvert.SerializeObject(new UserServiceModel()
+                                            var num = (2000 - history.Follow) > 0 ? (2000 - history.Follow) : 0;
+                                            if (num >= number)
                                             {
-                                                DateUse = DateTime.Now,
-                                                NumberLike = history.NumberLike,
-                                                Follow = number + history.Follow,
-                                            });
-                                            await UseService(info, json, number);
+                                                json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                {
+                                                    DateUse = DateTime.Now,
+                                                    NumberLike = history.NumberLike,
+                                                    Follow = number + history.Follow,
+                                                });
+                                                await UseService(info, json, number);
+                                            }
+                                            else
+                                            {
+                                                await ThongBaoKhongHopLe();
+                                            }
                                         }
                                         else
                                         {
-                                            await ThongBaoKhongHopLe();
+                                            if (number <= 2000)
+                                            {
+                                                json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                {
+                                                    NumberLike = 0,
+                                                    DateUse = DateTime.Now,
+                                                    Follow = number
+                                                });
+                                                await UseService(info, json, number);
+                                            }
+                                            else
+                                            {
+                                                await ThongBaoKhongHopLe();
+                                            }
                                         }
                                     }
                                 }
@@ -204,8 +258,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                 await ThongBaoKhongHopLe();
                             }
                         }
-
-                        await CheckAcountUseService();
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                 "Bạn vui lòng nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
+                        }
                     }
                     break;
                 default:
@@ -235,6 +292,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 }, Formatting.Indented);
                 await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork, contentSend);
             }
+            await CheckAcountUseService();
         }
     }
 }

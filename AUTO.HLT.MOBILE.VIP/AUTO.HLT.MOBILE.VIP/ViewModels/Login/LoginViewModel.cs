@@ -9,7 +9,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
+using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using Newtonsoft.Json;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
@@ -30,6 +33,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         private IPageDialogService _pageDialogService;
         private IDatabaseService _databaseService;
         private bool _isLoading;
+        private ITelegramService _telegramService;
 
         public View ContentLoginPage
         {
@@ -89,8 +93,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             set => SetProperty(ref _isLoading, value);
         }
 
-        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService) : base(navigationService)
         {
+            _telegramService = telegramService;
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             _loginService = loginService;
@@ -156,11 +161,43 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 case "5":
                     await CheckPhone(PhoneNumber);
                     break;
+                case "6":
+                    await CheckIntroducetor();
+                    break;
                 default:
                     break;
             }
 
             IsLoading = false;
+        }
+
+        private async Task CheckIntroducetor()
+        {
+            try
+            {
+                if (NguoiGioiThieu != null)
+                {
+                    var usr = Regex.Match(NguoiGioiThieu, @"^[a-zA-Z0-9]+(?:[_.]?[a-zA-Z0-9])*$")?.Value;
+                    if (!string.IsNullOrWhiteSpace(usr))
+                    {
+                        var data = await _loginService.CheckExistUser(usr);
+                        if (data != null && data.Code > 0)
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", $"Người giới {usr} không tồn tại", "OK");
+                            NguoiGioiThieu = "";
+                        }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", $"Người giới thiệu {NguoiGioiThieu} không tồn tại", "OK");
+                        NguoiGioiThieu = "";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private async Task CheckPhone(string phoneNumber)
@@ -169,18 +206,20 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             {
                 if (PhoneNumber != null)
                 {
-                    if (phoneNumber.Length == 10)
+                    var phone = PhoneNumber.Replace(" ", "");
+                    if (phone.Length == 10)
                     {
-                        var data = await _loginService.CheckExistPhone(phoneNumber.Replace(" ", ""));
+                        var data = await _loginService.CheckExistPhone(phone.Replace(" ", ""));
                         if (data != null && data.Code > 0)
                         {
-                            PhoneNumber = "";
                             await _pageDialogService.DisplayAlertAsync("Thông báo", $"Số điện thoại {data.Data} đã được đăng ký bởi một tài khoản khác", "OK");
+                            PhoneNumber = "";
                         }
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", $"Số điện thoại {phoneNumber} chưa chính xác", "OK");
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", $"Số điện thoại {phone} chưa chính xác", "OK");
+                        PhoneNumber = "";
                     }
                 }
             }
@@ -199,7 +238,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     var usr = Regex.Match(UserName, @"^[a-zA-Z0-9]+(?:[_.]?[a-zA-Z0-9])*$")?.Value;
                     if (!string.IsNullOrWhiteSpace(usr))
                     {
-                        var data = await _loginService.CheckExistUser(userName);
+                        var data = await _loginService.CheckExistUser(usr);
                         if (data != null && data.Code < 0)
                         {
                             await _pageDialogService.DisplayAlertAsync("Thông báo", $"Tài khoản {UserName} đã tồn tại", "OK");
@@ -225,13 +264,38 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             {
                 if (UserName != null && FullName != null && PhoneNumber != null && Passwd != null)
                 {
-                    var sigup = await _loginService.Sigup(new SigupModel { UserName = UserName, Name = FullName, NumberPhone = PhoneNumber.Replace(" ", ""), Password = Passwd });
+                    var sigup = await _loginService.Sigup(new SigupModel
+                    {
+                        UserName = UserName,
+                        Name = FullName,
+                        NumberPhone = PhoneNumber.Replace(" ", ""),
+                        Password = Passwd
+                    });
                     if (sigup != null && sigup.Code > 0)
                     {
+                        if (NguoiGioiThieu != null)
+                        {
+                            var nguoiGioiThieu = new NguoiGioiThieuModel()
+                            {
+                                UserDuocGioiThieu = UserName,
+                                UserGioiThieu = NguoiGioiThieu,
+                                Discount = 0,
+                                Note = "APP AUTOVIP",
+                            };
+                            await _loginService.AddIntroducetor(nguoiGioiThieu);
+                        }
+
+                        await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
+                        {
+                            Ten_Dich_Vu_Yeu_Cau = "Đăng ký tài khoản mới",
+                            Ghi_Chu = $"Người giới thiệu {NguoiGioiThieu}",
+                            Id_Nguoi_Dung = UserName,
+                            So_Luong = 1,
+                            Noi_Dung_Yeu_Cau = $"Tài khoản {UserName} đăng ký thành công",
+                        }, Formatting.Indented));
                         await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản thành công",
                             "OK");
                         await DoLogin(UserName, HashFunctionHelper.GetHashCode(Passwd, 1));
-                        UserName = Passwd = PhoneNumber = FullName = "";
                     }
                     else
                     {
@@ -249,8 +313,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             catch (Exception e)
             {
                 Crashes.TrackError(e);
-                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh trong quá trình xử lý vui lòng thử lại",
+                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                    "Lỗi phát sinh trong quá trình xử lý vui lòng thử lại",
                     "OK");
+            }
+            finally
+            {
+                UserName = Passwd = PhoneNumber = FullName = "";
             }
         }
 

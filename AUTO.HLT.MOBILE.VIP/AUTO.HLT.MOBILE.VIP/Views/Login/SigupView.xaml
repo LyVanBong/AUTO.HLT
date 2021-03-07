@@ -94,7 +94,14 @@
                 <Entry
                     BackgroundColor="Transparent"
                     Text="{Binding NguoiGioiThieu}"
-                    TextColor="#fff" />
+                    TextColor="#fff">
+                    <Entry.Behaviors>
+                        <behaviors1:EventToCommandBehavior
+                            Command="{Binding FunctionExecuteCommand}"
+                            CommandParameter="6"
+                            EventName="Unfocused" />
+                    </Entry.Behaviors>
+                </Entry>
             </textInputLayout:SfTextInputLayout>
             <Button
                 Grid.Row="6"

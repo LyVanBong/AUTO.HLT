@@ -16,6 +16,41 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Login
             _requestProvider = requestProvider;
         }
 
+        public async Task<ResponseModel<InfoIntroducetorModel>> Introducetor()
+        {
+            try
+            {
+                var data = await _requestProvider.PostAsync<InfoIntroducetorModel>("user/ThongTinNguoiGioiThieu");
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
+        }
+
+        public async Task<ResponseModel<string>> AddIntroducetor(NguoiGioiThieuModel input)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("UserGioiThieu",input.UserGioiThieu),
+                    new RequestParameter("UserDuocGioiThieu",input.UserDuocGioiThieu),
+                    new RequestParameter("Discount",input.Discount+""),
+                    new RequestParameter("Note",input.Note),
+                };
+                var data = await _requestProvider.PostAsync<string>("user/ThemNguoiGioiThieu", para);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return null;
+            }
+        }
+
         public async Task<ResponseModel<string>> Sigup(SigupModel sigup)
         {
             try

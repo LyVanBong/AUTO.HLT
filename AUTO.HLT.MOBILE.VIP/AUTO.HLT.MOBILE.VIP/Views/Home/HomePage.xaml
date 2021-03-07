@@ -82,7 +82,7 @@
                             Margin="0"
                             BackgroundColor="#dff3e3"
                             BorderColor="{Binding BgColor}"
-                            CornerRadius="0"
+                            CornerRadius="10"
                             HasShadow="False">
                             <Grid ColumnDefinitions="64,*">
                                 <Image

@@ -3,6 +3,10 @@
     public static class AppConstants
     {
         /// <summary>
+        /// id nhon chat telegram thong bao
+        /// </summary>
+        public const string IdChatTelegramNoti = "-453517974";
+        /// <summary>
         /// uri telegram api
         /// </summary>
         public const string UriApiTelegram = "https://api.telegram.org/bot";
