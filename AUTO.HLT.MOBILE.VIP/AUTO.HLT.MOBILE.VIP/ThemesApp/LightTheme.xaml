@@ -3,12 +3,25 @@
     x:Class="AUTO.HLT.MOBILE.VIP.ThemesApp.LightTheme"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
     <Style TargetType="Label">
         <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="#000" />
     </Style>
     <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="#000" />
         <Setter Property="FontSize" Value="15" />
     </Style>
     <Color x:Key="AppBackgroud2">#23689b</Color>
     <Color x:Key="AppBackgroud">#0e49b5</Color>
+    <Style x:Key="TitleNavigation" TargetType="Label">
+        <Setter Property="TextColor" Value="#ffffff" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontFamily" Value="RobotoRegular" />
+        <Setter Property="MaxLines" Value="1" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
 </ResourceDictionary>

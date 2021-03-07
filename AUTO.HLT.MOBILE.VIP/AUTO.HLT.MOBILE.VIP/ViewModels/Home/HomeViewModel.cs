@@ -18,6 +18,8 @@ using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
+using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
+using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using Newtonsoft.Json;
 using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -105,6 +107,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                 case 7:
                     await SetupAuto(item);
                     break;
+                case 5:
+                    await NavigationService.NavigateAsync(nameof(PokesPage));
+                    break;
+                case 4:
+                    await NavigationService.NavigateAsync(nameof(FilterFriendPage));
+                    break;
                 default:
                     break;
             }
@@ -124,7 +132,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     if (await _facebookService.CheckCookieAndToken())
                     {
                         var infoFace =
-                            await _facebookService.GetInfoUser("name,picture", Preferences.Get(AppConstants.TokenFaceook, ""));
+                            await _facebookService.GetInfoUser();
                         if (infoFace != null && infoFace.name != null)
                         {
                             if (await _pageDialogService.DisplayAlertAsync("Thông báo",

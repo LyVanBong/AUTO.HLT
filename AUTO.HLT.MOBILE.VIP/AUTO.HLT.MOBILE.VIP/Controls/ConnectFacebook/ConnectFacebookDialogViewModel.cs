@@ -5,7 +5,10 @@ using Prism.Services.Dialogs;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
@@ -17,6 +20,8 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
         public event Action<IDialogParameters> RequestClose;
         private IPageDialogService _pageDialogService;
         private bool _isLoading;
+        private IFacebookService _facebookService;
+        private IDatabaseService _databaseService;
 
         public ICommand FuntionCommand { get; private set; }
 
@@ -38,14 +43,19 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
             set => SetProperty(ref _isLoading, value);
         }
 
-        public ConnectFacebookDialogViewModel(IPageDialogService pageDialogService)
+        public ConnectFacebookDialogViewModel(IPageDialogService pageDialogService, IFacebookService facebookService, IDatabaseService databaseService)
         {
+            _databaseService = databaseService;
+            _facebookService = facebookService;
             _pageDialogService = pageDialogService;
             FuntionCommand = new AsyncCommand<string>(Funtion);
-            MessagingCenter.Subscribe<App>(this, AppConstants.GetTokenDone, (app) =>
-           {
-               ClosePopup(null);
-           });
+            MessagingCenter.Subscribe<App>(this, AppConstants.GetTokenDone, async (app) =>
+            {
+                var usr = await _databaseService.GetAccountUser();
+                var face = await _facebookService.GetInfoUser();
+                await _facebookService.UpdateUserFacebook(usr.ID, face.id, Preferences.Get(AppConstants.CookieFacebook, ""), Preferences.Get(AppConstants.TokenFaceook, ""), "APP AUTOVIP");
+                ClosePopup(null);
+            });
             MessagingCenter.Subscribe<App>(this, AppConstants.GetCookieDone, async (app) =>
             {
                 IsVisibleConnect = true;

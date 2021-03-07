@@ -185,7 +185,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
                         }
                     }
 
-                    var friend =await GetFrinds("1", token);
+                    var friend = await GetFrinds("1", token);
                     if (friend == null || friend.data == null)
                         return false;
                     else
@@ -194,8 +194,8 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
             }
             catch (Exception e)
             {
-               Crashes.TrackError(e);
-               return false;
+                Crashes.TrackError(e);
+                return false;
             }
         }
 
@@ -263,28 +263,32 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
             }
         }
 
-        public async Task<NamePictureUserModel> GetInfoUser(string fields, string accessToken)
+        public async Task<NamePictureUserModel> GetInfoUser(string fields = "name,picture")
         {
             try
             {
-                var para = new List<RequestParameter>
+                var accessToken = Preferences.Get(AppConstants.TokenFaceook, "");
+                if (accessToken != null)
                 {
-                    new RequestParameter("fields",fields),
-                    new RequestParameter("access_token",accessToken),
-                };
-                var data = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
-                if (data != null)
-                {
-                    var info = JsonConvert.DeserializeObject<NamePictureUserModel>(data);
-                    if (info != null)
-                        return info;
+                    var para = new List<RequestParameter>
+                    {
+                        new RequestParameter("fields",fields),
+                        new RequestParameter("access_token",accessToken),
+                    };
+                    var data = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
+                    if (data != null)
+                    {
+                        var info = JsonConvert.DeserializeObject<NamePictureUserModel>(data);
+                        if (info != null)
+                            return info;
+                    }
                 }
-                return null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Crashes.TrackError(e);
             }
+            return null;
         }
     }
 }

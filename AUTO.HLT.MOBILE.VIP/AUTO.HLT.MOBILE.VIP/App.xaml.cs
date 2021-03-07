@@ -8,11 +8,15 @@ using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
 using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
+using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
+using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
+using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Login;
+using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -57,6 +61,9 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
+
+            containerRegistry.RegisterForNavigation<FilterFriendPage, FilterFriendViewModel>();
+            containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<FeaturePage, FeatureViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();

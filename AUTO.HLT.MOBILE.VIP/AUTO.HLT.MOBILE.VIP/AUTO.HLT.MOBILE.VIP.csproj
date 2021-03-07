@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="FontAwesome5DuotoneSolid.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
     <None Remove="Resources\Images\icon_birthday.png" />
@@ -18,6 +22,8 @@
     <None Remove="Resources\Images\icon_Interactive.png" />
     <None Remove="Resources\Images\icon_like.png" />
     <None Remove="Resources\Images\icon_pokes.png" />
+    <None Remove="Resources\Images\icon_pokes_user.png" />
+    <None Remove="Resources\Images\icon_select_all_pokes.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +39,8 @@
     <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
     <EmbeddedResource Include="Resources\Images\icon_like.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
+    <EmbeddedResource Include="Resources\Images\icon_pokes_user.png" />
+    <EmbeddedResource Include="Resources\Images\icon_select_all_pokes.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +51,7 @@
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.46" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
@@ -52,6 +61,10 @@
   <ItemGroup>
     <Folder Include="Resources\Languages\" />
     <Folder Include="Resources\Svg\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="FontAwesome5DuotoneSolid.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,11 +80,17 @@
     <EmbeddedResource Update="Controls\Loading\LoadingView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Navigation\NavigationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Feature\FeaturePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FilterFriend\FilterFriendPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Home\AddLicenseKeyView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -93,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\SigupView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pokes\PokesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

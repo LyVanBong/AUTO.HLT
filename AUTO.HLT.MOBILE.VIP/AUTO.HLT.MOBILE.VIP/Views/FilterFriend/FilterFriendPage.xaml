@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.Views.FilterFriend.FilterFriendPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    BackgroundColor="{StaticResource AppBackgroud}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="#fff"
+            ColumnDefinitions="60,*"
+            RowDefinitions="40,30,30,50,Auto,0,Auto,*"
+            RowSpacing="5">
+            <Grid.Resources>
+                <Style TargetType="textInputLayout:SfTextInputLayout">
+                    <Setter Property="ContainerType" Value="Outlined" />
+                    <Setter Property="Margin" Value="20,0" />
+                    <Setter Property="OutlineCornerRadius" Value="5" />
+                </Style>
+            </Grid.Resources>
+            <navigation:NavigationView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Lọc bạn bè" />
+            <Image
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Source="{Binding AvatarFacebook}" />
+            <Label Grid.Row="1" Grid.Column="1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Tên" />
+                        <Span Text=": " />
+                        <Span Text="{Binding NameUserFacebook}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Grid.Row="2" Grid.Column="1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="ID" />
+                        <Span Text=": " />
+                        <Span Text="{Binding IdFacebook}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Grid
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,5"
+                Padding="0"
+                ColumnDefinitions="*,*">
+                <Button
+                    Grid.Column="0"
+                    Margin="0"
+                    Padding="0"
+                    BackgroundColor="DarkGray"
+                    Command="{Binding ConnectFacebookCommand}"
+                    CornerRadius="10"
+                    FontSize="12"
+                    Text="Kết nối facebook"
+                    TextColor="#000" />
+                <Button
+                    Grid.Column="1"
+                    Margin="0"
+                    Padding="0"
+                    BackgroundColor="DarkGray"
+                    Command="{Binding FilterFriendsCommand}"
+                    CornerRadius="10"
+                    FontSize="12"
+                    Text="Lọc bạn bè"
+                    TextColor="#000" />
+            </Grid>
+
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,0"
+                BackgroundColor="#fff"
+                HorizontalOptions="FillAndExpand"
+                Text="{Binding NotifillterDone}"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <FlexLayout
+                x:Name="FlexLayout"
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="20,0"
+                AlignContent="Start"
+                AlignItems="Start"
+                BindableLayout.ItemsSource="{Binding FillterFriendModels}"
+                Direction="Row"
+                HeightRequest="70"
+                HorizontalOptions="Start"
+                JustifyContent="Start"
+                VerticalOptions="Center"
+                Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Margin="5,2"
+                            Padding="5,0"
+                            BackgroundColor="#c9cbff"
+                            Command="{Binding Source={x:Reference FlexLayout}, Path=BindingContext.FillterCommand}"
+                            CommandParameter="{Binding .}"
+                            CornerRadius="10"
+                            FontSize="12"
+                            HeightRequest="30"
+                            Text="{Binding NameFilter}"
+                            TextColor="#222831" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+            <xForms:SfDataGrid
+                x:Name="dataGrid"
+                Grid.Row="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                AutoGenerateColumns="False"
+                BackgroundColor="#fff"
+                ColumnSizer="Auto"
+                FrozenColumnsCount="1"
+                ItemsSource="{Binding FriendsDoNotInteractData}"
+                ScrollingMode="Pixel">
+                <xForms:SfDataGrid.Columns>
+                    <xForms:GridTextColumn
+                        HeaderText="#"
+                        MappingName="Id"
+                        MinimumWidth="50" />
+                    <xForms:GridImageColumn
+                        HeaderText="Avatar"
+                        MappingName="Picture"
+                        MinimumWidth="50" />
+                    <xForms:GridSwitchColumn
+                        AllowEditing="True"
+                        HeaderText="Chọn"
+                        MappingName="IsSelected"
+                        MinimumWidth="50" />
+                    <xForms:GridTextColumn
+                        HeaderText="Tên"
+                        MappingName="Name"
+                        MinimumWidth="90" />
+                    <xForms:GridTextColumn
+                        HeaderText="Tương tác"
+                        MappingName="Reaction"
+                        MinimumWidth="40" />
+                    <xForms:GridTextColumn
+                        HeaderText="Bình luận"
+                        MappingName="Comment"
+                        MinimumWidth="40" />
+                    <xForms:GridTextColumn
+                        HeaderText="Trạng thái"
+                        MappingName="Status"
+                        MinimumWidth="80" />
+                </xForms:SfDataGrid.Columns>
+            </xForms:SfDataGrid>
+            <loading:LoadingView
+                Grid.Row="1"
+                Grid.RowSpan="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding IsLoading}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

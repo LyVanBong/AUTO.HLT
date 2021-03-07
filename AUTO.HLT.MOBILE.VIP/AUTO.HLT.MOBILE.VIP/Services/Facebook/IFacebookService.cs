@@ -114,8 +114,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
         /// Lấy thông tin user facebook
         /// </summary>
         /// <param name="fields"></param>
-        /// <param name="accessToken"></param>
         /// <returns></returns>
-        Task<NamePictureUserModel> GetInfoUser(string fields, string accessToken);
+        Task<NamePictureUserModel> GetInfoUser(string fields= "name,picture");
     }
 }
