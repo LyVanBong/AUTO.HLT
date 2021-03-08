@@ -16,7 +16,6 @@
             RowSpacing="0">
             <Grid.Resources>
                 <Style TargetType="Label">
-                    <Setter Property="Margin" Value="40,0,0,0" />
                     <Setter Property="FontSize" Value="18" />
                     <Setter Property="VerticalOptions" Value="CenterAndExpand" />
                 </Style>
@@ -33,18 +32,21 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
+                Margin="40,0,0,0"
                 Text="Hỗ trợ" />
 
             <Label
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
+                Margin="40,0,0,0"
                 FontSize="20"
                 Text="Thông tin hỗ trợ" />
             <Label
                 Grid.Row="2"
                 Grid.Column="0"
-                Grid.ColumnSpan="2">
+                Grid.ColumnSpan="2"
+                Margin="40,0,0,0">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Tên: " />
@@ -58,7 +60,9 @@
             <Label
                 Grid.Row="3"
                 Grid.Column="0"
-                Grid.ColumnSpan="2">
+                Grid.ColumnSpan="2"
+                Margin="40,0,0,0">
+
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Số điện thoại: " />
