@@ -9,12 +9,14 @@ using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
+using AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
 using AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
+using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Login;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
@@ -64,6 +66,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
             containerRegistry.RegisterForNavigation<FilterFriendPage, FilterFriendViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Folder Include="Resources\Languages\" />
     <Folder Include="Resources\Svg\" />
+    <Folder Include="ViewModels\HappyBirthday\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -93,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FilterFriend\FilterFriendPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\HappyBirthday\HappyBirthdayPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Home\AddLicenseKeyView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
