@@ -4,48 +4,84 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms">
     <ContentPage.Content>
-        <Grid RowDefinitions="40,*,60">
+        <Grid RowDefinitions="40,*,80,10" RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Chúc mừng sinh nhật" />
-            <CollectionView Grid.Row="1" ItemsSource="">
+            <CollectionView Grid.Row="1" ItemsSource="{Binding LsBirthday}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="15"
                         Orientation="Vertical"
-                        Span="2"
                         VerticalItemSpacing="15" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.EmptyView>
-                    <Label Text="Hôm nay không có ai sinh nhật" />
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="Hôm nay không có ai sinh nhật"
+                        TextColor="{StaticResource AppBackgroud}"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="80,*,80" RowDefinitions="40,40,Auto">
+                        <Grid
+                            Padding="10"
+                            BackgroundColor="#f1f1f1"
+                            ColumnDefinitions="60,*,Auto"
+                            RowDefinitions="30,30,Auto,2">
+                            <Grid.Resources>
+                                <Style TargetType="textInputLayout:SfTextInputLayout">
+                                    <Setter Property="ContainerType" Value="Outlined" />
+                                    <Setter Property="Margin" Value="10,0" />
+                                    <Setter Property="OutlineCornerRadius" Value="5" />
+                                </Style>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="HorizontalOptions" Value="Start" />
+                                    <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                                </Style>
+                            </Grid.Resources>
                             <Image
                                 Grid.Row="0"
                                 Grid.RowSpan="2"
-                                Grid.Column="0" />
+                                Grid.Column="0"
+                                Source="{Binding Picture}" />
                             <Label
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="Ten" />
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Text="Ten" />
+                                Text="{Binding Name, StringFormat='Tên: {0}'}" />
+                            <Label Grid.Row="1" Grid.Column="1">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Gender}"
+                                        TargetType="Label"
+                                        Value="female">
+                                        <Setter Property="Label.Text" Value="Nữ" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Gender}"
+                                        TargetType="Label"
+                                        Value="male">
+                                        <Setter Property="Label.Text" Value="Nam" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                             <StackLayout
                                 Grid.Row="0"
                                 Grid.Column="2"
                                 Padding="0"
                                 BackgroundColor="Transparent"
                                 Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsSavePasswd}" Color="#fff" />
+                                <CheckBox IsChecked="{Binding IsSendMessage}" Color="{StaticResource AppBackgroud}" />
                                 <Label
-                                    FontSize="16"
+                                    FontSize="12"
                                     Text="Tin nhắn"
-                                    TextColor="#fff"
+                                    TextColor="#000"
                                     VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                             <StackLayout
@@ -54,24 +90,25 @@
                                 Padding="0"
                                 BackgroundColor="Transparent"
                                 Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsSavePasswd}" Color="#fff" />
+                                <CheckBox IsChecked="{Binding IsPost}" Color="{StaticResource AppBackgroud}" />
                                 <Label
-                                    FontSize="16"
+                                    FontSize="12"
                                     Text="Đăng lên tường"
-                                    TextColor="#fff"
+                                    TextColor="#000"
                                     VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                             <textInputLayout:SfTextInputLayout
                                 Grid.Row="2"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
+                                BackgroundColor="#f1f1f1"
                                 FocusedColor="{StaticResource AppBackgroud}"
                                 Hint="Lời chúc"
                                 LeadingViewPosition="Inside">
                                 <Editor
                                     HeightRequest="140"
                                     Keyboard="Plain"
-                                    Text="{Binding Content}" />
+                                    Text="{Binding MessageContent}" />
                                 <textInputLayout:SfTextInputLayout.LeadingView>
                                     <Label
                                         FontFamily="Awesome"
@@ -79,11 +116,32 @@
                                         VerticalTextAlignment="Center" />
                                 </textInputLayout:SfTextInputLayout.LeadingView>
                             </textInputLayout:SfTextInputLayout>
+                            <BoxView
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Gray" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Grid.Row="2" Text="Chúc mừng ngay" />
+            <Button
+                Grid.Row="2"
+                Margin="25,0"
+                Padding="0"
+                BackgroundColor="#fff"
+                BorderColor="{StaticResource AppBackgroud}"
+                BorderWidth="1"
+                Command="{Binding HappyBirthdayCommand}"
+                CornerRadius="10"
+                HeightRequest="50"
+                Text="Chúc mừng ngay"
+                TextColor="{StaticResource AppBackgroud}"
+                VerticalOptions="CenterAndExpand" />
+            <loading:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="4"
+                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

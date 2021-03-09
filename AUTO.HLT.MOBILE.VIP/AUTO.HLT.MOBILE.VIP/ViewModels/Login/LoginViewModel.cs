@@ -287,11 +287,18 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
 
                         await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
                         {
-                            Ten_Dich_Vu_Yeu_Cau = "Đăng ký tài khoản mới",
-                            Ghi_Chu = $"Người giới thiệu {NguoiGioiThieu}",
+                            Ten_Thong_Bao = "Đăng ký tài khoản mới",
+                            Ghi_Chu = new
+                            {
+                                Nguoi_Gioi_Thieu = NguoiGioiThieu
+                            },
                             Id_Nguoi_Dung = UserName,
                             So_Luong = 1,
-                            Noi_Dung_Yeu_Cau = $"Tài khoản {UserName} đăng ký thành công",
+                            Noi_Dung_Yeu_Cau = new
+                            {
+                                Tai_Khoan = UserName,
+                                Trang_Thai = "Đăng ký thành công"
+                            },
                         }, Formatting.Indented));
                         await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản thành công",
                             "OK");

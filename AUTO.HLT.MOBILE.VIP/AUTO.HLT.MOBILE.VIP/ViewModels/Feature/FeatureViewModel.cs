@@ -284,9 +284,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
             {
                 var contentSend = JsonConvert.SerializeObject(new ContentSendTelegramModel()
                 {
-                    Ten_Dich_Vu_Yeu_Cau = _itemMenu.TitleItem,
+                    Ten_Thong_Bao = _itemMenu.TitleItem,
                     Id_Nguoi_Dung = _user.ID,
-                    Noi_Dung_Yeu_Cau = Content,
+                    Noi_Dung_Yeu_Cau = new
+                    {
+                        Noi_Dung=Content
+                    },
                     So_Luong = number,
                     Ghi_Chu = new
                     {

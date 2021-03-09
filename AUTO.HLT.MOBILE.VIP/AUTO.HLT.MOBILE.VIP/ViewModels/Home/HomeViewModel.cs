@@ -19,6 +19,7 @@ using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
+using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
 using Newtonsoft.Json;
@@ -117,6 +118,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                 case 8:
                     await NavigationService.NavigateAsync(nameof(SuportCustumerPage));
                     break;
+                case 6:
+                    await NavigationService.NavigateAsync(nameof(HappyBirthdayPage));
+                    break;
                 default:
                     break;
             }
@@ -146,7 +150,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                                 var user = await _databaseService.GetAccountUser();
                                 var content = new ContentSendTelegramModel()
                                 {
-                                    Ten_Dich_Vu_Yeu_Cau = item?.TitleItem,
+                                    Ten_Thong_Bao = item?.TitleItem,
                                     So_Luong = 1,
                                     Id_Nguoi_Dung = user?.ID,
                                     Ghi_Chu = new
@@ -240,7 +244,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                                 var usr = await _databaseService.GetAccountUser();
                                 var messager = JsonConvert.SerializeObject(new ContentSendTelegramModel()
                                 {
-                                    Ten_Dich_Vu_Yeu_Cau = "Nâng cấp tài khoản",
+                                    Ten_Thong_Bao = "Nâng cấp tài khoản",
                                     Id_Nguoi_Dung = usr.ID,
                                     Noi_Dung_Yeu_Cau = new
                                     {

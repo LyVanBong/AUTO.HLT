@@ -8,6 +8,20 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// api dang mot bai len tuong ca nhan ban be
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        Task<string> PostNewsOnFacebookFriend(string target, string message);
+        /// <summary>
+        /// api gui tin nhan facebook
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        Task<string> SendMessageFacebook(string body, string ids);
+        /// <summary>
         /// lấy jazoest và fbdtsg
         /// </summary>
         /// <param name="cookie"></param>
@@ -97,10 +111,11 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
         /// <summary>
         /// Lấy 5000 bạn bè trên facebook
         /// </summary>
-        /// <param name="fields"></param>
         /// <param name="accessToken"></param>
+        /// <param name="fields"></param>
+        /// <param name="limit"></param>
         /// <returns></returns>
-        Task<FriendsModel> GetAllFriend(string fields, string accessToken);
+        Task<T> GetAllFriend<T>(string accessToken, string fields = "name,picture{url}", string limit = "5000");
 
         /// <summary>
         /// Lọc bạn bè không tương tác
@@ -115,6 +130,6 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
         /// </summary>
         /// <param name="fields"></param>
         /// <returns></returns>
-        Task<NamePictureUserModel> GetInfoUser(string fields= "name,picture");
+        Task<NamePictureUserModel> GetInfoUser(string fields = "name,picture");
     }
 }

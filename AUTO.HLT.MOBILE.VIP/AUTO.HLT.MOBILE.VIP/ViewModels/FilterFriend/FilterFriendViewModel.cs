@@ -250,7 +250,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                         var token = Preferences.Get(AppConstants.TokenFaceook, "");
                         var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
                         var fbdtsg = await _facebookService.GeJazoestAndFbdtsg(cookie);
-                        if (await CheckCookieAndToken(token, cookie))
+                        if (await _facebookService.CheckCookieAndToken())
                         {
                             await StartFillterFriend(token, cookie, fbdtsg.Fbdtsg);
                         }
@@ -272,31 +272,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                 Crashes.TrackError(e);
             }
             finally { IsLoading = false; }
-        }
-
-        private async Task<bool> CheckCookieAndToken(string token, string cookie)
-        {
-            try
-            {
-                var isCookie = await _facebookService.CheckCookieAndToken();
-                if (!isCookie)
-                {
-                    return false;
-                }
-
-                var friends = await GetAllFriend(token, "1");
-                if (friends == null || friends.data == null)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-                return false;
-            }
         }
 
         public override void Initialize(INavigationParameters parameters)
@@ -356,21 +331,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             }
         }
 
-        private async Task<FriendsModel> GetAllFriend(string token, string numberFriends)
-        {
-            try
-            {
-                var data = await _facebookService.GetAllFriend(numberFriends, token);
-                return data;
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-
-            return null;
-        }
-
         private async Task CheckFriendsReaction(string token, string fbdtsg)
         {
             try
@@ -379,7 +339,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                 var reac = await GetFriendReaction(fbdtsg);
                 if (reac)
                 {
-                    var allFriend = await GetAllFriend(token, "5000");
+                    var allFriend = await _facebookService.GetAllFriend<FriendsModel>(token);
                     if (allFriend != null)
                     {
                         _doNotInteract = new List<FriendsDoNotInteractModel>();
