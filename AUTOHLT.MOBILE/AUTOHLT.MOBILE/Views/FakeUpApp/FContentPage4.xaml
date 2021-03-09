@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Buff Comment" />
+            <controls:NavigationView Grid.Row="0" Text="Bình luận" />
             <xForms:SfCircularGauge
                 Grid.Row="1"
                 Margin="10"

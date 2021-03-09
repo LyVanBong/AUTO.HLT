@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Buff like" />
+            <controls:NavigationView Grid.Row="0" Text="Thích" />
             <xForms:SfSunburstChart
                 x:Name="sunburstChart"
                 Grid.Row="1"

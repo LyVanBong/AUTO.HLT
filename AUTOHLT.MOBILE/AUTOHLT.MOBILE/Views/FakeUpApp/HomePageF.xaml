@@ -119,19 +119,19 @@
                             Grid.Column="1"
                             FontSize="12"
                             HorizontalOptions="CenterAndExpand"
-                            Text="{markupExtensions:Translate 1000006}" />
+                            Text="Mật khẩu" />
                         <Label
                             Grid.Row="2"
                             Grid.Column="2"
                             FontSize="12"
                             HorizontalOptions="CenterAndExpand"
-                            Text="{markupExtensions:Translate 1000021}" />
+                            Text="Thông báo" />
                         <Label
                             Grid.Row="2"
                             Grid.Column="3"
                             FontSize="12"
                             HorizontalOptions="CenterAndExpand"
-                            Text="{markupExtensions:Translate 1000005}" />
+                            Text="Tài khoản" />
                         <Image
                             Grid.Row="1"
                             Grid.Column="0"
@@ -214,7 +214,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_like.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000029}" />
+                            <Label Grid.Row="1" Text="Thích" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="4" />
@@ -234,7 +234,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_view.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000030}" />
+                            <Label Grid.Row="1" Text="Xem" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="5" />
@@ -254,7 +254,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_share.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000031}" />
+                            <Label Grid.Row="1" Text="Chia sẻ" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="6" />
@@ -274,7 +274,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_comments.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000032}" />
+                            <Label Grid.Row="1" Text="Bình luận" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="7" />
@@ -294,7 +294,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_follow.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000033}" />
+                            <Label Grid.Row="1" Text="Theo dõi" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="8" />
@@ -314,7 +314,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_Interactive.png}" />
-                            <Label Grid.Row="1" Text="{markupExtensions:Translate 1000026}" />
+                            <Label Grid.Row="1" Text="Tương tác" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="9" />
