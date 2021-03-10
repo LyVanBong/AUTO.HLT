@@ -15,7 +15,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Xem" />
+            <controls:NavigationView Grid.Row="0" Text="Bồ đội" />
             <xForms1:SfCalendar
                 x:Name="calendar"
                 Grid.Row="1"

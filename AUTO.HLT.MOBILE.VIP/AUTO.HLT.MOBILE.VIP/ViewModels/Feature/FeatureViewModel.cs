@@ -286,7 +286,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 {
                     Ten_Thong_Bao = _itemMenu.TitleItem,
                     Id_Nguoi_Dung = _user.ID,
-                    Noi_Dung_Yeu_Cau = new
+                    Noi_Dung_Thong_Bao = new
                     {
                         Noi_Dung=Content
                     },

@@ -15,7 +15,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Chia sẻ" />
+            <controls:NavigationView Grid.Row="0" Text="Trà xanh" />
             <xForms1:SfChart
                 x:Name="Chart"
                 Grid.Row="1"

@@ -294,7 +294,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                             },
                             Id_Nguoi_Dung = UserName,
                             So_Luong = 1,
-                            Noi_Dung_Yeu_Cau = new
+                            Noi_Dung_Thong_Bao = new
                             {
                                 Tai_Khoan = UserName,
                                 Trang_Thai = "Đăng ký thành công"

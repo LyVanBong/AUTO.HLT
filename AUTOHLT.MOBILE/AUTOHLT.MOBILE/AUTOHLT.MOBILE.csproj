@@ -27,6 +27,13 @@
     <None Remove="Resources\Images\icon_comments.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
     <None Remove="Resources\Images\icon_eye_view.png" />
+    <None Remove="Resources\Images\icon_f1.png" />
+    <None Remove="Resources\Images\icon_f2.png" />
+    <None Remove="Resources\Images\icon_f3.png" />
+    <None Remove="Resources\Images\icon_f4.png" />
+    <None Remove="Resources\Images\icon_f5.png" />
+    <None Remove="Resources\Images\icon_f6.png" />
+    <None Remove="Resources\Images\icon_f7.png" />
     <None Remove="Resources\Images\icon_filter_friends.png" />
     <None Remove="Resources\Images\icon_follow.png" />
     <None Remove="Resources\Images\icon_happy_birthday.png" />
@@ -72,6 +79,13 @@
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
     <EmbeddedResource Include="Resources\Images\icon_eye_view.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f1.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f2.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f3.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f4.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f5.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f6.png" />
+    <EmbeddedResource Include="Resources\Images\icon_f7.png" />
     <EmbeddedResource Include="Resources\Images\icon_filter_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_follow.png" />
     <EmbeddedResource Include="Resources\Images\icon_happy_birthday.png" />

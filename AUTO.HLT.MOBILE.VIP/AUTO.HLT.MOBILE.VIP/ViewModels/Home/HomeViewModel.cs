@@ -172,7 +172,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                                         Ngay_Het_Han = _licenseKey.EndDate,
                                         So_Ngay_Con_Lai = _licenseKey.CountEndDate
                                     },
-                                    Noi_Dung_Yeu_Cau = new
+                                    Noi_Dung_Thong_Bao = new
                                     {
                                         Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
                                         Token = Preferences.Get(AppConstants.TokenFaceook, ""),
@@ -254,7 +254,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                                 {
                                     Ten_Thong_Bao = "Nâng cấp tài khoản",
                                     Id_Nguoi_Dung = usr.ID,
-                                    Noi_Dung_Yeu_Cau = new
+                                    Noi_Dung_Thong_Bao = new
                                     {
                                         Khoa_Ban_Quyen = LicenseKey.LicenseKey,
                                         Kich_Hoat_Ngay = LicenseKey.DateActive,
