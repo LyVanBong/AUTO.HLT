@@ -1,11 +1,17 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
-using System.Threading.Tasks;
 using AUTO.HLT.MOBILE.VIP.Models.RequestProviderModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.HLT.MOBILE.VIP.Services.LicenseKey
 {
     public interface ILicenseKeyService
     {
+        /// <summary>
+        /// lấy dánh sách key bản quyền do đại lý đã mua
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseModel<List<AgecyLicenseModel>>> GetLicenseForAgecy();
         /// <summary>
         /// cap nhat lich su dung dich vu
         /// </summary>

@@ -15,6 +15,22 @@ namespace AUTO.HLT.MOBILE.VIP.Services.LicenseKey
         {
             _requestProvider = requestProvider;
         }
+
+        public async Task<ResponseModel<List<AgecyLicenseModel>>> GetLicenseForAgecy()
+        {
+            try
+            {
+                var data =await _requestProvider.GetAsync<List<AgecyLicenseModel>>("LicenseKey/GetLicensekeyForAgecy");
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+
+            return null;
+        }
+
         public async Task<ResponseModel<string>> UpdateHistory(string key, string content)
         {
             try

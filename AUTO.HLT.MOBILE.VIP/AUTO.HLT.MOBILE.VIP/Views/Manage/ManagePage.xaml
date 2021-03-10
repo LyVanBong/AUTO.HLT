@@ -3,8 +3,10 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.Manage.ManagePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP">
+    xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms">
     <ContentPage.Content>
         <Grid RowDefinitions="40,*">
             <navigation:NavigationView
@@ -12,7 +14,51 @@
                 Margin="0,0,0,0"
                 Text="Quản lý" />
 
-            <CollectionView Grid.Row="1"></CollectionView>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding LsMyLicense}">
+                <CollectionView.Resources>
+                    <Style TargetType="textInputLayout:SfTextInputLayout">
+                        <Setter Property="ContainerType" Value="Outlined" />
+                        <Setter Property="Margin" Value="10,0" />
+                        <Setter Property="OutlineCornerRadius" Value="5" />
+                    </Style>
+                </CollectionView.Resources>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="15"
+                        Orientation="Vertical"
+                        VerticalItemSpacing="15" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <textInputLayout:SfTextInputLayout
+                            Grid.Row="0"
+                            FocusedColor="{StaticResource AppBackgroud}"
+                            Hint="Khóa bản quyền"
+                            LeadingViewPosition="Inside">
+                            <Editor
+                                HeightRequest="140"
+                                IsReadOnly="True"
+                                Keyboard="Plain"
+                                Text="{Binding LicenseKey}">
+                                <Editor.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding TypeLicenseKey}"
+                                        TargetType="Editor"
+                                        Value="1">
+                                        <Setter Property="Editor.IsReadOnly" Value="False" />
+                                    </DataTrigger>
+                                </Editor.Triggers>
+                            </Editor>
+                            <textInputLayout:SfTextInputLayout.LeadingView>
+                                <Label
+                                    FontFamily="Awesome"
+                                    Text="{x:Static icon:FontAwesome5ProSolid.Newspaper}"
+                                    VerticalTextAlignment="Center" />
+                            </textInputLayout:SfTextInputLayout.LeadingView>
+                        </textInputLayout:SfTextInputLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <loading:LoadingView
                 Grid.Row="0"

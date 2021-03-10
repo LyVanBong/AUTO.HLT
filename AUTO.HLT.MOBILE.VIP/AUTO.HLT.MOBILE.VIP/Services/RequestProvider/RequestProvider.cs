@@ -38,7 +38,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.RequestProvider
                     : default;
                 return data;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
