@@ -64,6 +64,7 @@
     <Folder Include="Resources\Languages\" />
     <Folder Include="Resources\Svg\" />
     <Folder Include="ViewModels\HappyBirthday\" />
+    <Folder Include="ViewModels\Manage\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -117,6 +118,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\SigupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Manage\ManagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Pokes\PokesPage.xaml">

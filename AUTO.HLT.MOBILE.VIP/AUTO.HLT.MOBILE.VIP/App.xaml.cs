@@ -12,6 +12,7 @@ using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
+using AUTO.HLT.MOBILE.VIP.ViewModels.Manage;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
 using AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
@@ -19,6 +20,7 @@ using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Login;
+using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
 using AUTOHLT.MOBILE.Services.RestSharp;
@@ -66,6 +68,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<ManagePage, ManageViewModel>();
             containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
             containerRegistry.RegisterForNavigation<FilterFriendPage, FilterFriendViewModel>();

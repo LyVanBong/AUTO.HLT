@@ -20,6 +20,7 @@ using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
+using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
 using Newtonsoft.Json;
@@ -42,8 +43,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         private IDialogService _dialogService;
         private IFacebookService _facebookService;
         private ITelegramService _telegramService;
+        private ObservableCollection<ItemMenuModel> _listItemMenus;
 
-        public ObservableCollection<ItemMenuModel> ListItemMenus { get; set; }
+        public ObservableCollection<ItemMenuModel> ListItemMenus
+        {
+            get => _listItemMenus;
+            set => SetProperty(ref _listItemMenus, value);
+        }
 
         public LoginModel InfoUser
         {
@@ -85,7 +91,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             _licenseKeyService = licenseKeyService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
-            ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
             LogoutCommant = new AsyncCommand(Logout);
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
             ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
@@ -120,6 +125,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     break;
                 case 6:
                     await NavigationService.NavigateAsync(nameof(HappyBirthdayPage));
+                    break;
+                case 9:
+                    await NavigationService.NavigateAsync(nameof(ManagePage));
                     break;
                 default:
                     break;
@@ -298,8 +306,21 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             base.OnNavigatedTo(parameters);
             IsLoading = true;
-            InfoUser = await _databaseService.GetAccountUser();
             await CheckLicenseKey();
+            InfoUser = await _databaseService.GetAccountUser();
+           
+            ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
+            if (InfoUser.Role != 2)
+            {
+                ListItemMenus.Add(new ItemMenuModel
+                {
+                    BgColor = Color.FromHex("#000"),
+                    Id = 9,
+                    Role = 98,
+                    Icon = "icon_manager.png",
+                    TitleItem = "Quản lý",
+                });
+            }
             IsLoading = false;
         }
 
