@@ -51,9 +51,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Realm" Version="10.1.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.47" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />

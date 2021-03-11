@@ -7,10 +7,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using Microsoft.AppCenter.Crashes;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
@@ -24,6 +26,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
         private LicenseKeyModel _licenseKeyModel;
         private IPageDialogService _pageDialogService;
         private bool _isLoading;
+        private IDialogService _dialog;
 
         public ObservableCollection<FriendBirthdayModel> LsBirthday
         {
@@ -39,8 +42,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             set => SetProperty(ref _isLoading, value);
         }
 
-        public HappyBirthdayViewModel(INavigationService navigationService, IFacebookService facebookService, ILicenseKeyService licenseKeyService, IPageDialogService pageDialogService) : base(navigationService)
+        public HappyBirthdayViewModel(INavigationService navigationService, IFacebookService facebookService, ILicenseKeyService licenseKeyService, IPageDialogService pageDialogService, IDialogService dialog) : base(navigationService)
         {
+            _dialog = dialog;
             _pageDialogService = pageDialogService;
             _licenseKeyService = licenseKeyService;
             _facebookService = facebookService;
@@ -108,65 +112,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             try
             {
                 IsLoading = true;
-                if (await _facebookService.CheckCookieAndToken())
-                {
-                    var data = await _facebookService.GetAllFriend<FriendsModel>(
-                        Preferences.Get(AppConstants.TokenFaceook, ""), "id,name,birthday,picture{url},gender");
-                    if (data != null && data.data != null)
-                    {
-                        var friend = data.data;
-                        _licenseKeyModel = await _licenseKeyService.CheckLicenseForUser();
-                        LsBirthday = new ObservableCollection<FriendBirthdayModel>();
-                        if (_licenseKeyModel == null)
-                        {
-                            foreach (var item in friend)
-                            {
-                                var day = item?.birthday;
-                                if (!string.IsNullOrEmpty(day))
-                                {
-                                    LsBirthday.Add(new FriendBirthdayModel()
-                                    {
-                                        Id = item.id,
-                                        Name = item.name,
-                                        Picture = item.picture.data.url,
-                                        Gender = item.gender,
-                                        Birthday = item.birthday,
-                                        MessageContent = "Chúc mừng " + item.name + ", tuổi mới thành công hơn",
-                                    });
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in friend)
-                            {
-                                var day = item?.birthday;
-                                if (!string.IsNullOrEmpty(day))
-                                {
-                                    if (item.id == "100010625826662")
-                                    {
-                                        Console.WriteLine();
-                                    }
-                                    var d = day.Split('/');
-                                    var ngay = int.Parse(d[1]);
-                                    var thang = int.Parse(d[0]);
-                                    if (ngay == DateTime.Today.Day && thang == DateTime.Today.Month)
-                                    {
-                                        LsBirthday.Add(new FriendBirthdayModel()
-                                        {
-                                            Id = item.id,
-                                            Name = item.name,
-                                            Picture = item.picture.data.url,
-                                            Gender = item.gender,
-                                            Birthday = item.birthday,
-                                            MessageContent = "Chúc mừng sinh nhật " + item.name + ", tuổi mới thành công hơn",
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                await InitData();
             }
             catch (Exception e)
             {
@@ -175,6 +121,81 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             finally
             {
                 IsLoading = false;
+            }
+        }
+
+        private async Task InitData()
+        {
+            if (await _facebookService.CheckCookieAndToken())
+            {
+                var data = await _facebookService.GetAllFriend<FriendsModel>(
+                    Preferences.Get(AppConstants.TokenFaceook, ""), "id,name,birthday,picture{url},gender");
+                if (data != null && data.data != null)
+                {
+                    var friend = data.data;
+                    _licenseKeyModel = await _licenseKeyService.CheckLicenseForUser();
+                    LsBirthday = new ObservableCollection<FriendBirthdayModel>();
+                    if (_licenseKeyModel == null)
+                    {
+                        foreach (var item in friend)
+                        {
+                            var day = item?.birthday;
+                            if (!string.IsNullOrEmpty(day))
+                            {
+                                LsBirthday.Add(new FriendBirthdayModel()
+                                {
+                                    Id = item.id,
+                                    Name = item.name,
+                                    Picture = item.picture.data.url,
+                                    Gender = item.gender,
+                                    Birthday = item.birthday,
+                                    MessageContent = "Chúc mừng " + item.name + ", tuổi mới thành công hơn",
+                                });
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in friend)
+                        {
+                            var day = item?.birthday;
+                            if (!string.IsNullOrEmpty(day))
+                            {
+                                if (item.id == "100010625826662")
+                                {
+                                    Console.WriteLine();
+                                }
+
+                                var d = day.Split('/');
+                                var ngay = int.Parse(d[1]);
+                                var thang = int.Parse(d[0]);
+                                if (ngay == DateTime.Today.Day && thang == DateTime.Today.Month)
+                                {
+                                    LsBirthday.Add(new FriendBirthdayModel()
+                                    {
+                                        Id = item.id,
+                                        Name = item.name,
+                                        Picture = item.picture.data.url,
+                                        Gender = item.gender,
+                                        Birthday = item.birthday,
+                                        MessageContent = "Chúc mừng sinh nhật " + item.name + ", tuổi mới thành công hơn",
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Tính năng này cần kết nỗi với facebook của bạn", "Kết nỗi ngay", "Thôi"))
+                {
+                    await _dialog.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                }
+                else
+                {
+                    await NavigationService.GoBackAsync();
+                }
             }
         }
     }

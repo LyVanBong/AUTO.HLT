@@ -59,6 +59,16 @@
                         </textInputLayout:SfTextInputLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="Bạn chưa mua khóa bản quyền nào"
+                        TextColor="{StaticResource AppBackgroud}"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
+                </CollectionView.EmptyView>
             </CollectionView>
 
             <loading:LoadingView

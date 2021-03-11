@@ -73,7 +73,7 @@
                 SelectionMode="Single"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.Footer>
-                    <BoxView BackgroundColor="Transparent" HeightRequest="100" />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="{OnPlatform iOS='1', Android='100'}" />
                 </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
