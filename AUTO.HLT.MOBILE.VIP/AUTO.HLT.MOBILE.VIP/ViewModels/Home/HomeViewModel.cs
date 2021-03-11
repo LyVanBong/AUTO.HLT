@@ -152,7 +152,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                         if (infoFace != null && infoFace.name != null)
                         {
                             if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                $"Bạn muỗn cài tự động thả tim cho tài khoản facebook {infoFace?.name}", "Cài ngay",
+                                $"Bạn muỗn cài tự động cho tài khoản facebook {infoFace?.name}", "Cài ngay",
                                 "Thôi"))
                             {
                                 var user = await _databaseService.GetAccountUser();
