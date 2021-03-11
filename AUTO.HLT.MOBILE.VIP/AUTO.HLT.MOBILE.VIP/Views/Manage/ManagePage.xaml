@@ -6,9 +6,10 @@
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms">
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
-        <Grid RowDefinitions="40,*">
+        <Grid BackgroundColor="#fff" RowDefinitions="40,*">
             <navigation:NavigationView
                 Grid.Row="0"
                 Margin="0,0,0,0"
@@ -35,20 +36,20 @@
                             FocusedColor="{StaticResource AppBackgroud}"
                             Hint="Khóa bản quyền"
                             LeadingViewPosition="Inside">
-                            <Editor
+                            <Entry
                                 HeightRequest="140"
                                 IsReadOnly="True"
                                 Keyboard="Plain"
                                 Text="{Binding LicenseKey}">
-                                <Editor.Triggers>
+                                <Entry.Triggers>
                                     <DataTrigger
                                         Binding="{Binding TypeLicenseKey}"
                                         TargetType="Editor"
                                         Value="1">
                                         <Setter Property="Editor.IsReadOnly" Value="False" />
                                     </DataTrigger>
-                                </Editor.Triggers>
-                            </Editor>
+                                </Entry.Triggers>
+                            </Entry>
                             <textInputLayout:SfTextInputLayout.LeadingView>
                                 <Label
                                     FontFamily="Awesome"

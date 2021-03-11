@@ -272,7 +272,8 @@ namespace AUTO.HLT.MOBILE.VIP.Services.Facebook
             {
                 var parameters = new List<RequestParameter>
                 {
-                    new RequestParameter("fields", fields+",limit="+limit),
+                    new RequestParameter("fields", fields),
+                    new RequestParameter("limit",limit),
                     new RequestParameter("access_token", accessToken),
                 };
                 var json = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me/friends", parameters);

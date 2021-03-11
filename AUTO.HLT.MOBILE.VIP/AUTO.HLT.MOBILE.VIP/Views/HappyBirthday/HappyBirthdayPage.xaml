@@ -6,9 +6,13 @@
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms">
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
-        <Grid RowDefinitions="40,*,80,10" RowSpacing="0">
+        <Grid
+            BackgroundColor="#fff"
+            RowDefinitions="40,*,80,10"
+            RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Chúc mừng sinh nhật" />
             <CollectionView Grid.Row="1" ItemsSource="{Binding LsBirthday}">
                 <CollectionView.ItemsLayout>
@@ -106,6 +110,7 @@
                                 Hint="Lời chúc"
                                 LeadingViewPosition="Inside">
                                 <Editor
+                                    FontSize="16"
                                     HeightRequest="140"
                                     Keyboard="Plain"
                                     Text="{Binding MessageContent}" />

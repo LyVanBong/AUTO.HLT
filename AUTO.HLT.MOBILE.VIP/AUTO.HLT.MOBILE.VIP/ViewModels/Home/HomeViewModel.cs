@@ -152,7 +152,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                         if (infoFace != null && infoFace.name != null)
                         {
                             if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                $"Bạn muỗn cài tự động cho tài khoản facebook {infoFace?.name}", "Cài ngay",
+                                $"Bạn muốn cài tự động cho tài khoản facebook {infoFace?.name}", "Cài ngay",
                                 "Thôi"))
                             {
                                 var user = await _databaseService.GetAccountUser();
@@ -314,7 +314,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             {
                 ListItemMenus.Add(new ItemMenuModel
                 {
-                    BgColor = Color.FromHex("#000"),
+                    BgColor = Color.FromHex("#6930c3"),
                     Id = 9,
                     Role = 98,
                     Icon = "icon_manager.png",
@@ -341,7 +341,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             if (IsLoading) return;
             IsLoading = true;
-            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Bạn muỗn đăng xuất tài khoản",
+            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Bạn muốn đăng xuất tài khoản",
                 "Ok", "Cancel"))
             {
                 await _databaseService.DeleteAccontUser();

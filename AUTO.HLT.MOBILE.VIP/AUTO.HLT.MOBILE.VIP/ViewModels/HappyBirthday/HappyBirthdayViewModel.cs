@@ -54,31 +54,40 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                if (_licenseKeyModel != null && LsBirthday.Any())
+                if (_licenseKeyModel != null)
                 {
-                    var data = LsBirthday?.Where(x => x.IsPost || x.IsSendMessage)?.ToList();
-                    if (data.Any())
+                    if (LsBirthday.Any())
                     {
-                        foreach (var friend in data)
+                        var data = LsBirthday?.Where(x => x.IsPost || x.IsSendMessage)?.ToList();
+                        if (data.Any())
                         {
-                            if (friend.IsPost)
+                            foreach (var friend in data)
                             {
-                                var post = await _facebookService.PostNewsOnFacebookFriend(friend.Id, friend.MessageContent);
+                                if (friend.IsPost)
+                                {
+                                    var post = await _facebookService.PostNewsOnFacebookFriend(friend.Id, friend.MessageContent);
+                                }
+
+                                await Task.Delay(TimeSpan.FromSeconds(1));
+                                if (friend.IsSendMessage)
+                                {
+                                    var message = await _facebookService.SendMessageFacebook(friend.MessageContent, friend.Id);
+                                }
+                                await Task.Delay(TimeSpan.FromSeconds(1));
                             }
 
-                            await Task.Delay(TimeSpan.FromSeconds(1));
-                            if (friend.IsSendMessage)
-                            {
-                                var message = await _facebookService.SendMessageFacebook(friend.MessageContent, friend.Id);
-                            }
-                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Chúc mừng sinh nhật thành công", "OK");
                         }
-
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Chúc mừng sinh nhật thành công", "OK");
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo",
+                            "Hôm nay không có ai sinh nhật", "OK");
                     }
                 }
                 else
                 {
+
                     await _pageDialogService.DisplayAlertAsync("Thông báo",
                         "Bạn nên nâng cập tài khoản để sử dụng đầy đủ tinh năng hơn", "OK");
                 }
@@ -134,17 +143,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
                                 var day = item?.birthday;
                                 if (!string.IsNullOrEmpty(day))
                                 {
+                                    if (item.id == "100010625826662")
+                                    {
+                                        Console.WriteLine();
+                                    }
                                     var d = day.Split('/');
                                     var ngay = int.Parse(d[1]);
                                     var thang = int.Parse(d[0]);
-                                    if (d.Length == 2)
-                                    {
-                                        d[2] = "2001";
-                                    }
-
-                                    var nam = int.Parse(d[2]);
-                                    var birday = new DateTime(nam, thang, ngay);
-                                    if (birday.Date == DateTime.UtcNow.Date)
+                                    if (ngay == DateTime.Today.Day && thang == DateTime.Today.Month)
                                     {
                                         LsBirthday.Add(new FriendBirthdayModel()
                                         {
@@ -153,7 +159,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
                                             Picture = item.picture.data.url,
                                             Gender = item.gender,
                                             Birthday = item.birthday,
-                                            MessageContent = "Chúc mừng sinh nhật" + item.name + ", tuổi mới thành công hơn",
+                                            MessageContent = "Chúc mừng sinh nhật " + item.name + ", tuổi mới thành công hơn",
                                         });
                                     }
                                 }
