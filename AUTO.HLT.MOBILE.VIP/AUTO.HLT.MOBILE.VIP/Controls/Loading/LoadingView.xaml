@@ -9,14 +9,12 @@
             <Frame
                 Grid.Row="1"
                 Grid.Column="1"
-                Padding="0"
                 BackgroundColor="#ffffff"
                 CornerRadius="10"
                 HasShadow="True">
                 <xForms:SfBusyIndicator
                     x:Name="busyindicator"
                     Title="Hệ thống đang xử lý"
-                    Margin="0"
                     AnimationType="DoubleCircle"
                     BackgroundColor="#ffffff"
                     HorizontalOptions="FillAndExpand"
