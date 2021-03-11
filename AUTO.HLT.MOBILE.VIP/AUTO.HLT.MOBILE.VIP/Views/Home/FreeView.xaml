@@ -7,7 +7,7 @@
     <ContentView.Content>
         <Label
             Margin="5"
-            FontSize="15"
+            FontSize="18"
             HorizontalOptions="CenterAndExpand"
             Text="Miễn phí - (Nâng cấp)"
             TextColor="#fff"

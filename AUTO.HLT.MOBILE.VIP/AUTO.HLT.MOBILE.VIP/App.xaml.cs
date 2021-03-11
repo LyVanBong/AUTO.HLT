@@ -1,3 +1,4 @@
+using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
@@ -46,6 +47,8 @@ namespace AUTO.HLT.MOBILE.VIP
 
         protected override async void OnInitialized()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(AppSettings.LICENSE_KEY_SYNCFUSION);
+
             InitializeComponent();
 
             await NavigationService.NavigateAsync("/LoginPage");

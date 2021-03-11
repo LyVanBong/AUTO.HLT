@@ -5,14 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:fonts="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP">
+    xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
+    BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
         <Grid
             Margin="0"
             Padding="0"
             BackgroundColor="#f2f2f2"
             RowDefinitions="100,Auto,Auto,*,60"
-            RowSpacing="0">
+            RowSpacing="{OnPlatform Android='0',
+                                    iOS='10'}">
             <BoxView
                 Grid.Row="0"
                 Grid.RowSpan="3"
@@ -68,9 +70,10 @@
                 Margin="5,10,5,0"
                 BackgroundColor="Transparent"
                 ItemsSource="{Binding ListItemMenus}"
-                SelectionMode="Single">
+                SelectionMode="Single"
+                VerticalScrollBarVisibility="Never">
                 <CollectionView.Footer>
-                    <BoxView BackgroundColor="Transparent" HeightRequest="100" />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="{OnPlatform iOS='1', Android='100'}" />
                 </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
@@ -119,7 +122,8 @@
                 Padding="0"
                 BackgroundColor="{StaticResource AppBackgroud}"
                 BorderColor="#fa1e0e"
-                CornerRadius="100"
+                CornerRadius="{OnPlatform iOS='35',
+                                          Android='100'}"
                 HasShadow="True"
                 HeightRequest="70"
                 HorizontalOptions="Center"
