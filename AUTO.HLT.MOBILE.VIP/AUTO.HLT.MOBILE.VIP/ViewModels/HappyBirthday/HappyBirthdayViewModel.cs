@@ -149,7 +149,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
                                     Picture = item.picture.data.url,
                                     Gender = item.gender,
                                     Birthday = item.birthday,
-                                    MessageContent = "Chúc mừng " + item.name + ", tuổi mới thành công hơn",
+                                    MessageContent = $"Thay mặt chủ tịch nước , tổng bí thư , các tập thể ban ngành chúc {item.name} sinh nhật vui vẻ",
                                 });
                             }
                         }

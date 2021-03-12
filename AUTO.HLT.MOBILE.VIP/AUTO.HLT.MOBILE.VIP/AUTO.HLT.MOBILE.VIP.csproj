@@ -11,6 +11,12 @@
 
   <ItemGroup>
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
+    <None Remove="Resources\Images\icon_1.png" />
+    <None Remove="Resources\Images\icon_2.png" />
+    <None Remove="Resources\Images\icon_3.png" />
+    <None Remove="Resources\Images\icon_4.png" />
+    <None Remove="Resources\Images\icon_5.png" />
+    <None Remove="Resources\Images\icon_6.png" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
     <None Remove="Resources\Images\icon_birthday.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
@@ -29,6 +35,12 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
+    <EmbeddedResource Include="Resources\Images\icon_1.png" />
+    <EmbeddedResource Include="Resources\Images\icon_2.png" />
+    <EmbeddedResource Include="Resources\Images\icon_3.png" />
+    <EmbeddedResource Include="Resources\Images\icon_4.png" />
+    <EmbeddedResource Include="Resources\Images\icon_5.png" />
+    <EmbeddedResource Include="Resources\Images\icon_6.png" />
     <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
@@ -53,6 +65,7 @@
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.47" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
@@ -72,6 +85,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\FakeApp\FakeAppPage.xaml.cs">
+      <DependentUpon>FakeAppPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -89,6 +105,24 @@
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FakeApp\AddLicenseKeyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FakeApp\FContentPage3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FakeApp\FContentPage7.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FakeApp\FreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FakeApp\FakeAppPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FakeApp\VipView.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Feature\FeaturePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
