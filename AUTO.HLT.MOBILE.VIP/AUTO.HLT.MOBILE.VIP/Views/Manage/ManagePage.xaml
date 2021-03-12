@@ -22,9 +22,10 @@
             <CollectionView
                 Grid.Row="1"
                 Margin="10,5"
+                BackgroundColor="#fff"
                 ItemsSource="{Binding LsMyLicense}">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="15" />
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -32,27 +33,26 @@
                             Margin="0"
                             Padding="5"
                             BackgroundColor="#fff"
-                            CornerRadius="10">
+                            CornerRadius="10"
+                            HasShadow="False">
                             <Frame.Triggers>
                                 <DataTrigger
                                     Binding="{Binding TypeLicenseKey}"
                                     TargetType="Frame"
                                     Value="1">
-                                    <Setter Property="Frame.BackgroundColor" Value="#e4fbff" />
+                                    <Setter Property="Frame.BackgroundColor" Value="#dddddd" />
                                 </DataTrigger>
                                 <DataTrigger
                                     Binding="{Binding TypeLicenseKey}"
                                     TargetType="Frame"
                                     Value="-1">
-                                    <Setter
-                                        Property="Frame.BackgroundColor"
-                                        Value="#e45826" />
+                                    <Setter Property="Frame.BackgroundColor" Value="#fa1e0e" />
                                 </DataTrigger>
                                 <DataTrigger
                                     Binding="{Binding TypeLicenseKey}"
                                     TargetType="Frame"
                                     Value="2">
-                                    <Setter Property="Frame.BackgroundColor" Value="#eff0b6" />
+                                    <Setter Property="Frame.BackgroundColor" Value="#5aa469" />
                                 </DataTrigger>
                             </Frame.Triggers>
                             <Grid RowDefinitions="30,30,30,40">
@@ -90,6 +90,7 @@
                                 <Label Grid.Row="2" Text="{Binding DateActive, StringFormat='Ngày kích hoạt: {0}'}" />
                                 <Entry
                                     Grid.Row="3"
+                                    BackgroundColor="#fff"
                                     IsReadOnly="True"
                                     Text="{Binding LicenseKey}"
                                     TextColor="#000">

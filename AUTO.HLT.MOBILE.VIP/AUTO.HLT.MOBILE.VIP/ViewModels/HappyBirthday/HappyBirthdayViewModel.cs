@@ -188,7 +188,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             }
             else
             {
-                if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Tính năng này cần kết nỗi với facebook của bạn", "Kết nỗi ngay", "Thôi"))
+                if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Tính năng này cần kết nối với facebook của bạn", "Kết nối ngay", "Thôi"))
                 {
                     await _dialog.ShowDialogAsync(nameof(ConnectFacebookDialog));
                 }

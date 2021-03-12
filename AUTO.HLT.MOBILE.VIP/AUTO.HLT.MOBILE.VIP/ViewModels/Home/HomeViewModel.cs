@@ -194,7 +194,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     }
                     else
                     {
-                        if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nỗi với tài khoản facebook của mình", "Kết nỗi ngay", "Thôi"))
+                        if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
                         {
                             await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
                             await SetupAuto(item);

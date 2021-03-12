@@ -59,7 +59,7 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
             MessagingCenter.Subscribe<App>(this, AppConstants.GetCookieDone, async (app) =>
             {
                 IsVisibleConnect = true;
-                if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Đăng nhập thành công !", "Kết nỗi",
+                if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Đăng nhập thành công !", "Kết nối",
                     "Không"))
                     await Funtion("0");
             });
