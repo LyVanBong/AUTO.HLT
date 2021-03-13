@@ -3,11 +3,15 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.Manage.ManagePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     BackgroundColor="{StaticResource AppBackgroud}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid BackgroundColor="#fff" RowDefinitions="40,*">
             <navigation:NavigationView
@@ -15,48 +19,92 @@
                 Margin="0,0,0,0"
                 Text="Quản lý" />
 
-            <CollectionView Grid.Row="1" ItemsSource="{Binding LsMyLicense}">
-                <CollectionView.Resources>
-                    <Style TargetType="textInputLayout:SfTextInputLayout">
-                        <Setter Property="ContainerType" Value="Outlined" />
-                        <Setter Property="Margin" Value="10,0" />
-                        <Setter Property="OutlineCornerRadius" Value="5" />
-                    </Style>
-                </CollectionView.Resources>
+            <CollectionView
+                Grid.Row="1"
+                Margin="10,5"
+                BackgroundColor="#fff"
+                ItemsSource="{Binding LsMyLicense}">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout
-                        HorizontalItemSpacing="15"
-                        Orientation="Vertical"
-                        VerticalItemSpacing="15" />
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <textInputLayout:SfTextInputLayout
-                            Grid.Row="0"
-                            FocusedColor="{StaticResource AppBackgroud}"
-                            Hint="Khóa bản quyền"
-                            LeadingViewPosition="Inside">
-                            <Entry
-                                HeightRequest="140"
-                                IsReadOnly="True"
-                                Keyboard="Plain"
-                                Text="{Binding LicenseKey}">
-                                <Entry.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding TypeLicenseKey}"
-                                        TargetType="Editor"
-                                        Value="1">
-                                        <Setter Property="Editor.IsReadOnly" Value="False" />
-                                    </DataTrigger>
-                                </Entry.Triggers>
-                            </Entry>
-                            <textInputLayout:SfTextInputLayout.LeadingView>
-                                <Label
-                                    FontFamily="Awesome"
-                                    Text="{x:Static icon:FontAwesome5ProSolid.Newspaper}"
-                                    VerticalTextAlignment="Center" />
-                            </textInputLayout:SfTextInputLayout.LeadingView>
-                        </textInputLayout:SfTextInputLayout>
+                        <Frame
+                            Margin="0"
+                            Padding="5"
+                            BackgroundColor="#fff"
+                            CornerRadius="10"
+                            HasShadow="False">
+                            <Frame.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding TypeLicenseKey}"
+                                    TargetType="Frame"
+                                    Value="1">
+                                    <Setter Property="Frame.BackgroundColor" Value="#dddddd" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding TypeLicenseKey}"
+                                    TargetType="Frame"
+                                    Value="-1">
+                                    <Setter Property="Frame.BackgroundColor" Value="#fa1e0e" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding TypeLicenseKey}"
+                                    TargetType="Frame"
+                                    Value="2">
+                                    <Setter Property="Frame.BackgroundColor" Value="#5aa469" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Grid RowDefinitions="30,30,30,40">
+                                <Grid.Resources>
+                                    <Style TargetType="Label">
+                                        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                                        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="TextColor" Value="{StaticResource AppBackgroud}" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Label Grid.Row="0" Text="{Binding DateCreateKey, StringFormat='Ngày tạo {0}'}" />
+                                <Label Grid.Row="1">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding TypeLicenseKey}"
+                                            TargetType="Label"
+                                            Value="-1">
+                                            <Setter Property="Label.Text" Value="Trạng thái: Đã bị khóa" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding TypeLicenseKey}"
+                                            TargetType="Label"
+                                            Value="1">
+                                            <Setter Property="Label.Text" Value="Trạng thái: Có thể sử dụng" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding TypeLicenseKey}"
+                                            TargetType="Label"
+                                            Value="2">
+                                            <Setter Property="Label.Text" Value="Trạng thái: Đã được sử dụng" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Grid.Row="2" Text="{Binding DateActive, StringFormat='Ngày kích hoạt: {0}'}" />
+                                <Entry
+                                    Grid.Row="3"
+                                    BackgroundColor="#fff"
+                                    IsReadOnly="True"
+                                    Text="{Binding LicenseKey}"
+                                    TextColor="#000">
+                                    <Entry.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding TypeLicenseKey}"
+                                            TargetType="Entry"
+                                            Value="1">
+                                            <Setter Property="Entry.IsReadOnly" Value="False" />
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.EmptyView>
@@ -69,6 +117,9 @@
                         VerticalOptions="CenterAndExpand"
                         VerticalTextAlignment="Center" />
                 </CollectionView.EmptyView>
+                <CollectionView.Footer>
+                    <BoxView HeightRequest="50" />
+                </CollectionView.Footer>
             </CollectionView>
 
             <loading:LoadingView

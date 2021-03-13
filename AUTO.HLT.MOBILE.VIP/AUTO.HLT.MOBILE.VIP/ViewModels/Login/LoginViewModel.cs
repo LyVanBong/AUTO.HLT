@@ -348,7 +348,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     }
                     await _databaseService.SetAccountUser(login.Data);
                     Preferences.Set(AppConstants.Authorization, login.Data.Jwt);
-                    await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                    if (UserName.ToUpper() == "KHACHHANG")
+                    {
+                        await NavigationService.NavigateAsync("/FakeAppPage", null, false, true);
+                    }
+                    else
+                    {
+                        await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                    }
                 }
                 else
                 {
