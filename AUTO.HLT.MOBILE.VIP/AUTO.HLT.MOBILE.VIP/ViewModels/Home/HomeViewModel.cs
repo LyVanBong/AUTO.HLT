@@ -11,12 +11,14 @@ using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
@@ -28,6 +30,7 @@ using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
 {
@@ -44,6 +47,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         private IFacebookService _facebookService;
         private ITelegramService _telegramService;
         private ObservableCollection<ItemMenuModel> _listItemMenus;
+        private IVersionAppService _versionAppService;
 
         public ObservableCollection<ItemMenuModel> ListItemMenus
         {
@@ -83,8 +87,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         public ICommand ConnectFacebookCommand { get; private set; }
         public ICommand UseFeatureCommand { get; private set; }
 
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService, IDialogService dialogService, IFacebookService facebookService, ITelegramService telegramService) : base(navigationService)
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService, IDialogService dialogService, IFacebookService facebookService, ITelegramService telegramService, IVersionAppService versionAppService) : base(navigationService)
         {
+            _versionAppService = versionAppService;
             _telegramService = telegramService;
             _facebookService = facebookService;
             _dialogService = dialogService;
@@ -95,6 +100,42 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
             ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
             UseFeatureCommand = new AsyncCommand<ItemMenuModel>(UseFeature);
+           new Thread(CheckVerionApplication).Start();
+        }
+
+        private async void CheckVerionApplication()
+        {
+            try
+            {
+                var data = await _versionAppService.CheckVersionApp();
+                if (data != null && data.Code > 0 && data.Data != null)
+                {
+                    var version = data.Data;
+                    var sotreUri = version.Note.Split(';');
+                    var build = int.Parse(VersionTracking.CurrentBuild);
+                    if (version.Version > build)
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                "Đã có phiên bản mới, vui lòng cập nhật để sử dụng tính năng ổn định nhất",
+                                "Cập nhật ngay");
+                            if (DeviceInfo.Platform == DevicePlatform.Android)
+                            {
+                                await Browser.OpenAsync(sotreUri[0], BrowserLaunchMode.SystemPreferred);
+                            }
+                            else if (DeviceInfo.Platform == DevicePlatform.iOS)
+                            {
+                                await Browser.OpenAsync(sotreUri[1], BrowserLaunchMode.SystemPreferred);
+                            }
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private async Task UseFeature(ItemMenuModel item)
@@ -308,7 +349,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             IsLoading = true;
             await CheckLicenseKey();
             InfoUser = await _databaseService.GetAccountUser();
-           
+
             ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
             if (InfoUser.Role != 2)
             {

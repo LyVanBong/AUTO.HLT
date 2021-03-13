@@ -74,6 +74,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\VersionApp\" />
     <Folder Include="Resources\Languages\" />
     <Folder Include="Resources\Svg\" />
     <Folder Include="ViewModels\HappyBirthday\" />

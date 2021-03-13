@@ -8,6 +8,7 @@ using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
 using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
@@ -61,6 +62,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
 
+            containerRegistry.Register<IVersionAppService, VersionAppService>();
             containerRegistry.Register<ITelegramService, TelegramService>();
             containerRegistry.Register<IFacebookService, FacebookeService>();
             containerRegistry.Register<ILicenseKeyService, LicenseKeyService>();
