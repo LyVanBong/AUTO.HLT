@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
         <Grid
@@ -94,6 +95,7 @@
                 Command="{Binding RunFeatureCommand}"
                 CommandParameter="1"
                 Text="Thoát" />
+            <loading:LoadingView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="5" IsVisible="{Binding IsLoading}"/>
 
         </Grid>
     </ContentPage.Content>
