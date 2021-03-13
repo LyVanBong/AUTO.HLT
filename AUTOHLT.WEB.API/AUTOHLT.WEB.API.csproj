@@ -154,6 +154,7 @@
     <Compile Include="Controllers\Version2\User\SigUpController.cs" />
     <Compile Include="Controllers\Version2\User\TransferController.cs" />
     <Compile Include="Controllers\Version2\User\CheckExistPhoneController.cs" />
+    <Compile Include="Controllers\Version2\VersionApp\VersionApplicationController.cs" />
     <Compile Include="Database\AutoHLTDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -217,6 +218,9 @@
     <Compile Include="Database\sp_AllLicenseKey_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\sp_GetVersionApp_Result.cs">
+      <DependentUpon>AutoHLTDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>AutoHLTDb.tt</DependentUpon>
     </Compile>
@@ -262,6 +266,7 @@
     <Compile Include="Models\Version2\LicenseKey\CreatekeyModel.cs" />
     <Compile Include="Models\Version2\LicenseKey\UpdateHistoryUseProductModel.cs" />
     <Compile Include="Models\Version2\User\RoleModel.cs" />
+    <Compile Include="Models\Version2\VersionApplication\VersionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

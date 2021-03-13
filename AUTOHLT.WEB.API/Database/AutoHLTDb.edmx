@@ -170,6 +170,9 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetVersionApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVersion" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -212,6 +215,11 @@
         <Function Name="sp_UpdateHistoryUseProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="key" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="History" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateVersionApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Version" Type="int" Mode="In" />
+          <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ThemNguoiGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -548,7 +556,7 @@
             <Parameter Name="History" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_LayNguoiGioiThieuChoKhach" ReturnType="Collection(bsoft_autohltModel.sp_LayNguoiGioiThieuChoKhach_Result)">
-            <Parameter Name="UserName" Mode="In" Type="String" />
+          <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_LayTatCaGioiThieu" ReturnType="Collection(bsoft_autohltModel.sp_LayTatCaGioiThieu_Result)">
             <Parameter Name="Admin" Mode="In" Type="Int32" />
@@ -562,6 +570,14 @@
             <Parameter Name="GioiThieu" Mode="In" Type="String" />
             <Parameter Name="DuocGioiThieu" Mode="In" Type="String" />
             <Parameter Name="DisCount" Mode="In" Type="Int32" />
+            <Parameter Name="Note" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetVersionApp" ReturnType="Collection(bsoft_autohltModel.sp_GetVersionApp_Result)">
+            <Parameter Name="IdVersion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateVersionApplication">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Version" Mode="In" Type="Int32" />
             <Parameter Name="Note" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -757,6 +773,12 @@
           <Property Type="Int32" Name="DisCount" Nullable="true" />
           <Property Type="String" Name="Note" Nullable="true" MaxLength="Max" />
           <Property Type="DateTime" Name="DateCreate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_GetVersionApp_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="AppName" Nullable="false" />
+          <Property Type="Int32" Name="Version" Nullable="true" />
+          <Property Type="String" Name="Note" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1095,6 +1117,17 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_SetRoleUser" FunctionName="bsoft_autohltModel.Store.sp_SetRoleUser" />
           <FunctionImportMapping FunctionImportName="sp_ThemNguoiGioiThieu" FunctionName="bsoft_autohltModel.Store.sp_ThemNguoiGioiThieu" />
+          <FunctionImportMapping FunctionImportName="sp_GetVersionApp" FunctionName="bsoft_autohltModel.Store.sp_GetVersionApp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bsoft_autohltModel.sp_GetVersionApp_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateVersionApplication" FunctionName="bsoft_autohltModel.Store.sp_UpdateVersionApplication" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
