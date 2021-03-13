@@ -83,7 +83,7 @@
                 BorderColor="#b4aee8"
                 Command="{Binding SuportCommand}"
                 CommandParameter="1"
-                Text="Gửi tin nhăn" />
+                Text="Gửi tin nhắn" />
             <loading:LoadingView
                 Grid.Row="0"
                 Grid.RowSpan="6"

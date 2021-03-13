@@ -415,7 +415,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                 new ItemMenuModel()
                 {
                     Id = 8,
-                    TitleItem = "Hố trợ",
+                    TitleItem = "Hỗ trợ",
                     Role = 99,
                     BgColor = Color.FromHex("ff4b5c"),
                     Icon = "icon_customer_support.png"
