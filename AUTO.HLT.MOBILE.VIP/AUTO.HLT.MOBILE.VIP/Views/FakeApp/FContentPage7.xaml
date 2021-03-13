@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.Views.FakeApp.FContentPage7"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    BackgroundColor="{StaticResource AppBackgroud}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="#fff"
+            ColumnSpacing="0"
+            RowDefinitions="40,*"
+            RowSpacing="0">
+            <navigation:NavigationView Grid.Row="0" Text="65 cuộc đời" />
+            <xForms:SfDataGrid
+                x:Name="dataGrid"
+                Grid.Row="1"
+                AutoGenerateColumns="False"
+                ColumnSizer="Star"
+                ItemsSource="{Binding OrderInfoCollection}">
+                <xForms:SfDataGrid.Columns>
+                    <xForms:GridTextColumn HeaderText="Order ID" MappingName="OrderID" />
+                    <xForms:GridTextColumn HeaderText="Customer ID" MappingName="CustomerID" />
+                    <xForms:GridTextColumn MappingName="Customer" />
+                    <xForms:GridTextColumn HeaderText="Ship Country" MappingName="ShipCountry" />
+                </xForms:SfDataGrid.Columns>
+            </xForms:SfDataGrid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

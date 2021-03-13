@@ -113,7 +113,8 @@
                                     FontSize="16"
                                     HeightRequest="140"
                                     Keyboard="Plain"
-                                    Text="{Binding MessageContent}" />
+                                    Text="{Binding MessageContent}"
+                                    TextColor="#000" />
                                 <textInputLayout:SfTextInputLayout.LeadingView>
                                     <Label
                                         FontFamily="Awesome"

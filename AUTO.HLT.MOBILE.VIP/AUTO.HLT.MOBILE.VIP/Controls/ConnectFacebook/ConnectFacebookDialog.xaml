@@ -32,7 +32,7 @@
             BackgroundColor="Transparent"
             FontSize="20"
             HorizontalOptions="CenterAndExpand"
-            Text="Kết nỗi"
+            Text="Kết nối"
             TextColor="#fff"
             VerticalOptions="CenterAndExpand" />
         <customRenderer:WebViewRenderer
@@ -51,7 +51,7 @@
             CommandParameter="0"
             CornerRadius="10"
             IsEnabled="{Binding IsVisibleConnect}"
-            Text="Kết nỗi ngay">
+            Text="Kết nối ngay">
             <Button.Triggers>
                 <DataTrigger
                     Binding="{Binding Source={x:Reference ConnectFacebook}, Path=IsEnabled}"

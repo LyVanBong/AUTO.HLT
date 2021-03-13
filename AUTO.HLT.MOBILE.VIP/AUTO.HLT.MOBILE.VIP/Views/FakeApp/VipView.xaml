@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="AUTO.HLT.MOBILE.VIP.Views.FakeApp.VipView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
+    BackgroundColor="Transparent">
+    <ContentView.Content>
+        <Label
+            Margin="5"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand">
+            <Label.Style>
+                <Style TargetType="Span">
+                    <Setter Property="TextColor" Value="#fff" />
+                    <Setter Property="FontSize" Value="15" />
+                </Style>
+            </Label.Style>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding LicenseKey.EndDate}" />
+                    <Span Text=" (" />
+                    <Span Text="{Binding LicenseKey.CountEndDate}" />
+                    <Span Text=") " />
+                    <Span
+                        FontFamily="Awesome"
+                        Text="{x:Static local:FontAwesome5ProSolid.CheckCircle}"
+                        TextColor="#14DB3A" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </ContentView.Content>
+</ContentView>

@@ -8,6 +8,7 @@ using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
 using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday;
@@ -16,6 +17,7 @@ using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Manage;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
 using AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer;
+using AUTO.HLT.MOBILE.VIP.Views.FakeApp;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
@@ -71,6 +73,9 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();
+            containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();
+            containerRegistry.RegisterForNavigation<FakeAppPage, FakeAppViewModel>();
             containerRegistry.RegisterForNavigation<ManagePage, ManageViewModel>();
             containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
