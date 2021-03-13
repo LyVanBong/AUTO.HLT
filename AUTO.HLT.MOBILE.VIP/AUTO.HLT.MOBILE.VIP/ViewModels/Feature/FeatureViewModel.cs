@@ -13,6 +13,7 @@ using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
@@ -28,6 +29,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
         private ITelegramService _telegramService;
         private IDatabaseService _databaseService;
         private LoginModel _user;
+        private bool _isLoading;
 
         public ICommand RunFeatureCommand { get; set; }
 
@@ -49,6 +51,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
             set => SetProperty(ref _content, value);
         }
 
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
         public FeatureViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ILicenseKeyService licenseKeyService, ITelegramService telegramService, IDatabaseService databaseService) : base(navigationService)
         {
             _databaseService = databaseService;
@@ -61,6 +69,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsLoading = true;
             if (parameters != null)
             {
                 _itemMenu = parameters.GetValue<ItemMenuModel>("TypeFeature");
@@ -70,6 +79,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                     await CheckAcountUseService();
                 }
             }
+
+            IsLoading = false;
         }
 
         private async Task CheckAcountUseService()
@@ -99,13 +110,22 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                 else
                 {
                     var history = JsonConvert.DeserializeObject<UserServiceModel>(license.HistoryUseProduct);
-                    if (history.DateUse.Date == DateTime.Now.Date)
+                    if (history != null)
                     {
-                        MaxNumber = (2000 - history.Follow) + "";
+                        if (history.Follow > 1999)
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                "Bạn đã sử dụng hết số lượt của chức năng này", "OK");
+                            await NavigationService.GoBackAsync();
+                        }
+                        else
+                        {
+                            MaxNumber = (2000 - history.Follow) + "";
+                        }
                     }
                     else
                     {
-                        MaxNumber = "2000";
+                        MaxNumber = "0";
                     }
                 }
             }
@@ -113,67 +133,34 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
 
         private async Task RunFeature(string arg)
         {
-            switch (arg)
+            if (IsLoading) return;
+            IsLoading = true;
+            try
             {
-                case "1":
-                    await NavigationService.GoBackAsync();
-                    break;
-                case "0":
-                    if (string.IsNullOrWhiteSpace(Content) || string.IsNullOrWhiteSpace(Number))
-                    {
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin", "OK");
-                    }
-                    else
-                    {
-                        var info = await _licenseKeyService.CheckLicenseForUser();
-                        if (info != null)
+                switch (arg)
+                {
+                    case "1":
+                        await NavigationService.GoBackAsync();
+                        break;
+                    case "0":
+                        if (string.IsNullOrWhiteSpace(Content) || string.IsNullOrWhiteSpace(Number))
                         {
-                            var json = "";
-                            var number = int.Parse(Number);
-                            if (number > 0 && number <= int.Parse(MaxNumber))
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin",
+                                "OK");
+                        }
+                        else
+                        {
+                            var info = await _licenseKeyService.CheckLicenseForUser();
+                            if (info != null)
                             {
-                                _user = await _databaseService.GetAccountUser();
-                                if (_itemMenu.Id == 1)
+                                var json = "";
+                                var number = int.Parse(Number);
+                                if (number > 0 && number <= int.Parse(MaxNumber))
                                 {
-                                    if (string.IsNullOrEmpty(info.HistoryUseProduct))
+                                    _user = await _databaseService.GetAccountUser();
+                                    if (_itemMenu.Id == 1)
                                     {
-                                        if (number <= 100)
-                                        {
-                                            json = JsonConvert.SerializeObject(new UserServiceModel()
-                                            {
-                                                NumberLike = number,
-                                                DateUse = DateTime.Now,
-                                                Follow = 0
-                                            });
-                                            await UseService(info, json, number);
-                                        }
-                                        else
-                                        {
-                                            await ThongBaoKhongHopLe();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var history = JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
-                                        if (history.DateUse.Date == DateTime.Now.Date)
-                                        {
-                                            var num = (100 - history.NumberLike) > 0 ? (100 - history.NumberLike) : 0;
-                                            if (num >= number)
-                                            {
-                                                json = JsonConvert.SerializeObject(new UserServiceModel()
-                                                {
-                                                    DateUse = DateTime.Now,
-                                                    NumberLike = number + history.NumberLike,
-                                                    Follow = history.Follow,
-                                                });
-                                                await UseService(info, json, number);
-                                            }
-                                            else
-                                            {
-                                                await ThongBaoKhongHopLe();
-                                            }
-                                        }
-                                        else
+                                        if (string.IsNullOrEmpty(info.HistoryUseProduct))
                                         {
                                             if (number <= 100)
                                             {
@@ -190,50 +177,53 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                                 await ThongBaoKhongHopLe();
                                             }
                                         }
-                                    }
-
-                                }
-                                else if (_itemMenu.Id == 2)
-                                {
-                                    if (string.IsNullOrEmpty(info.HistoryUseProduct))
-                                    {
-                                        if (number <= 2000)
-                                        {
-                                            json = JsonConvert.SerializeObject(new UserServiceModel()
-                                            {
-                                                NumberLike = 0,
-                                                DateUse = DateTime.Now,
-                                                Follow = number
-                                            });
-                                            await UseService(info, json, number);
-                                        }
                                         else
                                         {
-                                            await ThongBaoKhongHopLe();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var history = JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
-                                        if (history.DateUse.Date == DateTime.Now.Date)
-                                        {
-                                            var num = (2000 - history.Follow) > 0 ? (2000 - history.Follow) : 0;
-                                            if (num >= number)
+                                            var history =
+                                                JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
+                                            if (history.DateUse.Date == DateTime.Now.Date)
                                             {
-                                                json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                var num = (100 - history.NumberLike) > 0
+                                                    ? (100 - history.NumberLike)
+                                                    : 0;
+                                                if (num >= number)
                                                 {
-                                                    DateUse = DateTime.Now,
-                                                    NumberLike = history.NumberLike,
-                                                    Follow = number + history.Follow,
-                                                });
-                                                await UseService(info, json, number);
+                                                    json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                    {
+                                                        DateUse = DateTime.Now,
+                                                        NumberLike = number + history.NumberLike,
+                                                        Follow = history.Follow,
+                                                    });
+                                                    await UseService(info, json, number);
+                                                }
+                                                else
+                                                {
+                                                    await ThongBaoKhongHopLe();
+                                                }
                                             }
                                             else
                                             {
-                                                await ThongBaoKhongHopLe();
+                                                if (number <= 100)
+                                                {
+                                                    json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                    {
+                                                        NumberLike = number,
+                                                        DateUse = DateTime.Now,
+                                                        Follow = history.Follow,
+                                                    });
+                                                    await UseService(info, json, number);
+                                                }
+                                                else
+                                                {
+                                                    await ThongBaoKhongHopLe();
+                                                }
                                             }
                                         }
-                                        else
+
+                                    }
+                                    else if (_itemMenu.Id == 2)
+                                    {
+                                        if (string.IsNullOrEmpty(info.HistoryUseProduct))
                                         {
                                             if (number <= 2000)
                                             {
@@ -250,23 +240,72 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                                                 await ThongBaoKhongHopLe();
                                             }
                                         }
+                                        else
+                                        {
+                                            var history =
+                                                JsonConvert.DeserializeObject<UserServiceModel>(info.HistoryUseProduct);
+                                            if (history.DateUse.Date == DateTime.Now.Date)
+                                            {
+                                                var num = (2000 - history.Follow) > 0 ? (2000 - history.Follow) : 0;
+                                                if (num >= number)
+                                                {
+                                                    json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                    {
+                                                        DateUse = DateTime.Now,
+                                                        NumberLike = history.NumberLike,
+                                                        Follow = number + history.Follow,
+                                                    });
+                                                    await UseService(info, json, number);
+                                                }
+                                                else
+                                                {
+                                                    await ThongBaoKhongHopLe();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (number <= 2000)
+                                                {
+                                                    json = JsonConvert.SerializeObject(new UserServiceModel()
+                                                    {
+                                                        NumberLike = history.NumberLike,
+                                                        DateUse = DateTime.Now,
+                                                        Follow = number
+                                                    });
+                                                    await UseService(info, json, number);
+                                                }
+                                                else
+                                                {
+                                                    await ThongBaoKhongHopLe();
+                                                }
+                                            }
+                                        }
                                     }
+                                }
+                                else
+                                {
+                                    await ThongBaoKhongHopLe();
                                 }
                             }
                             else
                             {
-                                await ThongBaoKhongHopLe();
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
                             }
                         }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                 "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
-                        }
-                    }
-                    break;
-                default:
-                    break;
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -288,7 +327,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                     Id_Nguoi_Dung = _user.ID,
                     Noi_Dung_Thong_Bao = new
                     {
-                        Noi_Dung=Content
+                        Noi_Dung = Content
                     },
                     So_Luong = number,
                     Ghi_Chu = new
