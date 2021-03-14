@@ -26,6 +26,7 @@
     <None Remove="Resources\Images\icon_home.png" />
     <None Remove="Resources\Images\icon_home_page.png" />
     <None Remove="Resources\Images\icon_Interactive.png" />
+    <None Remove="Resources\Images\icon_key_generation.png" />
     <None Remove="Resources\Images\icon_like.png" />
     <None Remove="Resources\Images\icon_manager.png" />
     <None Remove="Resources\Images\icon_pokes.png" />
@@ -50,6 +51,7 @@
     <EmbeddedResource Include="Resources\Images\icon_home.png" />
     <EmbeddedResource Include="Resources\Images\icon_home_page.png" />
     <EmbeddedResource Include="Resources\Images\icon_Interactive.png" />
+    <EmbeddedResource Include="Resources\Images\icon_key_generation.png" />
     <EmbeddedResource Include="Resources\Images\icon_like.png" />
     <EmbeddedResource Include="Resources\Images\icon_manager.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
@@ -67,6 +69,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="18.4.0.47" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
@@ -144,6 +147,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Home\VipView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\KeyGeneration\KeyGenerationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\LoginPage.xaml">

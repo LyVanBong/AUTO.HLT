@@ -22,6 +22,7 @@ using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
+using AUTO.HLT.MOBILE.VIP.Views.KeyGeneration;
 using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
@@ -168,6 +169,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     break;
                 case 9:
                     await NavigationService.NavigateAsync(nameof(ManagePage));
+                    break;
+                case 10:
+                    await NavigationService.NavigateAsync(nameof(KeyGenerationPage));
                     break;
                 default:
                     break;
@@ -360,6 +364,17 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     Icon = "icon_manager.png",
                     TitleItem = "Quản lý",
                 });
+                if (InfoUser.Role == 0)
+                {
+                    ListItemMenus.Add(new ItemMenuModel
+                    {
+                        BgColor = Color.FromHex("#9fd8df"),
+                        Id = 10,
+                        Role = 97,
+                        Icon = "icon_key_generation.png",
+                        TitleItem = "Tạo khóa bản quyền",
+                    });
+                }
             }
             new Thread(CheckVerionApplication).Start();
             IsLoading = false;

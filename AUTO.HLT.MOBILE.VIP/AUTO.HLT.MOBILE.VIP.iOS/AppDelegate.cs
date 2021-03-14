@@ -28,6 +28,7 @@ namespace AUTO.HLT.MOBILE.VIP.iOS
 
             #region Thư viên ngoài
 
+            Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
             SfDataGridRenderer.Init();
             SfTextInputLayoutRenderer.Init();

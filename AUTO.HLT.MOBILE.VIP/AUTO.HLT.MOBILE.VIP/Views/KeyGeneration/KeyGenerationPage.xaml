@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.Views.KeyGeneration.KeyGenerationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    BackgroundColor="{StaticResource AppBackgroud}">
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="*,*" RowDefinitions="40,*">
+            <navigation:NavigationView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Tạo khóa bản quyền" />
+            <tabView:SfTabView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="{StaticResource AppBackgroud}"
+                TabHeaderPosition="Top"
+                VisibleHeaderCount="2">
+                <tabView:SfTabItem
+                    Title="Đại lý"
+                    SelectionColor="#fff"
+                    TitleFontColor="Aquamarine"
+                    TitleFontSize="18">
+                    <tabView:SfTabItem.Content>
+                        <Grid x:Name="AllContactsGrid" BackgroundColor="Red" />
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+                <tabView:SfTabItem
+                    Title="Khách lẻ"
+                    SelectionColor="#fff"
+                    TitleFontColor="Aquamarine"
+                    TitleFontSize="18">
+                    <tabView:SfTabItem.Content>
+                        <Grid x:Name="FavoritesGrid" BackgroundColor="Green" />
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+            </tabView:SfTabView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
