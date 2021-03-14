@@ -141,7 +141,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         public async Task<IHttpActionResult> GetLicenseKeyForAgecy()
         {
             var veri = Verifying(Request);
-            if (veri != null && veri.UserName != null && veri.Role == 3)
+            if (veri != null && veri.UserName != null && veri.Role != 2)
             {
                 var infoLicense = DatabaseAutohlt.sp_InfoLicenseKeyForAgecy(veri.IdUser)?.ToList();
                 if (infoLicense != null)

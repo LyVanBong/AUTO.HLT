@@ -2,12 +2,14 @@
 using System.Globalization;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Forms;
@@ -157,14 +159,27 @@ namespace AUTOHLT.MOBILE.ViewModels.RechargeCustomers
                                 await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
                                 var log = await _userService.HistorySetMoneyForUser(Discount, NumberMoney, user.ID, _idRec,
                                     "1");
-                                var messageTele = $"Nạp tiền\n" +
-                                              $"Id người gửi: {user.ID}\n" +
-                                              $"Id người nhận: {_idRec}\n" +
-                                              $"Số tiền nạp: {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(NumberMoney))} VND\n" +
-                                              $"Chiết khẩu: {Discount} %\n" +
-                                              $"Thời gian chuyển: {DateTime.Now.ToString("F")}";
+                                var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                                {
+                                    Ten_Thong_Bao = "Nạp tiền",
+                                    So_Luong = 1,
+                                    Id_Nguoi_Dung = user?.ID,
+                                    Noi_Dung_Thong_Bao = new
+                                    {
+                                        Nguoi_Nhan = _idRec,
+                                        Nguoi_Gui = user.ID,
+                                        So_Tien_Nap = $"{string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(NumberMoney))} VND",
+                                        Chiet_Khau = Discount + "%",
+                                    },
+                                    Ghi_Chu = new
+                                    {
+                                        Ten = user?.Name,
+                                        Tai_Khoan = user?.UserName,
+                                        So_dien_thoai = user?.NumberPhone
+                                    }
+                                }, Formatting.Indented);
                                 var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWMoneyHistory,
-                                    messageTele);
+                                    content);
                             }
                             else
                             {

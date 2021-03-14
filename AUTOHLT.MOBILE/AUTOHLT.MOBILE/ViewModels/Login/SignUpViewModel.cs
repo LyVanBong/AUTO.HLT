@@ -8,7 +8,9 @@ using System;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Services.Telegram;
+using Newtonsoft.Json;
 using Prism.Services.Dialogs;
 using Xamarin.Forms;
 
@@ -286,45 +288,41 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             NavigationService.NavigateAsync("/LoginPage", para, true, true);
         }
 
-        private void SignUpAccount()
+        private async void SignUpAccount()
         {
             try
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var parameters = new DialogParameters
+                var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, $"{UserName}@autohlt.com", Age, IsMale);
+                if (data != null && data.Code > 0)
                 {
-                    { "NumberPhone", PhoneNumber+"" },
-                };
-                _dialogService.ShowDialog(nameof(OtpDialog), parameters, async (result) =>
-                 {
-                     var otp = result.Parameters.GetValue<string>("OtpSms");
-                     if (otp == "1")
-                     {
-                         var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, $"{UserName}@autohlt.com", Age, IsMale);
-                         if (data != null && data.Code > 0)
-                         {
-                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                             var mess = $"Tài khoản mới \"{UserName}\" đăng ký thành công với người giới thiệu \"{NguoiGioiThieu}\" lúc {DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy")}";
-                             await _telegramService.SendMessageToTelegram("-453517974", mess);
-                             if (NguoiGioiThieu != null)
-                                 await _userService.ThemGioiThieu(NguoiGioiThieu, UserName, 0, "khi dang ky tai khoan moi");
-                             Password = ConfirmPassword = Age = Email = PhoneNumber = "";
-                         }
-                         else
-                         {
-                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
-                             Password = ConfirmPassword = null;
-                         }
-                     }
-                     else if (otp == "0")
-                     {
-                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
-                         Password = ConfirmPassword = null;
-                     }
-
-                     IsEnableSignUp = false;
-                 });
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
+                    var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                    {
+                        Ten_Thong_Bao = "Đăng ký tài khoản mới",
+                        Ghi_Chu = new
+                        {
+                            Nguoi_Gioi_Thieu = NguoiGioiThieu
+                        },
+                        Id_Nguoi_Dung = UserName,
+                        So_Luong = 1,
+                        Noi_Dung_Thong_Bao = new
+                        {
+                            Tai_Khoan = UserName,
+                            Trang_Thai = "Đăng ký thành công"
+                        },
+                    }, Formatting.Indented);
+                    await _telegramService.SendMessageToTelegram("-453517974", content);
+                    if (NguoiGioiThieu != null)
+                        await _userService.ThemGioiThieu(NguoiGioiThieu, UserName, 0, "khi dang ky tai khoan moi");
+                    Password = ConfirmPassword = Age = Email = PhoneNumber = "";
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
+                    Password = ConfirmPassword = null;
+                }
 
             }
             catch (Exception e)
