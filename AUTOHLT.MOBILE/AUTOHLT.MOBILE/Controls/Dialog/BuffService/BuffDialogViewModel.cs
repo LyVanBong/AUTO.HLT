@@ -14,10 +14,14 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Models.Guide;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Services.Guide;
 using Microsoft.AppCenter.Crashes;
+using MongoDB.Bson.IO;
+using Newtonsoft.Json;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
 {
@@ -110,7 +114,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             set => SetProperty(ref _number, value);
         }
 
-        public BuffDialogViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService,IGuideService guideService) : base(navigationService)
+        public BuffDialogViewModel(INavigationService navigationService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService, IGuideService guideService) : base(navigationService)
         {
             _guideService = guideService;
             _telegramService = telegramService;
@@ -130,7 +134,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
             try
             {
                 // sub
-                if (_idProduct== "1ad3c424-5333-46b0-a0e8-5c31a6dbb161")
+                if (_idProduct == "1ad3c424-5333-46b0-a0e8-5c31a6dbb161")
                 {
                     _guide = await _guideService.GetGuide(7);
                 }
@@ -210,13 +214,24 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.BuffService
                                 var historyService = await _productService.AddHistoryUseService(_idProduct, Title,
                                     _userName,
                                     num + "", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
-                                var message = $"{Title}\n" +
-                                              $"Số lượng: {Number}\n" +
-                                              $"Nội dung: {Content}\n" +
-                                              $"Id người dùng dịch vụ: {user.ID}\n" +
-                                              $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                                var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                                {
+                                    Ten_Thong_Bao = Title,
+                                    So_Luong = int.Parse(Number),
+                                    Noi_Dung_Thong_Bao = new
+                                    {
+                                        Noi_Dung = Content,
+                                    },
+                                    Id_Nguoi_Dung = user?.ID,
+                                    Ghi_Chu = new
+                                    {
+                                        Ten = user?.Name,
+                                        Tai_Khoan = user?.UserName,
+                                        So_dien_thoai = user?.NumberPhone
+                                    }
+                                }, Formatting.Indented);
                                 var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                    message);
+                                    content);
                                 await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
                             }
                             else

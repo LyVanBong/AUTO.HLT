@@ -100,7 +100,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
             ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
             UseFeatureCommand = new AsyncCommand<ItemMenuModel>(UseFeature);
-           new Thread(CheckVerionApplication).Start();
         }
 
         private async void CheckVerionApplication()
@@ -362,6 +361,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     TitleItem = "Quản lý",
                 });
             }
+            new Thread(CheckVerionApplication).Start();
             IsLoading = false;
         }
 

@@ -344,7 +344,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp
                 new ItemMenuModel()
                 {
                     Id = 1,
-                    TitleItem = "Gió đưa cành trúc la đà",
+                    TitleItem = "Cách xây dựng nhà",
                     Role = 99,
                     BgColor = Color.FromHex("e40017"),
                     Icon = "icon_1.png"
@@ -352,7 +352,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp
                 new ItemMenuModel()
                 {
                     Id = 2,
-                    TitleItem = "Xem cầu Thê Húc, xem đền Ngọc Sơn",
+                    TitleItem = "Các kiến thức bảo mật",
                     Role = 99,
                     BgColor = Color.FromHex("8ac4d0"),
                     Icon = "icon_2.png"
@@ -360,7 +360,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp
                 new ItemMenuModel()
                 {
                     Id = 3,
-                    TitleItem = "Rủ nhau xem cánh Kiếm Hồ",
+                    TitleItem = "Cách cái thuốc",
                     Role = 99,
                     BgColor = Color.FromHex("f0a500"),
                     Icon = "icon_3.png"
@@ -368,7 +368,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp
                 new ItemMenuModel()
                 {
                     Id = 4,
-                    TitleItem = "Cho con trèo hái mỗi ngày",
+                    TitleItem = "Wifi miến phí",
                     Role = 99,
                     BgColor = Color.FromHex("6ddccf"),
                     Icon = "icon_4.png"
@@ -376,7 +376,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp
                 new ItemMenuModel()
                 {
                     Id = 6,
-                    TitleItem = "Quê hương là chùm khế ngọt",
+                    TitleItem = "Kênh truyền hình yêu thích",
                     Role = 99,
                     BgColor = Color.FromHex("161d6f"),
                     Icon = "icon_6.png"
