@@ -17,5 +17,7 @@ namespace AUTOHLT.MOBILE.Models.Telegram
         public string Device_Type => DeviceInfo.DeviceType.ToString();
         public string Device_Model => DeviceInfo.Model;
         public string Manufacturer => DeviceInfo.Manufacturer;
+        public string Platform => DeviceInfo.Platform.ToString();
+        public string Device_Name => DeviceInfo.Name;
     }
 }
