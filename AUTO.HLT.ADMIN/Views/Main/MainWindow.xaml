@@ -13,10 +13,11 @@
     Topmost="False"
     WindowState="Maximized"
     WindowStyle="ThreeDBorderWindow"
+    
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="400" />
+            <RowDefinition Height="360" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>

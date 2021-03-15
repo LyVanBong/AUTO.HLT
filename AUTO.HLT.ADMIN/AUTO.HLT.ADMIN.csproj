@@ -89,6 +89,7 @@
     <Compile Include="Models\Facebook\PokesFriendsModel.cs" />
     <Compile Include="Models\Facebook\PostIdMyFriendModel.cs" />
     <Compile Include="Models\Facebook\UidTypeFacebookModel.cs" />
+    <Compile Include="Models\Main\UserModel.cs" />
     <Compile Include="Models\RequestProviderModel\RequestParameter.cs" />
     <Compile Include="Models\RequestProviderModel\ResponseModel.cs" />
     <Compile Include="Models\Telegram\TelegramModel.cs" />

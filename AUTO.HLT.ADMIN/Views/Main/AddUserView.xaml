@@ -6,15 +6,15 @@
     xmlns:local="clr-namespace:AUTO.HLT.ADMIN.Views.Main"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="Transparent">
+    <Grid Background="#fff">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="65" />
+            <RowDefinition Height="65" />
             <RowDefinition Height="50" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -73,6 +73,43 @@
             Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Header="Chức năng" />
+            Header="Chức năng">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox
+                    Grid.Column="0"
+                    Content="Thả tim"
+                    TabIndex="5" />
+                <CheckBox
+                    Grid.Column="1"
+                    Content="Tương tác ảnh đại diện"
+                    TabIndex="6" />
+            </Grid>
+        </GroupBox>
+        <Grid
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="5,10" />
+                </Style>
+            </Grid.Resources>
+            <Button
+                Grid.Column="0"
+                Command="{Binding SaveAccountCommand}"
+                Content="Thêm Tài Khoản" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding DeleteAccountCommand}"
+                Content="Xóa tài khoản" />
+        </Grid>
     </Grid>
 </UserControl>
