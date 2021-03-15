@@ -112,6 +112,15 @@
     <Compile Include="Views\CheckWork\CheckWorkView.xaml.cs">
       <DependentUpon>CheckWorkView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Main\AddUserView.xaml.cs">
+      <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\HistoryWorkView.xaml.cs">
+      <DependentUpon>HistoryWorkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\ListUserView.xaml.cs">
+      <DependentUpon>ListUserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -135,6 +144,18 @@
     <Compile Include="Views\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Main\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\HistoryWorkView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\ListUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Main\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
