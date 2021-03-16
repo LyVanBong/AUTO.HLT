@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using AUTOHLT.WEB.API.Models;
+using AUTOHLT.WEB.API.Models.Version1;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AUTOHLT.WEB.API.Database;
-using AUTOHLT.WEB.API.Models;
-using AUTOHLT.WEB.API.Models.Version1;
 
 namespace AUTOHLT.WEB.API.Controllers.Version2.Facebook
 {
