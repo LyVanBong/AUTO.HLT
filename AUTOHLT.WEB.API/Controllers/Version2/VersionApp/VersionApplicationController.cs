@@ -19,7 +19,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.VersionApp
         [Route("CheckVersion")]
         public async Task<IHttpActionResult> UpdateVersionApplication(string id)
         {
-            var veri = Verifying(Request);
+            var veri =await Verifying(Request);
             if (veri != null && veri.UserName != null && id != null)
             {
                 var update = DatabaseAutohlt.sp_GetVersionApp(int.Parse(id))?.FirstOrDefault();
@@ -59,7 +59,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.VersionApp
         [Route("update")]
         public async Task<IHttpActionResult> UpdateVersionApplication(VersionModel input)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && input != null && input.VersionApp != null)
             {
                 var update = DatabaseAutohlt.sp_UpdateVersionApplication(input.IdApp, input.VersionApp, input.NoteApp);

@@ -4,6 +4,7 @@ using JWT.Builder;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace AUTOHLT.WEB.API.Controllers
@@ -30,15 +31,15 @@ namespace AUTOHLT.WEB.API.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        protected VerifyingModel Verifying(HttpRequestMessage request)
+        protected async Task<VerifyingModel> Verifying(HttpRequestMessage request)
         {
             try
             {
-                return JsonConvert.DeserializeObject<VerifyingModel>(new JwtBuilder()
+                return await Task.FromResult(JsonConvert.DeserializeObject<VerifyingModel>(new JwtBuilder()
                     .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
                     .WithSecret(_secret)
                     .MustVerifySignature()
-                    .Decode(request?.Headers?.Authorization?.ToString()));
+                    .Decode(request?.Headers?.Authorization?.ToString())));
             }
             catch (Exception)
             {
@@ -53,20 +54,20 @@ namespace AUTOHLT.WEB.API.Controllers
         /// <param name="idUser"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        protected string Signing(string user, Guid idUser, int? role)
+        protected async Task<string> Signing(string user, Guid idUser, int? role)
         {
             try
             {
-                return new JwtBuilder()
-                .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
-                .WithSecret(_secret)
-                .AddClaim("Exp", DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds())
-                .AddClaim("Iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-                .AddClaim("Iss", "autohlt.com")
-                .AddClaim("IdUser", idUser)
-                .AddClaim("UserName", user)
-                .AddClaim("Role", role)
-                .Encode();
+                return await Task.FromResult(new JwtBuilder()
+                    .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
+                    .WithSecret(_secret)
+                    .AddClaim("Exp", DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds())
+                    .AddClaim("Iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+                    .AddClaim("Iss", "autohlt.com")
+                    .AddClaim("IdUser", idUser)
+                    .AddClaim("UserName", user)
+                    .AddClaim("Role", role)
+                    .Encode());
             }
             catch (Exception)
             {

@@ -40,7 +40,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
                                 DateCreate = user.DateCreate,
                                 Price = user.Price,
                                 IdDevice = user.IdDevice,
-                                Jwt = Signing(user.UserName, user.ID, user.Role),
+                                Jwt =await Signing(user.UserName, user.ID, user.Role),
                             },
                         });
                     }

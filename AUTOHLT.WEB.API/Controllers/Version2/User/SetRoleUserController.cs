@@ -17,7 +17,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         [Route("AddRole")]
         public async Task<IHttpActionResult> SetRole(RoleModel input)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && input != null && veri.Role == 0)
             {
                 var update = DatabaseAutohlt.sp_SetRoleUser(input.IdUser, input.Role);

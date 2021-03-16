@@ -74,9 +74,6 @@
     <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.8.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
@@ -133,7 +130,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Version1\AutoLikeCommentAvatarController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -145,6 +141,7 @@
     <Compile Include="Controllers\Version1\ServiceUseHistoryController.cs" />
     <Compile Include="Controllers\Version1\UserController.cs" />
     <Compile Include="Controllers\Version1\UserFacebookController.cs" />
+    <Compile Include="Controllers\Version2\Facebook\FacebookController.cs" />
     <Compile Include="Controllers\Version2\FileUploads\FileUploadController.cs" />
     <Compile Include="Controllers\Version2\LicenseKey\LicenseKeyController.cs" />
     <Compile Include="Controllers\Version2\User\CheckExistUserController.cs" />

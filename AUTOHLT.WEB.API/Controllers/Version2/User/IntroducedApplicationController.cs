@@ -19,7 +19,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         [Route("ThongTinNguoiGioiThieu")]
         public async Task<IHttpActionResult> ThongTinNguoiGioiThieu()
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null)
             {
                 var data = DatabaseAutohlt.sp_LayNguoiGioiThieuChoKhach(veri.UserName)?.FirstOrDefault();
@@ -57,7 +57,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         [HttpGet]
         public async Task<IHttpActionResult> LayNguoiGioiThieu(string user, int admin)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && user != null)
             {
                 var data = DatabaseAutohlt.sp_LayTatCaGioiThieu(admin, user)?.ToList();
