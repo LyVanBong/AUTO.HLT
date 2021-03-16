@@ -101,7 +101,7 @@
         /// <summary>
         /// uri api
         /// </summary>
-        public const string UriApi = "https://api.autohlt.com/api/v1/";
+        public const string UriApi = "https://api.autohlt.vn/api/v1/";
 
         /// <summary>
         /// realm db
