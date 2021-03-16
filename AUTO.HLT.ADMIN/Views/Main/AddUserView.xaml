@@ -29,6 +29,7 @@
             Grid.Column="1"
             VerticalContentAlignment="Center"
             TabIndex="0"
+            Text="{Binding ID}"
             TextWrapping="Wrap" />
         <Label
             Grid.Row="1"
@@ -38,6 +39,7 @@
             Grid.Row="1"
             Grid.Column="1"
             VerticalContentAlignment="Center"
+            SelectedDate="{Binding NgayDangKy}"
             TabIndex="1" />
         <Label
             Grid.Row="2"
@@ -47,7 +49,8 @@
             Grid.Row="2"
             Grid.Column="1"
             VerticalContentAlignment="Center"
-            TabIndex="2" />
+            TabIndex="2"
+            Text="{Binding ThoiHan}" />
         <Label
             Grid.Row="3"
             Grid.Column="0"
@@ -57,6 +60,7 @@
             Grid.Column="1"
             VerticalContentAlignment="Center"
             TabIndex="3"
+            Text="{Binding Cookie}"
             TextWrapping="Wrap" />
         <Label
             Grid.Row="4"
@@ -68,6 +72,7 @@
             Grid.Column="1"
             VerticalContentAlignment="Center"
             TabIndex="4"
+            Text="{Binding Token}"
             TextWrapping="Wrap" />
         <GroupBox
             Grid.Row="5"
@@ -82,10 +87,12 @@
                 <CheckBox
                     Grid.Column="0"
                     Content="Thả tim"
+                    IsChecked="{Binding ThaTim}"
                     TabIndex="5" />
                 <CheckBox
                     Grid.Column="1"
                     Content="Tương tác ảnh đại diện"
+                    IsChecked="{Binding TuongTacAnhDaiDien}"
                     TabIndex="6" />
             </Grid>
         </GroupBox>
