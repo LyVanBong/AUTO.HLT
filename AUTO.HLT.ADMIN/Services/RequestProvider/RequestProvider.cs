@@ -48,7 +48,7 @@ namespace AUTO.HLT.ADMIN.Services.RequestProvider
         {
             try
             {
-                uri = "https://api.autohlt.com/api/v1/" + uri;
+                uri = "https://api.autohlt.vn/api/v1/" + uri;
                 _client.BaseUrl = new Uri(uri);
                 _request = new RestRequest(method);
             }

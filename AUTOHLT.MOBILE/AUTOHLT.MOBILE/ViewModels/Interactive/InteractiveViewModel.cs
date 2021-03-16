@@ -14,11 +14,13 @@ using System.Globalization;
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Models.Facebook;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Facebook;
 using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Telegram;
+using Newtonsoft.Json;
 using Prism.Services;
 using Prism.Services.Dialogs;
 using Xamarin.Essentials;
@@ -238,15 +240,25 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
             var spDangky = _lsDangky.FirstOrDefault(x => x.ID_ProductType == id);
             if (res)
             {
-                var message = $"Auto thả tim\n" +
-                              $"Ngày đăng ký dịch vụ {spDangky?.DateCreate}\n" +
-                              $"Thời hạn gói {end} ngày\n" +
-                              $"Cookie: {cookie}\n" +
-                              $"Tooken: {token}\n" +
-                              $"Id người dùng dịch vụ: {user.ID}\n" +
-                              $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                {
+                    Ten_Thong_Bao = "Tự động thả tim",
+                    So_Luong = 1,
+                    Id_Nguoi_Dung = user?.ID,
+                    Noi_Dung_Thong_Bao = new
+                    {
+                        Cookie = cookie,
+                        Token = token,
+                    },
+                    Ghi_Chu = new
+                    {
+                        Ten = user?.Name,
+                        Tai_Khoan = user?.UserName,
+                        So_dien_thoai = user?.NumberPhone
+                    }
+                }, Formatting.Indented);
                 var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                    message);
+                    content);
             }
         }
 

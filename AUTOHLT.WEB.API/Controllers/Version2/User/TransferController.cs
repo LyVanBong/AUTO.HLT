@@ -17,7 +17,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.User
         [Route("transfermoney")]
         public async Task<IHttpActionResult> TransferMoney([FromBody] TransferMoneyModel transfer)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null)
             {
                 var data = DatabaseAutohlt.UserTransfers(veri.IdUser, transfer.IdReceive, transfer.Price);

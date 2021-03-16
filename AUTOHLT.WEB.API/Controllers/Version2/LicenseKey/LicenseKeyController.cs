@@ -20,7 +20,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("UpdateHistoryUseProduct")]
         public async Task<IHttpActionResult> UpdateHistoryUserService(UpdateHistoryUseProductModel input)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && input != null)
             {
                 var update = DatabaseAutohlt.sp_UpdateHistoryUseProduct(input.LicenseKey, input.ContentHistory);
@@ -60,7 +60,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("Delete")]
         public async Task<IHttpActionResult> DeleteLicenseKey(Guid licenseKey)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && veri.Role == 0)
             {
                 var infoLicense = DatabaseAutohlt.sp_DeleteLicenseKey(licenseKey);
@@ -100,7 +100,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("All")]
         public async Task<IHttpActionResult> GetAllLicenseKey()
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && veri.Role == 0)
             {
                 var infoLicense = DatabaseAutohlt.sp_AllLicenseKey()?.ToList();
@@ -140,8 +140,8 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("GetLicensekeyForAgecy")]
         public async Task<IHttpActionResult> GetLicenseKeyForAgecy()
         {
-            var veri = Verifying(Request);
-            if (veri != null && veri.UserName != null && veri.Role == 3)
+            var veri = await Verifying(Request);
+            if (veri != null && veri.UserName != null && veri.Role != 2)
             {
                 var infoLicense = DatabaseAutohlt.sp_InfoLicenseKeyForAgecy(veri.IdUser)?.ToList();
                 if (infoLicense != null)
@@ -180,7 +180,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("CheckLicenseKey")]
         public async Task<IHttpActionResult> CheckInfoLicenseKeyForUser()
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null)
             {
                 var infoLicense = DatabaseAutohlt.sp_InfoLicenseKeyForUser(veri.IdUser)?.ToList();
@@ -235,7 +235,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("LockLicense")]
         public async Task<IHttpActionResult> LockLicenseKey(Guid LicenseKey)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && LicenseKey != null)
             {
                 if (DatabaseAutohlt.LockLicenseKey(LicenseKey) > 0)
@@ -271,7 +271,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("ActiveLicense")]
         public async Task<IHttpActionResult> UpdateLicensekey([FromBody] AddLicenseModel input)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && input != null)
             {
                 var update = DatabaseAutohlt.sp_AddLicenseKey(input.LicenseKey, veri.IdUser, DateTime.Now);
@@ -308,7 +308,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.LicenseKey
         [Route("Creates")]
         public async Task<IHttpActionResult> CreateLicenseKey([FromBody] CreatekeyModel input)
         {
-            var veri = Verifying(Request);
+            var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && input != null && input.AmountKey > 0 && veri.Role == 0)
             {
                 var amount = input.AmountKey;

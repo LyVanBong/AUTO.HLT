@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Resources.Fonts;
 using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Views.Agency;
@@ -482,14 +483,24 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                                             await _userService.SetMoneyUser(user.UserName, money - pr + "");
                                             var addHistoryUse = await _productService.AddHistoryUseService(_idProductSecurityFb,
                                                 $"Tăng {name}", user.ID, "1", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
-                                            var message = $"Tăng bạn bè\n" +
-                                                          $"Nội dung: Khách hàng đăng ký gói dịch tăng {name} facebook cần liên hệ với khách để thực hiện dịch vụ cho khách\n" +
-                                                          $"Id người dùng dịch vụ: {user.ID}\n" +
-                                                          $"Số điện thoại: {user.NumberPhone}\n" +
-                                                          $"Tên: {user.Name}\n" +
-                                                          $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                                            var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                                            {
+                                                Ten_Thong_Bao = "Tăng bạn bè",
+                                                So_Luong = 1,
+                                                Id_Nguoi_Dung = user?.ID,
+                                                Noi_Dung_Thong_Bao = new
+                                                {
+                                                    Noi_Dung = $"Khách hàng đăng ký gói dịch tăng {name} facebook cần liên hệ với khách để thực hiện dịch vụ cho khách",
+                                                },
+                                                Ghi_Chu = new
+                                                {
+                                                    Ten = user?.Name,
+                                                    Tai_Khoan = user?.UserName,
+                                                    So_dien_thoai = user?.NumberPhone
+                                                }
+                                            }, Formatting.Indented);
                                             var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                                message);
+                                                content);
                                             var dataMoneyUser = await _userService.GetMoneyUser(UserModel.UserName);
                                             if (dataMoneyUser != null)
                                             {
@@ -561,14 +572,24 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
 
                                         await _userService.SetMoneyUser(user.UserName, money - price + "");
                                         var addHistoryUse = await _productService.AddHistoryUseService(_idProductSecurityFb, "Bao mat facebook", user.ID, "1", DateTime.Now.ToString("yyy/MM/dd hh:mm:ss"));
-                                        var message = $"Bảo mật facebook\n" +
-                                                      $"Nội dung: Khách hàng đăng ký gói dịch bảo mật facebook cần liên hệ với khách để thực hiện dịch vụ cho khách\n" +
-                                                      $"Id người dùng dịch vụ: {user.ID}\n" +
-                                                      $"Số điện thoại: {user.NumberPhone}\n" +
-                                                      $"Tên: {user.Name}\n" +
-                                                      $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                                        var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                                        {
+                                            Ten_Thong_Bao = "Bảo mật facebook",
+                                            So_Luong = 1,
+                                            Id_Nguoi_Dung = user?.ID,
+                                            Noi_Dung_Thong_Bao = new
+                                            {
+                                                Noi_Dung = "Khách hàng đăng ký gói dịch bảo mật facebook cần liên hệ với khách để thực hiện dịch vụ cho khách",
+                                            },
+                                            Ghi_Chu = new
+                                            {
+                                                Ten = user?.Name,
+                                                Tai_Khoan = user?.UserName,
+                                                So_dien_thoai = user?.NumberPhone
+                                            }
+                                        }, Formatting.Indented);
                                         var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                            message);
+                                            content);
                                         var dataMoneyUser = await _userService.GetMoneyUser(UserModel.UserName);
                                         if (dataMoneyUser != null)
                                         {

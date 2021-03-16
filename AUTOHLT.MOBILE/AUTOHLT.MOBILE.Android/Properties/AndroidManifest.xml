@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="60" android:versionName="1.0.8" package="com.bsoftgroup.auto.hlt" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="62" android:versionName="1.0.10" package="com.bsoftgroup.auto.hlt" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="24" android:targetSdkVersion="30" />
 	<application android:label="AUTOHLT" android:icon="@mipmap/icon">
 		<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id" />

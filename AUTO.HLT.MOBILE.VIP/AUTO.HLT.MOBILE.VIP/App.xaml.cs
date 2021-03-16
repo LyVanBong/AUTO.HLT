@@ -14,6 +14,7 @@ using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Home;
+using AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Manage;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
@@ -23,6 +24,7 @@ using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
+using AUTO.HLT.MOBILE.VIP.Views.KeyGeneration;
 using AUTO.HLT.MOBILE.VIP.Views.Login;
 using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
@@ -75,6 +77,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<KeyGenerationPage, KeyGenerationViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();
             containerRegistry.RegisterForNavigation<FakeAppPage, FakeAppViewModel>();

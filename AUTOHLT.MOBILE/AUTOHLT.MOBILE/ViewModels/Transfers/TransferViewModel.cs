@@ -2,12 +2,14 @@
 using System.Globalization;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Forms;
@@ -167,13 +169,26 @@ namespace AUTOHLT.MOBILE.ViewModels.Transfers
                     if (data != null && data.Code > 0 && data.Data == "2")
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000047, "OK");
-                        var message = $"Chuyển tiền\n" +
-                                      $"Id người gửi: {id}\n" +
-                                      $"Id người nhận: {_idReceive}\n" +
-                                      $"Số tiền chuyển: {string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(AmountMoney))} VND\n" +
-                                      $"Thời gian chuyển: {DateTime.Now.ToString("F")}";
+                        var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                        {
+                            Ten_Thong_Bao = "Chuyển tiền",
+                            So_Luong = 1,
+                            Id_Nguoi_Dung = user?.ID,
+                            Noi_Dung_Thong_Bao = new
+                            {
+                                Nguoi_Nhan = _idReceive,
+                                Nguoi_Gui = id,
+                                So_Tien_Chuyen = $"{string.Format(new CultureInfo("en-US"), "{0:0,0}", decimal.Parse(AmountMoney))} VND",
+                            },
+                            Ghi_Chu = new
+                            {
+                                Ten = user?.Name,
+                                Tai_Khoan = user?.UserName,
+                                So_dien_thoai = user?.NumberPhone
+                            }
+                        }, Formatting.Indented);
                         var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWMoneyHistory,
-                            message);
+                            content);
                     }
                     else
                     {

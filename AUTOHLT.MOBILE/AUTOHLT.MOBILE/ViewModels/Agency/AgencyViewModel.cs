@@ -2,11 +2,13 @@
 using System.Windows.Input;
 using Acr.UserDialogs;
 using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Telegram;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.Essentials;
@@ -45,7 +47,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Agency
             set => SetProperty(ref _isLoading, value);
         }
 
-        public AgencyViewModel(INavigationService navigationService, IDatabaseService databaseService, ITelegramService telegramService, IPageDialogService pageDialogService,IGuideService guideService) : base(navigationService)
+        public AgencyViewModel(INavigationService navigationService, IDatabaseService databaseService, ITelegramService telegramService, IPageDialogService pageDialogService, IGuideService guideService) : base(navigationService)
         {
             _guideService = guideService;
             _pageDialogService = pageDialogService;
@@ -79,13 +81,23 @@ namespace AUTOHLT.MOBILE.ViewModels.Agency
                     var user = await _databaseService.GetAccountUser();
                     if (user != null)
                     {
-                        var message = $"Đăng ký đại lý\n" +
-                                      $"Nội dung: {Content}\n" +
-                                      $"Id người dùng dịch vụ: {user.ID}\n" +
-                                      $"Số điện thoại: {user.NumberPhone}\n" +
-                                      $"Tên: {user.Name}\n" +
-                                      $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
-                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork, message);
+                        var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                        {
+                            Ten_Thong_Bao = "Đăng ký đại lý",
+                            So_Luong = 1,
+                            Id_Nguoi_Dung = user?.ID,
+                            Noi_Dung_Thong_Bao = new
+                            {
+                                Noi_Dung = Content,
+                            },
+                            Ghi_Chu = new
+                            {
+                                Ten = user?.Name,
+                                Tai_Khoan = user?.UserName,
+                                So_dien_thoai = user?.NumberPhone
+                            }
+                        }, Formatting.Indented);
+                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork, content);
                         if (send != null && send.ok && send.result != null)
                         {
                             await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000094, "OK");

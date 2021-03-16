@@ -217,6 +217,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid">
       <Version>18.4.0.47</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView">
+      <Version>18.4.0.47</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.CommunityToolkit">
       <Version>1.0.3</Version>
     </PackageReference>

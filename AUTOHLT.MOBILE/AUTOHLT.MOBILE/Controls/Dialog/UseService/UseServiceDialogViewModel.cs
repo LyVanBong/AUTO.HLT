@@ -8,6 +8,9 @@ using Prism.Services;
 using Prism.Services.Dialogs;
 using System;
 using System.Windows.Input;
+using AUTOHLT.MOBILE.Models.Telegram;
+using AUTOHLT.MOBILE.Services.Database;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
@@ -24,7 +27,7 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
         private string _idProduct;
         private IPageDialogService _pageDialogService;
         private ITelegramService _telegramService;
-
+        private IDatabaseService _databaseService;
         public string Number
         {
             get => _number;
@@ -69,8 +72,9 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
             set => SetProperty(ref _title, value);
         }
 
-        public UseServiceDialogViewModel(IProductService productService, IPageDialogService pageDialogService, ITelegramService telegramService)
+        public UseServiceDialogViewModel(IProductService productService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService)
         {
+            _databaseService = databaseService;
             _telegramService = telegramService;
             _pageDialogService = pageDialogService;
             _productService = productService;
@@ -88,13 +92,25 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.UseService
                     if (addHistoryUse != null && addHistoryUse.Code > 0 && addHistoryUse.Data != null)
                     {
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                        var message = $"{Title}\n" +
-                                      $"Số lượng: {Number}\n" +
-                                      $"Nội dung: {Content}\n" +
-                                      $"Id người dùng dịch vụ: {_idUser}\n" +
-                                      $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                        var user = await _databaseService.GetAccountUser();
+                        var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                        {
+                            Ten_Thong_Bao = Title,
+                            So_Luong = int.Parse(Number),
+                            Id_Nguoi_Dung = user?.ID,
+                            Noi_Dung_Thong_Bao = new
+                            {
+                                Noi_Dung =Content,
+                            },
+                            Ghi_Chu = new
+                            {
+                                Ten = user?.Name,
+                                Tai_Khoan = user?.UserName,
+                                So_dien_thoai = user?.NumberPhone
+                            }
+                        }, Formatting.Indented);
                         var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                            message);
+                            content);
                         CloseDialog();
                     }
                     else

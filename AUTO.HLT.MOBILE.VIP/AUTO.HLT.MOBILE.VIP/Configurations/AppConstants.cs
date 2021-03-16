@@ -85,6 +85,6 @@
         /// <summary>
         /// url api
         /// </summary>
-        public const string UrlBase = "https://api.autohlt.com/api/version2/";
+        public const string UrlBase = "https://api.autohlt.vn/api/version2/";
     }
 }

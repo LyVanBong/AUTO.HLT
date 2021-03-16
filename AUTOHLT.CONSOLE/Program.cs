@@ -7,7 +7,7 @@ namespace AUTOHLT.CONSOLE
     {
         static void Main(string[] args)
         {
-            var client = new RestClient("https://api.autohlt.com/api/v1/user/updateuser");
+            var client = new RestClient("https://api.autohlt.vn/api/v1/user/updateuser");
             client.Timeout = -1;
             var request = new RestRequest(Method.PUT);
             request.AddParameter("UserName", "admin");

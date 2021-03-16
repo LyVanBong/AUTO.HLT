@@ -8,6 +8,7 @@ using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.Product;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
@@ -17,6 +18,7 @@ using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
@@ -53,7 +55,7 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
             get => _isLoading;
             set => SetProperty(ref _isLoading, value);
         }
-        public VipInteractionViewModel(INavigationService navigationService, IDatabaseService databaseService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IFacebookService facebookService, IDialogService dialogService, ITelegramService telegramService,IGuideService guideService) : base(navigationService)
+        public VipInteractionViewModel(INavigationService navigationService, IDatabaseService databaseService, IProductService productService, IUserService userService, IPageDialogService pageDialogService, IFacebookService facebookService, IDialogService dialogService, ITelegramService telegramService, IGuideService guideService) : base(navigationService)
         {
             _guideService = guideService;
             _telegramService = telegramService;
@@ -71,7 +73,7 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
         {
             try
             {
-                var data =await _guideService.GetGuide(10);
+                var data = await _guideService.GetGuide(10);
                 await Browser.OpenAsync(data?.Url);
             }
             catch (Exception ex)
@@ -157,10 +159,10 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
                                     "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
                                 if (result)
                                 {
-                                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null,  (res) =>
-                                    {
-                                        AutoBotHeart(product);
-                                    });
+                                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, (res) =>
+                                   {
+                                       AutoBotHeart(product);
+                                   });
                                 }
                             }
                         }
@@ -236,15 +238,27 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
             var spDangky = _lsDangky.FirstOrDefault(x => x.ID_ProductType == id);
             if (res)
             {
-                var message = $"Auto tương tác like avatar + comment\n" +
-                              $"Ngày đăng ký dịch vụ {spDangky?.DateCreate}\n" +
-                              $"Thời hạn gói {end} ngày\n" +
-                              $"Cookie: {cookie}\n" +
-                              $"Tooken: {token}\n" +
-                              $"Id người dùng dịch vụ: {user.ID}\n" +
-                              $"Thời yêu cầu dịch vụ: {DateTime.Now.ToString("F")}";
+                var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
+                {
+                    Ten_Thong_Bao = "Tự động like và comment avatar bạn bè",
+                    So_Luong = 1,
+                    Id_Nguoi_Dung = user?.ID,
+                    Noi_Dung_Thong_Bao = new
+                    {
+                        Cookie = cookie,
+                        Token = token,
+                    },
+                    Ghi_Chu = new
+                    {
+                        Ten = user?.Name,
+                        Tai_Khoan = user?.UserName,
+                        So_dien_thoai = user?.NumberPhone,
+                        Ngay_Dang_Dich_Vu = spDangky?.DateCreate,
+                        Thoi_Han_Goi = $"{end} ngày",
+                    }
+                }, Formatting.Indented);
                 var tele = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                    message);
+                    content);
             }
         }
 

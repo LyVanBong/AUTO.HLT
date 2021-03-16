@@ -28,7 +28,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.bsoftgroup.auto.hlt</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.8</string>
+	<string>1.0.10</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>XSAppIconAssets</key>
@@ -58,6 +58,6 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>CFBundleVersion</key>
-	<string>60</string>
+	<string>62</string>
 </dict>
 </plist>
