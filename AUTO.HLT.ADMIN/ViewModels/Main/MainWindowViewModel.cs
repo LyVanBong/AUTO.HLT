@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AUTO.HLT.ADMIN.Services.Facebook;
 
 namespace AUTO.HLT.ADMIN.ViewModels.Main
 {
@@ -32,6 +33,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private string _pathLog = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto/Log";
         private string _fileNameAccount = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto/Account_Facebook.json";
         private Visibility _loading;
+        private IFacebookService _facebookService;
 
         public string Title
         {
@@ -133,8 +135,9 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             set => SetProperty(ref _loading, value);
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IFacebookService facebookService)
         {
+            _facebookService = facebookService;
             Loading = Visibility.Visible;
             SaveAccountCommand = new DelegateCommand(SaveAccount);
             DeleteAccountCommand = new DelegateCommand(DeleteAccount);

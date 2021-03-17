@@ -77,6 +77,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configurations\AppConstants.cs" />
+    <Compile Include="Configurations\AppSettings.cs" />
     <Compile Include="Models\AddWork\WorkModel.cs" />
     <Compile Include="Models\AutoLikeCommentAvatar\HistoryAutoModel.cs" />
     <Compile Include="Models\AutoLikeCommentAvatar\UIdFacebookModel.cs" />
