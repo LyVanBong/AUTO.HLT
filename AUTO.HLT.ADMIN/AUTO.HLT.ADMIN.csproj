@@ -92,6 +92,7 @@
     <Compile Include="Models\Main\UserModel.cs" />
     <Compile Include="Models\RequestProviderModel\RequestParameter.cs" />
     <Compile Include="Models\RequestProviderModel\ResponseModel.cs" />
+    <Compile Include="Models\Telegram\ContentSendTelegramModel.cs" />
     <Compile Include="Models\Telegram\TelegramModel.cs" />
     <Compile Include="Services\AutoLikeCommentAvatar\AutoAvatarService.cs" />
     <Compile Include="Services\AutoLikeCommentAvatar\IAutoAvatarService.cs" />

@@ -6,9 +6,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace AUTO.HLT.ADMIN.ViewModels.Main
 {
@@ -25,8 +27,10 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private bool _tuongTacAnhDaiDien;
         private string _searchAccount;
         private UserModel _selectUser;
-        private string _path = AppDomain.CurrentDomain.BaseDirectory + "/DataAuto";
-        private string _fileNameAccount = "/AccountFacebook.json";
+        private string _path = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto";
+        private string _pathIdFacebook = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto/Id_Facebook";
+        private string _pathLog = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto/Log";
+        private string _fileNameAccount = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto/Account_Facebook.json";
         private Visibility _loading;
 
         public string Title
@@ -104,6 +108,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         public UserModel SelectUser
         {
             get => _selectUser;
+
             set
             {
                 if (SetProperty(ref _selectUser, value))
@@ -137,6 +142,22 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             DataUsers = new ObservableCollection<UserModel>();
             CreateDirectory();
             Loading = Visibility.Hidden;
+            StartServiceAuto();
+        }
+
+        private void StartServiceAuto()
+        {
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+#if DEBUG
+            Console.WriteLine("Chay thu xem timer chay the nao");
+#endif
         }
 
         private void CreateDirectory()
@@ -146,6 +167,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                 if (!Directory.Exists(_path))
                 {
                     Directory.CreateDirectory(_path);
+                    Directory.CreateDirectory(_path + "/Id_Facebook");
+                    Directory.CreateDirectory(_path + "/Log");
                 }
                 else
                 {
@@ -160,12 +183,11 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
 
         private void GetAccount()
         {
-            var pathFileAccount = _path + _fileNameAccount;
-            if (File.Exists(pathFileAccount))
+            if (File.Exists(_fileNameAccount))
             {
                 DataUsers =
                     JsonConvert.DeserializeObject<ObservableCollection<UserModel>>(
-                        File.ReadAllText(pathFileAccount));
+                        File.ReadAllText(_fileNameAccount));
             }
         }
         private Task SearchAccountUser()
@@ -290,7 +312,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                             DataUsers.Add(user);
                         }
 
-                        WriteAllFile(DataUsers, _path + _fileNameAccount);
+                        WriteAllFile(DataUsers, _fileNameAccount);
                         MessageBox.Show("Thêm tài khoản thành công", "Thông báo", MessageBoxButton.OK,
                             MessageBoxImage.Asterisk);
                     }
