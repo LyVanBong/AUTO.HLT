@@ -58,6 +58,6 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>CFBundleVersion</key>
-	<string>63</string>
+	<string>65</string>
 </dict>
 </plist>
