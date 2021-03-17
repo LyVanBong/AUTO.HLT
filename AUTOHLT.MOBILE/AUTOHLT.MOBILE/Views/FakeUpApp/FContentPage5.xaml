@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Cuộc đời đâu được mấy" />
+            <controls:NavigationView Grid.Row="0" Text="Điểm danh hàng ngày" />
             <dataForm:SfDataForm
                 x:Name="dataForm"
                 Grid.Row="1"

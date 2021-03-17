@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Thà là như thế" />
+            <controls:NavigationView Grid.Row="0" Text="Ghi chú" />
             <xForms:SfTreeMap
                 x:Name="treeMap"
                 Grid.Row="1"

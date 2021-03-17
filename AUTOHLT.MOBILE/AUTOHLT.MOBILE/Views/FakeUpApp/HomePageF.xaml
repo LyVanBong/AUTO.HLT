@@ -113,7 +113,7 @@
                             Grid.Column="0"
                             FontSize="12"
                             HorizontalOptions="CenterAndExpand"
-                            Text="Trời nắng" />
+                            Text="Thống kê" />
                         <Label
                             Grid.Row="2"
                             Grid.Column="1"
@@ -214,7 +214,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_f2.png}" />
-                            <Label Grid.Row="1" Text="Lợi ích" />
+                            <Label Grid.Row="1" Text="Chăm sóc" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="4" />
@@ -234,7 +234,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_f3.png}" />
-                            <Label Grid.Row="1" Text="Lỗi sống" />
+                            <Label Grid.Row="1" Text="Lịch hàng ngày" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="5" />
@@ -254,7 +254,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_f4.png}" />
-                            <Label Grid.Row="1" Text="Lành mạnh" />
+                            <Label Grid.Row="1" Text="Thời gian ngủ" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="6" />
@@ -274,7 +274,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_f5.png}" />
-                            <Label Grid.Row="1" Text="Ý nghĩa" />
+                            <Label Grid.Row="1" Text="Mục tiêu hàng ngày" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="7" />
@@ -294,7 +294,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_f6.png}" />
-                            <Label Grid.Row="1" Text="Chúng ta" />
+                            <Label Grid.Row="1" Text="Điểm danh hàng ngày" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="8" />
@@ -314,7 +314,7 @@
                             Padding="0"
                             RowDefinitions="*,20">
                             <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_f7.png}" />
-                            <Label Grid.Row="1" Text="Cuộc đời" />
+                            <Label Grid.Row="1" Text="Ghi chú" />
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="9" />

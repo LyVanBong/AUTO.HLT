@@ -4,7 +4,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-    xmlns:xForms="clr-namespace:Syncfusion.SfSunburstChart.XForms;assembly=Syncfusion.SfSunburstChart.XForms"
     xmlns:xForms1="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
     BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
@@ -15,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Trà xanh" />
+            <controls:NavigationView Grid.Row="0" Text="Thời gian ngủ" />
             <xForms1:SfChart
                 x:Name="Chart"
                 Grid.Row="1"

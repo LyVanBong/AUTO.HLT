@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="65 cuộc đời" />
+            <controls:NavigationView Grid.Row="0" Text="Thống kê" />
             <xForms:SfDataGrid
                 x:Name="dataGrid"
                 Grid.Row="1"
