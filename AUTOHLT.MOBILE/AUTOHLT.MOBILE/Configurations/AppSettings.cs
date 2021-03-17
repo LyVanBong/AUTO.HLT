@@ -5,6 +5,6 @@
         /// <summary>
         /// LICENSE KEY SYNCFUSION
         /// </summary>
-        internal static string SyncfusionLicense = "MzY5NDY2QDMxMzgyZTM0MmUzMGpUdEtGRFhHNzIzYlpxT3IwN3BqVWNKWXRsN2RNL1pBVFU0aUFRRHpYNnc9";
+        internal static string SyncfusionLicense = "NDEzMTkxQDMxMzgyZTM0MmUzMFpTdnN2ajhqbzBIQTlFSEltaXpiQ0dCZkZWaGkyK2QxcFhSWkU3QTh4cWs9";
     }
 }

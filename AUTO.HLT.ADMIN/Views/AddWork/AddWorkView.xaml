@@ -132,7 +132,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="4"
             AutoGenerateColumns="False"
-            ItemsSource="{Binding DataUserAutoLikeCommentAvatar}"
+            ItemsSource="{Binding DataUserAutoLikeCommentAvatar, Mode=TwoWay}"
             SelectedItem="{Binding ItemUserAuto}"
             SelectionMode="Single">
             <DataGrid.Columns>

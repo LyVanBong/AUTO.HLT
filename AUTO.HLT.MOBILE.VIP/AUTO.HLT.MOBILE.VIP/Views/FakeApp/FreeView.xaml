@@ -9,12 +9,8 @@
             Margin="5"
             FontSize="18"
             HorizontalOptions="CenterAndExpand"
-            Text="Miễn phí - (Nâng cấp)"
-            TextColor="#fff"
-            VerticalOptions="CenterAndExpand">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding UpgradeAccountCommand}" CommandParameter="0" />
-            </Label.GestureRecognizers>
-        </Label>
+            Text="Chúc khách hàng một ngày làm việc tốt lành"
+            TextColor="Aquamarine"
+            VerticalOptions="CenterAndExpand" />
     </ContentView.Content>
 </ContentView>

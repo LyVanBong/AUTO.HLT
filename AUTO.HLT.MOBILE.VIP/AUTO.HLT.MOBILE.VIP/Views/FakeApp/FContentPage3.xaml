@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <navigation:NavigationView Grid.Row="0" Text="Trà xanh" />
+            <navigation:NavigationView Grid.Row="0" Text="Wifi miến phí" />
             <xForms1:SfChart
                 x:Name="Chart"
                 Grid.Row="1"
