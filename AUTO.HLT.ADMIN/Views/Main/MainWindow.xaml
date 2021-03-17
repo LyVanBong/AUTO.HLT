@@ -13,7 +13,6 @@
     Topmost="False"
     WindowState="Maximized"
     WindowStyle="ThreeDBorderWindow"
-    
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -43,6 +42,34 @@
             Header="Lịch sử">
             <main:HistoryWorkView />
         </GroupBox>
-
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Background="DarkGray"
+            Opacity=".7"
+            Visibility="{Binding Loading}">
+            <Grid
+                Margin="250,0"
+                VerticalAlignment="Center"
+                Background="#435560">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <ProgressBar
+                    Name="pbStatus"
+                    Grid.Row="0"
+                    Margin="5"
+                    IsIndeterminate="True" />
+                <Label
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Hệ thống đang xử lý"
+                    Foreground="#fff" />
+            </Grid>
+        </Border>
     </Grid>
 </Window>

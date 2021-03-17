@@ -96,7 +96,14 @@
                     TabIndex="6" />
             </Grid>
         </GroupBox>
-        <Grid
+        <Button
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="5,10"
+            Command="{Binding SaveAccountCommand}"
+            Content="Thêm Tài Khoản" />
+        <!--<Grid
             Grid.Row="6"
             Grid.Column="0"
             Grid.ColumnSpan="2">
@@ -117,6 +124,6 @@
                 Grid.Column="1"
                 Command="{Binding DeleteAccountCommand}"
                 Content="Xóa tài khoản" />
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

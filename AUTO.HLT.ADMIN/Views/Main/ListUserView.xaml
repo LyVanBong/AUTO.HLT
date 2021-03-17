@@ -6,5 +6,67 @@
     xmlns:local="clr-namespace:AUTO.HLT.ADMIN.Views.Main"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="DarkOrange" />
+    <Grid Background="#fff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="150" />
+        </Grid.ColumnDefinitions>
+        <TextBox
+            Grid.Row="0"
+            Grid.Column="0"
+            VerticalContentAlignment="Center"
+            Text="{Binding SearchAccount, Mode=TwoWay}" />
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Command="{Binding SearchAccountCommand}"
+            Content="Tìm tài khoản" />
+        <DataGrid
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding DataUsers}"
+            SelectedItem="{Binding SelectUser}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding STT}" Header="#" />
+                <DataGridTextColumn Binding="{Binding ID}" Header="Id" />
+                <DataGridTemplateColumn Header="Trạng thái">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label>
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TrangThai}" Value="0">
+                                                <Setter Property="Label.Content" Value="Chưa chạy" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TrangThai}" Value="1">
+                                                <Setter Property="Label.Content" Value="Đang chạy" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TrangThai}" Value="2">
+                                                <Setter Property="Label.Content" Value="Hỏng" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Cookie}" Header="Cookie" />
+                <DataGridTextColumn Binding="{Binding Token}" Header="Token" />
+                <DataGridCheckBoxColumn Binding="{Binding ThaTim}" Header="Thả tim" />
+                <DataGridCheckBoxColumn Binding="{Binding TuongTacAnhDaiDien}" Header="Tương tác ảnh đại diện" />
+                <DataGridTextColumn Binding="{Binding NgayHetHan}" Header="Ngày hết hạn" />
+                <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>
