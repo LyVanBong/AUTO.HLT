@@ -77,6 +77,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<FContentPage8, FContentPage8ViewModel>();
             containerRegistry.RegisterForNavigation<KeyGenerationPage, KeyGenerationViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();

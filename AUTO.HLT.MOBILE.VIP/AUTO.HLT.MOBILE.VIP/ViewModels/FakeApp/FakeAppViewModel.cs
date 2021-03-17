@@ -115,7 +115,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp
                     await NavigationService.NavigateAsync(nameof(FeaturePage), para);
                     break;
                 case 3:
-                    await SetupAuto(item);
+                    await NavigationService.NavigateAsync(nameof(FContentPage8));
                     break;
                 case 4:
                     await NavigationService.NavigateAsync(nameof(FContentPage3));
