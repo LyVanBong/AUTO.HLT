@@ -8,6 +8,13 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// lay id bai viet cua ban be
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<PostIdMyFriendModel> GetIdPostFriends(string limit, string token,string id);
+        /// <summary>
         /// Lấy thông tin user facebook
         /// </summary>
         /// <param name="accessToken"></param>
@@ -33,7 +40,7 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<object> GetIdFriends(string token);
+        Task<FriendsModel> GetIdFriends(string token, string fields = "id,name");
         /// <summary>
         /// kiểm tra cookie token
         /// </summary>

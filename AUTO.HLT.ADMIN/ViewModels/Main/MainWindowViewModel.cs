@@ -1,17 +1,19 @@
-﻿using AUTO.HLT.ADMIN.Models.Main;
+﻿using AUTO.HLT.ADMIN.Models.Facebook;
+using AUTO.HLT.ADMIN.Models.Main;
+using AUTO.HLT.ADMIN.Services.Facebook;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using AUTO.HLT.ADMIN.Services.Facebook;
 
 namespace AUTO.HLT.ADMIN.ViewModels.Main
 {
@@ -34,6 +36,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private string _fileNameAccount = AppDomain.CurrentDomain.BaseDirectory + "/Data_Auto/Account_Facebook.json";
         private Visibility _loading;
         private IFacebookService _facebookService;
+        private List<Datum> _lsUID;
 
         public string Title
         {
@@ -135,6 +138,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             set => SetProperty(ref _loading, value);
         }
 
+        public ObservableCollection<HistoryModel> DataHistory { get; set; }
         public MainWindowViewModel(IFacebookService facebookService)
         {
             _facebookService = facebookService;
@@ -151,7 +155,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private void StartServiceAuto()
         {
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Interval = TimeSpan.FromMilliseconds(5000);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -159,8 +163,92 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private void Timer_Tick(object sender, EventArgs e)
         {
 #if DEBUG
-            Console.WriteLine("Chay thu xem timer chay the nao");
+            Console.WriteLine(@"Timer đang chạy cẩn thân nhẽ");
 #endif
+            try
+            {
+                var json = File.ReadAllText(_fileNameAccount);
+                if (!string.IsNullOrWhiteSpace(json))
+                {
+                    var data = JsonConvert.DeserializeObject<List<UserModel>>(json);
+                    if (data != null && data.Any())
+                    {
+                        var tmp = 0;
+                        foreach (var user in data)
+                        {
+                            if (user.TrangThai == 0)
+                            {
+                                var worker = new BackgroundWorker();
+                                worker.WorkerReportsProgress = true;
+                                worker.DoWork += Worker_DoWork;
+                                worker.ProgressChanged += Worker_ProgressChanged;
+                                worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+                                worker.RunWorkerAsync(user);
+                                user.TrangThai = 1;
+                                tmp++;
+                            }
+                        }
+                        if (tmp > 0)
+                        {
+                            WriteAllFile(data, _fileNameAccount);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBoxNoti($"Lỗi phát sinh: {ex.Message}");
+            }
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private async void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                var user = (UserModel)e.Argument;
+                if (user != null)
+                {
+                    var json = File.ReadAllText(_pathIdFacebook + "/ID_" + user.ID + ".json");
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        var data = JsonConvert.DeserializeObject<FriendsModel>(json);
+                        if (data != null && data.data.Any())
+                        {
+                            var random = new Random();
+                            var uid = random.Next(0, 1) == 1 ? data.data.OrderBy(x => x.name) : data.data.OrderByDescending(x => x.name);
+                            foreach (var id in uid)
+                            {
+                                var idPost = await _facebookService.GetIdPostFriends("2", user.Token, id.id);
+                                if (idPost != null && idPost.id != null)
+                                {
+
+                                }
+                                else
+                                {
+                                    if (!await _facebookService.CheckTokenCookie(user.Token, user.Cookie))
+                                    {
+                                        (sender as BackgroundWorker)?.CancelAsync();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBoxNoti("Lỗi: " + ex.Message);
+            }
         }
 
         private void CreateDirectory()
@@ -269,7 +357,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                 return data.Max(x => x.STT) + 1;
             }
         }
-        private void SaveAccount()
+        private async void SaveAccount()
         {
             try
             {
@@ -315,9 +403,17 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                             DataUsers.Add(user);
                         }
 
+                        await SaveUidFriendFacebook(Token, Cookie, ID);
                         WriteAllFile(DataUsers, _fileNameAccount);
                         MessageBox.Show("Thêm tài khoản thành công", "Thông báo", MessageBoxButton.OK,
                             MessageBoxImage.Asterisk);
+                        ID = "";
+                        Cookie = "";
+                        Token = "";
+                        ThoiHan = 0;
+                        NgayDangKy = "";
+                        TuongTacAnhDaiDien = false;
+                        ThaTim = false;
                     }
                     else
                     {
@@ -338,16 +434,25 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             }
             finally
             {
-                ID = "";
-                Cookie = "";
-                Token = "";
-                ThoiHan = 0;
-                NgayDangKy = "";
-                TuongTacAnhDaiDien = false;
-                ThaTim = false;
                 Loading = Visibility.Hidden;
             }
         }
+        /// <summary>
+        /// lưu danh sách user ra file json
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="cookie"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private async Task SaveUidFriendFacebook(string token, string cookie, string id)
+        {
+            var friends = await _facebookService.GetIdFriends(token);
+            if (friends != null)
+            {
+                File.WriteAllText(_pathIdFacebook + "/ID_" + id + ".json", JsonConvert.SerializeObject(friends));
+            }
+        }
+
         /// <summary>
         /// ghi file
         /// </summary>

@@ -21,6 +21,28 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
             _restSharpService = restSharpService;
         }
 
+        public async Task<PostIdMyFriendModel> GetIdPostFriends(string limit, string token, string id)
+        {
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("fields",$"posts.limit({limit})"),
+                    new RequestParameter("access_token",token),
+                };
+                var json = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/" + id, para);
+                if (!string.IsNullOrWhiteSpace(json))
+                {
+                    return JsonConvert.DeserializeObject<PostIdMyFriendModel>(json);
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            return null;
+        }
+
         public async Task<NamePictureUserModel> GetInfoUser(string accessToken, string fields = "name,picture")
         {
             try
@@ -77,9 +99,28 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
             }
         }
 
-        public Task<object> GetIdFriends(string token)
+        public async Task<FriendsModel> GetIdFriends(string token, string fields = "id,name")
         {
-            throw new NotImplementedException();
+            try
+            {
+                var rd = new Random();
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("fields",fields),
+                    new RequestParameter("limit",rd.Next(4500,5000)+""),
+                    new RequestParameter("access_token",token),
+                };
+                var data = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me/friends", para);
+                if (data != null)
+                {
+                    return JsonConvert.DeserializeObject<FriendsModel>(data);
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            return null;
         }
 
         public async Task<bool> CheckTokenCookie(string token, string cookie)
@@ -93,25 +134,13 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
                 else
                 {
                     var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
-                    if (html == null)
-                        return false;
-                    else
-                    {
-                        if (html.Contains("mbasic_logout_button"))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-
                     var friend = await GetInfoUser(token);
-                    if (friend == null)
-                        return false;
-                    else
-                        return true;
+                    if (friend != null && html != null)
+                    {
+                        if (html.Contains("mbasic_logout_button") && friend.name != null)
+                            return true;
+                    }
+                    return false;
                 }
             }
             catch (Exception e)
