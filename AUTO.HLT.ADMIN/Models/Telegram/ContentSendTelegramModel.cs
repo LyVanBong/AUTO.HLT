@@ -10,7 +10,7 @@ namespace AUTO.HLT.ADMIN.Models.Telegram
         public string Id_Nguoi_Dung { get; set; }
         public object Ghi_Chu { get; set; }
         public DateTime Thoi_Gian_Thong_Bao => DateTime.UtcNow;
-        public string App => "AUTOTOOL";
+        public string App => "AUTO TOOL";
 
     }
 }

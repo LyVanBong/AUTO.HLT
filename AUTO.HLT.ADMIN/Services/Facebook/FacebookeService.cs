@@ -20,7 +20,18 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
         {
             _restSharpService = restSharpService;
         }
-
+        public async Task<string> PostHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null)
+        {
+            try
+            {
+                var html = await _restSharpService.PostAsync(url, parameters, cookie);
+                return html;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public async Task<PostIdMyFriendModel> GetIdPostFriends(string limit, string token, string id)
         {
             try
@@ -79,7 +90,7 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
             }
             catch (Exception)
             {
-                throw;
+                return null;
             }
         }
 

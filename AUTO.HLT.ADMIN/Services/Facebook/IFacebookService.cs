@@ -8,6 +8,14 @@ namespace AUTO.HLT.ADMIN.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// giả lập request facebook bằng phương thức post
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="cookie"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        Task<string> PostHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null);
+        /// <summary>
         /// lay id bai viet cua ban be
         /// </summary>
         /// <param name="limit"></param>
