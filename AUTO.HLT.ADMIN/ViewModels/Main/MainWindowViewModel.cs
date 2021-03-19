@@ -218,6 +218,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                         if (tmp > 0)
                         {
                             WriteAllFile(data, _fileNameAccount);
+                            GetAccount();
                         }
                     }
                 }
