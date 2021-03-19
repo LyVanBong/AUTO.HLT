@@ -195,6 +195,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                 var json = "";
                 if (File.Exists(_fileNameAccount))
                     json = File.ReadAllText(_fileNameAccount);
+                else
+                    MessageBoxNoti("Chưa có dữ liệu");
                 if (!string.IsNullOrWhiteSpace(json))
                 {
                     var data = JsonConvert.DeserializeObject<List<UserModel>>(json);
@@ -203,10 +205,11 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                         var tmp = 0;
                         foreach (var user in data)
                         {
-                            if (user.TrangThai == 0)
+                            if (user.TrangThai == 0 && user.NgayHetHan >= DateTime.UtcNow.Date)
                             {
                                 var worker = new BackgroundWorker();
                                 worker.WorkerReportsProgress = true;
+                                worker.WorkerSupportsCancellation = true;
                                 worker.DoWork += Worker_DoWork;
                                 worker.ProgressChanged += Worker_ProgressChanged;
                                 worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
@@ -321,7 +324,11 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             {
                 if (user != null)
                 {
-                    var json = File.ReadAllText(_pathIdFacebook + "/ID_" + user.ID + ".json");
+                    var pathFileName = _pathIdFacebook + "/ID_" + user.ID + ".json";
+#if DEBUG
+                    Console.WriteLine($"duong dang file danh sach uid {pathFileName}");
+#endif
+                    var json = File.ReadAllText(pathFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
                         var data = JsonConvert.DeserializeObject<FriendsModel>(json);
@@ -358,10 +365,10 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                     }
                                     else
                                     {
-                                        CheckCookieToken(sender, user.Token, user.Cookie);
+                                        CheckCookieToken(sender, user.Token, user.Cookie, user);
                                     }
 
-                                    Task.Delay(random.Next(50000, 300000));
+                                    Task.Delay(TimeSpan.FromMinutes(random.Next(1, 2))).Wait();
 
                                     var htmlProfile2 = HtmlProfile(urlface, user.Cookie).Result;
                                     if (!string.IsNullOrWhiteSpace(htmlProfile2))
@@ -384,7 +391,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                     }
                                     else
                                     {
-                                        CheckCookieToken(sender, user.Token, user.Cookie);
+                                        CheckCookieToken(sender, user.Token, user.Cookie, user);
                                     }
                                 }
                                 var post = _facebookService.GetIdPostFriends("2", user.Token, id.id).Result;
@@ -419,10 +426,10 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                             }
                                             else
                                             {
-                                                CheckCookieToken(sender, user?.Token, user?.Cookie);
+                                                CheckCookieToken(sender, user?.Token, user?.Cookie, user);
                                             }
 
-                                            Task.Delay(random.Next(100000, 500000));
+                                            Task.Delay(TimeSpan.FromMinutes(random.Next(1, 2))).Wait();
                                         }
                                     }
 
@@ -433,7 +440,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                 }
                                 else
                                 {
-                                    CheckCookieToken(sender, user?.Token, user?.Cookie);
+                                    CheckCookieToken(sender, user?.Token, user?.Cookie, user);
                                 }
                             }
                         }
@@ -448,6 +455,9 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             {
                 e.Result = user;
             }
+
+            Task.Delay(TimeSpan.FromMinutes(30)).Await();
+            e.Result = 0;
         }
         /// <summary>
         /// auto comment avatar
@@ -559,14 +569,19 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
 
             return null;
         }
-        private async void CheckCookieToken(object sender, string token, string cookie)
+        private async void CheckCookieToken(object sender, string token, string cookie, UserModel user)
         {
             if (!await _facebookService.CheckTokenCookie(token, cookie))
             {
                 var bw = (sender as BackgroundWorker);
                 if (bw != null)
                 {
-                    bw.ReportProgress(0, 0);
+                    var his = new HistoryModel
+                    {
+                        Id = user.ID,
+                        Note_Auto = "Token hoac cookie die"
+                    };
+                    bw.ReportProgress(0, new HistoryModel());
                     bw.CancelAsync();
                 }
             }
