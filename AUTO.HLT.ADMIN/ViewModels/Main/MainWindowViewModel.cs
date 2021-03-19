@@ -368,7 +368,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                         CheckCookieToken(sender, user.Token, user.Cookie, user);
                                     }
 
-                                    Task.Delay(TimeSpan.FromMinutes(random.Next(1, 2))).Wait();
+                                    Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
 
                                     var htmlProfile2 = HtmlProfile(urlface, user.Cookie).Result;
                                     if (!string.IsNullOrWhiteSpace(htmlProfile2))
@@ -393,7 +393,9 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                     {
                                         CheckCookieToken(sender, user.Token, user.Cookie, user);
                                     }
+                                    Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
                                 }
+
                                 var post = _facebookService.GetIdPostFriends("2", user.Token, id.id).Result;
                                 if (post != null)
                                 {
@@ -429,7 +431,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                                 CheckCookieToken(sender, user?.Token, user?.Cookie, user);
                                             }
 
-                                            Task.Delay(TimeSpan.FromMinutes(random.Next(1, 2))).Wait();
+                                            Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
                                         }
                                     }
 
