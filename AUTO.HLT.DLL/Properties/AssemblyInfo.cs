@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AUTO.HLT.DLL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AUTO TOOL")]
+[assembly: AssemblyDescription("AUTO TOOL MMO")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AUTO.HLT.DLL")]
+[assembly: AssemblyCompany("BSOFT")]
+[assembly: AssemblyProduct("AUTOTOOL")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
