@@ -7,6 +7,19 @@ namespace AUTO.DLL.Services
 {
     public static class FacebookService
     {
+        public static async Task<bool> SendMessage(string message, string id)
+        {
+
+            try
+            {
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Đăng nhập facebook
         /// </summary>

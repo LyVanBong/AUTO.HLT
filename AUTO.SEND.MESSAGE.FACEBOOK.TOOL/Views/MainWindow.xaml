@@ -146,8 +146,8 @@
                 SelectedItem="{Binding SelectUser}"
                 SelectionMode="Single">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding STT}" Header="#" />
-                    <DataGridTextColumn Binding="{Binding ID}" Header="Id" />
+                    <DataGridTextColumn Binding="{Binding Stt}" Header="#" />
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
                     <DataGridTemplateColumn Header="Trạng thái">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -155,13 +155,16 @@
                                     <Label.Style>
                                         <Style TargetType="Label">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding TrangThai}" Value="0">
+                                                <DataTrigger Binding="{Binding Status}" Value="0">
                                                     <Setter Property="Label.Content" Value="Chưa chạy" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding TrangThai}" Value="1">
+                                                <DataTrigger Binding="{Binding Status}" Value="1">
                                                     <Setter Property="Label.Content" Value="Đang chạy" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding TrangThai}" Value="2">
+                                                <DataTrigger Binding="{Binding Status}" Value="2">
+                                                    <Setter Property="Label.Content" Value="Tạm dừng" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="3">
                                                     <Setter Property="Label.Content" Value="Hỏng" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -171,11 +174,12 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Message1}" Header="Sáng" />
+                    <DataGridTextColumn Binding="{Binding Message2}" Header="Trưa" />
+                    <DataGridTextColumn Binding="{Binding Message3}" Header="Tối" />
                     <DataGridTextColumn Binding="{Binding Cookie}" Header="Cookie" />
                     <DataGridTextColumn Binding="{Binding Token}" Header="Token" />
-                    <DataGridCheckBoxColumn Binding="{Binding ThaTim}" Header="Thả tim" />
-                    <DataGridCheckBoxColumn Binding="{Binding TuongTacAnhDaiDien}" Header="Tương tác ảnh đại diện" />
-                    <DataGridTextColumn Binding="{Binding NgayHetHan}" Header="Ngày hết hạn" />
+                    <DataGridTextColumn Binding="{Binding TimeDelay}" Header="Thời gian dừng" />
                     <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
                 </DataGrid.Columns>
             </DataGrid>
