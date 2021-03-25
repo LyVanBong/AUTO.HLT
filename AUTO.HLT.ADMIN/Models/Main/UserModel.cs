@@ -93,6 +93,6 @@ namespace AUTO.HLT.ADMIN.Models.Main
             set => SetProperty(ref _note, value);
         }
 
-        public DateTime NgayHetHan => NgayDangKy.AddDays(ThoiHan);
+        public DateTime NgayHetHan => NgayDangKy.AddDays(ThoiHan).Date;
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
+using AUTO.HLT.ADMIN.ViewModels.Main;
 
 namespace AUTO.HLT.ADMIN.Views.Main
 {
@@ -10,6 +12,12 @@ namespace AUTO.HLT.ADMIN.Views.Main
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            var vm = DataContext as MainWindowViewModel;
+          
         }
     }
 }
