@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using System.ComponentModel;
+using Prism.Mvvm;
 
 namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models
 {
@@ -16,6 +17,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models
         private int _timeDelay;
         private string _note;
         private int _status;
+        private BackgroundWorker _backgroundWorker;
 
         public string Id
         {
@@ -89,7 +91,13 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models
             set => SetProperty(ref _status, value);
         }
 
-        public AcountsModel(string id, int stt, string userName, string passwd, string cookie, string token, string message1, string message2, string message3, int timeDelay, string note, int status)
+        public BackgroundWorker BackgroundWorker
+        {
+            get => _backgroundWorker;
+            set => _backgroundWorker = value;
+        }
+
+        public AcountsModel(string id, int stt, string userName, string passwd, string cookie, string token, string message1, string message2, string message3, int timeDelay, string note, int status, BackgroundWorker backgroundWorker)
         {
             _id = id;
             _stt = stt;
@@ -103,6 +111,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models
             _timeDelay = timeDelay;
             _note = note;
             _status = status;
+            _backgroundWorker = backgroundWorker;
         }
     }
 }

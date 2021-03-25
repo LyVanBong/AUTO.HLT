@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using AUTO.DLL.Services;
+﻿using AUTO.DLL.Services;
+using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Xml;
-using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models;
-using Prism.Common;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
 {
@@ -128,7 +124,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                         max = DataUsers.Max(x => x.Stt) + 1;
                     }
                     var account = new AcountsModel(Id, max, UserName,
-                        Passwd, Cookie, Token, Message1, Message2, Message3, TimeDelay, "", 0);
+                        Passwd, Cookie, Token, Message1, Message2, Message3, TimeDelay, "", 0, null);
                     DataUsers.Add(account);
                     File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(DataUsers, new JsonSerializerOptions
                     {

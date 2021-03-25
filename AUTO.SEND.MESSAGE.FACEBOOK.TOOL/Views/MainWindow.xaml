@@ -19,123 +19,124 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <GroupBox
+        <ScrollViewer
             Grid.Row="0"
             Grid.RowSpan="2"
-            Grid.Column="0"
-            Header="Thêm tài khoản">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="80" />
-                    <RowDefinition Height="80" />
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <GroupBox
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Header="Tài khoản">
-                    <TextBox VerticalContentAlignment="Center" Text="{Binding UserName}" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Header="Mật khẩu">
-                    <PasswordBox Name="PasswordBox" VerticalContentAlignment="Center" />
-                </GroupBox>
-                <Button
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="1"
-                    Command="{Binding LoginFacebookCommand}"
-                    CommandParameter="{Binding ElementName=PasswordBox}"
-                    Content="Kết nỗi" />
-                <GroupBox
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="ID">
-                    <TextBox
-                        VerticalContentAlignment="Center"
-                        Text="{Binding Id}"
-                        TextWrapping="Wrap" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="Cookie">
-                    <TextBox
-                        VerticalContentAlignment="Center"
-                        Text="{Binding Cookie}"
-                        TextWrapping="Wrap" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="Token">
-                    <TextBox
-                        VerticalContentAlignment="Center"
-                        Text="{Binding Token}"
-                        TextWrapping="Wrap" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="Nội dung sáng (6h-9h)">
-                    <TextBox
-                        VerticalContentAlignment="Center"
-                        Text="{Binding Message1}"
-                        TextWrapping="Wrap" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="Nội dung trưa (11h-12h)">
-                    <TextBox
-                        VerticalContentAlignment="Center"
-                        Text="{Binding Message2}"
-                        TextWrapping="Wrap" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="7"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="Nội dung Tối (21h-23h)">
-                    <TextBox
-                        VerticalContentAlignment="Center"
-                        Text="{Binding Message3}"
-                        TextWrapping="Wrap" />
-                </GroupBox>
-                <GroupBox
-                    Grid.Row="8"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Header="Thời gian dừng giữa các lần gửi tin nhắn (phút)">
-                    <TextBox VerticalContentAlignment="Center" Text="{Binding TimeDelay}" />
-                </GroupBox>
-                <Button
-                    Grid.Row="9"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Command="{Binding SaveInfoCommand}"
-                    Content="Lưu tài khoản" />
-            </Grid>
-        </GroupBox>
+            Grid.Column="0">
+            <GroupBox Header="Thêm tài khoản">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="60" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Header="Tài khoản">
+                        <TextBox VerticalContentAlignment="Center" Text="{Binding UserName}" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Header="Mật khẩu">
+                        <PasswordBox Name="PasswordBox" VerticalContentAlignment="Center" />
+                    </GroupBox>
+                    <Button
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Command="{Binding LoginFacebookCommand}"
+                        CommandParameter="{Binding ElementName=PasswordBox}"
+                        Content="Kết nỗi" />
+                    <GroupBox
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="ID">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Id}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Cookie">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Cookie}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Token">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Token}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Nội dung sáng (6h-9h)">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Message1}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Nội dung trưa (11h-12h)">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Message2}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Nội dung Tối (21h-23h)">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Message3}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Thời gian dừng giữa các lần gửi tin nhắn (phút)">
+                        <TextBox VerticalContentAlignment="Center" Text="{Binding TimeDelay}" />
+                    </GroupBox>
+                    <Button
+                        Grid.Row="9"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Command="{Binding SaveInfoCommand}"
+                        Content="Lưu tài khoản" />
+                </Grid>
+            </GroupBox>
+        </ScrollViewer>
         <GroupBox
             Grid.Row="0"
             Grid.Column="1"
