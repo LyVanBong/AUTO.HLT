@@ -8,18 +8,11 @@ using System.Threading.Tasks;
 
 namespace AUTO.DLL.Services
 {
-    public  class RestSharpService 
+    public static  class RestSharpService 
     {
-        private IRestClient _client;
-        private IRestRequest _request;
-
-        public RestSharpService()
-        {
-            _client = new RestClient();
-            _client.Timeout = -1;
-        }
-
-        private void CreateClients(string uri, Method method = Method.GET)
+        private static IRestClient _client=new RestClient();
+        private static IRestRequest _request;
+        private static void CreateClients(string uri, Method method = Method.GET)
         {
             try
             {
@@ -36,7 +29,7 @@ namespace AUTO.DLL.Services
         /// them du lieu chuyen vao request
         /// </summary>
         /// <param name="parameters"></param>
-        private void AddPrarameter(IReadOnlyCollection<RequestParameter> parameters)
+        private static void AddPrarameter(IReadOnlyCollection<RequestParameter> parameters)
         {
             try
             {
@@ -55,7 +48,7 @@ namespace AUTO.DLL.Services
         /// them cookie
         /// </summary>
         /// <param name="cookie"></param>
-        private void AddHeader(string cookie)
+        private static void AddHeader(string cookie)
         {
             try
             {
@@ -89,7 +82,7 @@ namespace AUTO.DLL.Services
             }
         }
 
-        public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
+        public static async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -114,7 +107,7 @@ namespace AUTO.DLL.Services
             }
         }
 
-        public async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
+        public static async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -136,7 +129,7 @@ namespace AUTO.DLL.Services
             }
         }
 
-        public async Task<string> PutAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
+        public static async Task<string> PutAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {
@@ -158,7 +151,7 @@ namespace AUTO.DLL.Services
             }
         }
 
-        public async Task<string> DeleteAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
+        public static async Task<string> DeleteAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try
             {

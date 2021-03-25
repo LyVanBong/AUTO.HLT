@@ -3,7 +3,9 @@ using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
 {
@@ -28,6 +31,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
         private string _path = Directory.GetCurrentDirectory() + "/Data";
         private ObservableCollection<AcountsModel> _dataUsers;
         private string _passwd;
+        private AcountsModel _selectUser;
 
         public string Title
         {
@@ -99,12 +103,148 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
             set => SetProperty(ref _passwd, value);
         }
 
+        public AcountsModel SelectUser
+        {
+            get => _selectUser;
+            set
+            {
+                if (SetProperty(ref _selectUser, value))
+                {
+
+
+                }
+            }
+        }
+
         public MainWindowViewModel()
         {
             LoginFacebookCommand = new DelegateCommand<object>(async (pwd) => await LoginFacebook(pwd));
             SaveInfoCommand = new DelegateCommand(async () => await SaveInfo());
 
             InitData();
+
+            StartService();
+        }
+
+        private async void StartService()
+        {
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMinutes(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+#if DEBUG
+            Console.WriteLine($"Timer đang chạy : {DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss")}");
+#endif
+            if (File.Exists(_path + "/Acounts.json"))
+            {
+                var json = File.ReadAllText(_path + "/Acounts.json");
+                if (!string.IsNullOrWhiteSpace(json))
+                {
+                    var data = JsonSerializer.Deserialize<List<AcountsModel>>(json);
+                    if (data != null && data.Any())
+                    {
+                        var tmp = 0;
+                        foreach (var acount in data)
+                        {
+                            if (acount.Status == 0)
+                            {
+                                acount.Status = 1;
+                                acount.BackgroundWorker = new BackgroundWorker();
+                                acount.BackgroundWorker.WorkerReportsProgress = true;
+                                acount.BackgroundWorker.WorkerSupportsCancellation = true;
+                                acount.BackgroundWorker.DoWork += Worker_DoWork;
+                                acount.BackgroundWorker.ProgressChanged += Worker_ProgressChanged;
+                                acount.BackgroundWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+                                acount.BackgroundWorker.RunWorkerAsync(acount);
+                                tmp++;
+                            }
+                        }
+
+                        if (tmp > 0)
+                        {
+                            File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(data, new JsonSerializerOptions()
+                            {
+                                WriteIndented = true
+                            }));
+                            DataUsers = JsonSerializer.Deserialize<ObservableCollection<AcountsModel>>(
+                                File.ReadAllText(_path + "/Acounts.json"));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+                if (e.UserState != null)
+                {
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Message("Lỗi : " + ex.Message);
+            }
+        }
+
+        private async void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var user = (AcountsModel)e?.Argument;
+            try
+            {
+                if (user != null)
+                {
+                    var fileFriend = _path + "/Friends/" + user.Id + ".json";
+                    var json = File.ReadAllText(fileFriend);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        var data = JsonSerializer.Deserialize<List<FriendModel>>(json);
+                        if (data != null && data.Any())
+                        {
+                            var random = new Random();
+                            foreach (var friend in data)
+                            {
+                                if (!friend.IsSend)
+                                {
+                                    var message = string.Format(user.Message1, friend.name);
+                                    var note = "";
+                                   
+                                    if (await FacebookService.SendMessage(message, friend.id, user.Cookie))
+                                    {
+                                        (sender as BackgroundWorker)?.ReportProgress(1, new HistoryModel
+                                        {
+                                            Id = user.Id,
+                                            NameFriend = friend.name,
+                                            IdFriend = friend.id,
+                                            Message = message,
+                                            TimeSend = DateTime.Now,
+                                            Note = note,
+                                        });
+                                        await Task.Delay(
+                                            TimeSpan.FromMinutes(random.Next(user.TimeDelay - 1, user.TimeDelay + 1)));
+                                    }
+                                    friend.IsSend = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Message("Lỗi : " + ex.Message);
+            }
         }
 
         private async Task SaveInfo()
@@ -127,6 +267,12 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                         Passwd, Cookie, Token, Message1, Message2, Message3, TimeDelay, "", 0, null);
                     DataUsers.Add(account);
                     File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(DataUsers, new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    }));
+                    var data = await FacebookService.GetIdFriends(Token);
+                    var lsFriend = data.data as List<FriendModel>;
+                    File.WriteAllText(_path + @"/Friends/" + Id + ".json", JsonSerializer.Serialize(lsFriend, new JsonSerializerOptions()
                     {
                         WriteIndented = true
                     }));

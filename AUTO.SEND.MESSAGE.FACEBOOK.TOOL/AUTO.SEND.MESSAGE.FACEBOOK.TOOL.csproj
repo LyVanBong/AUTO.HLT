@@ -86,6 +86,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\AcountsModel.cs" />
+    <Compile Include="Models\FriendModel.cs" />
+    <Compile Include="Models\HistoryModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

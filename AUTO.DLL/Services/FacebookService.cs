@@ -1,24 +1,170 @@
 ﻿using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AUTO.DLL.Models;
 
 namespace AUTO.DLL.Services
 {
     public static class FacebookService
     {
-        public static async Task<bool> SendMessage(string message, string id)
+        /// <summary>
+        /// Lấy thông tin tài khoản facebook qua api
+        /// </summary>
+        /// <param name="accessToken">Token facebook</param>
+        /// <param name="fields">Các thông tin cần nấy mặc định là ảnh và tên</param>
+        /// <returns>Các thông tin đã yêu cầu cại fields</returns>
+        public static async Task<dynamic> GetInfoUser(string accessToken, string fields = "name,picture")
+        {
+            try
+            {
+                if (accessToken != null)
+                {
+                    var para = new List<RequestParameter>
+                    {
+                        new RequestParameter("fields",fields),
+                        new RequestParameter("access_token",accessToken),
+                    };
+                    var data = await RestSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
+                    if (data != null)
+                    {
+                        var info = JsonSerializer.Deserialize<dynamic>(data);
+                        if (info != null)
+                            return info;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return null;
+        }
+        /// <summary>
+        /// Lấy html của một trang web
+        /// </summary>
+        /// <param name="url">Đường đẫn của trang web</param>
+        /// <param name="cookie">cookie của trang web</param>
+        /// <param name="parameters">các tham số cần</param>
+        /// <returns>Html</returns>
+        public static async Task<string> GetHtmlFacebook(string url, string cookie = null, List<RequestParameter> parameters = null)
+        {
+            try
+            {
+                var html = await RestSharpService.GetAsync(url, parameters, cookie);
+                return html;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// Lấy danh sách bạn bè
+        /// </summary>
+        /// <param name="token">Token facebook</param>
+        /// <param name="fields">các thông tin cần lấy</param>
+        /// <param name="limit">Số lượng bạn bè muỗn lấy</param>
+        /// <returns>Danh sách bạn bè</returns>
+        public static async Task<dynamic> GetIdFriends(string token, string fields = "id,name", string limit = "5000")
+        {
+            try
+            {
+                var rd = new Random();
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("fields",fields),
+                    new RequestParameter("limit",limit),
+                    new RequestParameter("access_token",token),
+                };
+                var data = await RestSharpService.GetAsync("https://graph.facebook.com/v9.0/me/friends", para);
+                if (data != null)
+                {
+                    return JsonSerializer.Deserialize<dynamic>(data);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+        }
+        /// <summary>
+        /// Kiểm tra cookie và token còn sống không
+        /// </summary>
+        /// <param name="token">token</param>
+        /// <param name="cookie">cookie</param>
+        /// <returns>true là còn sống, false là đã die</returns>
+        public static async Task<bool> CheckTokenCookie(string token, string cookie)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(cookie) || string.IsNullOrEmpty(token))
+                {
+                    return false;
+                }
+                else
+                {
+                    var html = await RestSharpService.GetAsync(@"https://m.facebook.com/", null, cookie);
+                    var friend = await GetInfoUser(token);
+                    if (friend != null && html != null)
+                    {
+                        if (html.Contains("mbasic_logout_button") && friend.name != null)
+                            return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Lấy tham số facebook
+        /// </summary>
+        /// <param name="cookie">cookie facebook</param>
+        /// <returns>jazoest và fbdtsg</returns>
+        public static async Task<(string Jazoest, string Fbdtsg)> GeJazoestAndFbdtsg(string cookie)
+        {
+            try
+            {
+                var html = await GetHtmlFacebook("https://m.facebook.com/", cookie);
+                var jazoest = Regex.Match(html, @"/><input type=""hidden"" name=""jazoest"" value=""(.*?)"" autocomplete=""off"" /><input type=""hidden"" name=""privacyx""")?.Groups[1]?.Value;
+                var fbdtsg = Regex.Match(html, @"id=""mbasic-composer-form""><input type=""hidden"" name=""fb_dtsg"" value=""(.*?)""")?.Groups[1]?.Value;
+                return (Jazoest: jazoest, Fbdtsg: fbdtsg);
+            }
+            catch (Exception e)
+            {
+                return ("", "");
+            }
+        }
+        public static async Task<bool> SendMessage(string message, string id, string cookie)
         {
 
             try
             {
-
-                return true;
+                var getParaFace = await GeJazoestAndFbdtsg(cookie);
+                var para = new List<RequestParameter>()
+                {
+                    new RequestParameter("fb_dtsg",getParaFace.Fbdtsg),
+                    new RequestParameter("jazoest",getParaFace.Jazoest),
+                    new RequestParameter("body",message),
+                    new RequestParameter("ids",id),
+                };
+                var data = await RestSharpService.PostAsync("https://d.facebook.com/messages/send/?icm=1", para,
+                    cookie);
+#if DEBUG
+                Console.WriteLine("Send message data : " + data);
+#endif
+                if (data.Contains("mbasic_logout_button"))
+                    return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
             }
+            return false;
         }
         /// <summary>
         /// Đăng nhập facebook
