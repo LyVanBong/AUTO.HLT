@@ -2,21 +2,19 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C0BB541D-3639-4115-9AAE-E1CB753D7DD8}</ProjectGuid>
+    <ProjectGuid>{6AF76794-B681-497D-99C7-2A32C5A18A41}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AUTO.HLT.ADMIN</RootNamespace>
-    <AssemblyName>AUTOHLT ADMIN</AssemblyName>
+    <RootNamespace>AUTO.SEND.MESSAGE.FACEBOOK.TOOL</RootNamespace>
+    <AssemblyName>AUTO.SEND.MESSAGE.FACEBOOK.TOOL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,6 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -52,13 +51,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -77,90 +77,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\AddWork\WorkModel.cs" />
-    <Compile Include="Models\AutoLikeCommentAvatar\HistoryAutoModel.cs" />
-    <Compile Include="Models\AutoLikeCommentAvatar\UIdFacebookModel.cs" />
-    <Compile Include="Models\AutoLikeCommentAvatar\UserAutoModel.cs" />
-    <Compile Include="Models\Facebook\FillterFriendModel.cs" />
-    <Compile Include="Models\Facebook\FriendsDoNotInteractModel.cs" />
-    <Compile Include="Models\Facebook\FriendsModel.cs" />
-    <Compile Include="Models\Facebook\InviteFriendsLikePageModel.cs" />
-    <Compile Include="Models\Facebook\NamePictureUserModel.cs" />
-    <Compile Include="Models\Facebook\PokesFriendsModel.cs" />
-    <Compile Include="Models\Facebook\PostIdMyFriendModel.cs" />
-    <Compile Include="Models\Facebook\UidTypeFacebookModel.cs" />
-    <Compile Include="Models\Main\UserModel.cs" />
-    <Compile Include="Models\RequestProviderModel\RequestParameter.cs" />
-    <Compile Include="Models\RequestProviderModel\ResponseModel.cs" />
-    <Compile Include="Models\Telegram\TelegramModel.cs" />
-    <Compile Include="Services\AutoLikeCommentAvatar\AutoAvatarService.cs" />
-    <Compile Include="Services\AutoLikeCommentAvatar\IAutoAvatarService.cs" />
-    <Compile Include="Services\Facebook\FacebookeService.cs" />
-    <Compile Include="Services\Facebook\IFacebookService.cs" />
-    <Compile Include="Services\RequestProvider\IRequestProvider.cs" />
-    <Compile Include="Services\RequestProvider\RequestProvider.cs" />
-    <Compile Include="Services\RestSharp\IRestSharpService.cs" />
-    <Compile Include="Services\RestSharp\RestSharpService.cs" />
-    <Compile Include="Services\Telegram\ITelegramService.cs" />
-    <Compile Include="Services\Telegram\TelegramService.cs" />
-    <Compile Include="ViewModels\AddWork\AddWorkViewModel.cs" />
-    <Compile Include="ViewModels\CheckWork\CheckWorkViewModel.cs" />
-    <Compile Include="ViewModels\Login\LoginWindowViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\AddWork\AddWorkView.xaml.cs">
-      <DependentUpon>AddWorkView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CheckWork\CheckWorkView.xaml.cs">
-      <DependentUpon>CheckWorkView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\AddUserView.xaml.cs">
-      <DependentUpon>AddUserView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\HistoryWorkView.xaml.cs">
-      <DependentUpon>HistoryWorkView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\ListUserView.xaml.cs">
-      <DependentUpon>ListUserView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\AddWork\AddWorkView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CheckWork\CheckWorkView.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Login\LoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
-    <Compile Include="Views\Login\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Main\AddUserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\HistoryWorkView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\ListUserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -180,26 +109,37 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.Config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
-    <PackageReference Include="RestSharp">
-      <Version>106.11.7</Version>
+    <PackageReference Include="Selenium.Support">
+      <Version>3.141.0</Version>
     </PackageReference>
+    <PackageReference Include="Selenium.WebDriver">
+      <Version>3.141.0</Version>
+    </PackageReference>
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver">
+      <Version>89.0.4389.2300</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>5.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AUTO.DLL\AUTO.DLL.csproj">
+      <Project>{19637d9b-b825-4adf-9a47-2fbae19e39c7}</Project>
+      <Name>AUTO.DLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -212,18 +152,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Assets\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
