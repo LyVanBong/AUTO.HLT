@@ -402,7 +402,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                                             };
                                             (sender as BackgroundWorker)?.ReportProgress(1, his);
                                             friend.IsSend = true;
-                                            Thread.Sleep(TimeSpan.FromMinutes(user.TimeDelay));
+                                            Thread.Sleep(TimeSpan.FromMinutes(random.Next(user.TimeDelay - 1, user.TimeDelay + 1)));
                                         }
                                         else
                                         {
