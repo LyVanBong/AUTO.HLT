@@ -1,10 +1,9 @@
-﻿using System;
+﻿using AUTO.DLL.Models;
+using RestSharp;
+using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AUTO.DLL.Models;
-using Newtonsoft.Json;
-using RestSharp;
 
 namespace AUTO.DLL.Services
 {

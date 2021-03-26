@@ -82,6 +82,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\FriendsModel.cs" />
+    <Compile Include="Models\NamePictureUserModel.cs" />
     <Compile Include="Models\RequestParameter.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\TelegramModel.cs" />

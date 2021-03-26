@@ -16,7 +16,7 @@ namespace AUTO.DLL.Services
         /// <param name="accessToken">Token facebook</param>
         /// <param name="fields">Các thông tin cần nấy mặc định là ảnh và tên</param>
         /// <returns>Các thông tin đã yêu cầu cại fields</returns>
-        public static async Task<dynamic> GetInfoUser(string accessToken, string fields = "name,picture")
+        public static async Task<NamePictureUserModel> GetInfoUser(string accessToken, string fields = "name,picture")
         {
             try
             {
@@ -30,7 +30,7 @@ namespace AUTO.DLL.Services
                     var data = await RestSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
                     if (data != null)
                     {
-                        var info = JsonSerializer.Deserialize<dynamic>(data);
+                        var info = JsonSerializer.Deserialize<NamePictureUserModel>(data);
                         if (info != null)
                             return info;
                     }
@@ -67,7 +67,7 @@ namespace AUTO.DLL.Services
         /// <param name="fields">các thông tin cần lấy</param>
         /// <param name="limit">Số lượng bạn bè muỗn lấy</param>
         /// <returns>Danh sách bạn bè</returns>
-        public static async Task<dynamic> GetIdFriends(string token, string fields = "id,name", string limit = "5000")
+        public static async Task<FriendsModel> GetIdFriends(string token, string fields = "id,name", string limit = "5000")
         {
             try
             {
@@ -81,7 +81,7 @@ namespace AUTO.DLL.Services
                 var data = await RestSharpService.GetAsync("https://graph.facebook.com/v9.0/me/friends", para);
                 if (data != null)
                 {
-                    return JsonSerializer.Deserialize<dynamic>(data);
+                    return JsonSerializer.Deserialize<FriendsModel>(data);
                 }
             }
             catch (Exception)

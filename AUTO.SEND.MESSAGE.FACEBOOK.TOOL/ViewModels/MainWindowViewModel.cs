@@ -6,14 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Configurations;
 
 namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
 {
@@ -32,6 +35,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
         private ObservableCollection<AcountsModel> _dataUsers;
         private string _passwd;
         private AcountsModel _selectUser;
+        private ObservableCollection<HistoryModel> _dataHistory;
 
         public string Title
         {
@@ -116,6 +120,12 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
             }
         }
 
+        public ObservableCollection<HistoryModel> DataHistory
+        {
+            get => _dataHistory;
+            set => SetProperty(ref _dataHistory, value);
+        }
+
         public MainWindowViewModel()
         {
             LoginFacebookCommand = new DelegateCommand<object>(async (pwd) => await LoginFacebook(pwd));
@@ -132,6 +142,20 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
             timer.Interval = TimeSpan.FromMinutes(1);
             timer.Tick += Timer_Tick;
             timer.Start();
+            var mess = new ContentSendTelegramModel
+            {
+                Ten_Thong_Bao = "Bật công cụ gửi tin nhăn",
+                So_Luong = 1,
+                Ghi_Chu = new
+                {
+                    Message = "Khởi động công cụ"
+                }
+            };
+            await TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(mess, new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+            }));
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -168,7 +192,8 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                         {
                             File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(data, new JsonSerializerOptions()
                             {
-                                WriteIndented = true
+                                WriteIndented = true,
+                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
                             }));
                             DataUsers = JsonSerializer.Deserialize<ObservableCollection<AcountsModel>>(
                                 File.ReadAllText(_path + "/Acounts.json"));
@@ -180,7 +205,103 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            try
+            {
+                var account = e.Result as AcountsModel;
+                if (account != null)
+                {
+                    var dataUid =
+                        JsonSerializer.Deserialize<FriendsModel.Datum[]>(File.ReadAllText(_path + "/Friends/" + account.Id + ".json"));
+                    if (dataUid != null)
+                    {
+                        var uid = dataUid.Where(x => x.IsSend == false).ToArray();
+                        if (uid.Length == 0)
+                        {
+                            GetAllFriends(account).Await();
+                        }
+                    }
+                    else
+                    {
+                        GetAllFriends(account).Await();
+                    }
 
+                    var lsAcount = JsonSerializer.Deserialize<List<AcountsModel>>(File.ReadAllText(_path + "/Acounts.json"));
+                    if (lsAcount != null)
+                    {
+                        var acc = lsAcount.Single(x => x.Id == account.Id);
+                        acc.Status = 0;
+                        File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(lsAcount, new JsonSerializerOptions()
+                        {
+                            WriteIndented = true,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                        }));
+                    }
+                    else
+                    {
+                        if (!FacebookService.CheckTokenCookie(account.Token, account.Cookie).Result)
+                        {
+                            var message = new ContentSendTelegramModel
+                            {
+                                Ten_Thong_Bao = "Cookie die",
+                                Id_Nguoi_Dung = account.Id,
+                                So_Luong = 1,
+                                Noi_Dung_Thong_Bao = account,
+                                Ghi_Chu = new
+                                {
+                                    Message = "die"
+                                }
+                            };
+                            TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(message, new JsonSerializerOptions()
+                            {
+                                WriteIndented = true,
+                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                            })).Await();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Message("Lỗi : " + ex.Message);
+            }
+        }
+
+        private async Task GetAllFriends(AcountsModel account)
+        {
+            var lsUid = await FacebookService.GetIdFriends(account.Token);
+            if (lsUid != null)
+            {
+                File.WriteAllText(_path + "/Friends/" + account.Id + ".json", JsonSerializer.Serialize(lsUid.data,
+                    new JsonSerializerOptions()
+                    {
+                        WriteIndented = true,
+                        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                    }));
+            }
+            else
+            {
+                if (!await FacebookService.CheckTokenCookie(account.Token, account.Cookie))
+                {
+                    var message = new ContentSendTelegramModel
+                    {
+                        Ten_Thong_Bao = "Cookie die",
+                        Id_Nguoi_Dung = account.Id,
+                        So_Luong = 1,
+                        Noi_Dung_Thong_Bao = account,
+                        Ghi_Chu = new
+                        {
+                            Message = "die"
+                        }
+                    };
+                    await TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(
+                        message, new JsonSerializerOptions()
+                        {
+                            WriteIndented = true,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                        }));
+                }
+            }
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -189,7 +310,35 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
             {
                 if (e.UserState != null)
                 {
-                    
+                    var his = e.UserState as HistoryModel;
+                    if (his != null)
+                    {
+                        if (DataHistory == null)
+                        {
+                            his.Stt = 1;
+                            DataHistory = new ObservableCollection<HistoryModel>();
+                            DataHistory.Add(his);
+                        }
+                        else
+                        {
+                            his.Stt = DataHistory.Max(x => x.Stt) + 1;
+                            DataHistory.Add(his);
+                        }
+                        File.AppendAllText(_path + "/Logs/" + his.Id + ".json", JsonSerializer.Serialize(his, new JsonSerializerOptions()
+                        {
+                            WriteIndented = true,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                        }));
+                        var data = JsonSerializer.Deserialize<FriendsModel.Datum[]>(
+                            File.ReadAllText(_path + "/Friends/" + his.Id + ".json"));
+                        var usr = data.Single(x => x.id == his.IdFriend);
+                        usr.IsSend = true;
+                        File.WriteAllText(_path + "/Friends/" + his.Id + ".json", JsonSerializer.Serialize(data, new JsonSerializerOptions()
+                        {
+                            WriteIndented = true,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                        }));
+                    }
                 }
             }
             catch (Exception ex)
@@ -198,7 +347,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
             }
         }
 
-        private async void Worker_DoWork(object sender, DoWorkEventArgs e)
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             var user = (AcountsModel)e?.Argument;
             try
@@ -209,7 +358,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                     var json = File.ReadAllText(fileFriend);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        var data = JsonSerializer.Deserialize<List<FriendModel>>(json);
+                        var data = JsonSerializer.Deserialize<FriendsModel.Datum[]>(json);
                         if (data != null && data.Any())
                         {
                             var random = new Random();
@@ -217,24 +366,67 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                             {
                                 if (!friend.IsSend)
                                 {
-                                    var message = string.Format(user.Message1, friend.name);
+                                    var message = "";
                                     var note = "";
-                                   
-                                    if (await FacebookService.SendMessage(message, friend.id, user.Cookie))
+                                    var hours = DateTime.Now.Hour;
+                                    if (hours >= 6 && hours <= 9)
                                     {
-                                        (sender as BackgroundWorker)?.ReportProgress(1, new HistoryModel
-                                        {
-                                            Id = user.Id,
-                                            NameFriend = friend.name,
-                                            IdFriend = friend.id,
-                                            Message = message,
-                                            TimeSend = DateTime.Now,
-                                            Note = note,
-                                        });
-                                        await Task.Delay(
-                                            TimeSpan.FromMinutes(random.Next(user.TimeDelay - 1, user.TimeDelay + 1)));
+                                        message = string.Format(user.Message1, friend.name);
+                                        note = "Sáng";
                                     }
-                                    friend.IsSend = true;
+                                    else if (hours >= 11 && hours <= 12)
+                                    {
+                                        message = string.Format(user.Message2, friend.name);
+                                        note = "Trưa";
+                                    }
+                                    else if (hours >= 21 && hours <= 23)
+                                    {
+                                        message = string.Format(user.Message3, friend.name);
+                                        note = "Tối";
+                                    }
+
+                                    if (!string.IsNullOrWhiteSpace(message) && !string.IsNullOrWhiteSpace(note))
+                                    {
+                                        var checkFace =
+                                             FacebookService.SendMessage(message, friend.id, user.Cookie);
+                                        if (checkFace.Result)
+                                        {
+                                            var his = new HistoryModel
+                                            {
+                                                Id = user.Id,
+                                                NameFriend = friend.name,
+                                                IdFriend = friend.id,
+                                                Message = message,
+                                                Note = note,
+                                                TimeSend = DateTime.Now
+                                            };
+                                            (sender as BackgroundWorker)?.ReportProgress(1, his);
+                                            friend.IsSend = true;
+                                            Thread.Sleep(TimeSpan.FromMinutes(user.TimeDelay));
+                                        }
+                                        else
+                                        {
+                                            if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                                            {
+                                                var mess = new ContentSendTelegramModel
+                                                {
+                                                    Ten_Thong_Bao = "Cookie die",
+                                                    Id_Nguoi_Dung = user.Id,
+                                                    So_Luong = 1,
+                                                    Noi_Dung_Thong_Bao = user,
+                                                    Ghi_Chu = new
+                                                    {
+                                                        Message = "die"
+                                                    }
+                                                };
+                                                TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(message, new JsonSerializerOptions()
+                                                {
+                                                    WriteIndented = true,
+                                                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                                                })).Await();
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -244,6 +436,11 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
             catch (Exception ex)
             {
                 Message("Lỗi : " + ex.Message);
+            }
+            finally
+            {
+                e.Result = user;
+                (sender as BackgroundWorker)?.CancelAsync();
             }
         }
 
@@ -268,15 +465,47 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                     DataUsers.Add(account);
                     File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(DataUsers, new JsonSerializerOptions
                     {
-                        WriteIndented = true
+                        WriteIndented = true,
+                        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
                     }));
                     var data = await FacebookService.GetIdFriends(Token);
-                    var lsFriend = data.data as List<FriendModel>;
-                    File.WriteAllText(_path + @"/Friends/" + Id + ".json", JsonSerializer.Serialize(lsFriend, new JsonSerializerOptions()
+                    if (data != null)
                     {
-                        WriteIndented = true
-                    }));
+                        var lsFriend = data.data;
+                        File.WriteAllText(_path + @"/Friends/" + Id + ".json", JsonSerializer.Serialize(lsFriend, new JsonSerializerOptions()
+                        {
+                            WriteIndented = true,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                        }));
+                    }
+                    else
+                    {
+                        if (!await FacebookService.CheckTokenCookie(account.Token, account.Cookie))
+                        {
+                            var mess = new ContentSendTelegramModel
+                            {
+                                Ten_Thong_Bao = "Cookie die",
+                                Id_Nguoi_Dung = account.Id,
+                                So_Luong = 1,
+                                Noi_Dung_Thong_Bao = account,
+                                Ghi_Chu = new
+                                {
+                                    Message = "die"
+                                }
+                            };
+                            await TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(mess, new JsonSerializerOptions()
+                            {
+                                WriteIndented = true,
+                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                            }));
+                        }
+                    }
                     Message("Lưu thành công");
+                    Id = null;
+                    UserName = null;
+                    Cookie = null;
+                    Token = null;
+                    Message1 = null; Message2 = null; Message3 = null;
                 }
                 else
                 {
@@ -309,7 +538,6 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                     Directory.CreateDirectory(_path);
                     Directory.CreateDirectory(_path + "/Logs");
                     Directory.CreateDirectory(_path + "/Friends");
-                    File.Create(_path + "/Acounts.json");
                 }
             }
             catch (Exception e)

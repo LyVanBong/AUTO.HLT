@@ -4,6 +4,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models
 {
     public class HistoryModel
     {
+        public int Stt { get; set; }
         public string Id { get; set; }
         public string NameFriend { get; set; }
         public string Message { get; set; }
