@@ -31,9 +31,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             AutoGenerateColumns="False"
-            ItemsSource="{Binding DataUsers}"
-            SelectedItem="{Binding SelectUser}"
-            SelectionMode="Single">
+            ItemsSource="{Binding DataUsers}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding STT}" Header="#" />
                 <DataGridTextColumn Binding="{Binding ID}" Header="Id" />

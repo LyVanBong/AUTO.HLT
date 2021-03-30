@@ -3,8 +3,6 @@ using AUTO.HLT.ADMIN.Services.Facebook;
 using AUTO.HLT.ADMIN.Services.RequestProvider;
 using AUTO.HLT.ADMIN.Services.RestSharp;
 using AUTO.HLT.ADMIN.Services.Telegram;
-using AUTO.HLT.ADMIN.Views.AddWork;
-using AUTO.HLT.ADMIN.Views.CheckWork;
 using AUTO.HLT.ADMIN.Views.Main;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using Microsoft.AppCenter;
@@ -39,10 +37,6 @@ namespace AUTO.HLT.ADMIN
             containerRegistry.Register<ITelegramService, TelegramService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
             containerRegistry.Register<IRequestProvider, RequestProvider>();
-
-
-            containerRegistry.RegisterForNavigation<AddWorkView>();
-            containerRegistry.RegisterForNavigation<CheckWorkView>();
         }
     }
 }
