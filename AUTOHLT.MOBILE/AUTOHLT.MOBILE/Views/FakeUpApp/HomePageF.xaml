@@ -16,7 +16,7 @@
                 Margin="0"
                 Padding="0"
                 BackgroundColor="{StaticResource Gray-White}"
-                RowDefinitions="50,80,80,300,30,300,*"
+                RowDefinitions="50,80,80,450,30,300,*"
                 RowSpacing="0">
                 <!--<Image
                     Grid.Row="0"
@@ -188,7 +188,7 @@
                     Padding="0"
                     ColumnDefinitions="*,*,*"
                     ColumnSpacing="0"
-                    RowDefinitions="*,*"
+                    RowDefinitions="*,*,*"
                     RowSpacing="0">
                     <Grid.Resources>
                         <Style TargetType="Image">
@@ -318,6 +318,26 @@
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="9" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="5"
+                        Padding="0"
+                        BackgroundColor="{StaticResource Gray-100}"
+                        BorderColor="{StaticResource Gray-300}"
+                        CornerRadius="10"
+                        HasShadow="True">
+                        <Grid
+                            Margin="0"
+                            Padding="0"
+                            RowDefinitions="*,20">
+                            <Image Grid.Row="0" Source="{markupExtensions:ImageResource icon_filter_friends.png}" />
+                            <Label Grid.Row="1" Text="Ghi chú" />
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="10" />
                         </Frame.GestureRecognizers>
                     </Frame>
                 </Grid>

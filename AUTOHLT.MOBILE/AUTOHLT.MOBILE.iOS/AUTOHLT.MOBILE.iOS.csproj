@@ -280,10 +280,61 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\icon_splash_screen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\auction.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\blackdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\caret.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\chuyentien.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cong.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\contract.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\greenup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\insight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\len.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\qltk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reddown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\suong.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\thitruong.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tru.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadDebuggerTimeoutExceptionAUTOHLTMOBILEiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
