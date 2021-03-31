@@ -7,5 +7,5 @@
     xmlns:views="clr-namespace:AUTOHLT.MOBILE.Views.FakeUpApp.Views;assembly=AUTOHLT.MOBILE"
     android:TabbedPage.ToolbarPlacement="Bottom"
     NavigationPage.HasNavigationBar="False">
-    <views:DatLenhPage Title="Đặt lệnh" IconImageSource="auction.png" />
+    <views:DatLenhPage Title="Đặt lệnh"/>
 </TabbedPage>
