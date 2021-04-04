@@ -1,4 +1,5 @@
 ﻿using AUTO.DLL.Services;
+using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Configurations;
 using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -16,7 +16,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using AUTO.SEND.MESSAGE.FACEBOOK.TOOL.Configurations;
 
 namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
 {
