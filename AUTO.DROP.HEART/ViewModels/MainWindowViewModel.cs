@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -70,15 +73,44 @@ namespace AUTO.DROP.HEART.ViewModels
 
         public MainWindowViewModel()
         {
-            LoginFacebookCommand = new DelegateCommand<object>(async (obj) => await LoginFacebook(obj));
+            LoginFacebookCommand = new DelegateCommand<PasswordBox>(async (obj) => await LoginFacebook(obj));
             SaveInfoCommand = new DelegateCommand(async () => await SaveInfo());
+
+            CreateData();
+        }
+
+        private void CreateData()
+        {
+            try
+            {
+                var path = AppDomain.CurrentDomain.BaseDirectory + "/DATA";
+                if (Directory.Exists(path))
+                {
+                    var json = File.ReadAllText(path + "/Account.json");
+                    var data = JsonSerializer.Deserialize<List<AccountModel>>(json);
+                    if (data != null && data.Any())
+                    {
+                        DataUsers = new ObservableCollection<AccountModel>(data);
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(path + "/Friends");
+                    Directory.CreateDirectory(path + "/Logs");
+                }
+            }
+            catch (Exception e)
+            {
+                Message("Loi khoi tao du lieu: " + e.Message);
+            }
         }
 
         private async Task SaveInfo()
         {
             try
             {
-                if (!string.IsNullOrEmpty(Id) && !string.IsNullOrEmpty(Cookie)&&!string.IsNullOrEmpty(Token))
+                if (!string.IsNullOrEmpty(Id) && !string.IsNullOrEmpty(Cookie) && !string.IsNullOrEmpty(Token))
                 {
                     var max = 0;
                     if (DataUsers == null)
@@ -92,7 +124,7 @@ namespace AUTO.DROP.HEART.ViewModels
                     }
                     DataUsers.Add(new AccountModel()
                     {
-                        Stt=max,
+                        Stt = max,
                         Cookie = Cookie,
                         Token = Token,
                         Id = Id,
@@ -101,6 +133,17 @@ namespace AUTO.DROP.HEART.ViewModels
                         UserName = UserName,
                         Status = 0,
                     });
+                    File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/DATA/Account.json", JsonSerializer.Serialize(DataUsers, new JsonSerializerOptions
+                    {
+                        WriteIndented = true,
+                        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                    }));
+
+                    Id = null;
+                    Cookie = null;
+                    Token = null;
+                    UserName = null;
+                    Message("Lưu thông tin tài khoản thành công");
                 }
             }
             catch (Exception e)
@@ -109,13 +152,13 @@ namespace AUTO.DROP.HEART.ViewModels
             }
         }
 
-        private async Task LoginFacebook(object pwd)
+        private async Task LoginFacebook(PasswordBox pwd)
         {
             try
             {
                 if (pwd != null)
                 {
-                    var pass = ((PasswordBox)pwd).Password;
+                    var pass = pwd.Password;
                     if (!string.IsNullOrWhiteSpace(pass) && UserName != null)
                     {
                         var login = await FacebookService.Login(UserName, pass);
