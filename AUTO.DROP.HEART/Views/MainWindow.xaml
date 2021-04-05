@@ -135,7 +135,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Cookie}" Header="Cookie" />
                     <DataGridTextColumn Binding="{Binding Token}" Header="Token" />
-                    <DataGridTextColumn Binding="{Binding DateCreate}" Header="Thời gian chạy" />
+                    <DataGridTextColumn Binding="{Binding DateCreate}" Header="Thời gian thêm" />
                     <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
                 </DataGrid.Columns>
             </DataGrid>

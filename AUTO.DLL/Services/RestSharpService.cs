@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace AUTO.DLL.Services
 {
-    public static  class RestSharpService 
+    public static class RestSharpService
     {
-        private static IRestClient _client=new RestClient();
+        private static IRestClient _client;
         private static IRestRequest _request;
         private static void CreateClients(string uri, Method method = Method.GET)
         {
             try
             {
-                _client.BaseUrl = new Uri(uri);
+                _client = new RestClient(new Uri(uri));
                 _request = new RestRequest(method);
             }
             catch (Exception)

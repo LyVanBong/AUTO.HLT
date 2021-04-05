@@ -168,7 +168,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private void StartServiceAuto()
         {
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMinutes(1);
+            timer.Interval = TimeSpan.FromMinutes(5);
             timer.Tick += Timer_Tick;
             timer.Start();
             var message = new ContentSendTelegramModel

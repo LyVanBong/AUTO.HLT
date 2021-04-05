@@ -138,7 +138,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
         private async void StartService()
         {
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMinutes(1);
+            timer.Interval = TimeSpan.FromMinutes(5);
             timer.Tick += Timer_Tick;
             timer.Start();
             var mess = new ContentSendTelegramModel
@@ -162,43 +162,50 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
 #if DEBUG
             Console.WriteLine($"Timer đang chạy : {DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss")}");
 #endif
-            if (File.Exists(_path + "/Acounts.json"))
+            try
             {
-                var json = File.ReadAllText(_path + "/Acounts.json");
-                if (!string.IsNullOrWhiteSpace(json))
+                if (File.Exists(_path + "/Acounts.json"))
                 {
-                    var data = JsonSerializer.Deserialize<List<AcountsModel>>(json);
-                    if (data != null && data.Any())
+                    var json = File.ReadAllText(_path + "/Acounts.json");
+                    if (!string.IsNullOrWhiteSpace(json))
                     {
-                        var tmp = 0;
-                        foreach (var acount in data)
+                        var data = JsonSerializer.Deserialize<List<AcountsModel>>(json);
+                        if (data != null && data.Any())
                         {
-                            if (acount.Status == 0)
+                            var tmp = 0;
+                            foreach (var acount in data)
                             {
-                                acount.Status = 1;
-                                acount.BackgroundWorker = new BackgroundWorker();
-                                acount.BackgroundWorker.WorkerReportsProgress = true;
-                                acount.BackgroundWorker.WorkerSupportsCancellation = true;
-                                acount.BackgroundWorker.DoWork += Worker_DoWork;
-                                acount.BackgroundWorker.ProgressChanged += Worker_ProgressChanged;
-                                acount.BackgroundWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-                                acount.BackgroundWorker.RunWorkerAsync(acount);
-                                tmp++;
+                                if (acount.Status == 0)
+                                {
+                                    acount.Status = 1;
+                                    acount.BackgroundWorker = new BackgroundWorker();
+                                    acount.BackgroundWorker.WorkerReportsProgress = true;
+                                    acount.BackgroundWorker.WorkerSupportsCancellation = true;
+                                    acount.BackgroundWorker.DoWork += Worker_DoWork;
+                                    acount.BackgroundWorker.ProgressChanged += Worker_ProgressChanged;
+                                    acount.BackgroundWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+                                    acount.BackgroundWorker.RunWorkerAsync(acount);
+                                    tmp++;
+                                }
                             }
-                        }
 
-                        if (tmp > 0)
-                        {
-                            File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(data, new JsonSerializerOptions()
+                            if (tmp > 0)
                             {
-                                WriteIndented = true,
-                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
-                            }));
-                            DataUsers = JsonSerializer.Deserialize<ObservableCollection<AcountsModel>>(
-                                File.ReadAllText(_path + "/Acounts.json"));
+                                File.WriteAllText(_path + "/Acounts.json", JsonSerializer.Serialize(data, new JsonSerializerOptions()
+                                {
+                                    WriteIndented = true,
+                                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                                }));
+                                DataUsers = JsonSerializer.Deserialize<ObservableCollection<AcountsModel>>(
+                                    File.ReadAllText(_path + "/Acounts.json"));
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception exception)
+            {
+                Message("Lỗi: " + exception.Message);
             }
         }
 

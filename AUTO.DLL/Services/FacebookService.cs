@@ -1,10 +1,12 @@
 ﻿using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AUTO.DLL.Models;
+using OpenQA.Selenium;
 
 namespace AUTO.DLL.Services
 {
@@ -165,6 +167,37 @@ namespace AUTO.DLL.Services
             {
             }
             return false;
+        }
+        /// <summary>
+        /// Đăng nhập facebook bằng ChromeDriver
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public static async Task<string> GetHtmlFacebookChrome(string cookie)
+        {
+            try
+            {
+                var service = ChromeDriverService.CreateDefaultService();
+                service.HideCommandPromptWindow = true;
+
+                var options = new ChromeOptions();
+                options.AddArgument("--window-position=-1,-1");
+                options.AddArgument("--window-position=-32000,-32000");
+                var driver = new ChromeDriver(service, options);
+                driver.Navigate().GoToUrl("https://m.facebook.com/");
+                var ck = cookie.Split(';');
+                foreach (var s in ck)
+                {
+                    var c = s.Split('=');
+                    driver.Manage().Cookies.AddCookie(new Cookie(c[0],c[1]));
+                }
+                driver.Navigate().Refresh();
+                return driver.PageSource;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         /// <summary>
         /// Đăng nhập facebook

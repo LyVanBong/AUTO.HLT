@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using AUTO.DLL.Services;
+using AUTO.DROP.HEART.Configurations;
 using AUTO.DROP.HEART.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using RestSharp;
 
 namespace AUTO.DROP.HEART.ViewModels
 {
@@ -24,6 +29,7 @@ namespace AUTO.DROP.HEART.ViewModels
         private string _token;
         private ObservableCollection<AccountModel> _dataUsers;
         private string _id;
+        private string _path = Directory.GetCurrentDirectory() + "/DATA";
 
         public string Title
         {
@@ -77,6 +83,119 @@ namespace AUTO.DROP.HEART.ViewModels
             SaveInfoCommand = new DelegateCommand(async () => await SaveInfo());
 
             CreateData();
+
+            StartService();
+        }
+
+        private async Task<string> GetIdStory(string cookie)
+        {
+            try
+            {
+                var html = await FacebookService.GetHtmlFacebook("https://m.facebook.com/", cookie);
+                return html;
+            }
+            catch (Exception e)
+            {
+                Message("Lỗi: " + e.Message);
+                return null;
+            }
+        }
+
+        private async void StartService()
+        {
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMinutes(5);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+            var mess = new ContentSendTelegramModel
+            {
+                Ten_Thong_Bao = "Bật công cụ thả tim story",
+                So_Luong = 1,
+                Ghi_Chu = new
+                {
+                    Message = "Khởi động công cụ"
+                }
+            };
+            await TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(mess, new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+            }));
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (File.Exists(_path + "/Account.json"))
+                {
+                    var json = File.ReadAllText(_path + "/Account.json");
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        var data = JsonSerializer.Deserialize<List<AccountModel>>(json);
+                        if (data != null && data.Any())
+                        {
+                            var tmp = 0;
+                            foreach (var acount in data)
+                            {
+                                if (acount.Status == 0)
+                                {
+                                    acount.Status = 1;
+                                    var bgWorker = new BackgroundWorker();
+                                    bgWorker.WorkerReportsProgress = true;
+                                    bgWorker.WorkerSupportsCancellation = true;
+                                    bgWorker.DoWork += Worker_DoWork;
+                                    bgWorker.ProgressChanged += Worker_ProgressChanged;
+                                    bgWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+                                    bgWorker.RunWorkerAsync(acount);
+                                    tmp++;
+                                }
+                            }
+
+                            if (tmp > 0)
+                            {
+                                File.WriteAllText(_path + "/Account.json", JsonSerializer.Serialize(data, new JsonSerializerOptions()
+                                {
+                                    WriteIndented = true,
+                                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                                }));
+                                DataUsers = JsonSerializer.Deserialize<ObservableCollection<AccountModel>>(
+                                    File.ReadAllText(_path + "/Account.json"));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Message("Lỗi: " + ex.Message);
+            }
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                var user = (AccountModel)e?.Argument;
+                if (user != null)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Message("Lỗi: " + ex.Message);
+            }
         }
 
         private void CreateData()
@@ -138,6 +257,8 @@ namespace AUTO.DROP.HEART.ViewModels
                         WriteIndented = true,
                         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
                     }));
+
+                    var html = await FacebookService.GetHtmlFacebookChrome(Cookie);
 
                     Id = null;
                     Cookie = null;
