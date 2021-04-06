@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -169,11 +170,13 @@ namespace AUTO.DLL.Services
             return false;
         }
         /// <summary>
-        /// Đăng nhập facebook bằng ChromeDriver
+        /// Thả tim story facebook
         /// </summary>
+        /// <param name="url"></param>
         /// <param name="cookie"></param>
+        /// <param name="message"></param>
         /// <returns></returns>
-        public static async Task<string> GetHtmlFacebookChrome(string cookie)
+        public static async Task AutoDropHeartFacebookStory(string url, string cookie, string message = null)
         {
             try
             {
@@ -185,14 +188,68 @@ namespace AUTO.DLL.Services
                 options.AddArgument("--window-position=-32000,-32000");
                 var driver = new ChromeDriver(service, options);
                 driver.Navigate().GoToUrl("https://m.facebook.com/");
-                var ck = cookie.Split(';');
-                foreach (var s in ck)
+
+                if (cookie != null)
                 {
-                    var c = s.Split('=');
-                    driver.Manage().Cookies.AddCookie(new Cookie(c[0],c[1]));
+                    var ck = cookie.Split(';');
+                    foreach (var s in ck)
+                    {
+                        var c = s.Split('=');
+                        driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
+                    }
+                }
+
+                driver.Navigate().GoToUrl("https://m.facebook.com/" + url);
+                await Task.Delay(5000);
+
+                var element = driver.FindElementByXPath(@"/html/body/div[1]/div/div[2]/div/div[2]/div/div/div/div[2]/span/div[3]/div[9]/div");
+                element.Click();
+                await Task.Delay(1000);
+
+                var lsElements = driver.FindElementsByClassName(@"_7ko-");
+                lsElements[1].Click();
+
+                driver.Quit();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Loi: " + ex.Message);
+            }
+            return;
+        }
+        /// <summary>
+        /// get html bằng ChromeDriver
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public static async Task<string> GetHtmlChrome(string url, string cookie = null)
+        {
+            try
+            {
+                var service = ChromeDriverService.CreateDefaultService();
+                service.HideCommandPromptWindow = true;
+
+                var options = new ChromeOptions();
+                options.AddArgument("--window-position=-1,-1");
+                options.AddArgument("--window-position=-32000,-32000");
+                var driver = new ChromeDriver(service, options);
+                driver.Navigate().GoToUrl(url);
+
+                if (cookie != null)
+                {
+                    var ck = cookie.Split(';');
+                    foreach (var s in ck)
+                    {
+                        var c = s.Split('=');
+                        driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
+                    }
                 }
                 driver.Navigate().Refresh();
-                return driver.PageSource;
+                await Task.Delay(2000);
+                var html = driver.PageSource;
+                driver.Quit();
+                return html;
             }
             catch (Exception)
             {
@@ -205,7 +262,7 @@ namespace AUTO.DLL.Services
         /// <param name="user">Tài khoản</param>
         /// <param name="pass">Mật khẩu</param>
         /// <returns>Cookie và token</returns>
-        public static async Task<(string Cookie, string Token)> Login(string user, string pass)
+        public static async Task<(string Cookie, string Token)> LoginFacebook(string user, string pass)
         {
             try
             {
@@ -261,6 +318,7 @@ namespace AUTO.DLL.Services
                 Console.WriteLine("cookie: " + cookie);
                 Console.WriteLine("token: " + token);
 #endif
+                driver.Quit();
                 return (Cookie: cookie, Token: GetToken(driver));
             }
             catch (Exception e)

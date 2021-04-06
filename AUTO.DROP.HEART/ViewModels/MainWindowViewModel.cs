@@ -1,22 +1,23 @@
-﻿using System;
+﻿using AUTO.DLL.Services;
+using AUTO.DROP.HEART.Configurations;
+using AUTO.DROP.HEART.Models;
+using Prism.Commands;
+using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using AUTO.DLL.Services;
-using AUTO.DROP.HEART.Configurations;
-using AUTO.DROP.HEART.Models;
-using Prism.Commands;
-using Prism.Mvvm;
-using RestSharp;
 
 namespace AUTO.DROP.HEART.ViewModels
 {
@@ -30,6 +31,8 @@ namespace AUTO.DROP.HEART.ViewModels
         private ObservableCollection<AccountModel> _dataUsers;
         private string _id;
         private string _path = Directory.GetCurrentDirectory() + "/DATA";
+        private string _messager;
+        private ObservableCollection<HistoryModel> _dataHistory;
 
         public string Title
         {
@@ -77,6 +80,18 @@ namespace AUTO.DROP.HEART.ViewModels
             set => SetProperty(ref _id, value);
         }
 
+        public string Messager
+        {
+            get => _messager;
+            set => SetProperty(ref _messager, value);
+        }
+
+        public ObservableCollection<HistoryModel> DataHistory
+        {
+            get => _dataHistory;
+            set => SetProperty(ref _dataHistory, value);
+        }
+
         public MainWindowViewModel()
         {
             LoginFacebookCommand = new DelegateCommand<PasswordBox>(async (obj) => await LoginFacebook(obj));
@@ -85,20 +100,6 @@ namespace AUTO.DROP.HEART.ViewModels
             CreateData();
 
             StartService();
-        }
-
-        private async Task<string> GetIdStory(string cookie)
-        {
-            try
-            {
-                var html = await FacebookService.GetHtmlFacebook("https://m.facebook.com/", cookie);
-                return html;
-            }
-            catch (Exception e)
-            {
-                Message("Lỗi: " + e.Message);
-                return null;
-            }
         }
 
         private async void StartService()
@@ -174,12 +175,56 @@ namespace AUTO.DROP.HEART.ViewModels
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var account = e.Result as AccountModel;
+                if (account != null)
+                {
+                    Task.Delay(TimeSpan.FromHours(8)).Await();
+                    var lsAcount = JsonSerializer.Deserialize<List<AccountModel>>(File.ReadAllText(_path + "/Account.json"));
+                    if (lsAcount != null)
+                    {
+                        var acc = lsAcount.Single(x => x.Id == account.Id);
+                        acc.Status = 0;
+                        File.WriteAllText(_path + "/Account.json", JsonSerializer.Serialize(lsAcount, new JsonSerializerOptions()
+                        {
+                            WriteIndented = true,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                        }));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Message("Loi: " + ex.Message);
+            }
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var his = e.UserState as HistoryModel;
+                if (his != null)
+                {
+                    if (DataHistory == null)
+                    {
+                        his.Stt = 1;
+                        DataHistory = new ObservableCollection<HistoryModel>();
+                        DataHistory.Add(his);
+                    }
+                    else
+                    {
+                        his.Stt = DataHistory.Max(x => x.Stt) + 1;
+                        DataHistory.Add(his);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Message("Loi: " + ex.Message);
+            }
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -189,7 +234,71 @@ namespace AUTO.DROP.HEART.ViewModels
                 var user = (AccountModel)e?.Argument;
                 if (user != null)
                 {
-
+                    var html = FacebookService.GetHtmlChrome("https://m.facebook.com/", user.Cookie).Result;
+                    if (html != null)
+                    {
+                        var regex = Regex.Matches(html, @"id="""" data-href=""(.*?)""");
+                        foreach (Match o in regex)
+                        {
+                            var url = o?.Groups[1]?.Value;
+                            FacebookService.AutoDropHeartFacebookStory(url, user.Cookie).Await();
+                            var time = new Stopwatch();
+#if DEBUG
+                            time.Start();
+#endif
+                            Thread.Sleep(TimeSpan.FromMinutes(5));
+#if DEBUG
+                            time.Stop();
+                            Console.WriteLine(@"Thoi gian dung: " + time.ElapsedMilliseconds);
+#endif
+                            var his = new HistoryModel()
+                            {
+                                Id = user.Id,
+                                Note = "Tha tim xong",
+                                Story = url,
+                            };
+                            (sender as BackgroundWorker)?.ReportProgress(1, his);
+                        }
+                    }
+                    else
+                    {
+                        if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                        {
+                            var mess = new ContentSendTelegramModel
+                            {
+                                Ten_Thong_Bao = "Cookie die",
+                                Id_Nguoi_Dung = user.Id,
+                                So_Luong = 1,
+                                Noi_Dung_Thong_Bao = user,
+                                Ghi_Chu = new
+                                {
+                                    Message = "die"
+                                }
+                            };
+                            TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(mess, new JsonSerializerOptions()
+                            {
+                                WriteIndented = true,
+                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                            })).Await();
+                            var account = JsonSerializer.Deserialize<List<AccountModel>>(File.ReadAllText(_path + "/Account.json"));
+                            account?.ForEach(x =>
+                            {
+                                if (x.Id == user.Id)
+                                {
+                                    x.Status = 2;
+                                    return;
+                                }
+                            });
+                            File.WriteAllText(_path + "/Account.json", JsonSerializer.Serialize(account, new JsonSerializerOptions()
+                            {
+                                WriteIndented = true,
+                                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                            }));
+                            e.Result = null;
+                            (sender as BackgroundWorker)?.CancelAsync();
+                            return;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -251,6 +360,7 @@ namespace AUTO.DROP.HEART.ViewModels
                         Passwd = Passwd,
                         UserName = UserName,
                         Status = 0,
+                        Messager = Messager,
                     });
                     File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/DATA/Account.json", JsonSerializer.Serialize(DataUsers, new JsonSerializerOptions
                     {
@@ -258,12 +368,11 @@ namespace AUTO.DROP.HEART.ViewModels
                         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
                     }));
 
-                    var html = await FacebookService.GetHtmlFacebookChrome(Cookie);
-
                     Id = null;
                     Cookie = null;
                     Token = null;
                     UserName = null;
+                    Messager = null;
                     Message("Lưu thông tin tài khoản thành công");
                 }
             }
@@ -282,7 +391,7 @@ namespace AUTO.DROP.HEART.ViewModels
                     var pass = pwd.Password;
                     if (!string.IsNullOrWhiteSpace(pass) && UserName != null)
                     {
-                        var login = await FacebookService.Login(UserName, pass);
+                        var login = await FacebookService.LoginFacebook(UserName, pass);
                         if (login.Token != null && login.Cookie != null)
                         {
                             Passwd = pass;

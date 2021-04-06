@@ -31,6 +31,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="80" />
                         <RowDefinition Height="80" />
+                        <RowDefinition Height="80" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -86,8 +87,18 @@
                             Text="{Binding Token}"
                             TextWrapping="Wrap" />
                     </GroupBox>
-                    <Button
+                    <GroupBox
                         Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Header="Tin nhắn (nếu có)">
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Messager}"
+                            TextWrapping="Wrap" />
+                    </GroupBox>
+                    <Button
+                        Grid.Row="6"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Command="{Binding SaveInfoCommand}"
@@ -135,6 +146,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Cookie}" Header="Cookie" />
                     <DataGridTextColumn Binding="{Binding Token}" Header="Token" />
+                    <DataGridTextColumn Binding="{Binding Messager}" Header="Tin nhắn" />
                     <DataGridTextColumn Binding="{Binding DateCreate}" Header="Thời gian thêm" />
                     <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
                 </DataGrid.Columns>
@@ -147,11 +159,10 @@
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataHistory}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Stt}" Header="#" />
-                    <DataGridTextColumn Binding="{Binding ID}" Header="Id" />
-                    <DataGridTextColumn Binding="{Binding NameFriend}" Header="Tên người nhận" />
-                    <DataGridTextColumn Binding="{Binding IdFriend}" Header="ID người nhận" />
-                    <DataGridTextColumn Binding="{Binding Message}" Header="Tin nhăn" />
-                    <DataGridTextColumn Binding="{Binding TimeSend}" Header="Thời gian gửi" />
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
+                    <DataGridTextColumn Binding="{Binding Story}" Header="Story" />
+                    <DataGridTextColumn Binding="{Binding IdFriend}" Header="Thời gian" />
+                    <DataGridTextColumn Binding="{Binding DateCreate}" Header="Tin nhăn" />
                     <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
                 </DataGrid.Columns>
             </DataGrid>

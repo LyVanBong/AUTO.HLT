@@ -425,11 +425,14 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                                                         Message = "die"
                                                     }
                                                 };
-                                                TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(message, new JsonSerializerOptions()
+                                                TelegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonSerializer.Serialize(mess, new JsonSerializerOptions()
                                                 {
                                                     WriteIndented = true,
                                                     Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
                                                 })).Await();
+                                                e.Result = null;
+                                                (sender as BackgroundWorker)?.CancelAsync();
+                                                return;
                                             }
                                         }
                                     }
@@ -569,7 +572,7 @@ namespace AUTO.SEND.MESSAGE.FACEBOOK.TOOL.ViewModels
                 var pass = ((PasswordBox)pwd).Password;
                 if (!string.IsNullOrWhiteSpace(pass) && UserName != null)
                 {
-                    var login = await FacebookService.Login(UserName, pass);
+                    var login = await FacebookService.LoginFacebook(UserName, pass);
                     if (login.Token != null && login.Cookie != null)
                     {
                         Passwd = pass;
