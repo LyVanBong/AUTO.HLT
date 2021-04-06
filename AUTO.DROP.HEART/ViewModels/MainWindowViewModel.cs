@@ -256,6 +256,7 @@ namespace AUTO.DROP.HEART.ViewModels
                                 Id = user.Id,
                                 Note = "Tha tim xong",
                                 Story = url,
+                                Messager = user.Messager
                             };
                             (sender as BackgroundWorker)?.ReportProgress(1, his);
                         }

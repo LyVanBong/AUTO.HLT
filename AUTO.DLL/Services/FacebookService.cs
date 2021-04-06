@@ -207,7 +207,13 @@ namespace AUTO.DLL.Services
                 await Task.Delay(1000);
 
                 var lsElements = driver.FindElementsByClassName(@"_7ko-");
-                lsElements[1].Click();
+                var random = new Random();
+                var num = random.Next(3, 6);
+                for (int i = 0; i < num; i++)
+                {
+                    lsElements[1].Click();
+                    await Task.Delay(333);
+                }
 
                 driver.Quit();
             }

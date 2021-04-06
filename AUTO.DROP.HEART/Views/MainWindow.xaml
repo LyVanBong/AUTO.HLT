@@ -161,7 +161,7 @@
                     <DataGridTextColumn Binding="{Binding Stt}" Header="#" />
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
                     <DataGridTextColumn Binding="{Binding Story}" Header="Story" />
-                    <DataGridTextColumn Binding="{Binding IdFriend}" Header="Thời gian" />
+                    <DataGridTextColumn Binding="{Binding DateCreate}" Header="Thời gian" />
                     <DataGridTextColumn Binding="{Binding DateCreate}" Header="Tin nhăn" />
                     <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
                 </DataGrid.Columns>

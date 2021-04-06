@@ -9,6 +9,7 @@ namespace AUTO.DROP.HEART.Models
         private string _id;
         private string _story;
         private string _note;
+        private string _messager;
 
         public int Stt
         {
@@ -34,6 +35,12 @@ namespace AUTO.DROP.HEART.Models
         {
             get => _note;
             set => SetProperty(ref _note, value);
+        }
+
+        public string Messager
+        {
+            get => _messager;
+            set => SetProperty(ref _messager, value);
         }
     }
 }
