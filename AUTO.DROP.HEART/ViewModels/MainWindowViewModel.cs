@@ -180,7 +180,6 @@ namespace AUTO.DROP.HEART.ViewModels
                 var account = e.Result as AccountModel;
                 if (account != null)
                 {
-                    Task.Delay(TimeSpan.FromHours(8)).Await();
                     var lsAcount = JsonSerializer.Deserialize<List<AccountModel>>(File.ReadAllText(_path + "/Account.json"));
                     if (lsAcount != null)
                     {
