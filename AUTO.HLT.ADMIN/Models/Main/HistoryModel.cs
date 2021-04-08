@@ -11,6 +11,7 @@ namespace AUTO.HLT.ADMIN.Models.Main
         public string Id_Post { get; set; }
         public DateTime Time => DateTime.UtcNow;
         public string Type_Auto { get; set; }
+        public string Comment { get; set; }
         public string Note_Auto { get; set; }
     }
 }

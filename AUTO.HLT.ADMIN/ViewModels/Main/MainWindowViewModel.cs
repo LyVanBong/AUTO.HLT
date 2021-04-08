@@ -45,6 +45,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         private List<Datum> _lsUID;
         private ObservableCollection<HistoryModel> _dataHistory;
         private ITelegramService _telegramService;
+        private string _comment;
 
         public string Title
         {
@@ -152,6 +153,12 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             set => SetProperty(ref _dataHistory, value);
         }
 
+        public string Comment
+        {
+            get => _comment;
+            set => SetProperty(ref _comment, value);
+        }
+
         public MainWindowViewModel(IFacebookService facebookService, ITelegramService telegramService)
         {
             _telegramService = telegramService;
@@ -195,8 +202,6 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                 var json = "";
                 if (File.Exists(_fileNameAccount))
                     json = File.ReadAllText(_fileNameAccount);
-                else
-                    MessageBoxNoti("Chưa có dữ liệu");
                 if (!string.IsNullOrWhiteSpace(json))
                 {
                     var data = JsonConvert.DeserializeObject<List<UserModel>>(json);
@@ -240,7 +245,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                 if (data != null)
                 {
                     var json = File.ReadAllText(_fileNameAccount);
-                    if (json != null)
+                    if (!string.IsNullOrEmpty(json))
                     {
                         var LsUser = JsonConvert.DeserializeObject<List<UserModel>>(json);
                         if (LsUser != null && LsUser.Any())
@@ -262,6 +267,8 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                             _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(message, Formatting.Indented));
                         }
                     }
+
+                    SaveUidFriendFacebook(data.Token, data.Cookie, data.ID).Await();
                 }
             }
             catch (Exception exception)
@@ -335,114 +342,122 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                         if (data != null && data.data.Any())
                         {
                             var random = new Random();
-                            var uid = random.Next(10) > 5
-                                ? data.data.OrderBy(x => x.name)
-                                : data.data.OrderByDescending(x => x.name);
+                            var uid = data.data;
                             foreach (var id in uid)
                             {
-                                if (user.TuongTacAnhDaiDien)
+                                if (!id.IsSended)
                                 {
-                                    var urlface = $"https://d.facebook.com/{id.id}";
-
-                                    var htmlProfile = HtmlProfile(urlface, user.Cookie).Result;
-                                    if (!string.IsNullOrWhiteSpace(htmlProfile))
+                                    if (user.TuongTacAnhDaiDien)
                                     {
-                                        var autoLike = AutoLike(htmlProfile, "https://d.facebook.com", user.Cookie).Result;
-                                        if (autoLike)
+                                        var urlface = $"https://d.facebook.com/{id.id}";
+
+                                        var htmlProfile = HtmlProfile(urlface, user.Cookie).Result;
+                                        if (!string.IsNullOrWhiteSpace(htmlProfile))
                                         {
-                                            var his = new HistoryModel
+                                            var autoLike = AutoLike(htmlProfile, "https://d.facebook.com", user.Cookie).Result;
+                                            if (autoLike)
                                             {
-                                                Id = user.ID,
-                                                Id_Post = null,
-                                                Type_Auto = "Thả tim ảnh đại diện",
-                                                UId = id.id,
-                                                Uid_Facebooke_Friend = id.id,
-                                                Name_Friend_Facebook = id.name,
-                                                Note_Auto = "Thả tim ảnh đại diện thành công"
-                                            };
-                                            (sender as BackgroundWorker)?.ReportProgress(1, his);
+                                                var his = new HistoryModel
+                                                {
+                                                    Id = user.ID,
+                                                    Id_Post = null,
+                                                    Type_Auto = "Thả tim ảnh đại diện",
+                                                    UId = id.id,
+                                                    Uid_Facebooke_Friend = id.id,
+                                                    Name_Friend_Facebook = id.name,
+                                                    Note_Auto = "Thả tim ảnh đại diện thành công"
+                                                };
+                                                (sender as BackgroundWorker)?.ReportProgress(1, his);
+                                            }
                                         }
-                                    }
-                                    else
-                                    {
-                                        CheckCookieToken(sender, user.Token, user.Cookie, user);
-                                    }
-
-                                    Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
-
-                                    var htmlProfile2 = HtmlProfile(urlface, user.Cookie).Result;
-                                    if (!string.IsNullOrWhiteSpace(htmlProfile2))
-                                    {
-                                        var autoComment = AutoComment(htmlProfile2, "https://d.facebook.com", user?.Cookie).Result;
-                                        if (autoComment)
+                                        else
                                         {
-                                            var his = new HistoryModel
-                                            {
-                                                Id = user.ID,
-                                                Id_Post = null,
-                                                Type_Auto = "Bình luận ảnh đại diện",
-                                                UId = id.id,
-                                                Uid_Facebooke_Friend = id.id,
-                                                Name_Friend_Facebook = id.name,
-                                                Note_Auto = "Bình luận ảnh đại diện thành công"
-                                            };
-                                            (sender as BackgroundWorker)?.ReportProgress(1, his);
+                                            CheckCookieToken(sender, user.Token, user.Cookie, user);
                                         }
-                                    }
-                                    else
-                                    {
-                                        CheckCookieToken(sender, user.Token, user.Cookie, user);
-                                    }
-                                    Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
-                                }
 
-                                var post = _facebookService.GetIdPostFriends("2", user.Token, id.id).Result;
-                                if (post != null)
-                                {
-                                    var idp = post?.posts?.data;
-                                    if (user.ThaTim && idp != null && idp.Length > 0)
-                                    {
-                                        foreach (var datum in idp)
+                                        Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
+                                        if (user.Comment != null)
                                         {
-                                            var urlface = $"https://d.facebook.com/{datum.id}";
-                                            var htmlProfile =
-                                                _facebookService.GetHtmlFacebook(urlface, user.Cookie);
-                                            if (!string.IsNullOrWhiteSpace(htmlProfile.Result))
+                                            var lsCmt = user.Comment.Split('|');
+                                            var cmt = lsCmt[random.Next(0, lsCmt.Length - 1)];
+                                            var htmlProfile2 = HtmlProfile(urlface, user.Cookie).Result;
+                                            if (!string.IsNullOrWhiteSpace(htmlProfile2))
                                             {
-                                                var tim = AutoThaTim(htmlProfile.Result, "https://d.facebook.com",
-                                                    user.Cookie).Result;
-                                                if (tim)
+                                                var autoComment = AutoComment(htmlProfile2, "https://d.facebook.com", user?.Cookie, cmt).Result;
+                                                if (autoComment)
                                                 {
                                                     var his = new HistoryModel
                                                     {
                                                         Id = user.ID,
-                                                        Id_Post = datum.id,
-                                                        Type_Auto = "Thả tim",
-                                                        UId = post.id,
+                                                        Id_Post = null,
+                                                        Type_Auto = "Bình luận ảnh đại diện",
+                                                        UId = id.id,
                                                         Uid_Facebooke_Friend = id.id,
                                                         Name_Friend_Facebook = id.name,
-                                                        Note_Auto = "Thả tim thành công"
+                                                        Note_Auto = "Bình luận ảnh đại diện thành công"
                                                     };
                                                     (sender as BackgroundWorker)?.ReportProgress(1, his);
                                                 }
                                             }
                                             else
                                             {
-                                                CheckCookieToken(sender, user?.Token, user?.Cookie, user);
+                                                CheckCookieToken(sender, user.Token, user.Cookie, user);
                                             }
-
                                             Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
                                         }
                                     }
 
-                                    if (user.TuongTacAnhDaiDien)
+                                    var post = _facebookService.GetIdPostFriends("2", user.Token, id.id).Result;
+                                    if (post != null)
                                     {
+                                        var idp = post?.posts?.data;
+                                        if (user.ThaTim && idp != null && idp.Length > 0)
+                                        {
+                                            foreach (var datum in idp)
+                                            {
+                                                var urlface = $"https://d.facebook.com/{datum.id}";
+                                                var htmlProfile =
+                                                    _facebookService.GetHtmlFacebook(urlface, user.Cookie);
+                                                if (!string.IsNullOrWhiteSpace(htmlProfile.Result))
+                                                {
+                                                    var tim = AutoThaTim(htmlProfile.Result, "https://d.facebook.com",
+                                                        user.Cookie).Result;
+                                                    if (tim)
+                                                    {
+                                                        var his = new HistoryModel
+                                                        {
+                                                            Id = user.ID,
+                                                            Id_Post = datum.id,
+                                                            Type_Auto = "Thả tim bài viết",
+                                                            UId = post.id,
+                                                            Uid_Facebooke_Friend = id.id,
+                                                            Name_Friend_Facebook = id.name,
+                                                            Note_Auto = "Thả tim bài viết thành công"
+                                                        };
+                                                        (sender as BackgroundWorker)?.ReportProgress(1, his);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    CheckCookieToken(sender, user?.Token, user?.Cookie, user);
+                                                }
 
+                                                Task.Delay(TimeSpan.FromMinutes(random.Next(18, 22))).Wait();
+                                            }
+                                        }
+
+                                        if (user.TuongTacAnhDaiDien)
+                                        {
+
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    CheckCookieToken(sender, user?.Token, user?.Cookie, user);
+                                    else
+                                    {
+                                        CheckCookieToken(sender, user?.Token, user?.Cookie, user);
+                                    }
+
+                                    id.IsSended = true;
+                                    File.WriteAllText(pathFileName, JsonConvert.SerializeObject(uid, Formatting.Indented));
                                 }
                             }
                         }
@@ -457,9 +472,6 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             {
                 e.Result = user;
             }
-
-            Task.Delay(TimeSpan.FromMinutes(30)).Await();
-            e.Result = 0;
         }
         /// <summary>
         /// auto comment avatar
@@ -468,7 +480,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         /// <param name="urlface"></param>
         /// <param name="cookie"></param>
         /// <returns></returns>
-        private async Task<bool> AutoComment(string htmlProfile, string urlface, string cookie)
+        private async Task<bool> AutoComment(string htmlProfile, string urlface, string cookie, string comment)
         {
             if (!string.IsNullOrWhiteSpace(htmlProfile))
             {
@@ -488,7 +500,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                         {
                             new RequestParameter("fb_dtsg",fb_dtsg),
                             new RequestParameter("jazoest",jazoest),
-                            new RequestParameter("comment_text","<3"),
+                            new RequestParameter("comment_text",comment),
                         };
                         var html = await _facebookService.PostHtmlFacebook(url, cookie, para);
                         if (html != null && html.Contains("ref_component=mbasic_home_logo"))
@@ -769,6 +781,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                             TuongTacAnhDaiDien = TuongTacAnhDaiDien,
                             ThaTim = ThaTim,
                             TrangThai = 0,
+                            Comment = Comment,
                         };
                         if (DataUsers == null)
                             DataUsers = new ObservableCollection<UserModel>();
@@ -784,6 +797,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                                 usr.TuongTacAnhDaiDien = TuongTacAnhDaiDien;
                                 usr.ThaTim = ThaTim;
                                 usr.TrangThai = 0;
+                                Comment = Comment;
                             }
                             else
                             {
@@ -806,6 +820,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
                         NgayDangKy = "";
                         TuongTacAnhDaiDien = false;
                         ThaTim = false;
+                        Comment = "";
                     }
                     else
                     {
@@ -841,7 +856,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
             var friends = await _facebookService.GetIdFriends(token);
             if (friends != null)
             {
-                File.WriteAllText(_pathIdFacebook + "/ID_" + id + ".json", JsonConvert.SerializeObject(friends));
+                File.WriteAllText(_pathIdFacebook + "/ID_" + id + ".json", JsonConvert.SerializeObject(friends, Formatting.Indented));
             }
         }
 
@@ -852,7 +867,7 @@ namespace AUTO.HLT.ADMIN.ViewModels.Main
         /// <param name="path"></param>
         private void WriteAllFile(object obj, string path)
         {
-            File.WriteAllText(path, JsonConvert.SerializeObject(obj));
+            File.WriteAllText(path, JsonConvert.SerializeObject(obj, Formatting.Indented));
         }
     }
 }

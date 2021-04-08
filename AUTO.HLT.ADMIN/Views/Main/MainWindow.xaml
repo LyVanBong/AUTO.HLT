@@ -9,15 +9,15 @@
     Title="{Binding Title}"
     mvvm:ViewModelLocator.AutoWireViewModel="True"
     Background="#fff"
+    Closing="MainWindow_OnClosing"
     Icon="../../Resources/Images/icon.png"
     Topmost="False"
     WindowState="Maximized"
     WindowStyle="ThreeDBorderWindow"
-    Closing="MainWindow_OnClosing"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="360" />
+            <RowDefinition Height="500" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>

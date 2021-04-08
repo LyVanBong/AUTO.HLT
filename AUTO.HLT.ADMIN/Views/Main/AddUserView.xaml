@@ -8,77 +8,52 @@
     mc:Ignorable="d">
     <Grid Background="#fff">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="65" />
             <RowDefinition Height="65" />
             <RowDefinition Height="50" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Label
-            Grid.Row="0"
-            Grid.Column="0"
-            Content="ID" />
-        <TextBox
-            Grid.Row="0"
-            Grid.Column="1"
-            VerticalContentAlignment="Center"
-            TabIndex="0"
-            Text="{Binding ID}"
-            TextWrapping="Wrap" />
-        <Label
-            Grid.Row="1"
-            Grid.Column="0"
-            Content="Ngày Đăng ký" />
-        <DatePicker
-            Grid.Row="1"
-            Grid.Column="1"
-            VerticalContentAlignment="Center"
-            SelectedDate="{Binding NgayDangKy}"
-            TabIndex="1" />
-        <Label
-            Grid.Row="2"
-            Grid.Column="0"
-            Content="Thời hạn" />
-        <TextBox
-            Grid.Row="2"
-            Grid.Column="1"
-            VerticalContentAlignment="Center"
-            TabIndex="2"
-            Text="{Binding ThoiHan}" />
-        <Label
-            Grid.Row="3"
-            Grid.Column="0"
-            Content="Cookie" />
-        <TextBox
-            Grid.Row="3"
-            Grid.Column="1"
-            VerticalContentAlignment="Center"
-            TabIndex="3"
-            Text="{Binding Cookie}"
-            TextWrapping="Wrap" />
-        <Label
-            Grid.Row="4"
-            Grid.Column="0"
-            VerticalContentAlignment="Center"
-            Content="Token" />
-        <TextBox
-            Grid.Row="4"
-            Grid.Column="1"
-            VerticalContentAlignment="Center"
-            TabIndex="4"
-            Text="{Binding Token}"
-            TextWrapping="Wrap" />
+        <GroupBox Grid.Row="0" Header="Id">
+            <TextBox
+                VerticalContentAlignment="Center"
+                TabIndex="0"
+                Text="{Binding ID}"
+                TextWrapping="Wrap" />
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Ngày Đăng ký">
+            <DatePicker
+                VerticalContentAlignment="Center"
+                SelectedDate="{Binding NgayDangKy}"
+                TabIndex="1" />
+        </GroupBox>
+        <GroupBox Grid.Row="2" Header="Thời hạn">
+            <TextBox
+                VerticalContentAlignment="Center"
+                TabIndex="2"
+                Text="{Binding ThoiHan}" />
+        </GroupBox>
+        <GroupBox Grid.Row="3" Header="Cookie">
+            <TextBox
+                VerticalContentAlignment="Center"
+                TabIndex="3"
+                Text="{Binding Cookie}"
+                TextWrapping="Wrap" />
+        </GroupBox>
         <GroupBox
-            Grid.Row="5"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Header="Chức năng">
+            Grid.Row="4"
+            VerticalContentAlignment="Center"
+            Header="Token">
+            <TextBox
+                VerticalContentAlignment="Center"
+                TabIndex="4"
+                Text="{Binding Token}"
+                TextWrapping="Wrap" />
+        </GroupBox>
+        <GroupBox Grid.Row="5" Header="Chức năng">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -96,34 +71,18 @@
                     TabIndex="6" />
             </Grid>
         </GroupBox>
+        <GroupBox Grid.Row="6" Header="Bình luận (ảnh đại diện)">
+            <TextBox
+                VerticalContentAlignment="Center"
+                TabIndex="7"
+                Text="{Binding Comment}"
+                TextWrapping="Wrap" />
+        </GroupBox>
         <Button
-            Grid.Row="6"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.Row="7"
             Margin="5,10"
             Command="{Binding SaveAccountCommand}"
-            Content="Thêm Tài Khoản" />
-        <!--<Grid
-            Grid.Row="6"
-            Grid.Column="0"
-            Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="5,10" />
-                </Style>
-            </Grid.Resources>
-            <Button
-                Grid.Column="0"
-                Command="{Binding SaveAccountCommand}"
-                Content="Thêm Tài Khoản" />
-            <Button
-                Grid.Column="1"
-                Command="{Binding DeleteAccountCommand}"
-                Content="Xóa tài khoản" />
-        </Grid>-->
+            Content="Thêm Tài Khoản"
+            TabIndex="8" />
     </Grid>
 </UserControl>

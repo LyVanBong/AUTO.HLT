@@ -15,6 +15,7 @@ namespace AUTO.HLT.ADMIN.Models.Main
         private bool _tuongTacAnhDaiDien;
         private int _trangThai;
         private string _note;
+        private string _comment;
 
         public int STT
         {
@@ -94,5 +95,11 @@ namespace AUTO.HLT.ADMIN.Models.Main
         }
 
         public DateTime NgayHetHan => NgayDangKy.AddDays(ThoiHan).Date;
+
+        public string Comment
+        {
+            get => _comment;
+            set => SetProperty(ref _comment, value);
+        }
     }
 }
