@@ -31,7 +31,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="80" />
                         <RowDefinition Height="80" />
-                        <RowDefinition Height="80" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -91,11 +91,52 @@
                         Grid.Row="5"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Header="Tin nhắn (nếu có)">
-                        <TextBox
-                            VerticalContentAlignment="Center"
-                            Text="{Binding Messager}"
-                            TextWrapping="Wrap" />
+                        Header="Option story facebook">
+
+                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                            <RadioButton VerticalAlignment="Center" IsChecked="{Binding IsStory1}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yU/r/tc5IAx58Ipa.png" />
+                                    <Label Content="Thích" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton IsChecked="{Binding IsStory2}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/MB1XWOdQjV0.png" />
+                                    <Label Content="Yêu thích" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton IsChecked="{Binding IsStory3}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yR/r/QTVmPoFjk5O.png" />
+                                    <Label Content="Thương thương" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton IsChecked="{Binding IsStory4}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/bkP6GqAFgZ_.png" />
+                                    <Label Content="Haha" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton IsChecked="{Binding IsStory5}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/tHO3j6Ngeyx.png" />
+                                    <Label Content="Wow" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton IsChecked="{Binding IsStory6}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/1eqxxZX7fYp.png" />
+                                    <Label Content="Buồn" />
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton IsChecked="{Binding IsStory7}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/PByJ079GWfl.png" />
+                                    <Label Content="Phẫn nộ" />
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
                     </GroupBox>
                     <Button
                         Grid.Row="6"
@@ -162,7 +203,7 @@
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
                     <DataGridTextColumn Binding="{Binding Story}" Header="Story" />
                     <DataGridTextColumn Binding="{Binding DateCreate}" Header="Thời gian" />
-                    <DataGridTextColumn Binding="{Binding Messager}" Header="Tin nhăn" />
+                    <DataGridTextColumn Binding="{Binding Messager}" Header="Option" />
                     <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú" />
                 </DataGrid.Columns>
             </DataGrid>

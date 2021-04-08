@@ -176,7 +176,7 @@ namespace AUTO.DLL.Services
         /// <param name="cookie"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static async Task AutoDropHeartFacebookStory(string url, string cookie, string message = null)
+        public static async Task AutoDropHeartFacebookStory(string url, string cookie, int optionStory = 1)
         {
             try
             {
@@ -213,7 +213,7 @@ namespace AUTO.DLL.Services
                 var num = random.Next(3, 6);
                 for (int i = 0; i < num; i++)
                 {
-                    lsElements[1].Click();
+                    lsElements[optionStory].Click();
                     await Task.Delay(333);
                 }
             }
@@ -256,7 +256,7 @@ namespace AUTO.DLL.Services
                 }
 
                 _driver.Navigate().Refresh();
-                await Task.Delay(2000);
+                await Task.Delay(5000);
                 var html = _driver.PageSource;
                 return html;
             }

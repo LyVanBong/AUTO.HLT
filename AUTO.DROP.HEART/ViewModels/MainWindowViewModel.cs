@@ -33,6 +33,13 @@ namespace AUTO.DROP.HEART.ViewModels
         private string _path = Directory.GetCurrentDirectory() + "/DATA";
         private string _messager;
         private ObservableCollection<HistoryModel> _dataHistory;
+        private bool _isStory1;
+        private bool _isStory2 = true;
+        private bool _isStory3;
+        private bool _isStory4;
+        private bool _isStory5;
+        private bool _isStory6;
+        private bool _isStory7;
 
         public string Title
         {
@@ -90,6 +97,48 @@ namespace AUTO.DROP.HEART.ViewModels
         {
             get => _dataHistory;
             set => SetProperty(ref _dataHistory, value);
+        }
+
+        public bool IsStory1
+        {
+            get => _isStory1;
+            set => SetProperty(ref _isStory1, value);
+        }
+
+        public bool IsStory2
+        {
+            get => _isStory2;
+            set => SetProperty(ref _isStory2, value);
+        }
+
+        public bool IsStory3
+        {
+            get => _isStory3;
+            set => SetProperty(ref _isStory3, value);
+        }
+
+        public bool IsStory4
+        {
+            get => _isStory4;
+            set => SetProperty(ref _isStory4, value);
+        }
+
+        public bool IsStory5
+        {
+            get => _isStory5;
+            set => SetProperty(ref _isStory5, value);
+        }
+
+        public bool IsStory6
+        {
+            get => _isStory6;
+            set => SetProperty(ref _isStory6, value);
+        }
+
+        public bool IsStory7
+        {
+            get => _isStory7;
+            set => SetProperty(ref _isStory7, value);
         }
 
         public MainWindowViewModel()
@@ -240,7 +289,7 @@ namespace AUTO.DROP.HEART.ViewModels
                         foreach (Match o in regex)
                         {
                             var url = o?.Groups[1]?.Value;
-                            FacebookService.AutoDropHeartFacebookStory(url, user.Cookie).Await();
+                            FacebookService.AutoDropHeartFacebookStory(url, user.Cookie,user.OptionStory).Await();
                             var time = new Stopwatch();
 #if DEBUG
                             time.Start();
@@ -255,7 +304,7 @@ namespace AUTO.DROP.HEART.ViewModels
                                 Id = user.Id,
                                 Note = "Tha tim xong",
                                 Story = url,
-                                Messager = user.Messager
+                                Messager = user.OptionStory + ""
                             };
                             (sender as BackgroundWorker)?.ReportProgress(1, his);
                         }
@@ -314,21 +363,23 @@ namespace AUTO.DROP.HEART.ViewModels
         {
             try
             {
-                var path = AppDomain.CurrentDomain.BaseDirectory + "/DATA";
-                if (Directory.Exists(path))
+                if (Directory.Exists(_path))
                 {
-                    var json = File.ReadAllText(path + "/Account.json");
-                    var data = JsonSerializer.Deserialize<List<AccountModel>>(json);
-                    if (data != null && data.Any())
+                    if (File.Exists(_path + "/Account.json"))
                     {
-                        DataUsers = new ObservableCollection<AccountModel>(data);
+                        var json = File.ReadAllText(_path + "/Account.json");
+                        var data = JsonSerializer.Deserialize<List<AccountModel>>(json);
+                        if (data != null && data.Any())
+                        {
+                            DataUsers = new ObservableCollection<AccountModel>(data);
+                        }
                     }
                 }
                 else
                 {
-                    Directory.CreateDirectory(path);
-                    Directory.CreateDirectory(path + "/Friends");
-                    Directory.CreateDirectory(path + "/Logs");
+                    Directory.CreateDirectory(_path);
+                    Directory.CreateDirectory(_path + "/Friends");
+                    Directory.CreateDirectory(_path + "/Logs");
                 }
             }
             catch (Exception e)
@@ -353,6 +404,36 @@ namespace AUTO.DROP.HEART.ViewModels
                     {
                         max = DataUsers.Max(x => x.Stt) + 1;
                     }
+
+                    var option = 1;
+                    if (IsStory1)
+                    {
+                        option = 0;
+                    }
+                    else if (IsStory2)
+                    {
+                        option = 1;
+                    }
+                    else if (IsStory3)
+                    {
+                        option = 2;
+                    }
+                    else if (IsStory4)
+                    {
+                        option = 3;
+                    }
+                    else if (IsStory5)
+                    {
+                        option = 4;
+                    }
+                    else if (IsStory6)
+                    {
+                        option = 5;
+                    }
+                    else if (IsStory7)
+                    {
+                        option = 6;
+                    }
                     DataUsers.Add(new AccountModel()
                     {
                         Stt = max,
@@ -363,7 +444,7 @@ namespace AUTO.DROP.HEART.ViewModels
                         Passwd = Passwd,
                         UserName = UserName,
                         Status = 0,
-                        Messager = Messager,
+                        OptionStory = option,
                     });
                     File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/DATA/Account.json", JsonSerializer.Serialize(DataUsers, new JsonSerializerOptions
                     {

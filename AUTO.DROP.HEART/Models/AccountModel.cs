@@ -13,7 +13,7 @@ namespace AUTO.DROP.HEART.Models
         private string _token;
         private int _status;
         private string _note;
-        private string _messager;
+        private int _optionStory;
 
         public int Stt
         {
@@ -65,10 +65,10 @@ namespace AUTO.DROP.HEART.Models
 
         public DateTime DateCreate => DateTime.Now;
 
-        public string Messager
+        public int OptionStory
         {
-            get => _messager;
-            set => SetProperty(ref _messager, value);
+            get => _optionStory;
+            set => SetProperty(ref _optionStory, value);
         }
     }
 }
