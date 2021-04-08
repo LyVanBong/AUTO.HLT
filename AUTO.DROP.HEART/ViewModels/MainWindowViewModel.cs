@@ -259,6 +259,9 @@ namespace AUTO.DROP.HEART.ViewModels
                             };
                             (sender as BackgroundWorker)?.ReportProgress(1, his);
                         }
+                        e.Result = user;
+                        (sender as BackgroundWorker)?.CancelAsync();
+                        return;
                     }
                     else
                     {

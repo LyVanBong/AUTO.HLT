@@ -1,18 +1,18 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using AUTO.DLL.Models;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using AUTO.DLL.Models;
-using OpenQA.Selenium;
 
 namespace AUTO.DLL.Services
 {
     public static class FacebookService
     {
+        private static ChromeDriver _driver;
         /// <summary>
         /// Lấy thông tin tài khoản facebook qua api
         /// </summary>
@@ -186,8 +186,8 @@ namespace AUTO.DLL.Services
                 var options = new ChromeOptions();
                 options.AddArgument("--window-position=-1,-1");
                 options.AddArgument("--window-position=-32000,-32000");
-                var driver = new ChromeDriver(service, options);
-                driver.Navigate().GoToUrl("https://m.facebook.com/");
+                _driver = new ChromeDriver(service, options);
+                _driver.Navigate().GoToUrl("https://m.facebook.com/");
 
                 if (cookie != null)
                 {
@@ -195,18 +195,20 @@ namespace AUTO.DLL.Services
                     foreach (var s in ck)
                     {
                         var c = s.Split('=');
-                        driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
+                        _driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
                     }
                 }
 
-                driver.Navigate().GoToUrl("https://m.facebook.com/" + url);
+                _driver.Navigate().GoToUrl("https://m.facebook.com/" + url);
                 await Task.Delay(5000);
 
-                var element = driver.FindElementByXPath(@"/html/body/div[1]/div/div[2]/div/div[2]/div/div/div/div[2]/span/div[3]/div[9]/div");
+                var element =
+                    _driver.FindElementByXPath(
+                        @"/html/body/div[1]/div/div[2]/div/div[2]/div/div/div/div[2]/span/div[3]/div[9]/div");
                 element.Click();
                 await Task.Delay(1000);
 
-                var lsElements = driver.FindElementsByClassName(@"_7ko-");
+                var lsElements = _driver.FindElementsByClassName(@"_7ko-");
                 var random = new Random();
                 var num = random.Next(3, 6);
                 for (int i = 0; i < num; i++)
@@ -214,14 +216,15 @@ namespace AUTO.DLL.Services
                     lsElements[1].Click();
                     await Task.Delay(333);
                 }
-
-                driver.Quit();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Loi: " + ex.Message);
             }
-            return;
+            finally
+            {
+                _driver.Quit();
+            }
         }
         /// <summary>
         /// get html bằng ChromeDriver
@@ -239,8 +242,8 @@ namespace AUTO.DLL.Services
                 var options = new ChromeOptions();
                 options.AddArgument("--window-position=-1,-1");
                 options.AddArgument("--window-position=-32000,-32000");
-                var driver = new ChromeDriver(service, options);
-                driver.Navigate().GoToUrl(url);
+                _driver = new ChromeDriver(service, options);
+                _driver.Navigate().GoToUrl(url);
 
                 if (cookie != null)
                 {
@@ -248,19 +251,25 @@ namespace AUTO.DLL.Services
                     foreach (var s in ck)
                     {
                         var c = s.Split('=');
-                        driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
+                        _driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
                     }
                 }
-                driver.Navigate().Refresh();
+
+                _driver.Navigate().Refresh();
                 await Task.Delay(2000);
-                var html = driver.PageSource;
-                driver.Quit();
+                var html = _driver.PageSource;
                 return html;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                Debug.WriteLine("Loi: " + ex.Message);
             }
+            finally
+            {
+                _driver.Quit();
+            }
+
+            return null;
         }
         /// <summary>
         /// Đăng nhập facebook
@@ -280,25 +289,25 @@ namespace AUTO.DLL.Services
                 var options = new ChromeOptions();
                 options.AddArgument("--window-position=-1,-1");
                 //options.AddArgument("--window-position=-32000,-32000");
-                var driver = new ChromeDriver(service, options);
-                driver.Navigate().GoToUrl("https://www.facebook.com/");
+                _driver = new ChromeDriver(service, options);
+                _driver.Navigate().GoToUrl("https://www.facebook.com/");
                 await Task.Delay(2000);
                 // nhập tài khoản
-                var element = driver.FindElementById("email");
+                var element = _driver.FindElementById("email");
                 element.SendKeys(user);
                 await Task.Delay(3000);
                 // nhập mật khẩu
-                element = driver.FindElementById("pass");
+                element = _driver.FindElementById("pass");
                 element.SendKeys(pass);
                 await Task.Delay(4000);
                 // login
-                element = driver.FindElementByName("login");
+                element = _driver.FindElementByName("login");
                 element.Click();
                 await Task.Delay(2000);
                 for (int j = 0; j < 20; j++)
                 {
                     cookie = "";
-                    var allCookie = driver.Manage().Cookies.AllCookies;
+                    var allCookie = _driver.Manage().Cookies.AllCookies;
                     var countCookie = allCookie?.Count;
                     for (int i = 0; i < countCookie; i++)
                     {
@@ -308,7 +317,7 @@ namespace AUTO.DLL.Services
 
                     if (cookie.Contains("c_user="))
                     {
-                        token = GetToken(driver);
+                        token = GetToken(_driver);
 #if DEBUG
                         Console.WriteLine("cookie: " + cookie);
                         Console.WriteLine("token: " + token);
@@ -319,18 +328,23 @@ namespace AUTO.DLL.Services
                     await Task.Delay(1000);
                 }
 
-                token = GetToken(driver);
+                token = GetToken(_driver);
 #if DEBUG
                 Console.WriteLine("cookie: " + cookie);
                 Console.WriteLine("token: " + token);
 #endif
-                driver.Quit();
-                return (Cookie: cookie, Token: GetToken(driver));
+                return (Cookie: cookie, Token: GetToken(_driver));
             }
             catch (Exception e)
             {
-                throw e;
+                Debug.WriteLine("Loi: " + e.Message);
             }
+            finally
+            {
+                _driver.Quit();
+            }
+
+            return (null, null);
         }
         /// <summary>
         /// loc lay token facebook
