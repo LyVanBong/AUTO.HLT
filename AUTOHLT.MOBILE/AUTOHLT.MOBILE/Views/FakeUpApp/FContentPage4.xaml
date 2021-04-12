@@ -14,7 +14,7 @@
             ColumnSpacing="0"
             RowDefinitions="40,*"
             RowSpacing="0">
-            <controls:NavigationView Grid.Row="0" Text="Thầy giáo huấn" />
+            <controls:NavigationView Grid.Row="0" Text="Mục tiêu hàng ngày" />
             <xForms:SfCircularGauge
                 Grid.Row="1"
                 Margin="10"

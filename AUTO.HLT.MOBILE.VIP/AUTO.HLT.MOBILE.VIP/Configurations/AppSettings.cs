@@ -5,6 +5,6 @@
         /// <summary>
         /// khóa bản quyền của thư viện Syncfusion 
         /// </summary>
-        public const string LICENSE_KEY_SYNCFUSION = "NDEzMTkwQDMxMzgyZTM0MmUzMFpTdnN2ajhqbzBIQTlFSEltaXpiQ0dCZkZWaGkyK2QxcFhSWkU3QTh4cWs9";
+        public const string LICENSE_KEY_SYNCFUSION = "NDI4ODM0QDMxMzkyZTMxMmUzMEJPVm81MWh1c3pyakJvNEtGRnpLbWc5d0RKU244OWFBOVFFZCs2Q1RRNzA9";
     }
 }

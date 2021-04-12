@@ -27,6 +27,7 @@
             public string name { get; set; }
             public Picture picture { get; set; }
             public string id { get; set; }
+            public bool IsSended { get; set; }
         }
 
         public class Picture
