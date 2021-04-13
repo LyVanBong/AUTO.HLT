@@ -3,8 +3,11 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.KeyGeneration.KeyGenerationPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
+    xmlns:behaviors1="http://xamarin.com/schemas/2020/toolkit"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
         <Grid ColumnDefinitions="*,*" RowDefinitions="40,*">
@@ -12,30 +15,129 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Text="Tạo khóa bản quyền" />
+                Text="Cài đặt" />
             <tabView:SfTabView
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 BackgroundColor="{StaticResource AppBackgroud}"
                 TabHeaderPosition="Top"
-                VisibleHeaderCount="2">
+                VisibleHeaderCount="3">
                 <tabView:SfTabItem
-                    Title="Đại lý"
+                    Title="Tạo khóa"
                     SelectionColor="#fff"
-                    TitleFontColor="Aquamarine"
-                    TitleFontSize="18">
+                    TitleFontColor="CornflowerBlue"
+                    TitleFontSize="15">
                     <tabView:SfTabItem.Content>
-                        <Grid x:Name="AllContactsGrid" BackgroundColor="Red" />
+                        <Grid BackgroundColor="Red" />
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
-                    Title="Khách lẻ"
+                    Title="Tạo tài khoản"
                     SelectionColor="#fff"
-                    TitleFontColor="Aquamarine"
-                    TitleFontSize="18">
+                    TitleFontColor="CornflowerBlue"
+                    TitleFontSize="15">
                     <tabView:SfTabItem.Content>
-                        <Grid x:Name="FavoritesGrid" BackgroundColor="Green" />
+                        <ScrollView BackgroundColor="#fff">
+                            <Grid
+                                Margin="0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                RowDefinitions="80,80,80,80,60">
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Tên đăng nhập"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        Keyboard="Plain"
+                                        ReturnType="Next"
+                                        Text="{Binding UserName}"
+                                        TextColor="{StaticResource AppBackgroud}">
+                                        <Entry.Behaviors>
+                                            <behaviors:EventToCommandBehavior
+                                                Command="{Binding FunctionExecuteCommand}"
+                                                CommandParameter="2"
+                                                EventName="Unfocused" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </textInputLayout:SfTextInputLayout>
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Tên"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        Text="{Binding FullName}"
+                                        TextColor="{StaticResource AppBackgroud}" />
+                                </textInputLayout:SfTextInputLayout>
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="2"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    EnablePasswordVisibilityToggle="True"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Mật khẩu"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        IsPassword="False"
+                                        Text="{Binding Passwd}"
+                                        TextColor="{StaticResource AppBackgroud}" />
+                                </textInputLayout:SfTextInputLayout>
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="3"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Số điện thoại"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        Keyboard="Numeric"
+                                        Text="{Binding PhoneNumber}"
+                                        TextColor="{StaticResource AppBackgroud}">
+                                        <Entry.Behaviors>
+                                            <behaviors1:MaskedBehavior Mask="AAA AAAA AAA" UnMaskedCharacter="A" />
+                                            <behaviors:EventToCommandBehavior
+                                                Command="{Binding FunctionExecuteCommand}"
+                                                CommandParameter="1"
+                                                EventName="Unfocused" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </textInputLayout:SfTextInputLayout>
+                                <Button
+                                    Grid.Row="4"
+                                    Margin="20,5"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="{StaticResource AppBackgroud}"
+                                    BorderWidth="1"
+                                    Command="{Binding FunctionExecuteCommand}"
+                                    CommandParameter="0"
+                                    CornerRadius="10"
+                                    Text="Tạo tài khoản"
+                                    TextColor="{StaticResource AppBackgroud}" />
+                            </Grid>
+                        </ScrollView>
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+                <tabView:SfTabItem
+                    Title="Đổi mật khẩu"
+                    SelectionColor="#fff"
+                    TitleFontColor="CornflowerBlue"
+                    TitleFontSize="15">
+                    <tabView:SfTabItem.Content>
+                        <Grid BackgroundColor="Blue" />
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
             </tabView:SfTabView>

@@ -372,7 +372,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                         Id = 10,
                         Role = 97,
                         Icon = "icon_key_generation.png",
-                        TitleItem = "Tạo khóa bản quyền",
+                        TitleItem = "Cài đặt",
                     });
                 }
             }
