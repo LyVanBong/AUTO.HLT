@@ -31,6 +31,10 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         private ITelegramService _telegramService;
         private IUserService _userService;
         private int _selectedIndex;
+        private ObservableRangeCollection<UserModel> _userData;
+        private bool _isLoading;
+        private List<UserModel> _userCache;
+        private int _countUser;
 
         public string UserName
         {
@@ -62,9 +66,27 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         public int SelectedIndex
         {
             get => _selectedIndex;
-            set => SetProperty(ref _selectedIndex, value, async () => await Selected(_selectedIndex));
+            set => SetProperty(ref _selectedIndex, value);
         }
-        
+
+        public ObservableRangeCollection<UserModel> UserData
+        {
+            get => _userData;
+            set => SetProperty(ref _userData, value);
+        }
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
+        public int CountUser
+        {
+            get => _countUser;
+            set => SetProperty(ref _countUser, value);
+        }
+
         public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService) : base(navigationService)
         {
             _userService = userService;
@@ -72,12 +94,25 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             _loginService = loginService;
             _pageDialogService = pageDialogService;
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
-            ResetPasswdCommand = new AsyncCommand<object>(async (obj) => await ResetPasswd(obj));
+            ResetPasswdCommand = new AsyncCommand<string>(async (key) => await ResetPasswd(key));
         }
 
-        private async Task Selected(int index)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            base.OnNavigatedTo(parameters);
+            IsLoading = true;
+            await InitializeData();
+            IsLoading = false;
+        }
 
+        private async Task InitializeData()
+        {
+            var data = await AllUser();
+            if (data != null)
+            {
+                UserData = new ObservableRangeCollection<UserModel>(data);
+                CountUser = data.Count;
+            }
         }
 
         private async Task<List<UserModel>> AllUser()
@@ -96,7 +131,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             }
             return null;
         }
-        private async Task ResetPasswd(object o)
+        private async Task ResetPasswd(string key)
         {
             try
             {
