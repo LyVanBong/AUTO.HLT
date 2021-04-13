@@ -30,6 +30,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         private IPageDialogService _pageDialogService;
         private ITelegramService _telegramService;
         private IUserService _userService;
+        private int _selectedIndex;
 
         public string UserName
         {
@@ -57,6 +58,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
 
         public ICommand FunctionExecuteCommand { get; private set; }
         public ICommand ResetPasswdCommand { get; private set; }
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set => SetProperty(ref _selectedIndex, value, async () => await Selected(_selectedIndex));
+        }
+        
         public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService) : base(navigationService)
         {
             _userService = userService;
@@ -67,9 +75,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             ResetPasswdCommand = new AsyncCommand<object>(async (obj) => await ResetPasswd(obj));
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        private async Task Selected(int index)
         {
-            base.OnNavigatedTo(parameters);
 
         }
 

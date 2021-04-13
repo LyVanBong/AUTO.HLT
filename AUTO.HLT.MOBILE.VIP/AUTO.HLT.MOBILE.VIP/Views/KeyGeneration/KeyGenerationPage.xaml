@@ -21,6 +21,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 BackgroundColor="{StaticResource AppBackgroud}"
+                SelectedIndex="{Binding SelectedIndex}"
                 TabHeaderPosition="Top"
                 VisibleHeaderCount="3">
                 <tabView:SfTabItem
