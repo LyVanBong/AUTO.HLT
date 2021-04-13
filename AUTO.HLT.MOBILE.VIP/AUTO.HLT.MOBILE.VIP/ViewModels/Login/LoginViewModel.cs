@@ -136,7 +136,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             switch (key)
             {
                 case "0":
-                    if (UserName != null && Passwd != null)
+                    if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Passwd))
                     {
                         await DoLogin(UserName, HashFunctionHelper.GetHashCode(Passwd, 1));
                     }
@@ -262,7 +262,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         {
             try
             {
-                if (UserName != null && FullName != null && PhoneNumber != null && Passwd != null)
+                if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(FullName) && !string.IsNullOrEmpty(PhoneNumber) && !string.IsNullOrEmpty(Passwd))
                 {
                     var sigup = await _loginService.Sigup(new SigupModel
                     {

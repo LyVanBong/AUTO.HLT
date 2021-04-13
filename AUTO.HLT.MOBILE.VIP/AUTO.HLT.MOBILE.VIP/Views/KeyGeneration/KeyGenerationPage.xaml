@@ -3,8 +3,13 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.KeyGeneration.KeyGenerationPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
+    xmlns:behaviors1="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
         <Grid ColumnDefinitions="*,*" RowDefinitions="40,*">
@@ -12,33 +17,271 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Text="Tạo khóa bản quyền" />
+                Text="Cài đặt" />
             <tabView:SfTabView
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 BackgroundColor="{StaticResource AppBackgroud}"
+                SelectedIndex="{Binding SelectedIndex}"
                 TabHeaderPosition="Top"
-                VisibleHeaderCount="2">
+                VisibleHeaderCount="3">
                 <tabView:SfTabItem
-                    Title="Đại lý"
+                    Title="Tạo khóa"
                     SelectionColor="#fff"
-                    TitleFontColor="Aquamarine"
-                    TitleFontSize="18">
+                    TitleFontColor="CornflowerBlue"
+                    TitleFontSize="15">
                     <tabView:SfTabItem.Content>
-                        <Grid x:Name="AllContactsGrid" BackgroundColor="Red" />
+                        <Grid BackgroundColor="Red" />
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
-                    Title="Khách lẻ"
+                    Title="Tạo tài khoản"
                     SelectionColor="#fff"
-                    TitleFontColor="Aquamarine"
-                    TitleFontSize="18">
+                    TitleFontColor="CornflowerBlue"
+                    TitleFontSize="15">
                     <tabView:SfTabItem.Content>
-                        <Grid x:Name="FavoritesGrid" BackgroundColor="Green" />
+                        <ScrollView BackgroundColor="#fff">
+                            <Grid
+                                Margin="0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                RowDefinitions="80,80,80,80,60">
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="0"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Tên đăng nhập"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        Keyboard="Plain"
+                                        ReturnType="Next"
+                                        Text="{Binding UserName}"
+                                        TextColor="{StaticResource AppBackgroud}">
+                                        <Entry.Behaviors>
+                                            <behaviors:EventToCommandBehavior
+                                                Command="{Binding FunctionExecuteCommand}"
+                                                CommandParameter="2"
+                                                EventName="Unfocused" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </textInputLayout:SfTextInputLayout>
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="1"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Tên"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        Text="{Binding FullName}"
+                                        TextColor="{StaticResource AppBackgroud}" />
+                                </textInputLayout:SfTextInputLayout>
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="2"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    EnablePasswordVisibilityToggle="True"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Mật khẩu"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        IsPassword="False"
+                                        Text="{Binding Passwd}"
+                                        TextColor="{StaticResource AppBackgroud}" />
+                                </textInputLayout:SfTextInputLayout>
+                                <textInputLayout:SfTextInputLayout
+                                    Grid.Row="3"
+                                    Margin="20,0"
+                                    ContainerType="Outlined"
+                                    FocusedColor="{StaticResource AppBackgroud}"
+                                    Hint="Số điện thoại"
+                                    OutlineCornerRadius="8"
+                                    UnfocusedColor="{StaticResource AppBackgroud}">
+                                    <Entry
+                                        BackgroundColor="Transparent"
+                                        Keyboard="Numeric"
+                                        Text="{Binding PhoneNumber}"
+                                        TextColor="{StaticResource AppBackgroud}">
+                                        <Entry.Behaviors>
+                                            <behaviors1:MaskedBehavior Mask="AAA AAAA AAA" UnMaskedCharacter="A" />
+                                            <behaviors:EventToCommandBehavior
+                                                Command="{Binding FunctionExecuteCommand}"
+                                                CommandParameter="1"
+                                                EventName="Unfocused" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </textInputLayout:SfTextInputLayout>
+                                <Button
+                                    Grid.Row="4"
+                                    Margin="20,5"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="{StaticResource AppBackgroud}"
+                                    BorderWidth="1"
+                                    Command="{Binding FunctionExecuteCommand}"
+                                    CommandParameter="0"
+                                    CornerRadius="10"
+                                    Text="Tạo tài khoản"
+                                    TextColor="{StaticResource AppBackgroud}" />
+                            </Grid>
+                        </ScrollView>
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+                <tabView:SfTabItem
+                    Title="Danh Sách tài khoản"
+                    SelectionColor="#fff"
+                    TitleFontColor="CornflowerBlue"
+                    TitleFontSize="15">
+                    <tabView:SfTabItem.Content>
+                        <Grid BackgroundColor="#fff" RowDefinitions="60,40,*">
+                            <Frame
+                                Grid.Row="0"
+                                Margin="5"
+                                Padding="0"
+                                BackgroundColor="#fff"
+                                BorderColor="{StaticResource AppBackgroud}"
+                                CornerRadius="10"
+                                HasShadow="False">
+                                <SearchBar
+                                    Margin="0"
+                                    BackgroundColor="Transparent"
+                                    FontSize="15"
+                                    Text="{Binding SearchUser}"
+                                    TextColor="#000">
+                                    <SearchBar.Behaviors>
+                                        <behaviors:EventToCommandBehavior Command="{Binding SearchUserCommand}" EventName="TextChanged" />
+                                    </SearchBar.Behaviors>
+                                </SearchBar>
+                            </Frame>
+                            <Label
+                                Grid.Row="1"
+                                FontSize="15"
+                                HorizontalTextAlignment="Center"
+                                TextColor="#000"
+                                VerticalTextAlignment="Center">
+                                <Label.Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="Span">
+                                            <Setter Property="FontSize" Value="15" />
+                                            <Setter Property="TextColor" Value="#000" />
+                                            <Setter Property="FontAttributes" Value="Bold" />
+                                        </Style>
+                                    </ResourceDictionary>
+                                </Label.Resources>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Tổng số tài khoản: " />
+                                        <Span Text="{Binding CountUser}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <CollectionView
+                                Grid.Row="2"
+                                Margin="10,0"
+                                ItemsSource="{Binding UserData}"
+                                SelectionMode="None">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid
+                                            Margin="0"
+                                            Padding="0"
+                                            BackgroundColor="#fff"
+                                            ColumnDefinitions="60,*"
+                                            RowDefinitions="30,30,60">
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Margin="5"
+                                                Aspect="AspectFit"
+                                                Source="{markupExtensions:ImageResource icon_home_page.png}" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                VerticalTextAlignment="Center">
+                                                <Label.Resources>
+                                                    <ResourceDictionary>
+                                                        <Style TargetType="Span">
+                                                            <Setter Property="FontSize" Value="14" />
+                                                            <Setter Property="TextColor" Value="#000" />
+                                                        </Style>
+                                                    </ResourceDictionary>
+                                                </Label.Resources>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Name}" />
+                                                        <Span Text=" (" />
+                                                        <Span Text="{Binding UserName}" />
+                                                        <Span Text=")" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                FontSize="14"
+                                                Text="{Binding NumberPhone}"
+                                                TextColor="#000"
+                                                VerticalTextAlignment="Center" />
+                                            <Grid
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                ColumnDefinitions="*,*">
+                                                <Grid.Resources>
+                                                    <ResourceDictionary>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="FontSize" Value="14" />
+                                                            <Setter Property="TextColor" Value="#000" />
+                                                            <Setter Property="BackgroundColor" Value="#fff" />
+                                                            <Setter Property="BorderColor" Value="{StaticResource AppBackgroud}" />
+                                                            <Setter Property="BorderWidth" Value="1" />
+                                                            <Setter Property="CornerRadius" Value="10" />
+                                                            <Setter Property="Margin" Value="5" />
+                                                        </Style>
+                                                    </ResourceDictionary>
+                                                </Grid.Resources>
+                                                <Button
+                                                    Grid.Column="0"
+                                                    Command="{Binding ResetPasswdCommand}"
+                                                    CommandParameter="0"
+                                                    Text="Đặt lại mật khẩu" />
+                                                <Button
+                                                    Grid.Column="1"
+                                                    Command="{Binding ResetPasswdCommand}"
+                                                    CommandParameter="1"
+                                                    Text="Sét quyền tài khoản" />
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                <CollectionView.EmptyView>
+                                    <Label
+                                        BackgroundColor="#fff"
+                                        FontSize="18"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Chưa có dữ liệu"
+                                        TextColor="{StaticResource AppBackgroud}"
+                                        VerticalTextAlignment="Center" />
+                                </CollectionView.EmptyView>
+                            </CollectionView>
+                        </Grid>
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
             </tabView:SfTabView>
+            <loading:LoadingView
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
