@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -6,8 +8,10 @@ using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Helpers;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
+using AUTO.HLT.MOBILE.VIP.Models.User;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
+using AUTO.HLT.MOBILE.VIP.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
@@ -20,11 +24,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
     {
         private string _userName;
         private string _fullName;
-        private string _passwd;
+        private string _passwd = "Autovip@12345";
         private string _phoneNumber;
         private ILoginService _loginService;
         private IPageDialogService _pageDialogService;
         private ITelegramService _telegramService;
+        private IUserService _userService;
 
         public string UserName
         {
@@ -51,12 +56,49 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         }
 
         public ICommand FunctionExecuteCommand { get; private set; }
-        public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService) : base(navigationService)
+        public ICommand ResetPasswdCommand { get; private set; }
+        public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService) : base(navigationService)
         {
+            _userService = userService;
             _telegramService = telegramService;
             _loginService = loginService;
             _pageDialogService = pageDialogService;
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
+            ResetPasswdCommand = new AsyncCommand<object>(async (obj) => await ResetPasswd(obj));
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+        }
+
+        private async Task<List<UserModel>> AllUser()
+        {
+            try
+            {
+                var data = await _userService.GetAllUser();
+                if (data != null && data.Code > 0 && data.Data != null && data.Data.Any())
+                {
+                    return data.Data;
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            return null;
+        }
+        private async Task ResetPasswd(object o)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
 
         private async Task FunctionExecute(string key)
