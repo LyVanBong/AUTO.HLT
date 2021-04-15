@@ -32,7 +32,202 @@
                     TitleFontColor="CornflowerBlue"
                     TitleFontSize="15">
                     <tabView:SfTabItem.Content>
-                        <Grid BackgroundColor="Red" />
+                        <Grid
+                            Margin="0"
+                            Padding="0"
+                            BackgroundColor="#fff"
+                            ColumnDefinitions="60,*"
+                            RowDefinitions="30,30,60,70,*">
+                            <Grid.Resources>
+                                <ResourceDictionary>
+                                    <Style TargetType="Button">
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="TextColor" Value="#000" />
+                                        <Setter Property="BackgroundColor" Value="#fff" />
+                                        <Setter Property="BorderColor" Value="{StaticResource AppBackgroud}" />
+                                        <Setter Property="BorderWidth" Value="1" />
+                                        <Setter Property="CornerRadius" Value="10" />
+                                        <Setter Property="Margin" Value="10" />
+                                    </Style>
+                                </ResourceDictionary>
+                            </Grid.Resources>
+                            <Image
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Margin="5"
+                                Aspect="AspectFit"
+                                Source="{markupExtensions:ImageResource icon_home_page.png}" />
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                VerticalTextAlignment="Center">
+                                <Label.Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="Span">
+                                            <Setter Property="FontSize" Value="14" />
+                                            <Setter Property="TextColor" Value="#000" />
+                                        </Style>
+                                    </ResourceDictionary>
+                                </Label.Resources>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Agecy.Name}" />
+                                        <Span Text=" (" />
+                                        <Span Text="{Binding Agecy.UserName}" />
+                                        <Span Text=")" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontSize="14"
+                                Text="{Binding Agecy.NumberPhone}"
+                                TextColor="#000"
+                                VerticalTextAlignment="Center" />
+                            <textInputLayout:SfTextInputLayout
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Margin="10,0"
+                                ContainerType="Outlined"
+                                FocusedColor="{StaticResource AppBackgroud}"
+                                Hint="Số lượng tạo bản quyền"
+                                OutlineCornerRadius="8"
+                                UnfocusedColor="{StaticResource AppBackgroud}">
+                                <Entry
+                                    BackgroundColor="Transparent"
+                                    Keyboard="Numeric"
+                                    ReturnType="Next"
+                                    Text="{Binding AmountKey}"
+                                    TextColor="{StaticResource AppBackgroud}" />
+                            </textInputLayout:SfTextInputLayout>
+
+                            <Button
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Command="{Binding CreateKeyCommand}"
+                                Text="Tạo mã bản quyền" />
+
+                            <Grid
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                BackgroundColor="#fff"
+                                RowDefinitions="60,40,*">
+                                <Frame
+                                    Grid.Row="0"
+                                    Margin="5"
+                                    Padding="0"
+                                    BackgroundColor="#fff"
+                                    BorderColor="{StaticResource AppBackgroud}"
+                                    CornerRadius="10"
+                                    HasShadow="False">
+                                    <SearchBar
+                                        Margin="0"
+                                        BackgroundColor="Transparent"
+                                        FontSize="15"
+                                        Text="{Binding SearchAgecyTxt}"
+                                        TextColor="#000">
+                                        <SearchBar.Behaviors>
+                                            <behaviors:EventToCommandBehavior Command="{Binding SearchAgecyCommand}" EventName="TextChanged" />
+                                        </SearchBar.Behaviors>
+                                    </SearchBar>
+                                </Frame>
+                                <Label
+                                    Grid.Row="1"
+                                    FontSize="15"
+                                    HorizontalTextAlignment="Center"
+                                    TextColor="#000"
+                                    VerticalTextAlignment="Center">
+                                    <Label.Resources>
+                                        <ResourceDictionary>
+                                            <Style TargetType="Span">
+                                                <Setter Property="FontSize" Value="15" />
+                                                <Setter Property="TextColor" Value="#000" />
+                                                <Setter Property="FontAttributes" Value="Bold" />
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </Label.Resources>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Số lượng đại lý: " />
+                                            <Span Text="{Binding CountAgecy}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <CollectionView
+                                    Grid.Row="2"
+                                    Margin="10,0"
+                                    ItemsSource="{Binding AgecyData}"
+                                    SelectedItem="{Binding Agecy}"
+                                    SelectionMode="Single">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid
+                                                Margin="0"
+                                                Padding="0"
+                                                BackgroundColor="#fff"
+                                                ColumnDefinitions="60,*"
+                                                RowDefinitions="30,30,1">
+                                                <Image
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="0"
+                                                    Margin="5"
+                                                    Aspect="AspectFit"
+                                                    Source="{markupExtensions:ImageResource icon_home_page.png}" />
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    VerticalTextAlignment="Center">
+                                                    <Label.Resources>
+                                                        <ResourceDictionary>
+                                                            <Style TargetType="Span">
+                                                                <Setter Property="FontSize" Value="14" />
+                                                                <Setter Property="TextColor" Value="#000" />
+                                                            </Style>
+                                                        </ResourceDictionary>
+                                                    </Label.Resources>
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding Name}" />
+                                                            <Span Text=" (" />
+                                                            <Span Text="{Binding UserName}" />
+                                                            <Span Text=")" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    FontSize="14"
+                                                    Text="{Binding NumberPhone}"
+                                                    TextColor="#000"
+                                                    VerticalTextAlignment="Center" />
+                                                <BoxView
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="2"
+                                                    BackgroundColor="{StaticResource AppBackgroud}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                    <CollectionView.EmptyView>
+                                        <Label
+                                            BackgroundColor="#fff"
+                                            FontSize="18"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Chưa có dữ liệu"
+                                            TextColor="{StaticResource AppBackgroud}"
+                                            VerticalTextAlignment="Center" />
+                                    </CollectionView.EmptyView>
+                                </CollectionView>
+                            </Grid>
+
+                        </Grid>
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
@@ -135,7 +330,7 @@
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
-                    Title="Danh Sách tài khoản"
+                    Title="Tài khoản"
                     SelectionColor="#fff"
                     TitleFontColor="CornflowerBlue"
                     TitleFontSize="15">
@@ -153,7 +348,7 @@
                                     Margin="0"
                                     BackgroundColor="Transparent"
                                     FontSize="15"
-                                    Text="{Binding SearchUser}"
+                                    Text="{Binding SearchUserTxt}"
                                     TextColor="#000">
                                     <SearchBar.Behaviors>
                                         <behaviors:EventToCommandBehavior Command="{Binding SearchUserCommand}" EventName="TextChanged" />
@@ -183,6 +378,7 @@
                                 </Label.FormattedText>
                             </Label>
                             <CollectionView
+                                x:Name="CollectionView"
                                 Grid.Row="2"
                                 Margin="10,0"
                                 ItemsSource="{Binding UserData}"
@@ -250,14 +446,14 @@
                                                 </Grid.Resources>
                                                 <Button
                                                     Grid.Column="0"
-                                                    Command="{Binding ResetPasswdCommand}"
-                                                    CommandParameter="0"
+                                                    Command="{Binding Source={x:Reference CollectionView}, Path=BindingContext.ResetPasswdCommand}"
+                                                    CommandParameter="{Binding .}"
                                                     Text="Đặt lại mật khẩu" />
                                                 <Button
                                                     Grid.Column="1"
-                                                    Command="{Binding ResetPasswdCommand}"
-                                                    CommandParameter="1"
-                                                    Text="Sét quyền tài khoản" />
+                                                    Command="{Binding Source={x:Reference CollectionView}, Path=BindingContext.SetRoleCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="Sét quyền" />
                                             </Grid>
                                         </Grid>
                                     </DataTemplate>

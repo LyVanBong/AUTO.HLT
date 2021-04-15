@@ -10,6 +10,7 @@ using AUTO.HLT.MOBILE.VIP.Services.RestSharp;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.User;
 using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
+using AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
@@ -20,6 +21,7 @@ using AUTO.HLT.MOBILE.VIP.ViewModels.Login;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Manage;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
 using AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer;
+using AUTO.HLT.MOBILE.VIP.Views.ChangePassword;
 using AUTO.HLT.MOBILE.VIP.Views.FakeApp;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
@@ -79,6 +81,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage8, FContentPage8ViewModel>();
             containerRegistry.RegisterForNavigation<KeyGenerationPage, KeyGenerationViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();

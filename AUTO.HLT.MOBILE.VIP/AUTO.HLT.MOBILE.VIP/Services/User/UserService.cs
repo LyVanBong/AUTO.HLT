@@ -55,7 +55,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.User
                     new RequestParameter(nameof(user.Price),user.Price+""),
                     new RequestParameter(nameof(user.IdDevice),user.IdDevice),
                 };
-                var json = await _restSharpService.PutAsync("http://api.autohlt.com/api/v1/user/updateuser", para);
+                var json = await _restSharpService.PutAsync("https://api.autohlt.vn/api/v1/user/updateuser", para);
                 if (json != null)
                 {
                     var data = JsonConvert.DeserializeObject<ResponseModel<string>>(json);

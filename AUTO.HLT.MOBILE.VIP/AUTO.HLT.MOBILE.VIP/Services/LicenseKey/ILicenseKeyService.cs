@@ -8,6 +8,13 @@ namespace AUTO.HLT.MOBILE.VIP.Services.LicenseKey
     public interface ILicenseKeyService
     {
         /// <summary>
+        /// Tạo khóa bản quyền
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="amountKey"></param>
+        /// <returns></returns>
+        Task<ResponseModel<string>> CreateLicense(string idUser,string amountKey);
+        /// <summary>
         /// lấy dánh sách key bản quyền do đại lý đã mua
         /// </summary>
         /// <returns></returns>

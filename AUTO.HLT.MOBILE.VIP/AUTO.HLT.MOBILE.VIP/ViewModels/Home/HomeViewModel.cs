@@ -19,6 +19,7 @@ using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
+using AUTO.HLT.MOBILE.VIP.Views.ChangePassword;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
@@ -172,6 +173,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     break;
                 case 10:
                     await NavigationService.NavigateAsync(nameof(KeyGenerationPage));
+                    break;
+                case 11:
+                    await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
                     break;
                 default:
                     break;
@@ -467,6 +471,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     Role = 99,
                     BgColor = Color.FromHex("6930c3"),
                     Icon = "icon_Interactive.png"
+                },
+                new ItemMenuModel()
+                {
+                    Id = 11,
+                    TitleItem = "Đổi mật khẩu",
+                    Role = 99,
+                    BgColor = Color.FromHex("eca3f5"),
+                    Icon = "icon_change_password.png"
                 },
                 new ItemMenuModel()
                 {
