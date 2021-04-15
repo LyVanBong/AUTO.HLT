@@ -135,7 +135,7 @@
                     </tabView:SfTabItem.Content>
                 </tabView:SfTabItem>
                 <tabView:SfTabItem
-                    Title="Danh Sách tài khoản"
+                    Title="Tài khoản"
                     SelectionColor="#fff"
                     TitleFontColor="CornflowerBlue"
                     TitleFontSize="15">
@@ -153,7 +153,7 @@
                                     Margin="0"
                                     BackgroundColor="Transparent"
                                     FontSize="15"
-                                    Text="{Binding SearchUser}"
+                                    Text="{Binding SearchUserTxt}"
                                     TextColor="#000">
                                     <SearchBar.Behaviors>
                                         <behaviors:EventToCommandBehavior Command="{Binding SearchUserCommand}" EventName="TextChanged" />
@@ -183,6 +183,7 @@
                                 </Label.FormattedText>
                             </Label>
                             <CollectionView
+                                x:Name="CollectionView"
                                 Grid.Row="2"
                                 Margin="10,0"
                                 ItemsSource="{Binding UserData}"
@@ -250,14 +251,14 @@
                                                 </Grid.Resources>
                                                 <Button
                                                     Grid.Column="0"
-                                                    Command="{Binding ResetPasswdCommand}"
-                                                    CommandParameter="0"
+                                                    Command="{Binding Source={x:Reference CollectionView}, Path=BindingContext.ResetPasswdCommand}"
+                                                    CommandParameter="{Binding .}"
                                                     Text="Đặt lại mật khẩu" />
                                                 <Button
                                                     Grid.Column="1"
-                                                    Command="{Binding ResetPasswdCommand}"
-                                                    CommandParameter="1"
-                                                    Text="Sét quyền tài khoản" />
+                                                    Command="{Binding Source={x:Reference CollectionView}, Path=BindingContext.SetRoleCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="Sét quyền" />
                                             </Grid>
                                         </Grid>
                                     </DataTemplate>

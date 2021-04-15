@@ -87,6 +87,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             set => SetProperty(ref _countUser, value);
         }
 
+        public string SearchUserTxt { get; set; }
+        public ICommand SearchUserCommand { get; private set; }
+        public ICommand SetRoleCommand { get; private set; }
         public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService) : base(navigationService)
         {
             _userService = userService;
@@ -94,7 +97,169 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             _loginService = loginService;
             _pageDialogService = pageDialogService;
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
-            ResetPasswdCommand = new AsyncCommand<string>(async (key) => await ResetPasswd(key));
+            ResetPasswdCommand = new AsyncCommand<UserModel>(async (obj) => await ResetPasswd(obj));
+            SearchUserCommand = new AsyncCommand(async () => await SearchUser());
+            SetRoleCommand = new AsyncCommand<UserModel>(async (model) => await SetRole(model));
+        }
+
+        private async Task SetRole(UserModel model)
+        {
+            try
+            {
+                if (IsLoading)
+                    return;
+                IsLoading = true;
+                if (model != null)
+                {
+
+                    if (model.Role == 0)
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tài khoản " + model.UserName + ", đang là admin bạn không thay đổi quyền tài khoản này !", "OK");
+                    }
+                    else
+                    {
+                        if (model.Role == 2)
+                        {
+                            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Nâng quyền cho tài khoản " + model.UserName + ", lên làm đại lý !", "OK", "Thôi"))
+                            {
+                                model.Role = 3;
+                                var updateRole3 = await _userService.UpdateUser(model);
+                                if (updateRole3 != null && updateRole3.Code > 0)
+                                {
+                                    await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
+                                    {
+                                        Ten_Thong_Bao = "Sét quyền",
+                                        Ghi_Chu = new
+                                        {
+                                            Nguoi_Tao = "Tài khoản do admin tạo"
+                                        },
+                                        Id_Nguoi_Dung = model.UserName,
+                                        So_Luong = 1,
+                                        Noi_Dung_Thong_Bao = new
+                                        {
+                                            Noi_Dung = "Nâng quyền cho tài khoản " + model.UserName + ", lên làm đại lý !",
+                                            Tai_Khoan = model.UserName,
+                                            So_Dien_Thoi = model.NumberPhone,
+                                        },
+                                    }, Formatting.Indented));
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Thành công", "OK");
+                                }
+                                else
+                                {
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh, vui lòng thử lại.", "OK");
+                                }
+                            }
+                        }
+                        else if (model.Role == 3)
+                        {
+                            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Xóa quyền đại lý của tài khoản " + model.UserName + " !", "OK", "Thôi"))
+                            {
+                                model.Role = 2;
+                                var updateRole2 = await _userService.UpdateUser(model);
+                                if (updateRole2 != null && updateRole2.Code > 0)
+                                {
+                                    await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
+                                    {
+                                        Ten_Thong_Bao = "Sét quyền",
+                                        Ghi_Chu = new
+                                        {
+                                            Nguoi_Tao = "Tài khoản do admin tạo"
+                                        },
+                                        Id_Nguoi_Dung = model.UserName,
+                                        So_Luong = 1,
+                                        Noi_Dung_Thong_Bao = new
+                                        {
+                                            Noi_Dung = "Xóa quyền đại lý của tài khoản " + model.UserName + " !",
+                                            Tai_Khoan = model.UserName,
+                                            So_Dien_Thoi = model.NumberPhone,
+                                        },
+                                    }, Formatting.Indented));
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Thành công", "OK");
+                                }
+                                else
+                                {
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh, vui lòng thử lại.", "OK");
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh !", "OK");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                await InitializeData();
+                IsLoading = false;
+            }
+        }
+
+        private async Task SearchUser()
+        {
+            try
+            {
+                if (IsLoading)
+                    return;
+                IsLoading = true;
+
+                if (string.IsNullOrEmpty(SearchUserTxt))
+                {
+                    await InitializeData();
+                }
+                else
+                {
+                    var allUser = await AllUser();
+                    if (allUser != null && allUser.Any())
+                    {
+                        var findUserName = allUser.Where(x => x.UserName.Contains(SearchUserTxt));
+                        if (findUserName.Any())
+                        {
+                            UserData = new ObservableRangeCollection<UserModel>(findUserName);
+                        }
+                        else
+                        {
+                            var findId = allUser.Where(x => x.ID.Contains(SearchUserTxt));
+                            if (findId.Any())
+                            {
+                                UserData = new ObservableRangeCollection<UserModel>(findId);
+                            }
+                            else
+                            {
+                                var findPhone = allUser.Where(x => x.NumberPhone.Contains(SearchUserTxt));
+                                if (findPhone.Any())
+                                {
+                                    UserData = new ObservableRangeCollection<UserModel>(findPhone);
+                                }
+                                else
+                                {
+                                    var findName = allUser.Where(x => x.Name.Contains(SearchUserTxt));
+                                    if (findName.Any())
+                                    {
+                                        UserData = new ObservableRangeCollection<UserModel>(findName);
+                                    }
+                                }
+                            }
+                        }
+
+                        CountUser = UserData.Count;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -131,15 +296,59 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             }
             return null;
         }
-        private async Task ResetPasswd(string key)
+        private async Task ResetPasswd(UserModel obj)
         {
             try
             {
-
+                if (IsLoading) return;
+                IsLoading = true;
+                if (obj != null)
+                {
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo",
+                        "Bạn muốn đặt lại mật khẩu tài khoản " + obj.UserName + ", mật khẩu mặc định là: Autovip@12345",
+                        "Đặt lại ngay", "Thôi"))
+                    {
+                        obj.Password = HashFunctionHelper.GetHashCode("Autovip@12345", 1);
+                        var chanagePass = await _userService.UpdateUser(obj);
+                        if (chanagePass != null && chanagePass.Code > 0)
+                        {
+                            await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
+                            {
+                                Ten_Thong_Bao = "Đặt lại mật khẩu",
+                                Ghi_Chu = new
+                                {
+                                    Nguoi_Tao = "Tài khoản do admin tạo"
+                                },
+                                Id_Nguoi_Dung = obj.UserName,
+                                So_Luong = 1,
+                                Noi_Dung_Thong_Bao = new
+                                {
+                                    Noi_Dung = "Đặt lại mật khẩu cho khách hàng",
+                                    Tai_Khoan = obj.UserName,
+                                    So_Dien_Thoi = obj.NumberPhone,
+                                },
+                            }, Formatting.Indented));
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Đổi mật khẩu thành công !", "OK");
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh, vui lòng thử lại.", "OK");
+                        }
+                    }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh !", "OK");
+                }
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
+            }
+            finally
+            {
+                await InitializeData();
+                IsLoading = false;
             }
         }
 
