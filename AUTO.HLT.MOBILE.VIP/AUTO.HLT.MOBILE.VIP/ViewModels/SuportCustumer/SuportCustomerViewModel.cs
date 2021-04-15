@@ -19,6 +19,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
         private ILoginService _loginService;
         private InfoIntroducetorModel _introducetor;
         private IDatabaseService _databaseService;
+        private string _versionApp;
 
         public bool IsLoading
         {
@@ -33,12 +34,20 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
         }
 
         public ICommand SuportCommand { get; private set; }
+
+        public string VersionApp
+        {
+            get => _versionApp;
+            set => SetProperty(ref _versionApp, value);
+        }
+
         public SuportCustomerViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ILoginService loginService, IDatabaseService databaseService) : base(navigationService)
         {
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             _loginService = loginService;
             SuportCommand = new AsyncCommand<string>(Suport);
+            VersionApp = VersionTracking.CurrentVersion + " (" + VersionTracking.CurrentBuild + ")";
         }
 
         private async Task Suport(string arg)

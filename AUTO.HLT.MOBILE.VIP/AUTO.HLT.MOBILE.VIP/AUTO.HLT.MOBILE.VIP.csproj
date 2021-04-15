@@ -19,6 +19,7 @@
     <None Remove="Resources\Images\icon_6.png" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
     <None Remove="Resources\Images\icon_birthday.png" />
+    <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
     <None Remove="Resources\Images\icon_facebook_connect.png" />
     <None Remove="Resources\Images\icon_filter_friends.png" />
@@ -44,6 +45,7 @@
     <EmbeddedResource Include="Resources\Images\icon_6.png" />
     <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
+    <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
     <EmbeddedResource Include="Resources\Images\icon_facebook_connect.png" />
     <EmbeddedResource Include="Resources\Images\icon_filter_friends.png" />
@@ -109,6 +111,9 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ChangePassword\ChangePasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FakeApp\AddLicenseKeyView.xaml">
