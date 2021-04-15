@@ -9,6 +9,7 @@ using AUTO.HLT.MOBILE.VIP.Helpers;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Models.User;
+using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.User;
@@ -35,6 +36,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         private bool _isLoading;
         private List<UserModel> _userCache;
         private int _countUser;
+        private ObservableRangeCollection<UserModel> _agecyData;
+        private int _countAgecy;
+        private string _searchAgecyTxt;
+        private UserModel _agecy;
+        private string _amountKey;
+        private ILicenseKeyService _licenseKeyService;
 
         public string UserName
         {
@@ -90,8 +97,38 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         public string SearchUserTxt { get; set; }
         public ICommand SearchUserCommand { get; private set; }
         public ICommand SetRoleCommand { get; private set; }
-        public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService) : base(navigationService)
+
+        public ObservableRangeCollection<UserModel> AgecyData
         {
+            get => _agecyData;
+            set => SetProperty(ref _agecyData, value);
+        }
+
+        public int CountAgecy
+        {
+            get => _countAgecy;
+            set => SetProperty(ref _countAgecy, value);
+        }
+
+        public string SearchAgecyTxt { get; set; }
+        public ICommand SearchAgecyCommand { get; private set; }
+
+        public UserModel Agecy
+        {
+            get => _agecy;
+            set => SetProperty(ref _agecy, value);
+        }
+
+        public string AmountKey
+        {
+            get => _amountKey;
+            set => SetProperty(ref _amountKey, value);
+        }
+
+        public ICommand CreateKeyCommand { get; private set; }
+        public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService, ILicenseKeyService licenseKeyService) : base(navigationService)
+        {
+            _licenseKeyService = licenseKeyService;
             _userService = userService;
             _telegramService = telegramService;
             _loginService = loginService;
@@ -100,6 +137,97 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             ResetPasswdCommand = new AsyncCommand<UserModel>(async (obj) => await ResetPasswd(obj));
             SearchUserCommand = new AsyncCommand(async () => await SearchUser());
             SetRoleCommand = new AsyncCommand<UserModel>(async (model) => await SetRole(model));
+            SearchAgecyCommand = new AsyncCommand(async () => await SearchAgecy());
+            CreateKeyCommand = new AsyncCommand(async () => await CreateKey());
+        }
+
+        private async Task CreateKey()
+        {
+            try
+            {
+                if (IsLoading) return;
+                IsLoading = true;
+                if (Agecy != null && !string.IsNullOrEmpty(Agecy.ID) && !string.IsNullOrEmpty(AmountKey) && Agecy.Role == 3)
+                {
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo " + AmountKey + " mã bản quyền cho đại lý " + Agecy.Name, "OK", "Thôi"))
+                    {
+                        var createKey = await _licenseKeyService.CreateLicense(Agecy.ID, AmountKey);
+                        if (createKey != null && createKey.Code > 0)
+                        {
+                            await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
+                            {
+                                Ten_Thong_Bao = "Tạo mã bản quyền",
+                                Ghi_Chu = new
+                                {
+                                    Nguoi_Tao = "Tài khoản do admin tạo"
+                                },
+                                Id_Nguoi_Dung = Agecy.UserName,
+                                So_Luong = 1,
+                                Noi_Dung_Thong_Bao = new
+                                {
+                                    Noi_Dung = "Tạo " + AmountKey + " mã bản quyền, cho tài khoản " + Agecy.UserName + " thành công !",
+                                    Tai_Khoan = Agecy.UserName,
+                                    So_Dien_Thoi = Agecy.NumberPhone,
+                                },
+                            }, Formatting.Indented));
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Thành công", "OK");
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh, vui lòng thử lại.", "OK");
+                        }
+
+                        Agecy = new UserModel();
+                        AmountKey = "";
+                    }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Chưa đủ dữ liệu đầu vào", "OK");
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private async Task SearchAgecy()
+        {
+            try
+            {
+                if (IsLoading) return;
+                IsLoading = true;
+                if (AgecyData != null && AgecyData.Any())
+                {
+                    if (string.IsNullOrEmpty(SearchAgecyTxt))
+                    {
+                        var agecy = UserData.Where(x => x.Role == 3);
+                        AgecyData = new ObservableRangeCollection<UserModel>(agecy);
+                    }
+                    else
+                    {
+                        var agecy = UserData.Where(x => x.Role == 3);
+                        var find = agecy.Where(x => x.UserName.Contains(SearchAgecyTxt));
+                        if (find.Any())
+                        {
+                            AgecyData = new ObservableRangeCollection<UserModel>(find);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         private async Task SetRole(UserModel model)
@@ -277,6 +405,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             {
                 UserData = new ObservableRangeCollection<UserModel>(data);
                 CountUser = data.Count;
+                var agecy = data.Where(x => x.Role == 3);
+                if (agecy.Any())
+                {
+                    AgecyData = new ObservableRangeCollection<UserModel>(agecy);
+                    CountAgecy = AgecyData.Count;
+                }
             }
         }
 
