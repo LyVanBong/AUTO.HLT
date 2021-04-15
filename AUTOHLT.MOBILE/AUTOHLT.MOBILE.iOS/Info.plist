@@ -59,5 +59,9 @@
 	<string>Launch Screen</string>
 	<key>CFBundleVersion</key>
 	<string>74</string>
+  <key>GADApplicationIdentifier</key>
+  <string>ca-app-pub-9881695093256851~8311353609</string>
+  <key>GADIsAdManagerApp</key>
+  <true/>
 </dict>
 </plist>

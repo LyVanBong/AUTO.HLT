@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Google.MobileAds;
 using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
@@ -37,8 +38,8 @@ namespace AUTOHLT.MOBILE.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App(new iOSInitializer()));
             OtherLibraries(app, options);
+            LoadApplication(new App(new iOSInitializer()));
             return base.FinishedLaunching(app, options);
         }
 
@@ -59,6 +60,7 @@ namespace AUTOHLT.MOBILE.iOS
 
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
+            MobileAds.Configure("ca-app-pub-9881695093256851~8311353609");
             new SfTreeMapRenderer();
             SfDataFormRenderer.Init();
             SfGaugeRenderer.Init();
