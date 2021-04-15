@@ -458,15 +458,6 @@
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
-                                <CollectionView.EmptyView>
-                                    <Label
-                                        BackgroundColor="#fff"
-                                        FontSize="18"
-                                        HorizontalTextAlignment="Center"
-                                        Text="Chưa có dữ liệu"
-                                        TextColor="{StaticResource AppBackgroud}"
-                                        VerticalTextAlignment="Center" />
-                                </CollectionView.EmptyView>
                             </CollectionView>
                         </Grid>
                     </tabView:SfTabItem.Content>
