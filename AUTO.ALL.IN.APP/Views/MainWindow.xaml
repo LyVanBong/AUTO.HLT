@@ -16,7 +16,7 @@
         <TabControl SelectedIndex="1">
             <TabItem>
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="150" Orientation="Horizontal">
                         <Image Height="20" Source="../Resources/Images/home.png" />
                         <Label Content="Trang Chủ" />
                     </StackPanel>
@@ -27,7 +27,7 @@
             </TabItem>
             <TabItem>
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="150" Orientation="Horizontal">
                         <Image Height="20" Source="../Resources/Images/add-user.png" />
                         <Label Content="Thêm tài khoản" />
                     </StackPanel>
@@ -38,13 +38,24 @@
             </TabItem>
             <TabItem>
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="150" Orientation="Horizontal">
                         <Image Height="20" Source="../Resources/Images/history.png" />
                         <Label Content="Lịch Sử" />
                     </StackPanel>
                 </TabItem.Header>
                 <TabItem.Content>
                     <views:HistoryView />
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="150" Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/icon_settings.png" />
+                        <Label Content="Cài đặt" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <views:SettingView />
                 </TabItem.Content>
             </TabItem>
         </TabControl>
