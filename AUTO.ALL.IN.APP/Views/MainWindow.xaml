@@ -6,7 +6,7 @@
     xmlns:views="clr-namespace:AUTO.ALL.IN.APP.Views"
     Title="{Binding Title}"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    Background="#fff"
+    Background="#f5f4f4"
     Icon="../Resources/Images/icon.png"
     ToolTip="Công cụ hộ trợ facebook"
     WindowStartupLocation="CenterScreen"

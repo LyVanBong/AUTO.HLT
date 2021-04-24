@@ -4,135 +4,177 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="Transparent"
+    Background="#f5f4f4"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.Resources>
-            <ResourceDictionary>
-                <Style TargetType="GroupBox">
-                    <Setter Property="BorderBrush" Value="DarkGray" />
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="Padding" Value="0" />
-                </Style>
-                <Style TargetType="TextBox">
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="BorderThickness" Value="0" />
-                </Style>
-            </ResourceDictionary>
-        </Grid.Resources>
-        <GroupBox
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2">
-            <GroupBox.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Height="20" Source="../Resources/Images/icon_info.png" />
-                    <Label Content="Thông tin tài khoản" />
-                </StackPanel>
-            </GroupBox.Header>
-            <GroupBox.Content>
-                <StackPanel Orientation="Vertical">
-                    <StackPanel.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Height" Value="30" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                            </Style>
-                        </ResourceDictionary>
-                    </StackPanel.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="265" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="GroupBox">
+                        <Setter Property="BorderBrush" Value="DarkGray" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Margin" Value="0" />
+                        <Setter Property="Padding" Value="0" />
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+            <GroupBox
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/icon_info.png" />
+                        <Label Content="Thông tin tài khoản" />
+                    </StackPanel>
+                </GroupBox.Header>
+                <GroupBox.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".5*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
-                        <GroupBox Grid.Column="0" Header="Tài khoản">
-                            <TextBox />
+                        <GroupBox Grid.Column="0" Header="Dữ liệu tài khoản">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="40" />
+                                </Grid.RowDefinitions>
+                                <TextBox
+                                    Grid.Row="0"
+                                    AcceptsReturn="True"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    Text="{Binding DataJson}"
+                                    TextWrapping="Wrap" />
+                                <Button
+                                    Grid.Row="1"
+                                    Margin="3,3"
+                                    Background="#fff"
+                                    BorderBrush="Blue"
+                                    BorderThickness="2"
+                                    Command="{Binding GetInfoFacebookCommand}"
+                                    Content="Lấy thông tin tài khoản">
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10" />
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </Grid>
                         </GroupBox>
-                        <GroupBox Grid.Column="1" Header="Mật khẩu">
-                            <TextBox />
-                        </GroupBox>
-                        <Button
-                            Grid.Column="2"
-                            Margin="5"
-                            Background="#fff"
-                            BorderBrush="Blue"
-                            BorderThickness="2"
-                            Content="Đăng Nhập Facebook">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="10" />
-                                </Style>
-                            </Button.Resources>
-                        </Button>
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <StackPanel.Resources>
+                                <ResourceDictionary>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </ResourceDictionary>
+                            </StackPanel.Resources>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
+                                <GroupBox Grid.Column="0" Header="Tài khoản">
+                                    <TextBox Text="{Binding UserFacebookModel.UserNameFacebook}" />
+                                </GroupBox>
+                                <GroupBox Grid.Column="1" Header="Mật khẩu">
+                                    <TextBox Text="{Binding UserFacebookModel.PassFacebook}" />
+                                </GroupBox>
+                                <Button
+                                    Grid.Column="2"
+                                    Margin="5,8"
+                                    Background="#fff"
+                                    BorderBrush="Blue"
+                                    BorderThickness="2"
+                                    Content="Đăng Nhập Facebook">
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10" />
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </Grid>
+                            <GroupBox Header="ID">
+                                <TextBox Height="30" Text="{Binding UserFacebookModel.Id}" />
+                            </GroupBox>
+                            <GroupBox Header="Cookie">
+                                <TextBox
+                                    Height="40"
+                                    Text="{Binding UserFacebookModel.Cookie}"
+                                    TextWrapping="Wrap" />
+                            </GroupBox>
+                            <GroupBox Header="Token">
+                                <TextBox
+                                    Height="40"
+                                    Text="{Binding UserFacebookModel.Token}"
+                                    TextWrapping="Wrap" />
+                            </GroupBox>
+                        </StackPanel>
                     </Grid>
-                    <GroupBox Header="ID">
-                        <TextBox Height="30" />
-                    </GroupBox>
-                    <GroupBox Header="Cookie">
-                        <TextBox Height="40" TextWrapping="Wrap" />
-                    </GroupBox>
-                    <GroupBox Header="Token">
-                        <TextBox Height="40" />
-                    </GroupBox>
-                </StackPanel>
-            </GroupBox.Content>
-        </GroupBox>
-        <Button
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="20,3"
-            Background="#fff"
-            BorderBrush="Blue"
-            BorderThickness="2"
-            Content="Lưu tài khoản">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10" />
-                </Style>
-            </Button.Resources>
-        </Button>
-        <Button
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="20,3"
-            Background="#fff"
-            BorderBrush="OrangeRed"
-            BorderThickness="2"
-            Content="Nhập lại">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10" />
-                </Style>
-            </Button.Resources>
-        </Button>
-        <GroupBox
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2">
-            <GroupBox.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Height="20" Source="../Resources/Images/icon_options.png" />
-                    <Label Content="Các chức năng" />
-                </StackPanel>
-            </GroupBox.Header>
-            <GroupBox.Content>
-                <ScrollViewer>
+                </GroupBox.Content>
+            </GroupBox>
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="20,3"
+                Background="#fff"
+                BorderBrush="Blue"
+                BorderThickness="2"
+                Content="Lưu tài khoản">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="20,3"
+                Background="#fff"
+                BorderBrush="OrangeRed"
+                BorderThickness="2"
+                Content="Nhập lại">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <GroupBox
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/icon_options.png" />
+                        <Label Content="Các chức năng" />
+                    </StackPanel>
+                </GroupBox.Header>
+                <GroupBox.Content>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="500" />
+                            <RowDefinition Height="500" />
+                            <RowDefinition Height="500" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -154,9 +196,13 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Header="Xem story" />
+                        <GroupBox
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Header="Kết bạn theo gợi ý" />
                     </Grid>
-                </ScrollViewer>
-            </GroupBox.Content>
-        </GroupBox>
-    </Grid>
+                </GroupBox.Content>
+            </GroupBox>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
