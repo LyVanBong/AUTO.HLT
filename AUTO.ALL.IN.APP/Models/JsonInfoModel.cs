@@ -1,4 +1,6 @@
-﻿namespace AUTO.ALL.IN.APP.Models
+﻿using System;
+
+namespace AUTO.ALL.IN.APP.Models
 {
     public class JsonInfoModel
     {

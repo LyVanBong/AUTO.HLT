@@ -7,6 +7,7 @@
     Title="{Binding Title}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="#f5f4f4"
+    Closing="MainWindow_OnClosing"
     Icon="../Resources/Images/icon.png"
     ToolTip="Công cụ hộ trợ facebook"
     WindowStartupLocation="CenterScreen"

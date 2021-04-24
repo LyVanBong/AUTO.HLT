@@ -223,7 +223,8 @@ namespace AUTO.DLL.Services
             }
             finally
             {
-                _driver.Quit();
+                if (_driver != null)
+                    _driver.Quit();
             }
         }
         /// <summary>

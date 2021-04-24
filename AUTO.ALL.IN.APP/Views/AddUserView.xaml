@@ -104,6 +104,7 @@
                                     Background="#fff"
                                     BorderBrush="Blue"
                                     BorderThickness="2"
+                                    Command="{Binding LoginFacebookCommand}"
                                     Content="Đăng Nhập Facebook">
                                     <Button.Resources>
                                         <Style TargetType="{x:Type Border}">
@@ -112,21 +113,46 @@
                                     </Button.Resources>
                                 </Button>
                             </Grid>
-                            <GroupBox Header="ID">
-                                <TextBox Height="30" Text="{Binding UserFacebookModel.Id}" />
-                            </GroupBox>
-                            <GroupBox Header="Cookie">
-                                <TextBox
-                                    Height="40"
-                                    Text="{Binding UserFacebookModel.Cookie}"
-                                    TextWrapping="Wrap" />
-                            </GroupBox>
-                            <GroupBox Header="Token">
-                                <TextBox
-                                    Height="40"
-                                    Text="{Binding UserFacebookModel.Token}"
-                                    TextWrapping="Wrap" />
-                            </GroupBox>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <GroupBox
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Header="ID">
+                                    <TextBox Text="{Binding UserFacebookModel.Id}" />
+                                </GroupBox>
+                                <GroupBox
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Header="Ngày hết hạn">
+                                    <DatePicker VerticalContentAlignment="Center" SelectedDate="{Binding UserFacebookModel.EndDate}" />
+                                </GroupBox>
+                                <GroupBox
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Header="Cookie">
+                                    <TextBox
+                                        Height="95"
+                                        Text="{Binding UserFacebookModel.Cookie}"
+                                        TextWrapping="Wrap" />
+                                </GroupBox>
+                                <GroupBox
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Header="Token">
+                                    <TextBox
+                                        Height="95"
+                                        Text="{Binding UserFacebookModel.Token}"
+                                        TextWrapping="Wrap" />
+                                </GroupBox>
+                            </Grid>
                         </StackPanel>
                     </Grid>
                 </GroupBox.Content>
@@ -138,6 +164,8 @@
                 Background="#fff"
                 BorderBrush="Blue"
                 BorderThickness="2"
+                Command="{Binding SaveAccountCommand}"
+                CommandParameter="0"
                 Content="Lưu tài khoản">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
@@ -152,6 +180,8 @@
                 Background="#fff"
                 BorderBrush="OrangeRed"
                 BorderThickness="2"
+                Command="{Binding SaveAccountCommand}"
+                CommandParameter="1"
                 Content="Nhập lại">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">

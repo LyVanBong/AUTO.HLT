@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
 
 namespace AUTO.ALL.IN.APP.Views
 {
@@ -10,6 +13,12 @@ namespace AUTO.ALL.IN.APP.Views
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            ((Window) sender).Hide();
+            Debug.WriteLine($"[{DateTime.Now}]: Dừng chương trình lại nhẽ");
         }
     }
 }

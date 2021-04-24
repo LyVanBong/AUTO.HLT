@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using System;
+using Prism.Mvvm;
 
 namespace AUTO.ALL.IN.APP.Models
 {
@@ -16,6 +17,7 @@ namespace AUTO.ALL.IN.APP.Models
         private string _numberPhoneApp;
         private string _nameApp;
         private string _userNameApp;
+        private DateTime _endDate;
 
         /// <summary>
         /// Id nguoi dung
@@ -62,7 +64,11 @@ namespace AUTO.ALL.IN.APP.Models
             set => SetProperty(ref _passFacebook, value);
         }
 
-        public string EndDate { get; set; }
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set => SetProperty(ref _endDate, value);
+        }
 
         public string AvatarFacebook
         {
