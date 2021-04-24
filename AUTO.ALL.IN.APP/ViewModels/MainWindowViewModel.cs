@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using AUTO.ALL.IN.APP.Models;
+using AUTO.ALL.IN.APP.Services;
 using AUTO.DLL.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -72,7 +75,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
             {
                 if (key == "0")
                 {
-
+                    
                 }
                 else if (key == "1")
                 {

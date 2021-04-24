@@ -18,6 +18,10 @@ namespace AUTO.ALL.IN.APP.Models
         private string _nameApp;
         private string _userNameApp;
         private DateTime _endDate;
+        private bool _isSendMessage;
+        private bool _isInteractionStory;
+        private bool _isInteractionAvatar;
+        private bool _isInteractivePosts;
 
         /// <summary>
         /// Id nguoi dung
@@ -110,6 +114,34 @@ namespace AUTO.ALL.IN.APP.Models
         {
             get => _userNameApp;
             set => SetProperty(ref _userNameApp, value);
+        }
+
+        //Interactive Posts
+        public bool IsInteractivePosts
+        {
+            get => _isInteractivePosts;
+            set => SetProperty(ref _isInteractivePosts, value);
+        }
+
+        //Interaction Avatar
+        public bool IsInteractionAvatar
+        {
+            get => _isInteractionAvatar;
+            set => SetProperty(ref _isInteractionAvatar, value);
+        }
+
+        //Interaction Story
+        public bool IsInteractionStory
+        {
+            get => _isInteractionStory;
+            set => SetProperty(ref _isInteractionStory, value);
+        }
+
+        //Send Message
+        public bool IsSendMessage
+        {
+            get => _isSendMessage;
+            set => SetProperty(ref _isSendMessage, value);
         }
     }
 }
