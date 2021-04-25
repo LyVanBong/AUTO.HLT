@@ -202,34 +202,402 @@
                 <GroupBox.Content>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="500" />
-                            <RowDefinition Height="500" />
-                            <RowDefinition Height="500" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <GroupBox
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Header="Tương tác bài viết" />
-                        <GroupBox
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Header="Tương tác ảnh đại diện" />
-                        <GroupBox
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Header="Gửi tin nhăn" />
-                        <GroupBox
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Header="Xem story" />
-                        <GroupBox
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Header="Kết bạn theo gợi ý" />
+                        <GroupBox Grid.Row="0" Grid.Column="0">
+                            <GroupBox.Header>
+                                <CheckBox
+                                    x:Name="CheckBoxPost"
+                                    Content="Tương tác bài viết"
+                                    IsChecked="{Binding UserFacebookModel.OptionPost.IsSelectFunction}" />
+                            </GroupBox.Header>
+                            <GroupBox.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxPost, Path=IsChecked}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxPost, Path=IsChecked}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <GroupBox
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Header="Option">
+
+                                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yU/r/tc5IAx58Ipa.png" />
+                                                    <Label Content="Thích" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="1">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/MB1XWOdQjV0.png" />
+                                                    <Label Content="Yêu thích" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yR/r/QTVmPoFjk5O.png" />
+                                                    <Label Content="Thương thương" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="3">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/bkP6GqAFgZ_.png" />
+                                                    <Label Content="Haha" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="4">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/tHO3j6Ngeyx.png" />
+                                                    <Label Content="Wow" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/1eqxxZX7fYp.png" />
+                                                    <Label Content="Buồn" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionPostCommand}" CommandParameter="6">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/PByJ079GWfl.png" />
+                                                    <Label Content="Phẫn nộ" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Header="Bình luận">
+                                        <TextBox
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionPost.Comment}"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                    <GroupBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Header="Thời gian nghỉ">
+                                        <TextBox
+                                            Height="25"
+                                            VerticalContentAlignment="Center"
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionPost.TimeDelay}"
+                                            TextChanged="TextBoxBase_OnTextChanged"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                </Grid>
+                            </GroupBox.Content>
+                        </GroupBox>
+                        <!--  Tương tác ảnh đại diện  -->
+                        <GroupBox Grid.Row="0" Grid.Column="1">
+                            <GroupBox.Header>
+                                <CheckBox
+                                    x:Name="CheckBoxAvatar"
+                                    Content="Tương tác ảnh đại diện"
+                                    IsChecked="{Binding UserFacebookModel.OptionAvatar.IsSelectFunction}" />
+                            </GroupBox.Header>
+                            <GroupBox.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxAvatar, Path=IsChecked}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxAvatar, Path=IsChecked}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <GroupBox
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Header="Option">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yU/r/tc5IAx58Ipa.png" />
+                                                    <Label Content="Thích" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="1">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/MB1XWOdQjV0.png" />
+                                                    <Label Content="Yêu thích" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yR/r/QTVmPoFjk5O.png" />
+                                                    <Label Content="Thương thương" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="3">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/bkP6GqAFgZ_.png" />
+                                                    <Label Content="Haha" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="4">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/tHO3j6Ngeyx.png" />
+                                                    <Label Content="Wow" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/1eqxxZX7fYp.png" />
+                                                    <Label Content="Buồn" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionAvatarCommand}" CommandParameter="6">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/PByJ079GWfl.png" />
+                                                    <Label Content="Phẫn nộ" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Header="Bình luận">
+                                        <TextBox
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionAvatar.Comment}"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                    <GroupBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Header="Thời gian nghỉ">
+                                        <TextBox
+                                            Height="25"
+                                            VerticalContentAlignment="Center"
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionAvatar.TimeDelay}"
+                                            TextChanged="TextBoxBase_OnTextChanged"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                </Grid>
+                            </GroupBox.Content>
+                        </GroupBox>
+                        <GroupBox Grid.Row="1" Grid.Column="0">
+                            <GroupBox.Header>
+                                <CheckBox
+                                    x:Name="CheckBoxMessage"
+                                    Content="Gửi tin nhăn"
+                                    IsChecked="{Binding UserFacebookModel.OptionMessage.IsSelectFunction}" />
+                            </GroupBox.Header>
+                            <GroupBox.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxMessage, Path=IsChecked}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxMessage, Path=IsChecked}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <GroupBox Grid.Row="0" Header="Lời nhắn">
+                                        <TextBox
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionMessage.Messager}"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                    <GroupBox Grid.Row="1" Header="Thời gian nghỉ">
+                                        <TextBox
+                                            Height="25"
+                                            VerticalContentAlignment="Center"
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionMessage.TimeDelay}"
+                                            TextChanged="TextBoxBase_OnTextChanged"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                </Grid>
+                            </GroupBox.Content>
+                        </GroupBox>
+                        <GroupBox Grid.Row="1" Grid.Column="1">
+                            <GroupBox.Header>
+                                <CheckBox
+                                    x:Name="CheckBoxStory"
+                                    Content="Xem story"
+                                    IsChecked="{Binding UserFacebookModel.OptionStory.IsSelectFunction}" />
+                            </GroupBox.Header>
+                            <GroupBox.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxStory, Path=IsChecked}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxStory, Path=IsChecked}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <GroupBox
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Header="Option">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yU/r/tc5IAx58Ipa.png" />
+                                                    <Label Content="Thích" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="1">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/MB1XWOdQjV0.png" />
+                                                    <Label Content="Yêu thích" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yR/r/QTVmPoFjk5O.png" />
+                                                    <Label Content="Thương thương" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="3">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/bkP6GqAFgZ_.png" />
+                                                    <Label Content="Haha" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="4">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/tHO3j6Ngeyx.png" />
+                                                    <Label Content="Wow" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/1eqxxZX7fYp.png" />
+                                                    <Label Content="Buồn" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                            <RadioButton Command="{Binding SelectOptionStoryCommand}" CommandParameter="6">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/PByJ079GWfl.png" />
+                                                    <Label Content="Phẫn nộ" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Header="Lời nhắn">
+                                        <TextBox
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionStory.Messager}"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                    <GroupBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Header="Thời gian nghỉ">
+                                        <TextBox
+                                            Height="25"
+                                            VerticalContentAlignment="Center"
+                                            AcceptsReturn="True"
+                                            Text="{Binding UserFacebookModel.OptionStory.TimeDelay}"
+                                            TextChanged="TextBoxBase_OnTextChanged"
+                                            TextWrapping="Wrap" />
+                                    </GroupBox>
+                                </Grid>
+                            </GroupBox.Content>
+                        </GroupBox>
+                        <GroupBox Grid.Row="2" Grid.Column="0">
+                            <GroupBox.Header>
+                                <CheckBox
+                                    x:Name="CheckBoxFriend"
+                                    Content="Kết bạn theo gợi ý"
+                                    IsChecked="{Binding UserFacebookModel.OPtionFriendsSuggestions.IsSelectFunction}" />
+                            </GroupBox.Header>
+                            <GroupBox.Content>
+                                <GroupBox
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Header="Thời gian nghỉ">
+                                    <GroupBox.Style>
+                                        <Style TargetType="GroupBox">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxFriend, Path=IsChecked}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=CheckBoxFriend, Path=IsChecked}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </GroupBox.Style>
+                                    <TextBox
+                                        Height="25"
+                                        VerticalContentAlignment="Center"
+                                        AcceptsReturn="True"
+                                        Text="{Binding UserFacebookModel.OPtionFriendsSuggestions.TimeDelay}"
+                                        TextChanged="TextBoxBase_OnTextChanged"
+                                        TextWrapping="Wrap" />
+                                </GroupBox>
+                            </GroupBox.Content>
+                        </GroupBox>
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>

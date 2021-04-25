@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Dynamic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using AUTO.ALL.IN.APP.Models;
-using AUTO.ALL.IN.APP.Services;
+﻿using AUTO.ALL.IN.APP.Models;
 using AUTO.DLL.Services;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace AUTO.ALL.IN.APP.ViewModels
 {
@@ -29,7 +24,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         public MainWindowViewModel()
         {
-            UserFacebookModel = new UserFacebookModel();
             AddAccount();
         }
 
@@ -58,15 +52,58 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         public ICommand LoginFacebookCommand { get; private set; }
         public ICommand SaveAccountCommand { get; private set; }
+        public ICommand SelectOptionStoryCommand { get; private set; }
+        public ICommand SelectOptionAvatarCommand { get; private set; }
+        public ICommand SelectOptionPostCommand { get; private set; }
 
         /// <summary>
         /// constructor của chức năng thêm tài khoản
         /// </summary>
         private void AddAccount()
         {
+            UserFacebookModel = new UserFacebookModel();
             GetInfoFacebookCommand = new DelegateCommand(async () => await ConvertJsonToInfo());
             LoginFacebookCommand = new DelegateCommand(async () => await LoginFacebook());
             SaveAccountCommand = new DelegateCommand<string>(async (key) => await SaveAccount(key));
+            SelectOptionStoryCommand = new DelegateCommand<string>(async (story) => await SelectOptionStory(story));
+            SelectOptionAvatarCommand = new DelegateCommand<string>(async (avatar) => await SelectOptionAvatar(avatar));
+            SelectOptionPostCommand = new DelegateCommand<string>(async (post) => await SelectOptionPost(post));
+        }
+
+        private async Task SelectOptionPost(string post)
+        {
+            try
+            {
+                UserFacebookModel.OptionPost.IndexOptionReac = int.Parse(post);
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(SelectOptionPost));
+            }
+        }
+
+        private async Task SelectOptionAvatar(string avatar)
+        {
+            try
+            {
+                UserFacebookModel.OptionAvatar.IndexOptionReac = int.Parse(avatar);
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(SelectOptionAvatar));
+            }
+        }
+
+        private async Task SelectOptionStory(string story)
+        {
+            try
+            {
+                UserFacebookModel.OptionStory.IndexOptionReac = int.Parse(story);
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(SelectOptionStory));
+            }
         }
 
         private async Task SaveAccount(string key)
@@ -75,7 +112,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
             {
                 if (key == "0")
                 {
-                    
+
                 }
                 else if (key == "1")
                 {
@@ -144,8 +181,10 @@ namespace AUTO.ALL.IN.APP.ViewModels
                         UserFacebookModel.Id = data.Id_Nguoi_Dung;
                         UserFacebookModel.Cookie = data.Noi_Dung_Thong_Bao.Cookie;
                         UserFacebookModel.Token = data.Noi_Dung_Thong_Bao.Token;
-                        if (DateTime.TryParse(data.Ghi_Chu.Ngay_Het_Han, out var result))
-                            UserFacebookModel.EndDate = result;
+                        var strDate = data.Ghi_Chu.Ngay_Het_Han.Split('/');
+                        UserFacebookModel.EndDate = new DateTime(int.Parse(strDate[2]), int.Parse(strDate[1]),
+                            int.Parse(strDate[0]));
+
                         UserFacebookModel.NumberPhoneApp = data.Ghi_Chu.So_dien_thoai;
                         UserFacebookModel.NameApp = data.Ghi_Chu.Ten;
                         UserFacebookModel.UserNameApp = data.Ghi_Chu.Tai_Khoan;

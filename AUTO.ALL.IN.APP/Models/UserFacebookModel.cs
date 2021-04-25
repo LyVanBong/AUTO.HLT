@@ -1,11 +1,11 @@
-﻿using System;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
+using System;
 
 namespace AUTO.ALL.IN.APP.Models
 {
     public class UserFacebookModel : BindableBase
     {
-        private string _id;
+        private string _id = Guid.NewGuid() + "";
         private string _cookie;
         private string _token;
         private string _userNameFacebook;
@@ -18,10 +18,11 @@ namespace AUTO.ALL.IN.APP.Models
         private string _nameApp;
         private string _userNameApp;
         private DateTime _endDate;
-        private bool _isSendMessage;
-        private bool _isInteractionStory;
-        private bool _isInteractionAvatar;
-        private bool _isInteractivePosts;
+        private OptionReacModel _optionPost = new OptionReacModel();
+        private OptionReacModel _optionAvatar = new OptionReacModel();
+        private OptionReacModel _optionStory = new OptionReacModel();
+        private OptionReacModel _optionMessage = new OptionReacModel();
+        private OptionReacModel _oPtionFriendsSuggestions = new OptionReacModel();
 
         /// <summary>
         /// Id nguoi dung
@@ -116,32 +117,38 @@ namespace AUTO.ALL.IN.APP.Models
             set => SetProperty(ref _userNameApp, value);
         }
 
-        //Interactive Posts
-        public bool IsInteractivePosts
+        public OptionReacModel OptionPost
         {
-            get => _isInteractivePosts;
-            set => SetProperty(ref _isInteractivePosts, value);
+            get => _optionPost;
+            set => SetProperty(ref _optionPost, value);
         }
 
         //Interaction Avatar
-        public bool IsInteractionAvatar
+        public OptionReacModel OptionAvatar
         {
-            get => _isInteractionAvatar;
-            set => SetProperty(ref _isInteractionAvatar, value);
+            get => _optionAvatar;
+            set => SetProperty(ref _optionAvatar, value);
         }
 
         //Interaction Story
-        public bool IsInteractionStory
+    
+        public OptionReacModel OptionStory
         {
-            get => _isInteractionStory;
-            set => SetProperty(ref _isInteractionStory, value);
+            get => _optionStory;
+            set => SetProperty(ref _optionStory, value);
         }
 
         //Send Message
-        public bool IsSendMessage
+        public OptionReacModel OptionMessage
         {
-            get => _isSendMessage;
-            set => SetProperty(ref _isSendMessage, value);
+            get => _optionMessage;
+            set => SetProperty(ref _optionMessage, value);
+        }
+
+        public OptionReacModel OPtionFriendsSuggestions
+        {
+            get => _oPtionFriendsSuggestions;
+            set => SetProperty(ref _oPtionFriendsSuggestions, value);
         }
     }
 }

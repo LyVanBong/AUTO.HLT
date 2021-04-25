@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\JsonInfoModel.cs" />
+    <Compile Include="Models\OptionReacModel.cs" />
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
@@ -199,6 +200,10 @@
     <ProjectReference Include="..\AUTO.DLL\AUTO.DLL.csproj">
       <Project>{19637d9b-b825-4adf-9a47-2fbae19e39c7}</Project>
       <Name>AUTO.DLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AUTO.DROP.HEART\AUTO.DROP.HEART.csproj">
+      <Project>{37A9D806-6BC6-474B-8C0C-8C69D79F4ED1}</Project>
+      <Name>AUTO.DROP.HEART</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

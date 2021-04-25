@@ -275,8 +275,8 @@
       <DependentUpon>AutoHLTDb.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\auto.api.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.API.AUTOHLT.pubxml" />
-    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
