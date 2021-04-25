@@ -14,7 +14,7 @@
     WindowState="Maximized"
     WindowStyle="ThreeDBorderWindow">
     <Grid>
-        <TabControl SelectedIndex="1">
+        <TabControl SelectedIndex="{Binding SelectedIndex}">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Width="150" Orientation="Horizontal">

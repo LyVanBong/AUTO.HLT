@@ -1,15 +1,17 @@
 ﻿using AUTO.ALL.IN.APP.Models;
+using AUTO.ALL.IN.APP.Services;
 using AUTO.DLL.Services;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using AUTO.ALL.IN.APP.Services;
-using Newtonsoft.Json;
+using System.Windows.Threading;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AUTO.ALL.IN.APP.ViewModels
@@ -20,6 +22,14 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private string _dataJson;
         private UserFacebookModel _userFacebookModel = new UserFacebookModel();
         private ObservableCollection<UserFacebookModel> _dataTool = new ObservableCollection<UserFacebookModel>();
+        private DispatcherTimer _dispatcherTimer;
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set => SetProperty(ref _selectedIndex, value);
+        }
 
         public string Title
         {
@@ -30,8 +40,155 @@ namespace AUTO.ALL.IN.APP.ViewModels
         public MainWindowViewModel()
         {
             AddAccount();
+            StartService().Await();
         }
 
+        #region Service
+
+        private async Task StartService()
+        {
+            try
+            {
+                DataTool = await
+                   RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(nameof(UserFacebookModel));
+                _dispatcherTimer = new DispatcherTimer();
+                _dispatcherTimer.Interval = TimeSpan.FromMinutes(10);
+                _dispatcherTimer.Tick += Timer_Tick;
+                _dispatcherTimer.Start();
+
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(StartService));
+            }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (DataTool.Any())
+                {
+                    foreach (var user in DataTool)
+                    {
+                        if (user.Status == 0 && user.EndDate.Date >= DateTime.Now.Date)
+                        {
+                            user.Worker = new BackgroundWorker();
+                            user.Worker.WorkerReportsProgress = true;
+                            user.Worker.WorkerSupportsCancellation = true;
+                            user.Worker.DoWork += Worker_DoWork;
+                            user.Worker.ProgressChanged += Worker_ProgressChanged;
+                            user.Worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+                            user.Worker.RunWorkerAsync(user);
+                            user.Status = 1;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessageError(ex, nameof(Timer_Tick)).Await();
+            }
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessageError(ex, nameof(Worker_RunWorkerCompleted)).Await();
+            }
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessageError(ex, nameof(Worker_ProgressChanged)).Await();
+            }
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var user = e.Argument as UserFacebookModel;
+            try
+            {
+                if (user != null)
+                {
+                    var friend = user.DataFacebook.friends.data;
+                    if (friend != null && friend.Any())
+                    {
+                        var random = new Random();
+                        foreach (var myFriend in friend)
+                        {
+                            // tha tim avatar
+                            if (user.OptionAvatar.IsSelectFunction)
+                            {
+                                ReacAvatarFacebook();
+                            }
+                            // tha tim story
+                            if (user.OptionStory.IsSelectFunction)
+                            {
+                                SeenStoryFacebook();
+                            }
+                            // ke ban theo goi y
+                            if (user.OPtionFriendsSuggestions.IsSelectFunction)
+                            {
+                                FriendsSuggestionsFacebook();
+                            }
+                            // gui tin nhan
+                            if (user.OptionMessage.IsSelectFunction)
+                            {
+                                SendMessageFacebook();
+                            }
+                            // bai viet cua ban be
+                            if (user.OptionPost.IsSelectFunction)
+                            {
+                                ReacPostFacebook();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessageError(ex, nameof(Worker_DoWork)).Await();
+            }
+        }
+
+        private void ReacAvatarFacebook()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SeenStoryFacebook()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FriendsSuggestionsFacebook()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SendMessageFacebook()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ReacPostFacebook()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
         #region Home
 
         public ObservableCollection<UserFacebookModel> DataTool

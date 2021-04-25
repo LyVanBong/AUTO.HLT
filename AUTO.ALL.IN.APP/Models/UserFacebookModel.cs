@@ -1,5 +1,6 @@
 ﻿using Prism.Mvvm;
 using System;
+using System.ComponentModel;
 
 namespace AUTO.ALL.IN.APP.Models
 {
@@ -22,7 +23,7 @@ namespace AUTO.ALL.IN.APP.Models
         private OptionReacModel _oPtionFriendsSuggestions = new OptionReacModel();
         private DataFacebookModel _dataFacebook = new DataFacebookModel();
         private int _status;
-
+        public BackgroundWorker Worker { get; set; }
         public DataFacebookModel DataFacebook
         {
             get => _dataFacebook;
