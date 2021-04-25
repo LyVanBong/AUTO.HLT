@@ -14,6 +14,31 @@ namespace AUTO.DLL.Services
     {
         private static ChromeDriver _driver;
         /// <summary>
+        /// lấy dữ liệu facebook thông qua api
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        public static async Task<string> GetApiFacebook(string accessToken, string fields)
+        {
+            var json = "";
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("fields",fields),
+                    new RequestParameter("access_token",accessToken),
+                };
+                json = await RestSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi: " + e.Message);
+            }
+
+            return json;
+        }
+        /// <summary>
         /// Lấy thông tin tài khoản facebook qua api
         /// </summary>
         /// <param name="accessToken">Token facebook</param>

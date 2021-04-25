@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\DataFacebookModel.cs" />
     <Compile Include="Models\JsonInfoModel.cs" />
     <Compile Include="Models\OptionReacModel.cs" />
     <Compile Include="Views\SettingView.xaml.cs">

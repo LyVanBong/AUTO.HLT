@@ -10,9 +10,6 @@ namespace AUTO.ALL.IN.APP.Models
         private string _token;
         private string _userNameFacebook;
         private string _passFacebook;
-        private string _avatarFacebook;
-        private string _nameFacebook;
-        private string _idFacebook;
         private string _numberPhoneFacebook;
         private string _numberPhoneApp;
         private string _nameApp;
@@ -23,6 +20,14 @@ namespace AUTO.ALL.IN.APP.Models
         private OptionReacModel _optionStory = new OptionReacModel();
         private OptionReacModel _optionMessage = new OptionReacModel();
         private OptionReacModel _oPtionFriendsSuggestions = new OptionReacModel();
+        private DataFacebookModel _dataFacebook = new DataFacebookModel();
+        private int _status;
+
+        public DataFacebookModel DataFacebook
+        {
+            get => _dataFacebook;
+            set => SetProperty(ref _dataFacebook, value);
+        }
 
         /// <summary>
         /// Id nguoi dung
@@ -75,24 +80,11 @@ namespace AUTO.ALL.IN.APP.Models
             set => SetProperty(ref _endDate, value);
         }
 
-        public string AvatarFacebook
-        {
-            get => _avatarFacebook;
-            set => SetProperty(ref _avatarFacebook, value);
-        }
+        public string AvatarFacebook => DataFacebook.picture.data.url;
 
-        public string NameFacebook
-        {
-            get => _nameFacebook;
-            set => SetProperty(ref _nameFacebook, value);
-        }
+        public string NameFacebook => DataFacebook.name;
 
-        public string IdFacebook
-        {
-            get => _idFacebook;
-            set => SetProperty(ref _idFacebook, value);
-        }
-
+        public string IdFacebook => DataFacebook.id;
         public string NumberPhoneFacebook
         {
             get => _numberPhoneFacebook;
@@ -131,7 +123,7 @@ namespace AUTO.ALL.IN.APP.Models
         }
 
         //Interaction Story
-    
+
         public OptionReacModel OptionStory
         {
             get => _optionStory;
@@ -149,6 +141,17 @@ namespace AUTO.ALL.IN.APP.Models
         {
             get => _oPtionFriendsSuggestions;
             set => SetProperty(ref _oPtionFriendsSuggestions, value);
+        }
+        /// <summary>
+        /// 0 là lài khoản mới được thêm hoặc mới được cập nhật lại
+        /// 1 đang chạy
+        /// 2 tạm dừng
+        /// 3 die
+        /// </summary>
+        public int Status
+        {
+            get => _status;
+            set => SetProperty(ref _status, value);
         }
     }
 }

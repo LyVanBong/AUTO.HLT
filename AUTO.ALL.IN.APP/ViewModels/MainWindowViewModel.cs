@@ -3,10 +3,14 @@ using AUTO.DLL.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Text.Json;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using AUTO.ALL.IN.APP.Services;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AUTO.ALL.IN.APP.ViewModels
 {
@@ -14,7 +18,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
     {
         private string _title = "Công cụ hỗ trợ facebook";
         private string _dataJson;
-        private UserFacebookModel _userFacebookModel;
+        private UserFacebookModel _userFacebookModel = new UserFacebookModel();
+        private ObservableCollection<UserFacebookModel> _dataTool = new ObservableCollection<UserFacebookModel>();
 
         public string Title
         {
@@ -27,6 +32,15 @@ namespace AUTO.ALL.IN.APP.ViewModels
             AddAccount();
         }
 
+        #region Home
+
+        public ObservableCollection<UserFacebookModel> DataTool
+        {
+            get => _dataTool;
+            set => SetProperty(ref _dataTool, value);
+        }
+
+        #endregion
         #region Thêm tài khoản
 
         /// <summary>
@@ -61,7 +75,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
         /// </summary>
         private void AddAccount()
         {
-            UserFacebookModel = new UserFacebookModel();
             GetInfoFacebookCommand = new DelegateCommand(async () => await ConvertJsonToInfo());
             LoginFacebookCommand = new DelegateCommand(async () => await LoginFacebook());
             SaveAccountCommand = new DelegateCommand<string>(async (key) => await SaveAccount(key));
@@ -112,7 +125,77 @@ namespace AUTO.ALL.IN.APP.ViewModels
             {
                 if (key == "0")
                 {
+                    if (UserFacebookModel != null)
+                    {
+                        if (string.IsNullOrEmpty(UserFacebookModel.Id) || string.IsNullOrEmpty(UserFacebookModel.Cookie) || string.IsNullOrEmpty(UserFacebookModel.Token))
+                        {
+                            await ShowMessage(@"Vui lòng điền đầy đủ dữ liệu trước khi lưu !").ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            if (UserFacebookModel.OptionPost.IsSelectFunction || UserFacebookModel.OPtionFriendsSuggestions.IsSelectFunction || UserFacebookModel.OptionAvatar.IsSelectFunction || UserFacebookModel.OptionStory.IsSelectFunction || UserFacebookModel.OptionMessage.IsSelectFunction)
+                            {
+                                var random = new Random();
 
+                                var fields = "friends.limit(" + random.Next(4000, 5000) + "){id,name},id,name,picture,email";
+                                var json = await FacebookService.GetApiFacebook(UserFacebookModel.Token, fields);
+                                if (string.IsNullOrEmpty(json))
+                                {
+                                    if (await FacebookService.CheckTokenCookie(UserFacebookModel.Token, UserFacebookModel.Cookie))
+                                    {
+                                        await ShowMessage(@"Lỗi phát sinh vui lòng thử lại !").ConfigureAwait(false);
+                                    }
+                                    else
+                                    {
+                                        await ShowMessage(@"Cookie hoặc token die !").ConfigureAwait(false);
+                                    }
+                                }
+                                else
+                                {
+                                    var facebook = JsonConvert.DeserializeObject<DataFacebookModel>(json);
+                                    if (facebook == null)
+                                    {
+                                        await ShowMessage(@"Lỗi phát sinh vui lòng thử lại !").ConfigureAwait(false);
+                                    }
+                                    else
+                                    {
+                                        UserFacebookModel.DataFacebook = facebook;
+                                        if (DataTool.Any(x => x.IdFacebook == UserFacebookModel.IdFacebook))
+                                        {
+                                            if (MessageBox.Show("Tài khoản này đã tồn tại bạn có muỗn cập nhật lại không !", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                            {
+                                                var update = DataTool.FirstOrDefault(x =>
+                                                    x.IdFacebook == UserFacebookModel.IdFacebook);
+                                                if (update == null) return;
+                                                update.DataFacebook = facebook;
+                                                DataTool.Add(update);
+                                                await ShowMessage(@"Cập nhật dữ liệu thành công !").ConfigureAwait(false);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            DataTool.Add(UserFacebookModel);
+                                            await ShowMessage(@"Lưu dữ liệu thành công !").ConfigureAwait(false);
+                                        }
+
+                                        if (DataTool.Any())
+                                        {
+                                            await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
+                                        }
+                                        await ResetInput();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                await ShowMessage(@"Bạn chưa chọn chức năng nào để chạy công cụ !").ConfigureAwait(false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await ShowMessage(@"Dữ liệu chưa được khởi tạo").ConfigureAwait(false);
+                    }
                 }
                 else if (key == "1")
                 {
