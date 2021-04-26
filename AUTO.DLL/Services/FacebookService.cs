@@ -7,12 +7,120 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace AUTO.DLL.Services
 {
     public static class FacebookService
     {
         private static ChromeDriver _driver;
+
+        /// <summary>
+        /// binh luan vao bai viet cua ban be
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="cookie"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public static async Task<int> CommentPost(string html, string cookie, string comment)
+        {
+            var result = 0;
+            if (string.IsNullOrEmpty(comment))
+                return result;
+            try
+            {
+                var random = new Random();
+                var cmt = comment.Split('\n');
+                if ((await RestSharpService.PostAsync(HttpUtility.HtmlDecode(@"https://d.facebook.com" + Regex.Matches(html, @"action=""(.*?)""")[0].Groups[1].Value), new List<RequestParameter>()
+                {
+                    new RequestParameter("fb_dtsg", Regex.Matches(html, @"name=""fb_dtsg"" value=""(.*?)""")[0].Groups[1].Value),
+                    new RequestParameter("jazoest", Regex.Matches(html, @"name=""jazoest"" value=""(.*?)""")[0].Groups[1].Value),
+                    new RequestParameter("comment_text", cmt[random.Next(0,cmt.Length-1)]),
+                }, cookie)).Contains("/home.php?ref_component=mbasic_home_logo"))
+                {
+                    result = 1;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return result;
+        }
+        /// <summary>
+        /// tương tác với bài viết của của bạn bè
+        /// </summary>
+        /// <param name="fbid"></param>
+        /// <param name="cookie"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        public static async Task<int> ReactionPost(string fbid, string cookie, int option, string comment)
+        {
+            var result = 0;
+            try
+            {
+                var html = await FacebookService.GetHtmlFacebook("https://d.facebook.com/" + HttpUtility.HtmlDecode(
+                    Regex.Matches(
+                            await FacebookService.GetHtmlFacebook(
+                                "https://d.facebook.com/reactions/picker/?is_permalink=1&ft_id=" + fbid, cookie),
+                            @"/ufi/reaction.*?""")[option].Value
+                        .Replace("\"", "")), cookie);
+                if (html.Contains("/home.php?ref_component=mbasic_home_logo"))
+                {
+                    result += await CommentPost(html, cookie, comment);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return result;
+        }
+        /// <summary>
+        /// get id avartar
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public static async Task<string> GetIdPostFacebook(string uid, string cookie, int option)
+        {
+            var id = "";
+            try
+            {
+                id = Regex.Match(
+                    Regex.Matches(await FacebookService.GetHtmlFacebook("https://d.facebook.com/" + uid, cookie),
+                        @"\/photo.php\?fbid\=.*?refid\=17")[option].Value, @"fbid=(.*?)&").Groups[1].Value;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return id;
+        }
+
+        /// <summary>
+        /// post facebook get html
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="cookie"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static async Task<string> PostHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null)
+        {
+            var html = "";
+            try
+            {
+                html = await RestSharpService.PostAsync(url, parameters, cookie);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return html;
+        }
+
         /// <summary>
         /// lấy dữ liệu facebook thông qua api
         /// </summary>

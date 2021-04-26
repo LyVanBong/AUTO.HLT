@@ -29,7 +29,15 @@ namespace AUTO.ALL.IN.APP.Models
             get => _uidFriend;
             set => SetProperty(ref _uidFriend, value);
         }
-
+        /// <summary>
+        /// 0. post
+        /// 1. avatar
+        /// 2. nhan tin
+        /// 3. xem story
+        /// 4. ket ban theo goi y
+        /// 5. cookie ore token die
+        /// 6. tam dung
+        /// </summary>
         public int TypeLogger
         {
             get => _typeLogger;

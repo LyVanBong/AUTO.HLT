@@ -8,6 +8,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -24,6 +26,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private ObservableCollection<UserFacebookModel> _dataTool = new ObservableCollection<UserFacebookModel>();
         private DispatcherTimer _dispatcherTimer;
         private int _selectedIndex;
+        private ObservableCollection<LoggerModel> _dataLogger = new ObservableCollection<LoggerModel>();
 
         public int SelectedIndex
         {
@@ -43,16 +46,28 @@ namespace AUTO.ALL.IN.APP.ViewModels
             StartService().Await();
         }
 
+        #region Logger
+
+        public ObservableCollection<LoggerModel> DataLogger
+        {
+            get => _dataLogger;
+            set => SetProperty(ref _dataLogger, value);
+        }
+
+        #endregion
         #region Service
 
         private async Task StartService()
         {
             try
             {
-                DataTool = await
-                   RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(nameof(UserFacebookModel));
+                var data = await RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(nameof(UserFacebookModel));
+                if (data != null)
+                {
+                    DataTool = data;
+                }
                 _dispatcherTimer = new DispatcherTimer();
-                _dispatcherTimer.Interval = TimeSpan.FromMinutes(10);
+                _dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
                 _dispatcherTimer.Tick += Timer_Tick;
                 _dispatcherTimer.Start();
 
@@ -67,7 +82,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             try
             {
-                if (DataTool.Any())
+                if (DataTool != null && DataTool.Any())
                 {
                     foreach (var user in DataTool)
                     {
@@ -95,6 +110,20 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             try
             {
+                var logger = e.Result as LoggerModel;
+                if (logger != null)
+                {
+                    if (DataLogger == null || !DataLogger.Any())
+                    {
+                        DataLogger = new ObservableCollection<LoggerModel>();
+                        logger.No = 1;
+                    }
+                    else
+                    {
+                        logger.No = DataLogger.Count + 1;
+                    }
+                    DataLogger.Add(logger);
+                }
 
             }
             catch (Exception ex)
@@ -105,8 +134,22 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            var logger = e.UserState as LoggerModel;
             try
             {
+                if (logger != null)
+                {
+                    if (DataLogger == null)
+                    {
+                        DataLogger = new ObservableCollection<LoggerModel>();
+                        logger.No = 1;
+                    }
+                    else
+                    {
+                        logger.No = DataLogger.Count + 1;
+                    }
+                    DataLogger.Add(logger);
+                }
 
             }
             catch (Exception ex)
@@ -118,11 +161,12 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             var user = e.Argument as UserFacebookModel;
+            var worker = sender as BackgroundWorker;
             try
             {
                 if (user != null)
                 {
-                    var friend = DataTool.FirstOrDefault(x => x.IdFacebook == user.IdFacebook)?.DataFacebook?.friends?.data;
+                    var friend = user?.DataFacebook?.friends?.data;
                     if (friend != null && friend.Any())
                     {
                         var random = new Random();
@@ -131,33 +175,70 @@ namespace AUTO.ALL.IN.APP.ViewModels
                             if (!myFriend.IsDone)
                             {
                                 myFriend.IsDone = true;
+                                if (worker.CancellationPending == true)
+                                {
+                                    user.Status = 2;
+                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    e.Cancel = true;
+                                    return;
+                                }
                                 // tha tim avatar
                                 if (user.OptionAvatar.IsSelectFunction)
                                 {
-                                    ReacAvatarFacebook();
+                                    ReacAvatarFacebook(user, myFriend, random, worker, e);
+                                }
+                                if (worker.CancellationPending == true)
+                                {
+                                    user.Status = 2;
+                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    e.Cancel = true;
+                                    return;
                                 }
                                 // tha tim story
                                 if (user.OptionStory.IsSelectFunction)
                                 {
-                                    SeenStoryFacebook();
+                                    SeenStoryFacebook(user, myFriend, random, worker, e);
+                                }
+                                if (worker.CancellationPending == true)
+                                {
+                                    user.Status = 2;
+                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    e.Cancel = true;
+                                    return;
                                 }
                                 // ke ban theo goi y
                                 if (user.OPtionFriendsSuggestions.IsSelectFunction)
                                 {
-                                    FriendsSuggestionsFacebook();
+                                    //FriendsSuggestionsFacebook();
+                                }
+                                if (worker.CancellationPending == true)
+                                {
+                                    user.Status = 2;
+                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    e.Cancel = true;
+                                    return;
                                 }
                                 // gui tin nhan
                                 if (user.OptionMessage.IsSelectFunction)
                                 {
-                                    SendMessageFacebook();
+                                    SendMessageFacebook(user, myFriend, random, worker, e);
+                                }
+                                if (worker.CancellationPending == true)
+                                {
+                                    user.Status = 2;
+                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    e.Cancel = true;
+                                    return;
                                 }
                                 // bai viet cua ban be
                                 if (user.OptionPost.IsSelectFunction)
                                 {
-                                    ReacPostFacebook();
+                                    ReacPostFacebook(user, myFriend, random, worker, e);
                                 }
                             }
                         }
+                        e.Result = new LoggerModel(0, user.IdFacebook, "0000000000", 7, "Run tool done", "Done");
+                        user.Status = 0;
                     }
                 }
             }
@@ -166,15 +247,87 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 ShowMessageError(ex, nameof(Worker_DoWork)).Await();
             }
         }
-
-        private void ReacAvatarFacebook()
+        /// <summary>
+        /// tương tác với ảnh đại diện của bạn bè
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="friend"></param>
+        /// <param name="random"></param>
+        /// <param name="worker"></param>
+        /// <param name="ev"></param>
+        private void ReacAvatarFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
         {
-            throw new NotImplementedException();
+            var delay = user.OptionAvatar.TimeDelay;
+            try
+            {
+                var idPost = FacebookService.GetIdPostFacebook(friend.id, user.Cookie, 0).Result;
+                if (!string.IsNullOrWhiteSpace(idPost))
+                {
+                    var reaction =
+                        FacebookService.ReactionPost(idPost, user.Cookie, user.OptionAvatar.IndexOptionReac, user.OptionAvatar.Comment).Result;
+                    if (reaction > 0)
+                    {
+                        var his = new LoggerModel(1, user.IdFacebook, friend.id, 1, user.OptionAvatar.IndexOptionReac + ",Interactive avatar", "Done");
+                        worker.ReportProgress(1, his);
+                    }
+                }
+                else
+                {
+                    if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                    {
+                        user.Status = 3;
+                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
+                        ev.Result = his;
+                        ev.Cancel = true;
+                        return;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessageError(e, nameof(ReacAvatarFacebook)).Await();
+                return;
+            }
+
+            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
+
         }
 
-        private void SeenStoryFacebook()
+        private void SeenStoryFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
         {
-            throw new NotImplementedException();
+            var delay = user.OptionStory.TimeDelay;
+            try
+            {
+                var html = FacebookService.GetHtmlChrome("https://m.facebook.com/", user.Cookie).Result;
+                if (string.IsNullOrEmpty(html))
+                {
+                    if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                    {
+                        user.Status = 3;
+                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
+                        ev.Result = his;
+                        ev.Cancel = true;
+                        return;
+                    }
+                }
+                else
+                {
+                    var regex = Regex.Matches(html, @"id="""" data-href=""(.*?)""");
+                    foreach (Match o in regex)
+                    {
+                        var url = o?.Groups[1]?.Value;
+                        FacebookService.AutoDropHeartFacebookStory(url, user.Cookie, user.OptionStory.IndexOptionReac).Await();
+                        var his = new LoggerModel(1, user.IdFacebook, friend.id, 3, user.OptionMessage.IndexOptionReac + ",Interactive story", "Done");
+                        worker.ReportProgress(1, his);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessageError(e, nameof(SeenStoryFacebook)).Await();
+                return;
+            }
+            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
         }
 
         private void FriendsSuggestionsFacebook()
@@ -182,14 +335,79 @@ namespace AUTO.ALL.IN.APP.ViewModels
             throw new NotImplementedException();
         }
 
-        private void SendMessageFacebook()
+        private void SendMessageFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
         {
-            throw new NotImplementedException();
+            var delay = user.OptionMessage.TimeDelay;
+            try
+            {
+                var messager = user.OptionMessage.Messager;
+                if (string.IsNullOrEmpty(messager)) return;
+                var mess = messager.Split('\n');
+
+
+                var send = FacebookService.SendMessage(string.Format(mess[random.Next(0, mess.Length - 1)], friend.name), friend.id,
+                    user.Cookie).Result;
+
+                if (send)
+                {
+
+                    var his = new LoggerModel(1, user.IdFacebook, friend.id, 2, user.OptionMessage.IndexOptionReac + ",Interactive send messager", "Done");
+                    worker.ReportProgress(1, his);
+                }
+                else
+                {
+                    if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                    {
+                        user.Status = 3;
+                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
+                        ev.Result = his;
+                        ev.Cancel = true;
+                        return;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessageError(e, nameof(SendMessageFacebook)).Await();
+                return;
+            }
+            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
         }
 
-        private void ReacPostFacebook()
+        private void ReacPostFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
         {
-            throw new NotImplementedException();
+            var delay = user.OptionPost.TimeDelay;
+            try
+            {
+                var idPost = FacebookService.GetIdPostFacebook(friend.id, user.Cookie, 1).Result;
+                if (!string.IsNullOrWhiteSpace(idPost))
+                {
+                    var reaction =
+                        FacebookService.ReactionPost(idPost, user.Cookie, user.OptionPost.IndexOptionReac, user.OptionPost.Comment).Result;
+                    if (reaction > 0)
+                    {
+                        var his = new LoggerModel(1, user.IdFacebook, friend.id, 0, user.OptionPost.IndexOptionReac + ",Interactive post", "Done");
+                        worker.ReportProgress(1, his);
+                    }
+                }
+                else
+                {
+                    if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                    {
+                        user.Status = 3;
+                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
+                        ev.Result = his;
+                        ev.Cancel = true;
+                        return;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessageError(e, nameof(ReacPostFacebook)).Await();
+                return;
+            }
+            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
         }
 
         #endregion
