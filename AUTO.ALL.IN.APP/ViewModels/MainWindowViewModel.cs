@@ -122,36 +122,40 @@ namespace AUTO.ALL.IN.APP.ViewModels
             {
                 if (user != null)
                 {
-                    var friend = user.DataFacebook.friends.data;
+                    var friend = DataTool.FirstOrDefault(x => x.IdFacebook == user.IdFacebook)?.DataFacebook?.friends?.data;
                     if (friend != null && friend.Any())
                     {
                         var random = new Random();
                         foreach (var myFriend in friend)
                         {
-                            // tha tim avatar
-                            if (user.OptionAvatar.IsSelectFunction)
+                            if (!myFriend.IsDone)
                             {
-                                ReacAvatarFacebook();
-                            }
-                            // tha tim story
-                            if (user.OptionStory.IsSelectFunction)
-                            {
-                                SeenStoryFacebook();
-                            }
-                            // ke ban theo goi y
-                            if (user.OPtionFriendsSuggestions.IsSelectFunction)
-                            {
-                                FriendsSuggestionsFacebook();
-                            }
-                            // gui tin nhan
-                            if (user.OptionMessage.IsSelectFunction)
-                            {
-                                SendMessageFacebook();
-                            }
-                            // bai viet cua ban be
-                            if (user.OptionPost.IsSelectFunction)
-                            {
-                                ReacPostFacebook();
+                                myFriend.IsDone = true;
+                                // tha tim avatar
+                                if (user.OptionAvatar.IsSelectFunction)
+                                {
+                                    ReacAvatarFacebook();
+                                }
+                                // tha tim story
+                                if (user.OptionStory.IsSelectFunction)
+                                {
+                                    SeenStoryFacebook();
+                                }
+                                // ke ban theo goi y
+                                if (user.OPtionFriendsSuggestions.IsSelectFunction)
+                                {
+                                    FriendsSuggestionsFacebook();
+                                }
+                                // gui tin nhan
+                                if (user.OptionMessage.IsSelectFunction)
+                                {
+                                    SendMessageFacebook();
+                                }
+                                // bai viet cua ban be
+                                if (user.OptionPost.IsSelectFunction)
+                                {
+                                    ReacPostFacebook();
+                                }
                             }
                         }
                     }

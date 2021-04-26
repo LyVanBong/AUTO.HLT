@@ -76,6 +76,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\DataFacebookModel.cs" />
     <Compile Include="Models\JsonInfoModel.cs" />
+    <Compile Include="Models\LoggerModel.cs" />
     <Compile Include="Models\OptionReacModel.cs" />
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
@@ -145,6 +146,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Notifications">
+      <Version>7.0.1</Version>
+    </PackageReference>
     <PackageReference Include="FireSharp">
       <Version>2.0.4</Version>
     </PackageReference>
