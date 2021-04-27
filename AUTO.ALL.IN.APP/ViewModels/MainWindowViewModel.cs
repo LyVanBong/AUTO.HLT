@@ -27,6 +27,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private DispatcherTimer _dispatcherTimer;
         private int _selectedIndex;
         private ObservableCollection<LoggerModel> _dataLogger = new ObservableCollection<LoggerModel>();
+        private Visibility _loading = Visibility.Hidden;
 
         public int SelectedIndex
         {
@@ -38,6 +39,12 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
+        }
+
+        public Visibility Loading
+        {
+            get => _loading;
+            set => SetProperty(ref _loading, value);
         }
 
         public MainWindowViewModel()
@@ -69,7 +76,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 _dispatcherTimer = new DispatcherTimer();
                 _dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
                 _dispatcherTimer.Tick += Timer_Tick;
-                _dispatcherTimer.Start();
+                 _dispatcherTimer.Start();
 
             }
             catch (Exception e)

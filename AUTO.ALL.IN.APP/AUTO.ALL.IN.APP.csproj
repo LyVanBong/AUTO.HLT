@@ -162,6 +162,9 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver">
       <Version>90.0.4430.2400</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfBusyIndicator.WPF">
+      <Version>19.1.0.58</Version>
+    </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>5.0.2</Version>
     </PackageReference>
@@ -210,6 +213,9 @@
       <Project>{37A9D806-6BC6-474B-8C0C-8C69D79F4ED1}</Project>
       <Name>AUTO.DROP.HEART</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\icon_notication.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

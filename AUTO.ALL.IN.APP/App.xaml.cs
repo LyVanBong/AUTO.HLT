@@ -12,6 +12,7 @@ namespace AUTO.ALL.IN.APP
     {
         protected override Window CreateShell()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDM2OTI3QDMxMzkyZTMxMmUzMFEyNW45ZER4VUtmVlBwSnpMcTBDbEZjV3ArM0dwSVFkbEZyTmZzNDdOdjg9");
             return Container.Resolve<MainWindow>();
         }
 
