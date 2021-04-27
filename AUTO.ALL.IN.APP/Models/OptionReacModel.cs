@@ -6,9 +6,10 @@ namespace AUTO.ALL.IN.APP.Models
     {
         private bool _isSelectFunction;
         private int _indexOptionReac = 1;
-        private string _comment ="Mỗi dòng là 1 bình luận";
-        private string _messager="Mỗi dòng là 1 tin nhắn";
+        private string _comment = "Mỗi dòng là 1 bình luận";
+        private string _messager = "Mỗi dòng là 1 tin nhắn";
         private int _timeDelay = 5;
+        private long _totalReaction;
 
         public bool IsSelectFunction
         {
@@ -38,6 +39,12 @@ namespace AUTO.ALL.IN.APP.Models
         {
             get => _timeDelay;
             set => SetProperty(ref _timeDelay, value);
+        }
+
+        public long TotalReaction
+        {
+            get => _totalReaction;
+            set => SetProperty(ref _totalReaction, value);
         }
     }
 }

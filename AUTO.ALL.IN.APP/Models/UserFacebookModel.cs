@@ -23,6 +23,7 @@ namespace AUTO.ALL.IN.APP.Models
         private OptionReacModel _oPtionFriendsSuggestions = new OptionReacModel();
         private DataFacebookModel _dataFacebook = new DataFacebookModel();
         private int _status;
+        private int _totalFriends;
         public BackgroundWorker Worker { get; set; }
         public DataFacebookModel DataFacebook
         {
@@ -152,7 +153,36 @@ namespace AUTO.ALL.IN.APP.Models
         public int Status
         {
             get => _status;
-            set => SetProperty(ref _status, value);
+            set
+            {
+                if (SetProperty(ref _status, value))
+                    RaisePropertyChanged(TrangThai);
+            }
         }
+
+        public string TrangThai
+        {
+            get
+            {
+                if (Status == 0)
+                {
+                    return "NEW";
+                }
+                else if (Status == 1)
+                {
+                    return "RUNNING";
+                }
+                else if (Status == 2)
+                {
+                    return "PAUSE";
+                }
+                else
+                {
+                    return "DIED";
+                }
+            }
+        }
+
+        public int TotalFriends => DataFacebook.friends.data.Length;
     }
 }

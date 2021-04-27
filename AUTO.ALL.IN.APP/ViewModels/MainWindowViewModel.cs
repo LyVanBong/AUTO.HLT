@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AUTO.ALL.IN.APP.Views;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AUTO.ALL.IN.APP.ViewModels
@@ -28,6 +29,20 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private int _selectedIndex;
         private ObservableCollection<LoggerModel> _dataLogger = new ObservableCollection<LoggerModel>();
         private Visibility _loading = Visibility.Hidden;
+        private AccountStatisticsModel _accountStatistics;
+        private bool _isRunningTool;
+
+        public bool IsRunningTool
+        {
+            get => _isRunningTool;
+            set => SetProperty(ref _isRunningTool, value);
+        }
+
+        public AccountStatisticsModel AccountStatistics
+        {
+            get => _accountStatistics;
+            set => SetProperty(ref _accountStatistics, value);
+        }
 
         public int SelectedIndex
         {
@@ -50,6 +65,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
         public MainWindowViewModel()
         {
             AddAccount();
+            HomeTool();
             StartService().Await();
         }
 
@@ -69,6 +85,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
             try
             {
                 var data = await RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(nameof(UserFacebookModel));
+                AccountStatistics = new AccountStatisticsModel(data);
                 if (data != null)
                 {
                     DataTool = data;
@@ -76,7 +93,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 _dispatcherTimer = new DispatcherTimer();
                 _dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
                 _dispatcherTimer.Tick += Timer_Tick;
-                 _dispatcherTimer.Start();
+                // _dispatcherTimer.Start();
 
             }
             catch (Exception e)
@@ -339,7 +356,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         private void FriendsSuggestionsFacebook()
         {
-            throw new NotImplementedException();
+
         }
 
         private void SendMessageFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
@@ -424,6 +441,26 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             get => _dataTool;
             set => SetProperty(ref _dataTool, value);
+        }
+
+        public ICommand StartToolCommand { get; private set; }
+
+        private void HomeTool()
+        {
+            StartToolCommand = new DelegateCommand(() =>
+            {
+                if (IsRunningTool)
+                {
+                    _dispatcherTimer.Stop();
+                    IsRunningTool = false;
+                }
+                else
+                {
+                    _dispatcherTimer.Start();
+                    IsRunningTool = true;
+                }
+
+            });
         }
 
         #endregion

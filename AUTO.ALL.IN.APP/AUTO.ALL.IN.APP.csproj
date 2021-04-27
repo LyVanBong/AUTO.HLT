@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AccountStatisticsModel.cs" />
     <Compile Include="Models\DataFacebookModel.cs" />
     <Compile Include="Models\JsonInfoModel.cs" />
     <Compile Include="Models\LoggerModel.cs" />
@@ -216,6 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\icon_notication.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\icon_start.png" />
+    <Resource Include="Resources\Images\icon_stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

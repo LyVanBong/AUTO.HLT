@@ -97,44 +97,55 @@
                         </Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="Foreground" Value="#000000" />
                             <Setter Property="FontSize" Value="13" />
                             <Setter Property="Margin" Value="2,0" />
                         </Style>
                     </ResourceDictionary>
                 </StackPanel.Resources>
-                <TextBlock FontSize="10">
+                <TextBlock FontSize="10" Foreground="#23049d">
                     <Run Text="TOTAL:" />
-                    <Run Text="10" />
+                    <Run Text="{Binding AccountStatistics.Total}" />
                 </TextBlock>
-                <TextBlock FontSize="10">
+                <TextBlock FontSize="10" Foreground="#00917c">
                     <Run Text="NEW:" />
-                    <Run Text="10" />
+                    <Run Text="{Binding AccountStatistics.New}" />
                 </TextBlock>
-                <TextBlock FontSize="10">
+                <TextBlock FontSize="10" Foreground="#cf0000">
                     <Run Text="RUNNING:" />
-                    <Run Text="10" />
+                    <Run Text="{Binding AccountStatistics.Running}" />
                 </TextBlock>
-                <TextBlock FontSize="10">
+                <TextBlock FontSize="10" Foreground="#f58634">
                     <Run Text="PAUSE:" />
-                    <Run Text="10" />
+                    <Run Text="{Binding AccountStatistics.Pause}" />
                 </TextBlock>
-                <TextBlock FontSize="10">
+                <TextBlock FontSize="10" Foreground="#000000">
                     <Run Text="DIED:" />
-                    <Run Text="10" />
+                    <Run Text="{Binding AccountStatistics.Died}" />
                 </TextBlock>
                 <!--  STOP  -->
                 <Label
-                    Content="LIVE"
                     FontSize="15"
                     FontWeight="Bold"
-                    Foreground="#cf0000" />
+                    Foreground="#cf0000">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRunningTool}" Value="True">
+                                    <Setter Property="Content" Value="LIVE" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsRunningTool}" Value="False">
+                                    <Setter Property="Content" Value="STOP" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
                 <syncfusion:SfBusyIndicator
-                    AnimationSpeed="250"
+                    AnimationSpeed="200"
                     AnimationType="Ripple"
                     Background="Transparent"
                     FontSize="10"
-                    Foreground="#cf0000"
+                    Foreground="#0061a8"
                     IsBusy="True"
                     ViewboxHeight="30"
                     ViewboxWidth="30" />
