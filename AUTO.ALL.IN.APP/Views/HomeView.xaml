@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="homeView"
     Background="#f5f4f4"
     mc:Ignorable="d">
     <Grid>
@@ -18,7 +19,7 @@
             <ListView
                 Background="Transparent"
                 ItemsSource="{Binding DataTool}"
-                SelectionMode="Extended">
+                SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <GroupBox
@@ -45,10 +46,40 @@
                                 </Grid.Resources>
                                 <Grid.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Menu item 1" />
-                                        <MenuItem Header="Menu item 2" />
-                                        <Separator />
-                                        <MenuItem Header="Menu item 3" />
+                                        <MenuItem
+                                            Command="{Binding Source={x:Reference Name=homeView}, Path=DataContext.UpdateUserCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Header="Cập nhật">
+                                            <MenuItem.Icon>
+                                                <Image
+                                                    Width="20"
+                                                    Height="20"
+                                                    Source="../Resources/Images/icon_edit.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            Command="{Binding Source={x:Reference Name=homeView}, Path=DataContext.PauseUserCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Header="Tạm dừng">
+                                            <MenuItem.Icon>
+                                                <Image
+                                                    Width="20"
+                                                    Height="20"
+                                                    Source="../Resources/Images/icon_pause.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <Separator Background="Gray" />
+                                        <MenuItem
+                                            Command="{Binding Source={x:Reference Name=homeView}, Path=DataContext.DeleteUserCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Header="Xóa tài khoản">
+                                            <MenuItem.Icon>
+                                                <Image
+                                                    Width="20"
+                                                    Height="20"
+                                                    Source="../Resources/Images/icon_remove.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                     </ContextMenu>
                                 </Grid.ContextMenu>
                                 <Image
@@ -136,13 +167,42 @@
                                             </TextBlock>
                                         </StackPanel>
                                     </GroupBox>
-                                    <TextBlock
+                                    <StackPanel
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Foreground="#000000">
-                                        <Run Text="Trạng thái:" />
-                                        <Run Text="{Binding TrangThai, Mode=OneWay}" />
-                                    </TextBlock>
+                                        Margin="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Orientation="Horizontal">
+                                        <Label
+                                            VerticalAlignment="Center"
+                                            Content="Trạng thái: "
+                                            FontSize="13"
+                                            Foreground="#000000" />
+                                        <Label
+                                            VerticalAlignment="Center"
+                                            FontSize="13"
+                                            Foreground="#000000">
+                                            <Label.Style>
+                                                <Style TargetType="Label">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}" Value="0">
+                                                            <Setter Property="Content" Value="NEW" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="1">
+                                                            <Setter Property="Content" Value="RUNNING" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="2">
+                                                            <Setter Property="Content" Value="PAUSE" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="3">
+                                                            <Setter Property="Content" Value="DIED" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                    </StackPanel>
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
@@ -158,8 +218,33 @@
             </ListView>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Chức năng">
-            <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Background="#8AA4EB" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Content="WIN WIN"
+                    FontSize="60"
+                    FontWeight="Bold"
+                    Foreground="#fff" />
                 <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
                     Width="100"
                     Height="100"
                     Padding="3"
@@ -184,8 +269,7 @@
                         </Image>
                     </Button.Content>
                 </Button>
-
-            </StackPanel>
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>

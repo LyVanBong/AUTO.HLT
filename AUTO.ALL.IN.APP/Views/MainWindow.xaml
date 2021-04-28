@@ -81,7 +81,7 @@
                     Stretch="Uniform" />
                 <Label
                     VerticalAlignment="Center"
-                    Content="Thong bao"
+                    Content="{Binding Notification}"
                     FontSize="12"
                     Foreground="#687980" />
             </StackPanel>

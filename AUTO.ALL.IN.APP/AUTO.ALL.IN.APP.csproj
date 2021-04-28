@@ -222,5 +222,14 @@
     <Resource Include="Resources\Images\icon_start.png" />
     <Resource Include="Resources\Images\icon_stop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\billgates.png" />
+    <Resource Include="Resources\Images\job.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\icon_edit.png" />
+    <Resource Include="Resources\Images\icon_pause.png" />
+    <Resource Include="Resources\Images\icon_remove.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

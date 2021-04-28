@@ -20,6 +20,7 @@ namespace AUTO.ALL.IN.APP.Views
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
+            Debug.WriteLine($"[{DateTime.Now}]: Bắt đầu dừng");
             ((Window)sender).Hide();
             var vm = DataContext as MainWindowViewModel;
             if (vm != null)

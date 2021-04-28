@@ -30,13 +30,18 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private Visibility _loading = Visibility.Hidden;
         private AccountStatisticsModel _accountStatistics;
         private bool _isRunningTool;
+        private string _notification = $"[{DateTime.Now}] Thông báo mới tại đây";
 
         public bool IsRunningTool
         {
             get => _isRunningTool;
             set => SetProperty(ref _isRunningTool, value);
         }
-
+        public string Notification
+        {
+            get => _notification;
+            set => SetProperty(ref _notification, value);
+        }
         public AccountStatisticsModel AccountStatistics
         {
             get => _accountStatistics;
@@ -123,8 +128,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 _dispatcherTimer = new DispatcherTimer();
                 _dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
                 _dispatcherTimer.Tick += Timer_Tick;
-                // _dispatcherTimer.Start();
-
             }
             catch (Exception e)
             {
@@ -134,6 +137,9 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+#if DEBUG
+            Console.WriteLine($"[{DateTime.Now}] Start timer");
+#endif
             try
             {
                 if (DataTool != null && DataTool.Any())
@@ -474,23 +480,81 @@ namespace AUTO.ALL.IN.APP.ViewModels
         }
 
         public ICommand StartToolCommand { get; private set; }
-
+        public ICommand UpdateUserCommand { get; private set; }
+        public ICommand PauseUserCommand { get; private set; }
+        public ICommand DeleteUserCommand { get; private set; }
         private void HomeTool()
         {
+            UpdateUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await UpdateUser(user));
             StartToolCommand = new DelegateCommand(() =>
             {
                 if (IsRunningTool)
                 {
+                    Notification = $"[{DateTime.Now}] Tạm dừng chạy công cụ";
                     _dispatcherTimer.Stop();
                     IsRunningTool = false;
                 }
                 else
                 {
+                    Notification = $"[{DateTime.Now}] Bật công cụ";
                     _dispatcherTimer.Start();
                     IsRunningTool = true;
                 }
 
             });
+            PauseUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await PauseUser(user));
+            DeleteUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await DeleteUser(user));
+        }
+
+        private async Task DeleteUser(UserFacebookModel user)
+        {
+            try
+            {
+                user.Status = 3;
+                if (user.Worker != null)
+                {
+                    user.Worker.CancelAsync();
+                    user.Worker = null;
+                }
+                await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
+                Notification = $"[{DateTime.Now}] Xóa tài khoản";
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(DeleteUser));
+            }
+        }
+
+        private async Task PauseUser(UserFacebookModel user)
+        {
+            try
+            {
+                user.Status = 2;
+                if (user.Worker != null)
+                {
+                    user.Worker.CancelAsync();
+                    user.Worker = null;
+                }
+                await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
+                Notification = $"[{DateTime.Now}] Tạm dừng tài khoản";
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(PauseUser));
+            }
+        }
+
+        private async Task UpdateUser(UserFacebookModel user)
+        {
+            try
+            {
+                SelectedIndex = 1;
+                UserFacebookModel = user;
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(UpdateUser));
+            }
         }
 
         #endregion
@@ -620,14 +684,22 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                                 var update = DataTool.FirstOrDefault(x =>
                                                     x.IdFacebook == UserFacebookModel.IdFacebook);
                                                 if (update == null) return;
-                                                update.DataFacebook = facebook;
-                                                DataTool.Add(update);
+                                                update.Cookie = UserFacebookModel?.Cookie;
+                                                update.Token = UserFacebookModel?.Token;
+                                                update.PassFacebook = UserFacebookModel?.PassFacebook;
+                                                update.UserNameFacebook = UserFacebookModel?.UserNameFacebook;
+                                                update.EndDate = UserFacebookModel.EndDate;
+                                                update.NumberPhoneApp = UserFacebookModel?.NumberPhoneApp;
+                                                update.NameApp = UserFacebookModel?.NameApp;
+                                                update.UserNameApp = UserFacebookModel?.UserNameApp;
+                                                Notification = $"[{DateTime.Now}] Cập nhật dữ liệu thành công";
                                                 await ShowMessage(@"Cập nhật dữ liệu thành công !").ConfigureAwait(false);
                                             }
                                         }
                                         else
                                         {
                                             DataTool.Add(UserFacebookModel);
+                                            Notification = $"[{DateTime.Now}] Lưu dữ liệu thành công";
                                             await ShowMessage(@"Lưu dữ liệu thành công !").ConfigureAwait(false);
                                         }
 
