@@ -2,10 +2,9 @@
 using FireSharp.Config;
 using FireSharp.Response;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Threading.Tasks;
-using AUTO.ALL.IN.APP.Models;
 
 namespace AUTO.ALL.IN.APP.Services
 {
@@ -38,19 +37,19 @@ namespace AUTO.ALL.IN.APP.Services
             }
             return default;
         }
-        public static async Task<T> Post<T>(string path,T data)
+        public static async Task<bool> Post<T>(string path, T data)
         {
             try
             {
-                FirebaseResponse response = await FirebaseClient().SetAsync(path,data);
-                return response.ResultAs<T>();
+                FirebaseResponse response = await FirebaseClient().SetAsync(path, data);
+                return response.StatusCode == HttpStatusCode.OK;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
 
-            return default;
+            return false;
         }
         public static async Task<T> Get<T>(string path)
         {

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using AUTO.ALL.IN.APP.Views;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AUTO.ALL.IN.APP.ViewModels
@@ -69,6 +68,37 @@ namespace AUTO.ALL.IN.APP.ViewModels
             StartService().Await();
         }
 
+        public async void UpdateDatabase()
+        {
+            try
+            {
+                if (_dispatcherTimer.IsEnabled)
+                {
+                    _dispatcherTimer.Stop();
+                    _dispatcherTimer = null;
+                }
+                if (DataTool != null && DataTool.Any())
+                {
+                    foreach (var user in DataTool)
+                    {
+                        if (user.Worker != null)
+                        {
+                            user.Worker.CancelAsync();
+                            user.Worker.Dispose();
+                            user.Worker = null;
+                        }
+                        if (user.Status == 1)
+                            user.Status = 0;
+                    }
+                    // Lưu dữ liệu lên database
+                    await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
+                }
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(UpdateDatabase));
+            }
+        }
         #region Logger
 
         public ObservableCollection<LoggerModel> DataLogger
