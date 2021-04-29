@@ -35,7 +35,7 @@ namespace AUTOHLT.WEB.API.Controllers.Telegram
                 if (response.IsSuccessful && response.StatusCode == HttpStatusCode.OK)
                     return Ok(new
                     {
-                        Code = -11111,
+                        Code = 11111,
                         Message = "Gửi tin nhắn thành công",
                         Data = message
                     });
