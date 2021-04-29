@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Telegram\TelegramController.cs" />
     <Compile Include="Controllers\Version1\AutoLikeCommentAvatarController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Version1\HuongDanSuDungController.cs" />
