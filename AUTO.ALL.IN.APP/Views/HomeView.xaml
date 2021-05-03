@@ -54,7 +54,20 @@
                                                 <Image
                                                     Width="20"
                                                     Height="20"
-                                                    Source="../Resources/Images/icon_edit.png" />
+                                                    Source="../Resources/Images/icon_edit.png"
+                                                    Stretch="Uniform" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            Command="{Binding Source={x:Reference Name=homeView}, Path=DataContext.ContinueUserCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Header="Chạy lại">
+                                            <MenuItem.Icon>
+                                                <Image
+                                                    Width="20"
+                                                    Height="20"
+                                                    Source="../Resources/Images/icon_new.png"
+                                                    Stretch="Uniform" />
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <MenuItem
@@ -65,10 +78,11 @@
                                                 <Image
                                                     Width="20"
                                                     Height="20"
-                                                    Source="../Resources/Images/icon_pause.png" />
+                                                    Source="../Resources/Images/icon_pause.png"
+                                                    Stretch="Uniform" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <Separator Background="Gray" />
+                                        <Separator Background="LightPink" />
                                         <MenuItem
                                             Command="{Binding Source={x:Reference Name=homeView}, Path=DataContext.DeleteUserCommand}"
                                             CommandParameter="{Binding .}"
@@ -77,7 +91,8 @@
                                                 <Image
                                                     Width="20"
                                                     Height="20"
-                                                    Source="../Resources/Images/icon_remove.png" />
+                                                    Source="../Resources/Images/icon_remove.png"
+                                                    Stretch="Uniform" />
                                             </MenuItem.Icon>
                                         </MenuItem>
                                     </ContextMenu>

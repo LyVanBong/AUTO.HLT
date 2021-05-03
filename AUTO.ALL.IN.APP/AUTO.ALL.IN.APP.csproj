@@ -227,5 +227,8 @@
     <Resource Include="Resources\Images\icon_pause.png" />
     <Resource Include="Resources\Images\icon_remove.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\icon_new.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

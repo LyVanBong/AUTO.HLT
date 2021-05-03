@@ -13,8 +13,6 @@ namespace AUTO.DLL.Services
 {
     public static class FacebookService
     {
-        private static ChromeDriver _driver;
-
         /// <summary>
         /// binh luan vao bai viet cua ban be
         /// </summary>
@@ -311,16 +309,17 @@ namespace AUTO.DLL.Services
         /// <returns></returns>
         public static async Task AutoDropHeartFacebookStory(string url, string cookie, int optionStory = 1)
         {
+            ChromeDriver driver = new ChromeDriver();
             try
             {
                 var service = ChromeDriverService.CreateDefaultService();
                 service.HideCommandPromptWindow = true;
 
                 var options = new ChromeOptions();
-                options.AddArgument("--window-position=-1,-1");
-                options.AddArgument("--window-position=-32000,-32000");
-                _driver = new ChromeDriver(service, options);
-                _driver.Navigate().GoToUrl("https://m.facebook.com/");
+                //options.AddArgument("--window-position=-1,-1");
+                //options.AddArgument("--window-position=-32000,-32000");
+                driver = new ChromeDriver(service, options);
+                driver.Navigate().GoToUrl("https://m.facebook.com/");
 
                 if (cookie != null)
                 {
@@ -328,20 +327,20 @@ namespace AUTO.DLL.Services
                     foreach (var s in ck)
                     {
                         var c = s.Split('=');
-                        _driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
+                        driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
                     }
                 }
 
-                _driver.Navigate().GoToUrl("https://m.facebook.com/" + url);
+                driver.Navigate().GoToUrl("https://m.facebook.com/" + url);
                 await Task.Delay(5000);
 
                 var element =
-                    _driver.FindElementByXPath(
+                    driver.FindElementByXPath(
                         @"/html/body/div[1]/div/div[2]/div/div[2]/div/div/div/div[2]/span/div[3]/div[9]/div");
                 element.Click();
                 await Task.Delay(1000);
 
-                var lsElements = _driver.FindElementsByClassName(@"_7ko-");
+                var lsElements = driver.FindElementsByClassName(@"_7ko-");
                 var random = new Random();
                 var num = random.Next(3, 6);
                 for (int i = 0; i < num; i++)
@@ -356,8 +355,7 @@ namespace AUTO.DLL.Services
             }
             finally
             {
-                if (_driver != null)
-                    _driver.Quit();
+                driver.Quit();
             }
         }
         /// <summary>
@@ -368,6 +366,7 @@ namespace AUTO.DLL.Services
         /// <returns></returns>
         public static async Task<string> GetHtmlChrome(string url, string cookie = null)
         {
+            var driver = new ChromeDriver();
             try
             {
                 var service = ChromeDriverService.CreateDefaultService();
@@ -376,8 +375,8 @@ namespace AUTO.DLL.Services
                 var options = new ChromeOptions();
                 options.AddArgument("--window-position=-1,-1");
                 options.AddArgument("--window-position=-32000,-32000");
-                _driver = new ChromeDriver(service, options);
-                _driver.Navigate().GoToUrl(url);
+                driver = new ChromeDriver(service, options);
+                driver.Navigate().GoToUrl(url);
 
                 if (cookie != null)
                 {
@@ -385,13 +384,13 @@ namespace AUTO.DLL.Services
                     foreach (var s in ck)
                     {
                         var c = s.Split('=');
-                        _driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
+                        driver.Manage().Cookies.AddCookie(new Cookie(c[0], c[1]));
                     }
                 }
 
-                _driver.Navigate().Refresh();
+                driver.Navigate().Refresh();
                 await Task.Delay(5000);
-                var html = _driver.PageSource;
+                var html = driver.PageSource;
                 return html;
             }
             catch (Exception ex)
@@ -400,7 +399,7 @@ namespace AUTO.DLL.Services
             }
             finally
             {
-                _driver.Quit();
+                driver.Quit();
             }
 
             return null;
@@ -413,6 +412,7 @@ namespace AUTO.DLL.Services
         /// <returns>Cookie và token</returns>
         public static async Task<(string Cookie, string Token)> LoginFacebook(string user, string pass)
         {
+            var driver = new ChromeDriver();
             try
             {
                 var token = "";
@@ -423,25 +423,25 @@ namespace AUTO.DLL.Services
                 var options = new ChromeOptions();
                 options.AddArgument("--window-position=-1,-1");
                 //options.AddArgument("--window-position=-32000,-32000");
-                _driver = new ChromeDriver(service, options);
-                _driver.Navigate().GoToUrl("https://www.facebook.com/");
+                driver = new ChromeDriver(service, options);
+                driver.Navigate().GoToUrl("https://www.facebook.com/");
                 await Task.Delay(2000);
                 // nhập tài khoản
-                var element = _driver.FindElementById("email");
+                var element = driver.FindElementById("email");
                 element.SendKeys(user);
                 await Task.Delay(3000);
                 // nhập mật khẩu
-                element = _driver.FindElementById("pass");
+                element = driver.FindElementById("pass");
                 element.SendKeys(pass);
                 await Task.Delay(4000);
                 // login
-                element = _driver.FindElementByName("login");
+                element = driver.FindElementByName("login");
                 element.Click();
                 await Task.Delay(2000);
                 for (int j = 0; j < 20; j++)
                 {
                     cookie = "";
-                    var allCookie = _driver.Manage().Cookies.AllCookies;
+                    var allCookie = driver.Manage().Cookies.AllCookies;
                     var countCookie = allCookie?.Count;
                     for (int i = 0; i < countCookie; i++)
                     {
@@ -451,7 +451,7 @@ namespace AUTO.DLL.Services
 
                     if (cookie.Contains("c_user="))
                     {
-                        token = GetToken(_driver);
+                        token = GetToken(driver);
 #if DEBUG
                         Console.WriteLine("cookie: " + cookie);
                         Console.WriteLine("token: " + token);
@@ -462,12 +462,12 @@ namespace AUTO.DLL.Services
                     await Task.Delay(1000);
                 }
 
-                token = GetToken(_driver);
+                token = GetToken(driver);
 #if DEBUG
                 Console.WriteLine("cookie: " + cookie);
                 Console.WriteLine("token: " + token);
 #endif
-                return (Cookie: cookie, Token: GetToken(_driver));
+                return (Cookie: cookie, Token: GetToken(driver));
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace AUTO.DLL.Services
             }
             finally
             {
-                _driver.Quit();
+                driver.Quit();
             }
 
             return (null, null);

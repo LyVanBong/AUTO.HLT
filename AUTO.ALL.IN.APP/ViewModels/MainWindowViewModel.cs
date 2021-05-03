@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,7 +15,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Data = AUTO.DLL.Models.Data;
 
 namespace AUTO.ALL.IN.APP.ViewModels
 {
@@ -119,6 +119,10 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             try
             {
+                if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\DATA\LOGGER"))
+                {
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\DATA\LOGGER");
+                }
                 var data =
                     await RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(
                         nameof(UserFacebookModel));
@@ -138,7 +142,10 @@ namespace AUTO.ALL.IN.APP.ViewModels
             }
             finally
             {
-                
+                if ((await ResultMessageBox("Bạn có muộn bật tool luôn không")) == MessageBoxResult.OK)
+                {
+                    await TurnOnOffService();
+                }
             }
         }
 
@@ -241,6 +248,32 @@ namespace AUTO.ALL.IN.APP.ViewModels
             catch (Exception ex)
             {
                 ShowMessageError(ex, nameof(Worker_ProgressChanged)).Await();
+            }
+        }
+
+        private async Task AddLogger(LoggerModel logger)
+        {
+            try
+            {
+                var pathLog = AppDomain.CurrentDomain.BaseDirectory + "/DATA/LOGGER/Log-" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt";
+                if (File.Exists(pathLog))
+                {
+                    if (DataLogger == null)
+                    {
+                        DataLogger = new ObservableCollection<LoggerModel>();
+                    }
+                    logger.No = DataLogger.Count + 1;
+                    Notification = $"[{logger.No}]-[{logger.DateTime}]";
+                    DataLogger.Add(logger);
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(AddLogger));
             }
         }
 
@@ -509,10 +542,32 @@ namespace AUTO.ALL.IN.APP.ViewModels
         public ICommand UpdateUserCommand { get; private set; }
         public ICommand PauseUserCommand { get; private set; }
         public ICommand DeleteUserCommand { get; private set; }
+        public ICommand ContinueUserCommand { get; private set; }
         private void HomeTool()
         {
             UpdateUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await UpdateUser(user));
-            StartToolCommand = new DelegateCommand(() =>
+            StartToolCommand = new DelegateCommand(async () => await TurnOnOffService());
+            PauseUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await PauseUser(user));
+            DeleteUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await DeleteUser(user));
+            ContinueUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await ContinueUser(user));
+        }
+
+        private async Task ContinueUser(UserFacebookModel user)
+        {
+            try
+            {
+                user.Status = 0;
+                await UpAccountStatistics();
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(ContinueUser));
+            }
+        }
+
+        private async Task TurnOnOffService()
+        {
+            await Task.Run(() =>
             {
                 if (IsRunningTool)
                 {
@@ -522,14 +577,12 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 }
                 else
                 {
+                    Timer_Tick(null, null);
                     Notification = $"[{DateTime.Now}] Bật công cụ";
                     _dispatcherTimer.Start();
                     IsRunningTool = true;
                 }
-
             });
-            PauseUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await PauseUser(user));
-            DeleteUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await DeleteUser(user));
         }
 
         private async Task DeleteUser(UserFacebookModel user)
