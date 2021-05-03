@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+using Data = AUTO.DLL.Models.Data;
 
 namespace AUTO.ALL.IN.APP.ViewModels
 {
@@ -28,7 +28,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private int _selectedIndex;
         private ObservableCollection<LoggerModel> _dataLogger = new ObservableCollection<LoggerModel>();
         private Visibility _loading = Visibility.Hidden;
-        private AccountStatisticsModel _accountStatistics;
+        private AccountStatisticsModel _accountStatistics = new AccountStatisticsModel();
         private bool _isRunningTool;
         private string _notification = $"[{DateTime.Now}] Thông báo mới tại đây";
 
@@ -119,12 +119,15 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             try
             {
-                var data = await RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(nameof(UserFacebookModel));
-                AccountStatistics = new AccountStatisticsModel(data);
+                var data =
+                    await RealtimeDatabaseService.Get<ObservableCollection<UserFacebookModel>>(
+                        nameof(UserFacebookModel));
                 if (data != null)
                 {
                     DataTool = data;
+                    await UpAccountStatistics();
                 }
+
                 _dispatcherTimer = new DispatcherTimer();
                 _dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
                 _dispatcherTimer.Tick += Timer_Tick;
@@ -133,12 +136,35 @@ namespace AUTO.ALL.IN.APP.ViewModels
             {
                 await ShowMessageError(e, nameof(StartService));
             }
+            finally
+            {
+                
+            }
+        }
+
+        public async Task UpAccountStatistics()
+        {
+            try
+            {
+                if (DataTool != null && DataTool.Any())
+                {
+                    AccountStatistics.Total = DataTool.Count;
+                    AccountStatistics.New = DataTool.Count(x => x.Status == 0);
+                    AccountStatistics.Running = DataTool.Count(x => x.Status == 1);
+                    AccountStatistics.Pause = DataTool.Count(x => x.Status == 2);
+                    AccountStatistics.Died = DataTool.Count(x => x.Status == 3);
+                }
+            }
+            catch (Exception e)
+            {
+                await ShowMessageError(e, nameof(UpAccountStatistics));
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
 #if DEBUG
-            Console.WriteLine($"[{DateTime.Now}] Start timer");
+            Console.WriteLine($@"[{DateTime.Now}] Start timer");
 #endif
             try
             {
@@ -510,19 +536,29 @@ namespace AUTO.ALL.IN.APP.ViewModels
         {
             try
             {
-                user.Status = 3;
-                if (user.Worker != null)
+                if ((await ResultMessageBox($"Bạn muỗn xóa tài khoản {user.UserNameApp}")) == MessageBoxResult.OK)
                 {
-                    user.Worker.CancelAsync();
-                    user.Worker = null;
+                    if (user.Worker != null)
+                    {
+                        user.Worker.CancelAsync();
+                        user.Worker = null;
+                    }
+                    DataTool.Remove(user);
+                    await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
+                    await UpAccountStatistics();
+                    Notification = $"[{DateTime.Now}] Xóa tài khoản";
                 }
-                await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
-                Notification = $"[{DateTime.Now}] Xóa tài khoản";
             }
             catch (Exception e)
             {
                 await ShowMessageError(e, nameof(DeleteUser));
             }
+        }
+
+        private Task<MessageBoxResult> ResultMessageBox(string message)
+        {
+            return Task.FromResult(
+                MessageBox.Show(message, "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Question));
         }
 
         private async Task PauseUser(UserFacebookModel user)
@@ -536,6 +572,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                     user.Worker = null;
                 }
                 await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
+                await UpAccountStatistics();
                 Notification = $"[{DateTime.Now}] Tạm dừng tài khoản";
             }
             catch (Exception e)
@@ -644,21 +681,29 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 {
                     if (UserFacebookModel != null)
                     {
-                        if (string.IsNullOrEmpty(UserFacebookModel.Id) || string.IsNullOrEmpty(UserFacebookModel.Cookie) || string.IsNullOrEmpty(UserFacebookModel.Token))
+                        if (string.IsNullOrEmpty(UserFacebookModel.Id) ||
+                            string.IsNullOrEmpty(UserFacebookModel.Cookie) ||
+                            string.IsNullOrEmpty(UserFacebookModel.Token))
                         {
                             await ShowMessage(@"Vui lòng điền đầy đủ dữ liệu trước khi lưu !").ConfigureAwait(false);
                         }
                         else
                         {
-                            if (UserFacebookModel.OptionPost.IsSelectFunction || UserFacebookModel.OPtionFriendsSuggestions.IsSelectFunction || UserFacebookModel.OptionAvatar.IsSelectFunction || UserFacebookModel.OptionStory.IsSelectFunction || UserFacebookModel.OptionMessage.IsSelectFunction)
+                            if (UserFacebookModel.OptionPost.IsSelectFunction ||
+                                UserFacebookModel.OPtionFriendsSuggestions.IsSelectFunction ||
+                                UserFacebookModel.OptionAvatar.IsSelectFunction ||
+                                UserFacebookModel.OptionStory.IsSelectFunction ||
+                                UserFacebookModel.OptionMessage.IsSelectFunction)
                             {
                                 var random = new Random();
 
-                                var fields = "friends.limit(" + random.Next(4000, 5000) + "){id,name},id,name,picture,email";
+                                var fields = "friends.limit(" + random.Next(4000, 5000) +
+                                             "){id,name},id,name,picture,email";
                                 var json = await FacebookService.GetApiFacebook(UserFacebookModel.Token, fields);
                                 if (string.IsNullOrEmpty(json))
                                 {
-                                    if (await FacebookService.CheckTokenCookie(UserFacebookModel.Token, UserFacebookModel.Cookie))
+                                    if (await FacebookService.CheckTokenCookie(UserFacebookModel.Token,
+                                        UserFacebookModel.Cookie))
                                     {
                                         await ShowMessage(@"Lỗi phát sinh vui lòng thử lại !").ConfigureAwait(false);
                                     }
@@ -679,21 +724,19 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                         UserFacebookModel.DataFacebook = facebook;
                                         if (DataTool.Any(x => x.IdFacebook == UserFacebookModel.IdFacebook))
                                         {
-                                            if (MessageBox.Show("Tài khoản này đã tồn tại bạn có muỗn cập nhật lại không !", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                            if (MessageBox.Show(
+                                                    "Tài khoản này đã tồn tại bạn có muỗn cập nhật lại không !",
+                                                    "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                                                MessageBoxResult.Yes)
                                             {
-                                                var update = DataTool.FirstOrDefault(x =>
+                                                var removeUser = DataTool.FirstOrDefault(x =>
                                                     x.IdFacebook == UserFacebookModel.IdFacebook);
-                                                if (update == null) return;
-                                                update.Cookie = UserFacebookModel?.Cookie;
-                                                update.Token = UserFacebookModel?.Token;
-                                                update.PassFacebook = UserFacebookModel?.PassFacebook;
-                                                update.UserNameFacebook = UserFacebookModel?.UserNameFacebook;
-                                                update.EndDate = UserFacebookModel.EndDate;
-                                                update.NumberPhoneApp = UserFacebookModel?.NumberPhoneApp;
-                                                update.NameApp = UserFacebookModel?.NameApp;
-                                                update.UserNameApp = UserFacebookModel?.UserNameApp;
+                                                if (removeUser == null) return;
+                                                DataTool.Remove(removeUser);
+                                                DataTool.Add(UserFacebookModel);
                                                 Notification = $"[{DateTime.Now}] Cập nhật dữ liệu thành công";
-                                                await ShowMessage(@"Cập nhật dữ liệu thành công !").ConfigureAwait(false);
+                                                await ShowMessage(@"Cập nhật dữ liệu thành công !")
+                                                    .ConfigureAwait(false);
                                             }
                                         }
                                         else
@@ -707,13 +750,15 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                         {
                                             await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
                                         }
+
                                         await ResetInput();
                                     }
                                 }
                             }
                             else
                             {
-                                await ShowMessage(@"Bạn chưa chọn chức năng nào để chạy công cụ !").ConfigureAwait(false);
+                                await ShowMessage(@"Bạn chưa chọn chức năng nào để chạy công cụ !")
+                                    .ConfigureAwait(false);
                             }
                         }
                     }
@@ -730,6 +775,10 @@ namespace AUTO.ALL.IN.APP.ViewModels
             catch (Exception e)
             {
                 await ShowMessageError(e, nameof(SaveAccount));
+            }
+            finally
+            {
+                await UpAccountStatistics();
             }
         }
 
@@ -783,7 +832,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 }
                 else
                 {
-                    var data = JsonSerializer.Deserialize<JsonInfoModel>(DataJson);
+
+                    var data = JsonConvert.DeserializeObject<JsonInfoModel>(DataJson);
                     if (data != null)
                     {
                         UserFacebookModel.Id = data.Id_Nguoi_Dung;

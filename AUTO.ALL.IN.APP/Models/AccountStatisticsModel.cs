@@ -41,17 +41,5 @@ namespace AUTO.ALL.IN.APP.Models
             get => _died;
             set => SetProperty(ref _died, value);
         }
-
-        public AccountStatisticsModel(ObservableCollection<UserFacebookModel> user)
-        {
-            if (user != null && user.Any())
-            {
-                _total = user.Count;
-                _new = user.Count(x => x.Status == 0);
-                _running = user.Count(x => x.Status == 1);
-                _pause = user.Count(x => x.Status == 2);
-                _died = user.Count(x => x.Status == 3);
-            }
-        }
     }
 }

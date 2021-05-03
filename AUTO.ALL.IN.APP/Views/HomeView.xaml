@@ -85,7 +85,7 @@
                                 <Image
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Source="{Binding AvatarFacebook}"
+                                    Source="{Binding AvatarFacebook, Mode=OneWay}"
                                     Stretch="Uniform" />
                                 <GroupBox
                                     Grid.Row="1"
