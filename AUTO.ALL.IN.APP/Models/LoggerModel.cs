@@ -57,9 +57,8 @@ namespace AUTO.ALL.IN.APP.Models
         }
 
         public DateTime DateTime => DateTime.Now;
-        public LoggerModel(long no, string uid, string uidFriend, int typeLogger, string loggerContent, string note)
+        public LoggerModel(string uid, string uidFriend, int typeLogger, string loggerContent, string note)
         {
-            _no = no;
             _uid = uid;
             _uidFriend = uidFriend;
             _typeLogger = typeLogger;

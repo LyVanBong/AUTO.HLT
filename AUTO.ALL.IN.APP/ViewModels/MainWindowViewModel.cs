@@ -201,54 +201,12 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            try
-            {
-                var logger = e.Result as LoggerModel;
-                if (logger != null)
-                {
-                    if (DataLogger == null || !DataLogger.Any())
-                    {
-                        DataLogger = new ObservableCollection<LoggerModel>();
-                        logger.No = 1;
-                    }
-                    else
-                    {
-                        logger.No = DataLogger.Count + 1;
-                    }
-                    DataLogger.Add(logger);
-                }
 
-            }
-            catch (Exception ex)
-            {
-                ShowMessageError(ex, nameof(Worker_RunWorkerCompleted)).Await();
-            }
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            var logger = e.UserState as LoggerModel;
-            try
-            {
-                if (logger != null)
-                {
-                    if (DataLogger == null)
-                    {
-                        DataLogger = new ObservableCollection<LoggerModel>();
-                        logger.No = 1;
-                    }
-                    else
-                    {
-                        logger.No = DataLogger.Count + 1;
-                    }
-                    DataLogger.Add(logger);
-                }
 
-            }
-            catch (Exception ex)
-            {
-                ShowMessageError(ex, nameof(Worker_ProgressChanged)).Await();
-            }
         }
 
         private async Task AddLogger(LoggerModel logger)
@@ -256,20 +214,19 @@ namespace AUTO.ALL.IN.APP.ViewModels
             try
             {
                 var pathLog = AppDomain.CurrentDomain.BaseDirectory + "/DATA/LOGGER/Log-" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt";
-                if (File.Exists(pathLog))
+                if (DataLogger == null)
                 {
-                    if (DataLogger == null)
-                    {
-                        DataLogger = new ObservableCollection<LoggerModel>();
-                    }
-                    logger.No = DataLogger.Count + 1;
-                    Notification = $"[{logger.No}]-[{logger.DateTime}]";
-                    DataLogger.Add(logger);
+                    DataLogger = new ObservableCollection<LoggerModel>();
                 }
-                else
+                if (!File.Exists(pathLog))
                 {
-
+                    if (DataLogger.Any())
+                        DataLogger.Clear();
                 }
+                logger.No = DataLogger.Count + 1;
+                Notification = $"[{logger.No}]-[{logger.DateTime}]-[{logger.TypeLogger}]-[{logger.Uid}]-[{logger.UidFriend}]-[{logger.LoggerContent}]-[{logger.Note}]";
+                File.AppendAllLines(pathLog, new[] { Notification });
+                App.Current.Dispatcher.Invoke(() => DataLogger.Add(logger));
             }
             catch (Exception e)
             {
@@ -283,7 +240,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
             var worker = sender as BackgroundWorker;
             try
             {
-                if (user != null)
+                if (user != null && worker != null)
                 {
                     var friend = user?.DataFacebook?.friends?.data;
                     if (friend != null && friend.Any())
@@ -297,7 +254,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 if (worker.CancellationPending == true)
                                 {
                                     user.Status = 2;
-                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    AddLogger(new LoggerModel(user.IdFacebook, myFriend.id, 7, "Tạm dừng tài khoản", "Done")).Await();
                                     e.Cancel = true;
                                     return;
                                 }
@@ -309,7 +266,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 if (worker.CancellationPending == true)
                                 {
                                     user.Status = 2;
-                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    AddLogger(new LoggerModel(user.IdFacebook, myFriend.id, 7, "Tạm dừng tài khoản", "Done")).Await();
                                     e.Cancel = true;
                                     return;
                                 }
@@ -321,7 +278,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 if (worker.CancellationPending == true)
                                 {
                                     user.Status = 2;
-                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    AddLogger(new LoggerModel(user.IdFacebook, myFriend.id, 7, "Tạm dừng tài khoản", "Done")).Await();
                                     e.Cancel = true;
                                     return;
                                 }
@@ -333,7 +290,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 if (worker.CancellationPending == true)
                                 {
                                     user.Status = 2;
-                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    AddLogger(new LoggerModel(user.IdFacebook, myFriend.id, 7, "Tạm dừng tài khoản", "Done")).Await();
                                     e.Cancel = true;
                                     return;
                                 }
@@ -345,7 +302,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 if (worker.CancellationPending == true)
                                 {
                                     user.Status = 2;
-                                    e.Result = new LoggerModel(0, user.IdFacebook, myFriend.id, 7, "Cancel tool", "Done");
+                                    AddLogger(new LoggerModel(user.IdFacebook, myFriend.id, 7, "Tạm dừng tài khoản", "Done")).Await();
                                     e.Cancel = true;
                                     return;
                                 }
@@ -356,7 +313,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 }
                             }
                         }
-                        e.Result = new LoggerModel(0, user.IdFacebook, "0000000000", 7, "Run tool done", "Done");
+                        AddLogger(new LoggerModel(user.IdFacebook, "", 7, "Run tool done", "Done")).Await();
                         user.Status = 0;
                     }
                 }
@@ -386,8 +343,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
                         FacebookService.ReactionPost(idPost, user.Cookie, user.OptionAvatar.IndexOptionReac, user.OptionAvatar.Comment).Result;
                     if (reaction > 0)
                     {
-                        var his = new LoggerModel(1, user.IdFacebook, friend.id, 1, user.OptionAvatar.IndexOptionReac + ",Interactive avatar", "Done");
-                        worker.ReportProgress(1, his);
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 1, "Tương tác với ảnh đại diện của bạn bè", "Done")).Await();
+                        user.OptionAvatar.TotalReaction++;
                     }
                 }
                 else
@@ -395,8 +352,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                     if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
                     {
                         user.Status = 3;
-                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
-                        ev.Result = his;
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 5, "Token or cookie die", "Error")).Await();
                         ev.Cancel = true;
                         return;
                     }
@@ -423,8 +379,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                     if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
                     {
                         user.Status = 3;
-                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
-                        ev.Result = his;
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 5, "Token or cookie die", "Error")).Await();
                         ev.Cancel = true;
                         return;
                     }
@@ -436,8 +391,9 @@ namespace AUTO.ALL.IN.APP.ViewModels
                     {
                         var url = o?.Groups[1]?.Value;
                         FacebookService.AutoDropHeartFacebookStory(url, user.Cookie, user.OptionStory.IndexOptionReac).Await();
-                        var his = new LoggerModel(1, user.IdFacebook, friend.id, 3, user.OptionMessage.IndexOptionReac + ",Interactive story", "Done");
-                        worker.ReportProgress(1, his);
+                        user.OptionStory.TotalReaction++;
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 3, "Xem story của bạn bè: " + url, "Done")).Await();
+                        Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
                     }
                 }
             }
@@ -446,7 +402,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 ShowMessageError(e, nameof(SeenStoryFacebook)).Await();
                 return;
             }
-            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
         }
 
         private void FriendsSuggestionsFacebook()
@@ -469,17 +424,15 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
                 if (send)
                 {
-
-                    var his = new LoggerModel(1, user.IdFacebook, friend.id, 2, user.OptionMessage.IndexOptionReac + ",Interactive send messager", "Done");
-                    worker.ReportProgress(1, his);
+                    AddLogger(new LoggerModel(user.IdFacebook, friend.id, 2, "Gửi tin nhắn", "Done")).Await();
+                    user.OptionMessage.TotalReaction++;
                 }
                 else
                 {
                     if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
                     {
                         user.Status = 3;
-                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
-                        ev.Result = his;
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 5, "Token or cookie die", "Error")).Await();
                         ev.Cancel = true;
                         return;
                     }
@@ -505,8 +458,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
                         FacebookService.ReactionPost(idPost, user.Cookie, user.OptionPost.IndexOptionReac, user.OptionPost.Comment).Result;
                     if (reaction > 0)
                     {
-                        var his = new LoggerModel(1, user.IdFacebook, friend.id, 0, user.OptionPost.IndexOptionReac + ",Interactive post", "Done");
-                        worker.ReportProgress(1, his);
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 0, user.OptionPost.IndexOptionReac + ",Interactive post", "Done")).Await();
+                        user.OptionPost.TotalReaction++;
                     }
                 }
                 else
@@ -514,8 +467,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                     if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
                     {
                         user.Status = 3;
-                        var his = new LoggerModel(0, user.IdFacebook, friend.id, 5, "Token or cookie die", "Error");
-                        ev.Result = his;
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 5, "Token or cookie die", "Error")).Await();
                         ev.Cancel = true;
                         return;
                     }
@@ -557,7 +509,9 @@ namespace AUTO.ALL.IN.APP.ViewModels
             try
             {
                 user.Status = 0;
+                await RealtimeDatabaseService.Post(nameof(UserFacebookModel), DataTool);
                 await UpAccountStatistics();
+                Notification = $"[{DateTime.Now}] Chạy lại tài khoản: " + user.UserNameApp;
             }
             catch (Exception e)
             {

@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 
 namespace AUTO.ALL.IN.APP.Models
 {
