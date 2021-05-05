@@ -1,7 +1,9 @@
 ﻿using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Syncfusion.XlsIO;
@@ -62,6 +64,8 @@ namespace AUTOHLT.CONSOLE
         {
             try
             {
+                if (!Directory.Exists(Directory.GetCurrentDirectory() + "/DATA"))
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/DATA");
                 _allUser = await GetAllUser();
                 _allUserActive = await GetUserActive();
             }
@@ -74,35 +78,37 @@ namespace AUTOHLT.CONSOLE
 
         static async Task Main(string[] args)
         {
-            RegisterLicense();
-            await GetData().ConfigureAwait(false);
             Console.OutputEncoding = Encoding.UTF8;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WindowWidth = 40;
-            Console.WindowHeight = 40;
+            Console.Title = "Tool lấy dữ liệu khách hàng";
             var key = "";
+            RegisterLicense();
+            await GetData().ConfigureAwait(false);
             while (true)
             {
                 Console.WriteLine("1. Lấy toàn bộ danh sách user");
                 Console.WriteLine("2. In user đã kich hoạt");
-                Console.WriteLine("3. In User chưa kích hoạt");
-                Console.WriteLine("4. Tìm user");
-                Console.WriteLine("5. Thoát");
+                Console.WriteLine("0. Thoát");
                 Console.Write("Mời chọn chức năng: ");
                 key = Console.ReadLine();
                 switch (key)
                 {
                     case "1":
-                        await PrintAllUser("TatCaKhachHang", _allUser);
+                        await ExportExcel("Tat-Ca-Khach-Hang", _allUser);
                         break;
                     case "2":
+                        var autovip = _allUser.Join(_allUserActive, user => user.ID, lincese => lincese.IdUser,
+                            (user, lincese) => user);
+                        await ExportExcel("Tat-Ca-Khach-Hang-Da-Nang-Cap-Tai-Khoan", autovip.ToList());
                         break;
                     case "3":
                         break;
                     case "4":
                         break;
-                    case "5":
-                        break;
+                    case "0":
+                        Console.Write("Nhấn phím bất kỳ để thoát !");
+                        Console.ReadKey();
+                       return;
                     default:
                         break;
                 }
@@ -117,24 +123,11 @@ namespace AUTOHLT.CONSOLE
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDQwODc1QDMxMzkyZTMxMmUzMG4yOGdrMEd0bkZxeEVPUVZHNkJuRnFGY1dGNGpKMzJETnN0U0VsQlFHRFU9");
         }
 
-        private static async Task PrintAllUser<T>(string name, List<T> data)
+        private static Task ExportExcel<T>(string name, List<T> data)
         {
             try
             {
-                ExportExcel(name, data);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        private static void ExportExcel<T>(string name, List<T> data)
-        {
-            try
-            {
-                var path = Directory.GetCurrentDirectory() + "/" + name + "-" + DateTime.Now + ".xlsx";
+                var path = Directory.GetCurrentDirectory() + "/DATA/" + name + "-" + DateTime.Now.Ticks + ".xlsx";
                 using (ExcelEngine excelEngine = new ExcelEngine())
                 {
                     var application = excelEngine.Excel;
@@ -144,20 +137,41 @@ namespace AUTOHLT.CONSOLE
                     var nameSheet = workbook.Worksheets[name];
                     //Import data from customerObjects collection
                     sheet.ImportData(data, 2, 1, false);
+                    sheet["A1"].Text = "ID người dùng";
+                    sheet["B1"].Text = "Tài khoản";
+                    sheet["C1"].Text = "Tên";
+                    sheet["D1"].Text = "Số điện thoại";
+                    sheet["E1"].Text = "Email";
+                    sheet["F1"].Text = "Ngày đăng ký";
+                    sheet["A1:F1"].CellStyle.Font.Bold = true;
+                    sheet["A1:F1"].CellStyle.Font.Size = 15;
+
                     sheet.UsedRange.AutofitColumns();
                     //Save the file in the given path
                     var excelStream =
                         File.Create(path);
                     workbook.SaveAs(excelStream);
                     excelStream.Dispose();
-                    File.op
                 }
+
+                OpenFile(path);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
+            return Task.FromResult(0);
+        }
+
+        private static void OpenFile(string path)
+        {
+            var startInfo = new ProcessStartInfo(path)
+            {
+                WindowStyle = ProcessWindowStyle.Maximized,
+                Arguments = Path.GetFileName(path)
+            };
+            Process.Start(startInfo);
         }
     }
 }
