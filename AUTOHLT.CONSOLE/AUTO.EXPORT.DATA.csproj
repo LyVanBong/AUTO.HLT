@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6637C171-1FA8-4DDD-ADE1-7A901AAF8692}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AUTOHLT.CONSOLE</RootNamespace>
-    <AssemblyName>AUTOHLT.CONSOLE</AssemblyName>
+    <RootNamespace>AUTO.EXPORT.DATA</RootNamespace>
+    <AssemblyName>AUTO.EXPORT.DATA</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

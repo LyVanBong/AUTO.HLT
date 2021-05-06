@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AUTOHLT.CONSOLE
+namespace AUTO.EXPORT.DATA
 {
     public class AllUserActiveModel
     {
