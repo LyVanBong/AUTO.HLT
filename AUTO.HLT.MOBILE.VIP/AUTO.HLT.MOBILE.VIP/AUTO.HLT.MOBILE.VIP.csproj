@@ -80,6 +80,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="FHomeModule\Models\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="Resources\Languages\" />
     <Folder Include="Resources\Svg\" />
@@ -109,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\Navigation\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FHomeModule\Views\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

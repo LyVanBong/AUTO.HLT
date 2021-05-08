@@ -350,7 +350,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     Preferences.Set(AppConstants.Authorization, login.Data.Jwt);
                     if (UserName.ToUpper() == "KHACHHANG")
                     {
-                        await NavigationService.NavigateAsync("/FakeAppPage", null, false, true);
+                        await NavigationService.NavigateAsync("/FHomePage", null, false, true);
                     }
                     else
                     {
