@@ -16,7 +16,6 @@ namespace AUTO.MOBILE.DLL.Services.RestSharp
         public RestSharpService()
         {
             _client = new RestClient();
-            _client.Timeout = -1;
         }
         private void CreateClients(string uri, Method method = Method.GET)
         {

@@ -3,6 +3,18 @@
     public static class AppConstants
     {
         /// <summary>
+        /// get html like post
+        /// </summary>
+        public const string UriGetHtmlLikePostFacebook = "https://d.facebook.com/ufi/reaction/profile/browser/fetch/";
+        /// <summary>
+        /// get api facebook
+        /// </summary>
+        public const string UriGetApiFacebook = "https://graph.facebook.com/v10.0/me";
+        /// <summary>
+        /// url get id facebook
+        /// </summary>
+        public const string UriGetIdFacebook = "https://id.atpsoftware.vn/";
+        /// <summary>
         /// id nhon chat telegram thong bao
         /// </summary>
         public const string IdChatTelegramNoti = "-453517974";
@@ -56,7 +68,7 @@
         /// <summary>
         /// Uri đăng nhập facebook
         /// </summary>
-        public const string UriLoginFacebook = "https://m.facebook.com/";
+        public const string UriLoginFacebook = "https://m.facebook.com";
 
         /// <summary>
         /// Uri dùng để get token facebook
