@@ -1,14 +1,12 @@
-﻿using RestSharp;
+﻿using AUTO.DLL.MOBILE.Services.Facebook;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
-using Newtonsoft.Json;
-using AUTO.MOBILE.DLL.Services.Facebook;
 
 namespace AUTO.CONSOLE.CORE
 {
