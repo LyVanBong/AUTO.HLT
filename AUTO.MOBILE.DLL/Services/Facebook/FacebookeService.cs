@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using AUTO.MOBILE.DLL.Configurations;
+﻿using AUTO.MOBILE.DLL.Configurations;
 using AUTO.MOBILE.DLL.Models.Facebook;
 using AUTO.MOBILE.DLL.Models.RequestProviderModel;
 using AUTO.MOBILE.DLL.Services.RestSharp;
 using Newtonsoft.Json;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace AUTO.MOBILE.DLL.Services.Facebook
 {
@@ -26,13 +28,14 @@ namespace AUTO.MOBILE.DLL.Services.Facebook
             var id = "";
             try
             {
-                var urlFacebook = "https://m.facebook.com";
-                var para = new List<RequestParameter>
-                {
-                    new RequestParameter("Content-Type", "application/x-www-form-urlencoded"),
-                    new RequestParameter("linkCheckUid", urlFacebook+urlProfile),
-                };
-                var data = await _restSharpService.PostAsync(AppConstants.UriGetIdFacebook, para);
+                var client = new RestClient("https://id.atpsoftware.vn/");
+                client.Timeout = -1;
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                request.AddParameter("linkCheckUid", "https://m.facebook.com" + urlProfile);
+                var response = await client.ExecuteAsync(request);
+
+                var data = response.Content;
                 var regex = new Regex(@"<textarea.*?"">(.*?)</textarea>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
                 var strId = regex.Match(data)?.Groups[1]?.Value;
                 if (!string.IsNullOrEmpty(strId))
@@ -115,21 +118,40 @@ namespace AUTO.MOBILE.DLL.Services.Facebook
                 var lsIdPost = await GetIdMyPost(cookie, token, limit);
                 if (lsIdPost.Any())
                 {
+#if DEBUG
+                    Console.OutputEncoding = Encoding.UTF8;
                     var stt = 1;
+                    var time1 = new Stopwatch();
+                    var time2 = new Stopwatch();
+                    time1.Start();
+#endif
                     foreach (var item in lsIdPost)
                     {
+#if DEBUG
                         Console.WriteLine("#STT : " + stt++);
                         Console.WriteLine("Id : " + item.id);
+                        time2.Start();
+#endif
                         var comment = await GetUIdCommentFromAPost(cookie, item.id);
+#if DEBUG
                         Console.WriteLine("Comment");
                         Console.WriteLine("Số lượng : " + comment.Count);
+                        Console.WriteLine("Time : " + time2.ElapsedMilliseconds / 1000 + " s");
+#endif
                         if (comment.Any())
                         {
                             data.AddRange(comment);
                         }
+#if DEBUG
+                        time2.Restart();
+#endif
                         var like = await GetUIdLikeFromAPost(cookie, item.id);
+#if DEBUG
                         Console.WriteLine("Like");
                         Console.WriteLine("Số lượng : " + like.Count);
+                        Console.WriteLine("Time : " + time2.ElapsedMilliseconds / 1000 + " s");
+                        time2.Reset();
+#endif
                         if (like.Any())
                         {
                             data.AddRange(like);
@@ -137,6 +159,10 @@ namespace AUTO.MOBILE.DLL.Services.Facebook
 
                         Console.WriteLine("----------------------------------------------------");
                     }
+#if DEBUG
+                    Console.WriteLine("Số lượng : " + data.Count);
+                    Console.WriteLine("Time Run All : " + time1.ElapsedMilliseconds / 1000 + " s");
+#endif
                 }
             }
             catch (Exception e)
@@ -220,7 +246,6 @@ namespace AUTO.MOBILE.DLL.Services.Facebook
                     var regex = Regex.Matches(html, @"<div><h3 class=""\w+""><a href=""(.*?)"">");
                     if (regex.Any())
                     {
-
                         var listThread = new List<Task<string>>();
                         foreach (Match o in regex)
                         {
