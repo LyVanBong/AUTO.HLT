@@ -50,6 +50,20 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             return id;
         }
 
+        public Task<string> GetIdFromProfileFacebook2(string urlProfile)
+        {
+            var id = "";
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+            return id;
+        }
+
         public async Task<List<Datum>> GetIdMyPost(string cookie, string token, string limit)
         {
             var data = new List<Datum>();

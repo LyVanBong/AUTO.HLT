@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <UserSecretsId>50e55ece-fd7e-4013-b99a-e738f9a82fff</UserSecretsId>
   </PropertyGroup>
 
@@ -90,6 +90,10 @@
 
   <ItemGroup>
     <Page Include="FontAwesome5DuotoneSolid.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AUTO.DLL.MOBILE\AUTO.DLL.MOBILE.csproj" />
   </ItemGroup>
 
   <ItemGroup>
