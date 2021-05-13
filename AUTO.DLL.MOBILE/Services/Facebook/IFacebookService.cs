@@ -12,7 +12,6 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
         /// <param name="urlProfile"></param>
         /// <returns></returns>
         Task<string> GetIdFromProfileFacebook(string urlProfile);
-        Task<string> GetIdFromProfileFacebook2(string urlProfile);
         /// <summary>
         /// lấy danh sách id bài viết của mình
         /// </summary>

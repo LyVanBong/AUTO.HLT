@@ -50,20 +50,6 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             return id;
         }
 
-        public Task<string> GetIdFromProfileFacebook2(string urlProfile)
-        {
-            var id = "";
-            try
-            {
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Lỗi : " + e.ToString());
-            }
-            return id;
-        }
-
         public async Task<List<Datum>> GetIdMyPost(string cookie, string token, string limit)
         {
             var data = new List<Datum>();
@@ -93,7 +79,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             return data;
         }
 
-        public async Task<List<string>> FindIdFromHtmlComment(string comment)
+        public Task<List<string>> FindIdFromHtmlComment(string comment)
         {
             var data = new List<string>();
 
@@ -102,16 +88,9 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 var regex = Regex.Matches(comment, @"<div><h3><a class=""\w+ \w+"" href=""(.*?)refid=[0-9]+&amp;__tn__=R""");
                 if (regex.Any())
                 {
-                    var listThread = new List<Task<string>>();
                     foreach (Match o in regex)
                     {
-                        listThread.Add(GetIdFromProfileFacebook(o?.Groups[1]?.Value));
-                    }
-
-                    var res = await Task.WhenAll(listThread);
-                    if (res.Any())
-                    {
-                        data = res.ToList();
+                        data.Add(o?.Groups[1]?.Value);
                     }
                 }
             }
@@ -120,7 +99,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 Debug.WriteLine("Lỗi : " + e.ToString());
             }
 
-            return data;
+            return Task.FromResult(data);
         }
 
         public async Task<List<string>> GetUIdFromPost(string cookie, string limit, string token)
@@ -204,26 +183,26 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                     if (html1.Contains(@"id=""see_prev_"))
                     {
                         var urlSeenComment = Regex.Match(html1, @"><a href=""(/story.php\?story_fbid.*?)""").Groups[1].Value;
-                        var httml2 = await _restSharpService.GetAsync(
+                        var html2 = await _restSharpService.GetAsync(
                             AppConstants.UriLoginFacebook + HttpUtility.HtmlDecode(urlSeenComment), null, cookie);
-                        var lsId2 = await FindIdFromHtmlComment(httml2);
+                        var lsId2 = await FindIdFromHtmlComment(html2);
                         if (lsId2.Any())
                         {
                             data.AddRange(lsId2);
                         }
-                        if (httml2.Contains(@"id=""see_prev_"))
+                        if (html2.Contains(@"id=""see_prev_"))
                             while (true)
                             {
-                                if (!httml2.Contains(@"id=""see_prev_"))
+                                if (!html2.Contains(@"id=""see_prev_"))
                                 {
                                     break;
                                 }
 
-                                var urlSeenComment3 = Regex.Matches(httml2, @"><a href=""(/story.php\?story_fbid.*?)""")[0]?.Groups[1]?.Value;
-                                var html3 = await _restSharpService.GetAsync(
+                                var urlSeenComment3 = Regex.Matches(html2, @"><a href=""(/story.php\?story_fbid.*?)""")[0]?.Groups[1]?.Value;
+                                html2 = await _restSharpService.GetAsync(
                                     AppConstants.UriLoginFacebook + HttpUtility.HtmlDecode(urlSeenComment3), null,
                                     cookie);
-                                var lsId3 = await FindIdFromHtmlComment(html3);
+                                var lsId3 = await FindIdFromHtmlComment(html2);
                                 if (lsId3.Any())
                                 {
                                     data.AddRange(lsId3);
@@ -260,16 +239,9 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                     var regex = Regex.Matches(html, @"<div><h3 class=""\w+""><a href=""(.*?)"">");
                     if (regex.Any())
                     {
-                        var listThread = new List<Task<string>>();
                         foreach (Match o in regex)
                         {
-                            listThread.Add(GetIdFromProfileFacebook(o?.Groups[1]?.Value));
-                        }
-
-                        var res = await Task.WhenAll(listThread);
-                        if (res.Any())
-                        {
-                            data = res.ToList();
+                            data.Add(o?.Groups[1]?.Value);
                         }
                     }
                 }
