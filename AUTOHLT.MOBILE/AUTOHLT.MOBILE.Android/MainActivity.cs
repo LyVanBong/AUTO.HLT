@@ -3,6 +3,7 @@ using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Gms.Ads;
 using Android.OS;
 using Java.Security;
 using Plugin.FacebookClient;
@@ -60,6 +61,7 @@ namespace AUTOHLT.MOBILE.Droid
 
         private void OtherLibraries()
         {
+            MobileAds.Initialize(ApplicationContext);
             UserDialogs.Init(this);
             FacebookClientManager.Initialize(this);
         }

@@ -1,0 +1,169 @@
+﻿<Window
+    x:Class="AUTO.ALL.IN.APP.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    xmlns:views="clr-namespace:AUTO.ALL.IN.APP.Views"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="#f5f4f4"
+    Closing="MainWindow_OnClosing"
+    Icon="../Resources/Images/icon.png"
+    ToolTip="Công cụ hộ trợ facebook"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    WindowStyle="ThreeDBorderWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0" SelectedIndex="{Binding SelectedIndex}">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="150" Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/home.png" />
+                        <Label Content="Trang Chủ" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <views:HomeView />
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="150" Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/add-user.png" />
+                        <Label Content="Thêm tài khoản" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <views:AddUserView />
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="150" Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/history.png" />
+                        <Label Content="Lịch Sử" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <views:HistoryView />
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="150" Orientation="Horizontal">
+                        <Image Height="20" Source="../Resources/Images/icon_settings.png" />
+                        <Label Content="Cài đặt" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <views:SettingView />
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                Orientation="Horizontal">
+                <Image
+                    Margin="5"
+                    Source="../Resources/Images/icon_notication.png"
+                    Stretch="Uniform" />
+                <Label
+                    VerticalAlignment="Center"
+                    Content="{Binding Notification}"
+                    FontSize="12"
+                    Foreground="#687980" />
+            </StackPanel>
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="Label">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="13" />
+                            <Setter Property="Margin" Value="2,0" />
+                        </Style>
+                    </ResourceDictionary>
+                </StackPanel.Resources>
+                <TextBlock FontSize="10" Foreground="#23049d">
+                    <Run Text="TOTAL:" />
+                    <Run Text="{Binding AccountStatistics.Total}" />
+                </TextBlock>
+                <TextBlock FontSize="10" Foreground="#00917c">
+                    <Run Text="NEW:" />
+                    <Run Text="{Binding AccountStatistics.New}" />
+                </TextBlock>
+                <TextBlock FontSize="10" Foreground="#cf0000">
+                    <Run Text="RUNNING:" />
+                    <Run Text="{Binding AccountStatistics.Running}" />
+                </TextBlock>
+                <TextBlock FontSize="10" Foreground="#f58634">
+                    <Run Text="PAUSE:" />
+                    <Run Text="{Binding AccountStatistics.Pause}" />
+                </TextBlock>
+                <TextBlock FontSize="10" Foreground="#000000">
+                    <Run Text="DIED:" />
+                    <Run Text="{Binding AccountStatistics.Died}" />
+                </TextBlock>
+                <!--  STOP  -->
+                <Label
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Foreground="#cf0000">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRunningTool}" Value="True">
+                                    <Setter Property="Content" Value="LIVE" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsRunningTool}" Value="False">
+                                    <Setter Property="Content" Value="STOP" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <syncfusion:SfBusyIndicator
+                    AnimationSpeed="200"
+                    AnimationType="Ripple"
+                    Background="Transparent"
+                    FontSize="10"
+                    Foreground="#0061a8"
+                    IsBusy="True"
+                    ViewboxHeight="30"
+                    ViewboxWidth="30" />
+            </StackPanel>
+        </Grid>
+        <syncfusion:SfBusyIndicator
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            AnimationSpeed="100"
+            AnimationType="DoubleRing"
+            Background="#d3e0ea"
+            FontSize="15"
+            Foreground="#0061a8"
+            Header="Đang xử lý"
+            IsBusy="True"
+            Opacity=".8"
+            ViewboxHeight="100"
+            ViewboxWidth="100"
+            Visibility="{Binding Loading}" />
+    </Grid>
+</Window>

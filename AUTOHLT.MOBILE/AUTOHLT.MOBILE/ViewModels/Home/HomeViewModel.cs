@@ -766,7 +766,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 ServiceData = new ObservableCollection<ServiceModel>();
                 foreach (var item in _dataHome)
                 {
-                    await Task.Delay(TimeSpan.FromMilliseconds(200));
                     if (Permission == 2)
                     {
                         if (item.UserRole == "2")

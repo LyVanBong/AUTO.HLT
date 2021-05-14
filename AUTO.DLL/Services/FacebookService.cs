@@ -7,12 +7,173 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace AUTO.DLL.Services
 {
     public static class FacebookService
     {
         private static ChromeDriver _driver;
+
+        public static async Task<bool> AddFriend(string cookie)
+        {
+            var result = false;
+            try
+            {
+                var random = new Random();
+                var html = await FacebookService.GetHtmlFacebook("https://m.facebook.com/friends/center/suggestions/", cookie);
+                if (!string.IsNullOrEmpty(html) && html.Contains("mbasic_logout_button"))
+                {
+                    var regex = Regex.Matches(html, @"(/a/mobile/.*?)""");
+                    if (regex.Count > 0)
+                    {
+                        var url = regex[random.Next(6)]?.Groups[1]?.Value;
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            var repone = await FacebookService.GetHtmlFacebook("https://d.facebook.com" + HttpUtility.HtmlDecode(url), cookie);
+                            if (!string.IsNullOrEmpty(repone) && repone.Contains("mbasic_logout_button"))
+                                result = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+            return result;
+        }
+        /// <summary>
+        /// binh luan vao bai viet cua ban be
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="cookie"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public static async Task<int> CommentPost(string html, string cookie, string comment)
+        {
+            var result = 0;
+            if (string.IsNullOrEmpty(comment))
+                return result;
+            try
+            {
+                var random = new Random();
+                var cmt = comment.Split('\n');
+                if ((await RestSharpService.PostAsync(HttpUtility.HtmlDecode(@"https://d.facebook.com" + Regex.Matches(html, @"action=""(.*?)""")[0].Groups[1].Value), new List<RequestParameter>()
+                {
+                    new RequestParameter("fb_dtsg", Regex.Matches(html, @"name=""fb_dtsg"" value=""(.*?)""")[0].Groups[1].Value),
+                    new RequestParameter("jazoest", Regex.Matches(html, @"name=""jazoest"" value=""(.*?)""")[0].Groups[1].Value),
+                    new RequestParameter("comment_text", cmt[random.Next(0,cmt.Length-1)]),
+                }, cookie)).Contains("/home.php?ref_component=mbasic_home_logo"))
+                {
+                    result = 1;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return result;
+        }
+        /// <summary>
+        /// tương tác với bài viết của của bạn bè
+        /// </summary>
+        /// <param name="fbid"></param>
+        /// <param name="cookie"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        public static async Task<int> ReactionPost(string fbid, string cookie, int option, string comment)
+        {
+            var result = 0;
+            try
+            {
+                var html = await FacebookService.GetHtmlFacebook("https://d.facebook.com/" + HttpUtility.HtmlDecode(
+                    Regex.Matches(
+                            await FacebookService.GetHtmlFacebook(
+                                "https://d.facebook.com/reactions/picker/?is_permalink=1&ft_id=" + fbid, cookie),
+                            @"/ufi/reaction.*?""")[option].Value
+                        .Replace("\"", "")), cookie);
+                if (html.Contains("/home.php?ref_component=mbasic_home_logo"))
+                {
+                    result += await CommentPost(html, cookie, comment);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return result;
+        }
+        /// <summary>
+        /// get id avartar
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public static async Task<string> GetIdPostFacebook(string uid, string cookie, int option)
+        {
+            var id = "";
+            try
+            {
+                id = Regex.Match(
+                    Regex.Matches(await FacebookService.GetHtmlFacebook("https://d.facebook.com/" + uid, cookie),
+                        @"\/photo.php\?fbid\=.*?refid\=17")[option].Value, @"fbid=(.*?)&").Groups[1].Value;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return id;
+        }
+
+        /// <summary>
+        /// post facebook get html
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="cookie"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static async Task<string> PostHtmlFacebook(string url, string cookie, List<RequestParameter> parameters = null)
+        {
+            var html = "";
+            try
+            {
+                html = await RestSharpService.PostAsync(url, parameters, cookie);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return html;
+        }
+
+        /// <summary>
+        /// lấy dữ liệu facebook thông qua api
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        public static async Task<string> GetApiFacebook(string accessToken, string fields)
+        {
+            var json = "";
+            try
+            {
+                var para = new List<RequestParameter>
+                {
+                    new RequestParameter("fields",fields),
+                    new RequestParameter("access_token",accessToken),
+                };
+                json = await RestSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi: " + e.Message);
+            }
+
+            return json;
+        }
         /// <summary>
         /// Lấy thông tin tài khoản facebook qua api
         /// </summary>
@@ -234,11 +395,11 @@ namespace AUTO.DLL.Services
         /// <returns></returns>
         public static async Task<string> GetHtmlChrome(string url, string cookie = null)
         {
+
             try
             {
                 var service = ChromeDriverService.CreateDefaultService();
                 service.HideCommandPromptWindow = true;
-
                 var options = new ChromeOptions();
                 options.AddArgument("--window-position=-1,-1");
                 options.AddArgument("--window-position=-32000,-32000");
@@ -349,14 +510,14 @@ namespace AUTO.DLL.Services
         /// <summary>
         /// loc lay token facebook
         /// </summary>
-        /// <param name="driver"></param>
+        /// <param name="_driver"></param>
         /// <returns></returns>
-        private static string GetToken(ChromeDriver driver)
+        private static string GetToken(ChromeDriver _driver)
         {
             string token;
-            driver.Navigate().GoToUrl("https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed");
-            token = Regex.Match(driver?.PageSource, @"\,\\""accessToken\\"":\\""(.*?)\\")?.Groups[1]?.Value;
-            driver.Quit();
+            _driver.Navigate().GoToUrl("https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed");
+            token = Regex.Match(_driver?.PageSource, @"\,\\""accessToken\\"":\\""(.*?)\\")?.Groups[1]?.Value;
+            _driver.Quit();
             return token;
         }
     }

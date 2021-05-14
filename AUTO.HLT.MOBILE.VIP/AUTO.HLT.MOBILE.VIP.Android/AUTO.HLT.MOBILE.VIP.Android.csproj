@@ -71,28 +71,28 @@
       <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="Realm">
-      <Version>10.1.2</Version>
+      <Version>10.1.4</Version>
     </PackageReference>
     <PackageReference Include="RestSharp">
       <Version>106.11.7</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>19.1.0.55</Version>
+      <Version>19.1.0.63</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>19.1.0.55</Version>
+      <Version>19.1.0.63</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>19.1.0.55</Version>
+      <Version>19.1.0.63</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfChart">
-      <Version>19.1.0.55</Version>
+      <Version>19.1.0.63</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid">
-      <Version>19.1.0.55</Version>
+      <Version>19.1.0.63</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfTabView">
-      <Version>19.1.0.55</Version>
+      <Version>19.1.0.63</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.CommunityToolkit">
       <Version>1.1.0</Version>

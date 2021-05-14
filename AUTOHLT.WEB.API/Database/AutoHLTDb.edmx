@@ -573,7 +573,7 @@
             <Parameter Name="Note" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_GetVersionApp" ReturnType="Collection(bsoft_autohltModel.sp_GetVersionApp_Result)">
-            <Parameter Name="IdVersion" Mode="In" Type="Int32" />
+          <Parameter Name="IdVersion" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_UpdateVersionApplication">
             <Parameter Name="Id" Mode="In" Type="Int32" />
