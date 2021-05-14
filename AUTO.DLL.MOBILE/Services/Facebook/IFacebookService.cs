@@ -29,11 +29,11 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
         /// <summary>
         /// Lấy danh sách id bạn bè đã tương tác bài viết
         /// </summary>
-        /// <param name="cookie">Cookie facebook</param>
+        /// <param name="cookie"></param>
         /// <param name="limit"></param>
         /// <param name="token"></param>
-        /// <returns>Danh sách id bạn bè</returns>
-        Task<List<string>> GetUIdFromPost(string cookie, string limit, string token);
+        /// <returns></returns>
+        Task<(List<string> LsUid,List<string> LsUsrName)> GetUIdFromPost(string cookie, string limit, string token);
         /// <summary>
         /// Lấy id bạn bè đã comment bài viết
         /// </summary>

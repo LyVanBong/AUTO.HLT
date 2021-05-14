@@ -102,60 +102,45 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             return Task.FromResult(data);
         }
 
-        public async Task<List<string>> GetUIdFromPost(string cookie, string limit, string token)
+        public async Task<(List<string> LsUid, List<string> LsUsrName)> GetUIdFromPost(string cookie, string limit, string token)
         {
-            var data = new List<string>();
-
+            var lsUid = new List<string>();
+            var lsUsrName = new List<string>();
             try
             {
                 var lsIdPost = await GetIdMyPost(cookie, token, limit);
                 if (lsIdPost.Any())
                 {
 #if DEBUG
-                    Console.OutputEncoding = Encoding.UTF8;
                     var stt = 1;
-                    var time1 = new Stopwatch();
-                    var time2 = new Stopwatch();
-                    time1.Start();
 #endif
+                    var lsTask = new List<Task<List<string>>>();
                     foreach (var item in lsIdPost)
                     {
 #if DEBUG
-                        Console.WriteLine("#STT : " + stt++);
-                        Console.WriteLine("Id : " + item.id);
-                        time2.Start();
+                        Console.WriteLine("#" + stt++ + " : " + item.id);
 #endif
-                        var comment = await GetUIdCommentFromAPost(cookie, item.id);
-#if DEBUG
-                        Console.WriteLine("Comment");
-                        Console.WriteLine("Số lượng : " + comment.Count);
-                        Console.WriteLine("Time : " + time2.ElapsedMilliseconds / 1000 + " s");
-#endif
-                        if (comment.Any())
-                        {
-                            data.AddRange(comment);
-                        }
-#if DEBUG
-                        time2.Restart();
-#endif
-                        var like = await GetUIdLikeFromAPost(cookie, item.id);
-#if DEBUG
-                        Console.WriteLine("Like");
-                        Console.WriteLine("Số lượng : " + like.Count);
-                        Console.WriteLine("Time : " + time2.ElapsedMilliseconds / 1000 + " s");
-                        time2.Reset();
-#endif
-                        if (like.Any())
-                        {
-                            data.AddRange(like);
-                        }
-
-                        Console.WriteLine("----------------------------------------------------");
+                        lsTask.Add(GetUIdCommentFromAPost(cookie, item.id));
+                        lsTask.Add(GetUIdLikeFromAPost(cookie, item.id));
                     }
-#if DEBUG
-                    Console.WriteLine("Số lượng : " + data.Count);
-                    Console.WriteLine("Time Run All : " + time1.ElapsedMilliseconds / 1000 + " s");
-#endif
+
+                    var resTask = await Task.WhenAll(lsTask);
+                    foreach (var list in resTask)
+                    {
+                        foreach (var s in list)
+                        {
+                            var regex = Regex.Match(s, @"/profile.php\?id=(\d+)");
+                            var id = regex?.Groups[1]?.Value;
+                            if (!string.IsNullOrEmpty(id))
+                            {
+                                lsUid.Add(id);
+                            }
+                            else
+                            {
+                                lsUsrName.Add(s);
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -163,7 +148,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 Debug.WriteLine("Lỗi : " + e.ToString());
             }
 
-            return data;
+            return (lsUid, lsUsrName);
         }
 
         public async Task<List<string>> GetUIdCommentFromAPost(string cookie, string id)
