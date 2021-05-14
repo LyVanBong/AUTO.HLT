@@ -285,7 +285,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                                 // ke ban theo goi y
                                 if (user.OPtionFriendsSuggestions.IsSelectFunction)
                                 {
-                                    //FriendsSuggestionsFacebook();
+                                    FriendsSuggestionsFacebook(user, myFriend, random, worker, e);
                                 }
                                 if (worker.CancellationPending == true)
                                 {
@@ -387,13 +387,16 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 else
                 {
                     var regex = Regex.Matches(html, @"id="""" data-href=""(.*?)""");
-                    foreach (Match o in regex)
+                    if (regex.Count > 0)
                     {
-                        var url = o?.Groups[1]?.Value;
-                        FacebookService.AutoDropHeartFacebookStory(url, user.Cookie, user.OptionStory.IndexOptionReac).Await();
-                        user.OptionStory.TotalReaction++;
-                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 3, "Xem story của bạn bè: " + url, "Done")).Await();
-                        Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
+                        var url = regex[random.Next(6)]?.Groups[1]?.Value;
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            FacebookService.AutoDropHeartFacebookStory(url, user.Cookie, user.OptionStory.IndexOptionReac).Await();
+                            user.OptionStory.TotalReaction++;
+                            AddLogger(new LoggerModel(user.IdFacebook, friend.id, 3, "Xem story của bạn bè: " + url, "Done")).Await();
+                            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
+                        }
                     }
                 }
             }
@@ -404,9 +407,32 @@ namespace AUTO.ALL.IN.APP.ViewModels
             }
         }
 
-        private void FriendsSuggestionsFacebook()
+        private void FriendsSuggestionsFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
         {
-
+            try
+            {
+                var delay = user.OPtionFriendsSuggestions.TimeDelay;
+                if (FacebookService.AddFriend("").Result)
+                {
+                    user.OptionStory.TotalReaction++;
+                    AddLogger(new LoggerModel(user.IdFacebook, friend.id, 4, "Gửi lời mời kết bạn", "Done")).Await();
+                    Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
+                }
+                else
+                {
+                    if (!FacebookService.CheckTokenCookie(user.Token, user.Cookie).Result)
+                    {
+                        user.Status = 3;
+                        AddLogger(new LoggerModel(user.IdFacebook, friend.id, 5, "Token or cookie die", "Error")).Await();
+                        ev.Cancel = true;
+                        return;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessageError(e, nameof(FriendsSuggestionsFacebook)).Await();
+            }
         }
 
         private void SendMessageFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
@@ -426,6 +452,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 {
                     AddLogger(new LoggerModel(user.IdFacebook, friend.id, 2, "Gửi tin nhắn", "Done")).Await();
                     user.OptionMessage.TotalReaction++;
+                    Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
                 }
                 else
                 {
@@ -443,7 +470,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 ShowMessageError(e, nameof(SendMessageFacebook)).Await();
                 return;
             }
-            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
         }
 
         private void ReacPostFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
@@ -460,6 +486,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                     {
                         AddLogger(new LoggerModel(user.IdFacebook, friend.id, 0, user.OptionPost.IndexOptionReac + ",Interactive post", "Done")).Await();
                         user.OptionPost.TotalReaction++;
+                        Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
                     }
                 }
                 else
@@ -478,7 +505,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 ShowMessageError(e, nameof(ReacPostFacebook)).Await();
                 return;
             }
-            Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
         }
 
         #endregion

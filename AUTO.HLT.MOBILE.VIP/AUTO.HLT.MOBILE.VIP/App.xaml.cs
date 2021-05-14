@@ -1,5 +1,7 @@
-using AUTO.HLT.MOBILE.VIP.Configurations;
+﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using AUTO.HLT.MOBILE.VIP.FHomeModule.ViewModel;
+using AUTO.HLT.MOBILE.VIP.FHomeModule.Views;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
@@ -64,6 +66,12 @@ namespace AUTO.HLT.MOBILE.VIP
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+            #region Phần đăng ký View - ViewModel của đức
+
+            containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
+
+            #endregion
 
             containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
 

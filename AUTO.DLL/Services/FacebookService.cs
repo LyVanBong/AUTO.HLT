@@ -14,6 +14,35 @@ namespace AUTO.DLL.Services
     public static class FacebookService
     {
         private static ChromeDriver _driver;
+
+        public static async Task<bool> AddFriend(string cookie)
+        {
+            var result = false;
+            try
+            {
+                var random = new Random();
+                var html = await FacebookService.GetHtmlFacebook("https://m.facebook.com/friends/center/suggestions/", cookie);
+                if (!string.IsNullOrEmpty(html) && html.Contains("mbasic_logout_button"))
+                {
+                    var regex = Regex.Matches(html, @"(/a/mobile/.*?)""");
+                    if (regex.Count > 0)
+                    {
+                        var url = regex[random.Next(6)]?.Groups[1]?.Value;
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            var repone = await FacebookService.GetHtmlFacebook("https://d.facebook.com" + HttpUtility.HtmlDecode(url), cookie);
+                            if (!string.IsNullOrEmpty(repone) && repone.Contains("mbasic_logout_button"))
+                                result = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+            return result;
+        }
         /// <summary>
         /// binh luan vao bai viet cua ban be
         /// </summary>
@@ -366,7 +395,7 @@ namespace AUTO.DLL.Services
         /// <returns></returns>
         public static async Task<string> GetHtmlChrome(string url, string cookie = null)
         {
-            
+
             try
             {
                 var service = ChromeDriverService.CreateDefaultService();
