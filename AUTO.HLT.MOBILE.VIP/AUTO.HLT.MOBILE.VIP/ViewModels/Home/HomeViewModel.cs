@@ -1,38 +1,37 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
 using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
-using AUTO.HLT.MOBILE.VIP.Services.Database;
-using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
-using AUTO.HLT.MOBILE.VIP.Views.Home;
-using Microsoft.AppCenter.Crashes;
-using Prism.Navigation;
-using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
 using AUTO.HLT.MOBILE.VIP.Views.ChangePassword;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
+using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.KeyGeneration;
 using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using Prism.Navigation;
+using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
 {
@@ -176,6 +175,55 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     break;
                 case 11:
                     await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
+                    break;
+                case 12:
+                    if (_licenseKey != null)
+                    {
+                        var infoFace =
+                            await _facebookService.GetInfoUser();
+                        if (infoFace != null && infoFace.name != null)
+                        {
+                            if (await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                $"Bạn muốn kết bạn theo gợi ý cho tài khoản facebook {infoFace?.name}", "Cài ngay",
+                                "Thôi"))
+                            {
+                                var user = await _databaseService.GetAccountUser();
+                                var content = new ContentSendTelegramModel()
+                                {
+                                    Ten_Thong_Bao = item?.TitleItem,
+                                    So_Luong = 1,
+                                    Id_Nguoi_Dung = user?.ID,
+                                    Ghi_Chu = new
+                                    {
+                                        Ten = user?.Name,
+                                        Tai_Khoan = user?.UserName,
+                                        So_dien_thoai = user?.NumberPhone,
+                                        Id_facebook = infoFace?.id,
+                                        Ten_facebook = infoFace?.name,
+                                        Avatar_facebook = infoFace?.picture?.data?.url,
+                                        Ngay_Het_Han = _licenseKey.EndDate,
+                                        So_Ngay_Con_Lai = _licenseKey.CountEndDate
+                                    },
+                                    Noi_Dung_Thong_Bao = new
+                                    {
+                                        Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
+                                        Token = Preferences.Get(AppConstants.TokenFaceook, ""),
+                                    }
+                                };
+                                var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                    JsonConvert.SerializeObject(content, Formatting.Indented));
+                                if (send != null && send.ok)
+                                {
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                                }
+                                else
+                                {
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                        "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
+                                }
+                            }
+                        }
+                    }
                     break;
                 default:
                     break;
@@ -474,6 +522,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                 },
                 new ItemMenuModel()
                 {
+                    Id = 12,
+                    TitleItem = "Kết bạn theo gợi ý",
+                    Role = 99,
+                    BgColor = Color.FromHex("233e8b"),
+                    Icon = "icon_add_friend.png"
+                },
+                new ItemMenuModel()
+                {
                     Id = 11,
                     TitleItem = "Đổi mật khẩu",
                     Role = 99,
@@ -487,8 +543,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     Role = 99,
                     BgColor = Color.FromHex("ff4b5c"),
                     Icon = "icon_customer_support.png"
-                },
-
+                }
             };
         }
     }

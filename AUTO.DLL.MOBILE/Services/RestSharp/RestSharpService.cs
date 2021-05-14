@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AUTO.MOBILE.DLL.Models.RequestProviderModel;
+using AUTO.DLL.MOBILE.Models.RequestProviderModel;
 using RestSharp;
 
-namespace AUTO.MOBILE.DLL.Services.RestSharp
+namespace AUTO.DLL.MOBILE.Services.RestSharp
 {
     public class RestSharpService : IRestSharpService
     {
