@@ -23,6 +23,73 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
         {
             _restSharpService = new RestSharpService();
         }
+
+        public async Task<List<MyFriendModel>> GetMyFriend(string cookie)
+        {
+            var lsFriend = new List<MyFriendModel>();
+            var stt = 1;
+            try
+            {
+#if DEBUG
+                var count = 1;
+                Console.WriteLine("## " + count++);
+#endif
+                var html = await _restSharpService.GetAsync("https://d.facebook.com/profile.php?v=friends", null, cookie);
+                var regex = Regex.Matches(html, @"style=""vertical-align: middle""><img src=""(.*?)"".href=""/(.*?)"">(.*?)</a>");
+                if (regex.Any())
+                {
+                    foreach (Match o in regex)
+                    {
+                        var picture = HttpUtility.HtmlDecode(o.Groups[1]?.Value);
+                        var regexUid = Regex.Match(o.Groups[2]?.Value, @"profile.php\?id=(\d+)");
+                        var uid = regexUid.Groups[1].Value;
+                        if (string.IsNullOrEmpty(uid))
+                        {
+                            var regexUsr = Regex.Match(o.Groups[2]?.Value, @"(.*?)\?");
+                            uid = regexUsr.Groups[1].Value;
+                        }
+                        lsFriend.Add(new MyFriendModel(stt++, uid, o?.Groups[3]?.Value, 0, "", false, picture));
+                    }
+                }
+
+                if (html.Contains("m_more_friends"))
+                {
+                    while (true)
+                    {
+#if DEBUG
+                        Console.WriteLine("## " + count++);
+#endif
+                        var urlMoreFriend = Regex.Match(html, @"id=""m_more_friends""><a href=""(.*?)""");
+                        html = await _restSharpService.GetAsync("https://d.facebook.com" + HttpUtility.HtmlDecode(urlMoreFriend?.Groups[1]?.Value), null, cookie);
+                        var regex2 = Regex.Matches(html, @"style=""vertical-align: middle""><img src=""(.*?)"".href=""/(.*?)"">(.*?)</a>");
+                        if (regex2.Any())
+                        {
+                            foreach (Match o in regex2)
+                            {
+                                var picture = HttpUtility.HtmlDecode(o.Groups[1]?.Value);
+                                var regexUid = Regex.Match(o.Groups[2]?.Value, @"profile.php\?id=(\d+)");
+                                var uid = regexUid.Groups[1].Value;
+                                if (string.IsNullOrEmpty(uid))
+                                {
+                                    var regexUsr = Regex.Match(o.Groups[2]?.Value, @"(.*?)\?");
+                                    uid = regexUsr.Groups[1].Value;
+                                }
+                                lsFriend.Add(new MyFriendModel(stt++, uid, o?.Groups[3]?.Value, 0, "", false, picture));
+                            }
+                        }
+                        if (!html.Contains("m_more_friends"))
+                            break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+
+            return lsFriend;
+        }
+
         public async Task<string> GetIdFromProfileFacebook(string urlProfile)
         {
             var id = "";
@@ -102,10 +169,9 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             return Task.FromResult(data);
         }
 
-        public async Task<(List<string> LsUid, List<string> LsUsrName)> GetUIdFromPost(string cookie, string limit, string token)
+        public async Task<List<string>> GetUIdFromPost(string cookie, string limit, string token)
         {
             var lsUid = new List<string>();
-            var lsUsrName = new List<string>();
             try
             {
                 var lsIdPost = await GetIdMyPost(cookie, token, limit);
@@ -131,14 +197,15 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                         {
                             var regex = Regex.Match(s, @"/profile.php\?id=(\d+)");
                             var id = regex?.Groups[1]?.Value;
-                            if (!string.IsNullOrEmpty(id))
+                            if (string.IsNullOrEmpty(id))
                             {
-                                lsUid.Add(id);
+                                id = Regex.Match(s, @"/(.*?)\?")?.Groups[1].Value;
+                                if (string.IsNullOrEmpty(id) && !s.Contains("?"))
+                                {
+                                    id = s.Remove(0, 1);
+                                }
                             }
-                            else
-                            {
-                                lsUsrName.Add(s);
-                            }
+                            lsUid.Add(id);
                         }
                     }
                 }
@@ -148,7 +215,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 Debug.WriteLine("Lỗi : " + e.ToString());
             }
 
-            return (lsUid, lsUsrName);
+            return lsUid;
         }
 
         public async Task<List<string>> GetUIdCommentFromAPost(string cookie, string id)
