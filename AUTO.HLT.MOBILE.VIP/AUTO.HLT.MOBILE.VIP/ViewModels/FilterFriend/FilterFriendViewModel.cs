@@ -43,12 +43,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         };
 
         private IPageDialogService _pageDialogService;
-        private List<MyFriendModel> _doNotInteract;
         private IDialogService _dialogService;
         private ILicenseKeyService _licenseKeyService;
         private int _numberPost = 15;
 
         private AUTO.DLL.MOBILE.Services.Facebook.IFacebookService _facebook = new FacebookeService();
+        private List<MyFriendModel> _doNotInteract;
 
         public ICommand FilterFriendsCommand { get; private set; }
 
@@ -126,21 +126,16 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                             if (data.Any())
                             {
                                 var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                                var fb_para = await _facebookService.GeJazoestAndFbdtsg(cookie);
-                                var fb_dtsg = fb_para.Fbdtsg;
-                                var jazoest = fb_para.Jazoest;
-
-                                if (fb_dtsg != null && jazoest != null && cookie != null)
+                                if (cookie != null)
                                 {
                                     var num = 0;
                                     foreach (var item in data)
                                     {
-                                        var unFriend = await _facebookService.UnFriend(fb_dtsg, jazoest, item.Uid, cookie);
-                                        if (unFriend != null && unFriend.Contains(item.Uid))
+                                        var isUnFriend = await _facebook.UnFriend(cookie, item.Uid);
+                                        if (isUnFriend)
                                         {
                                             num++;
                                             FriendsDoNotInteractData.Remove(item);
-                                            _doNotInteract.Remove(item);
                                         }
                                     }
                                     await _pageDialogService.DisplayAlertAsync("Thông báo",
@@ -287,13 +282,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         {
             try
             {
-                var myFriend = await _facebook.GetMyFriend(cookie);
-                if (myFriend != null && myFriend.Any())
+                _doNotInteract = await _facebook.GetMyFriend(cookie);
+                if (_doNotInteract != null && _doNotInteract.Any())
                 {
-                    var lsUid = await _facebook.GetUIdFromPost(cookie, limit, token);
+                    var lsUid = await _facebook.GetUIdFromPost(cookie, token, limit);
                     if (lsUid != null && lsUid.Any())
                     {
-                        foreach (var friend in myFriend)
+                        foreach (var friend in _doNotInteract)
                         {
                             var reaction = lsUid.Count(x => x == friend.Uid);
                             if (reaction > 0)
@@ -306,8 +301,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                                 friend.Status = "Chưa tương tác";
                             }
                         }
-                        FriendsDoNotInteractData = new ObservableCollection<MyFriendModel>(myFriend);
                     }
+
+                    FriendsDoNotInteractData = new ObservableCollection<MyFriendModel>(_doNotInteract);
                 }
             }
             catch (Exception e)
