@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using AUTO.DLL.MOBILE.Configurations;
+﻿using AUTO.DLL.MOBILE.Configurations;
 using AUTO.DLL.MOBILE.Models.Facebook;
 using AUTO.DLL.MOBILE.Models.RequestProviderModel;
 using AUTO.DLL.MOBILE.Services.RestSharp;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace AUTO.DLL.MOBILE.Services.Facebook
 {
@@ -22,6 +21,43 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
         public FacebookeService()
         {
             _restSharpService = new RestSharpService();
+        }
+
+        public async Task<bool> UnFriend(string cookie, string uid)
+        {
+            var isUnfriend = false;
+
+            try
+            {
+                var htmlProfile = await _restSharpService.GetAsync("https://d.facebook.com/" + uid, null, cookie);
+                var matchUid = Regex.Match(htmlProfile, @"<div class=""\w+ \w+""><a href=""/photo.php\?fbid=.*?id=(.*?)&");
+                var matchDtsg = Regex.Match(htmlProfile, @"name=""fb_dtsg"" value=""(.*?)""");
+                var matchJazoest = Regex.Match(htmlProfile, @"name=""jazoest"" value=""(.*?)""");
+                var id = matchUid?.Groups[1]?.Value;
+                var fb_dtsg = matchDtsg?.Groups[1]?.Value;
+                var jazoest = matchJazoest?.Groups[1]?.Value;
+                var name = Regex.Match(htmlProfile, @"<title>(.*?)</title>")?.Groups[1]?.Value;
+                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(fb_dtsg) && !string.IsNullOrEmpty(jazoest))
+                {
+                    var para = new List<RequestParameter>
+                    {
+                        new RequestParameter("fb_dtsg",fb_dtsg),
+                        new RequestParameter("jazoest",jazoest),
+                        new RequestParameter("friend_id",id),
+                    };
+                    var html = await _restSharpService.PostAsync("https://d.facebook.com/a/removefriend.php", para, cookie);
+                    if (html.Contains(name))
+                    {
+                        isUnfriend = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+
+            return isUnfriend;
         }
 
         public async Task<List<MyFriendModel>> GetMyFriend(string cookie)
@@ -40,7 +76,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 {
                     foreach (Match o in regex)
                     {
-                        var picture = HttpUtility.HtmlDecode(o.Groups[1]?.Value);
+                        var picture = HttpUtility.HtmlDecode(Regex.Match(o.Groups[1].Value, @"(https.*?)""").Groups[1].Value);
                         var regexUid = Regex.Match(o.Groups[2]?.Value, @"profile.php\?id=(\d+)");
                         var uid = regexUid.Groups[1].Value;
                         if (string.IsNullOrEmpty(uid))
@@ -66,7 +102,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                         {
                             foreach (Match o in regex2)
                             {
-                                var picture = HttpUtility.HtmlDecode(o.Groups[1]?.Value);
+                                var picture = HttpUtility.HtmlDecode(Regex.Match(o.Groups[1].Value, @"(https.*?)""").Groups[1].Value);
                                 var regexUid = Regex.Match(o.Groups[2]?.Value, @"profile.php\?id=(\d+)");
                                 var uid = regexUid.Groups[1].Value;
                                 if (string.IsNullOrEmpty(uid))
@@ -169,7 +205,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             return Task.FromResult(data);
         }
 
-        public async Task<List<string>> GetUIdFromPost(string cookie, string limit, string token)
+        public async Task<List<string>> GetUIdFromPost(string cookie, string token, string limit)
         {
             var lsUid = new List<string>();
             try

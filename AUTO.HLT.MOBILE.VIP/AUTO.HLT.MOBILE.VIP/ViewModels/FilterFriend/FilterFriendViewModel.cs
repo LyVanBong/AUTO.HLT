@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.DLL.MOBILE.Models.Facebook;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using IFacebookService = AUTO.HLT.MOBILE.VIP.Services.Facebook.IFacebookService;
@@ -28,7 +29,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         private string _avatarFacebook;
         private string _reaction;
         private string _comment;
-        private ObservableCollection<FriendsDoNotInteractModel> _friendsDoNotInteractData;
+        private ObservableCollection<MyFriendModel> _friendsDoNotInteractData;
 
         private List<FillterFriendModel> _fillterFriendModels = new List<FillterFriendModel>
         {
@@ -42,10 +43,10 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         };
 
         private IPageDialogService _pageDialogService;
-        private List<FriendsDoNotInteractModel> _doNotInteract;
+        private List<MyFriendModel> _doNotInteract;
         private IDialogService _dialogService;
         private ILicenseKeyService _licenseKeyService;
-        private int _numberPost = 5;
+        private int _numberPost = 15;
 
         private AUTO.DLL.MOBILE.Services.Facebook.IFacebookService _facebook = new FacebookeService();
 
@@ -58,7 +59,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             set => SetProperty(ref _fillterFriendModels, value);
         }
 
-        public ObservableCollection<FriendsDoNotInteractModel> FriendsDoNotInteractData
+        public ObservableCollection<MyFriendModel> FriendsDoNotInteractData
         {
             get => _friendsDoNotInteractData;
             set => SetProperty(ref _friendsDoNotInteractData, value);
@@ -201,7 +202,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                 {
                     if (FriendsDoNotInteractData != null && FriendsDoNotInteractData.Any())
                     {
-                        FriendsDoNotInteractData = new ObservableCollection<FriendsDoNotInteractModel>();
+                        FriendsDoNotInteractData = new ObservableCollection<MyFriendModel>();
                         if (fillter.Id == -1)
                         {
                             foreach (var model in _doNotInteract)
@@ -214,7 +215,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                         {
                             foreach (var model in _doNotInteract)
                             {
-                                if ((model.Comment + model.Reaction) <= fillter.Id)
+                                if (model.Interactive <= fillter.Id)
                                 {
                                     model.IsSelected = true;
                                     FriendsDoNotInteractData.Add(model);
@@ -286,26 +287,27 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         {
             try
             {
-                var reac = await _facebook.GetUIdFromPost(cookie, limit, token);
-                if (reac != null && reac.Any())
+                var myFriend = await _facebook.GetMyFriend(cookie);
+                if (myFriend != null && myFriend.Any())
                 {
-                    var allFriend = await _facebookService.GetAllFriend<FriendsModel>(token);
-                    if (allFriend != null)
+                    var lsUid = await _facebook.GetUIdFromPost(cookie, limit, token);
+                    if (lsUid != null && lsUid.Any())
                     {
-                        _doNotInteract = new List<FriendsDoNotInteractModel>();
-                        foreach (var s in reac)
+                        foreach (var friend in myFriend)
                         {
-
+                            var reaction = lsUid.Count(x => x == friend.Uid);
+                            if (reaction > 0)
+                            {
+                                friend.Interactive = reaction;
+                                friend.Status = "Có tương tác";
+                            }
+                            else
+                            {
+                                friend.Status = "Chưa tương tác";
+                            }
                         }
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            FriendsDoNotInteractData = new ObservableCollection<FriendsDoNotInteractModel>(_doNotInteract);
-                        });
+                        FriendsDoNotInteractData = new ObservableCollection<MyFriendModel>(myFriend);
                     }
-                }
-                else
-                {
-
                 }
             }
             catch (Exception e)

@@ -6,6 +6,13 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
 {
     public interface IFacebookService
     {
+        /// <summary>
+        /// xóa bạn bè
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        Task<bool> UnFriend(string cookie, string uid);
         Task<List<MyFriendModel>> GetMyFriend(string cookie);
         /// <summary>
         /// Tìm id từ url profile
@@ -34,7 +41,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
         /// <param name="limit"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<List<string>> GetUIdFromPost(string cookie, string limit, string token);
+        Task<List<string>> GetUIdFromPost(string cookie, string token, string limit);
         /// <summary>
         /// Lấy id bạn bè đã comment bài viết
         /// </summary>

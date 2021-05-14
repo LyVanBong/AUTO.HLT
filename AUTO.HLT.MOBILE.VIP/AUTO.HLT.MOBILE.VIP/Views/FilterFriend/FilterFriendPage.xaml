@@ -132,6 +132,7 @@
             <xForms:SfDataGrid
                 x:Name="dataGrid"
                 Grid.Row="6"
+                Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 AutoGenerateColumns="False"
@@ -160,16 +161,12 @@
                         MinimumWidth="90" />
                     <xForms:GridTextColumn
                         HeaderText="Tương tác"
-                        MappingName="Reaction"
-                        MinimumWidth="40" />
-                    <xForms:GridTextColumn
-                        HeaderText="Bình luận"
-                        MappingName="Comment"
+                        MappingName="Interactive"
                         MinimumWidth="40" />
                     <xForms:GridTextColumn
                         HeaderText="Trạng thái"
                         MappingName="Status"
-                        MinimumWidth="80" />
+                        MinimumWidth="120" />
                 </xForms:SfDataGrid.Columns>
             </xForms:SfDataGrid>
             <loading:LoadingView
