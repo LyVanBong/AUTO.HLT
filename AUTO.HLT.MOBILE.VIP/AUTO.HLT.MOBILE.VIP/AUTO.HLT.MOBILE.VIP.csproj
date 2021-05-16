@@ -1,9 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <UserSecretsId>50e55ece-fd7e-4013-b99a-e738f9a82fff</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Resources\Languages\**" />
+    <Compile Remove="Resources\Svg\**" />
+    <EmbeddedResource Remove="Resources\Languages\**" />
+    <EmbeddedResource Remove="Resources\Svg\**" />
+    <None Remove="Resources\Languages\**" />
+    <None Remove="Resources\Svg\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="FontAwesome5DuotoneSolid.xaml" />
@@ -17,6 +26,7 @@
     <None Remove="Resources\Images\icon_4.png" />
     <None Remove="Resources\Images\icon_5.png" />
     <None Remove="Resources\Images\icon_6.png" />
+    <None Remove="Resources\Images\icon_add_friend.png" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
     <None Remove="Resources\Images\icon_birthday.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
@@ -43,6 +53,7 @@
     <EmbeddedResource Include="Resources\Images\icon_4.png" />
     <EmbeddedResource Include="Resources\Images\icon_5.png" />
     <EmbeddedResource Include="Resources\Images\icon_6.png" />
+    <EmbeddedResource Include="Resources\Images\icon_add_friend.png" />
     <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
@@ -65,14 +76,14 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.2.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Realm" Version="10.1.2" />
+    <PackageReference Include="Realm" Version="10.1.4" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.1.0.58" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.1.0.58" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="19.1.0.58" />
-    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.1.0.58" />
-    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.1.0.58" />
-    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.1.0.58" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.1.0.63" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="19.1.0.63" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="19.1.0.63" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.1.0.63" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.1.0.63" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.1.0.63" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
@@ -82,14 +93,16 @@
   <ItemGroup>
     <Folder Include="FHomeModule\Models\" />
     <Folder Include="Models\VersionApp\" />
-    <Folder Include="Resources\Languages\" />
-    <Folder Include="Resources\Svg\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Include="FontAwesome5DuotoneSolid.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AUTO.DLL.MOBILE\AUTO.DLL.MOBILE.csproj" />
   </ItemGroup>
 
   <ItemGroup>

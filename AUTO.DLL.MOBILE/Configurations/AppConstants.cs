@@ -1,4 +1,4 @@
-﻿namespace AUTO.MOBILE.DLL.Configurations
+﻿namespace AUTO.DLL.MOBILE.Configurations
 {
     public static class AppConstants
     {
