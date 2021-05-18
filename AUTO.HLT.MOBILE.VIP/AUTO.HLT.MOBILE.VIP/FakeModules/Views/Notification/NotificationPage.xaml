@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.Notification.NotificationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xaml="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Padding="0,15" ColumnDefinitions="50,*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                    VerticalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{xaml:NavigateTo '/FMainPage'}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Chuyến đi của ôi"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <Label
+                FontSize="16"
+                HorizontalTextAlignment="Center"
+                Text="Chưa có thông báo nào cho bạn"
+                TextColor="#000" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

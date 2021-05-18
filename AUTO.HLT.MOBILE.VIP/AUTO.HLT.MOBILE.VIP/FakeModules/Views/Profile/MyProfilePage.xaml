@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.Profile.MyProfilePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xaml="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Padding="0,15" ColumnDefinitions="50,*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                    VerticalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{xaml:NavigateTo '/FMainPage'}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Thông tin cá nhân"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <Label
+                Margin="10,0"
+                FontSize="16"
+                Text="Họ và tên"
+                TextColor="#000" />
+            <Entry
+                Margin="10,0"
+                ClearButtonVisibility="WhileEditing"
+                FontSize="16"
+                Text="Khách hàng"
+                TextColor="#000" />
+            <Label
+                Margin="10,0"
+                FontSize="16"
+                Text="Số điện thoại"
+                TextColor="#000" />
+            <Entry
+                Margin="10,0"
+                ClearButtonVisibility="WhileEditing"
+                FontSize="16"
+                Keyboard="Numeric"
+                Text="0987654321"
+                TextColor="#000" />
+            <Label
+                Margin="10,0"
+                FontSize="16"
+                Text="Địa chỉ email"
+                TextColor="#000" />
+            <Entry
+                Margin="10,0"
+                ClearButtonVisibility="WhileEditing"
+                FontSize="16"
+                Text="khachhang@autovip.com"
+                TextColor="#000" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -133,7 +133,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 }
 
                 _dispatcherTimer = new DispatcherTimer();
-                _dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
+                _dispatcherTimer.Interval = TimeSpan.FromMinutes(10);
                 _dispatcherTimer.Tick += Timer_Tick;
             }
             catch (Exception e)
@@ -209,11 +209,12 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         }
 
+        private long _stt = 1;
         private async Task AddLogger(LoggerModel logger)
         {
             try
             {
-                var pathLog = AppDomain.CurrentDomain.BaseDirectory + "/DATA/LOGGER/Log-" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt";
+                var pathLog = AppDomain.CurrentDomain.BaseDirectory + "\\DATA\\LOGGER\\Log-" + logger.Uid + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt";
                 if (DataLogger == null)
                 {
                     DataLogger = new ObservableCollection<LoggerModel>();
@@ -222,15 +223,17 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 {
                     if (DataLogger.Any())
                         DataLogger.Clear();
+                    _stt = 1;
                 }
-                logger.No = DataLogger.Count + 1;
+
+                logger.No = _stt++;
                 Notification = $"[{logger.No}]-[{logger.DateTime}]-[{logger.TypeLogger}]-[{logger.Uid}]-[{logger.UidFriend}]-[{logger.LoggerContent}]-[{logger.Note}]";
                 File.AppendAllLines(pathLog, new[] { Notification });
                 App.Current.Dispatcher.Invoke(() => DataLogger.Add(logger));
             }
             catch (Exception e)
             {
-                await ShowMessageError(e, nameof(AddLogger));
+                //await ShowMessageError(e, nameof(AddLogger));
             }
         }
 

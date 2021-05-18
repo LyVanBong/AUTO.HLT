@@ -19,6 +19,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="FakeModules\Resources\icon_f_booking.png" />
+    <None Remove="FakeModules\Resources\icon_f_car1.png" />
+    <None Remove="FakeModules\Resources\icon_f_car2.png" />
+    <None Remove="FakeModules\Resources\icon_f_car3.png" />
+    <None Remove="FakeModules\Resources\icon_f_car4.png" />
+    <None Remove="FakeModules\Resources\icon_f_history_booking.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_2.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_3.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_4.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_5.png" />
+    <None Remove="FakeModules\Resources\icon_f_notification.png" />
+    <None Remove="FakeModules\Resources\icon_helper_us.png" />
+    <None Remove="FakeModules\Resources\icon_invite_friend.png" />
+    <None Remove="FakeModules\Resources\icon_left_arrow.png" />
+    <None Remove="FakeModules\Resources\icon_user.png" />
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <None Remove="Resources\Images\icon_1.png" />
     <None Remove="Resources\Images\icon_2.png" />
@@ -31,6 +47,7 @@
     <None Remove="Resources\Images\icon_birthday.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
+    <None Remove="Resources\Images\icon_drop_hear.png" />
     <None Remove="Resources\Images\icon_facebook_connect.png" />
     <None Remove="Resources\Images\icon_filter_friends.png" />
     <None Remove="Resources\Images\icon_follow.png" />
@@ -46,6 +63,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_booking.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car1.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car2.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car3.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car4.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_history_booking.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_2.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_3.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_4.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_5.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_notification.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_helper_us.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_invite_friend.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_left_arrow.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_user.png" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <EmbeddedResource Include="Resources\Images\icon_1.png" />
     <EmbeddedResource Include="Resources\Images\icon_2.png" />
@@ -58,6 +91,7 @@
     <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
+    <EmbeddedResource Include="Resources\Images\icon_drop_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_facebook_connect.png" />
     <EmbeddedResource Include="Resources\Images\icon_filter_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_follow.png" />
@@ -91,7 +125,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FHomeModule\Models\" />
+    <Folder Include="FakeModules\Models\" />
+    <Folder Include="FakeModules\ViewModels\Main\" />
+    <Folder Include="FakeModules\ViewModels\Home\" />
+    <Folder Include="FakeModules\ViewModels\HelperUs\" />
+    <Folder Include="FakeModules\ViewModels\InviteFriend\" />
+    <Folder Include="FakeModules\ViewModels\AboutUs\" />
+    <Folder Include="FakeModules\ViewModels\MyProfile\" />
+    <Folder Include="FakeModules\ViewModels\MyBooking\" />
+    <Folder Include="FakeModules\ViewModels\Notification\" />
+    <Folder Include="FakeModules\ViewModels\TermsCondition\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -106,9 +149,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\FakeApp\FakeAppPage.xaml.cs">
-      <DependentUpon>FakeAppPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -124,7 +164,40 @@
     <EmbeddedResource Update="Controls\Navigation\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="FHomeModule\Views\FHomePage.xaml">
+    <EmbeddedResource Update="FakeModules\Views\AboutUs\FAboutUsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\views\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\HelperUs\HelperUsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Home\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\InviteFriend\InviteFriendPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Main\FMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Main\FMainPageFlyout.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\views\FMain\FMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\MyBooking\MyBookingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Notification\NotificationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Profile\MyProfilePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\TermsCondition\TermsConditionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
@@ -132,27 +205,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ChangePassword\ChangePasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\AddLicenseKeyView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FContentPage3.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FContentPage7.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FContentPage8.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FreeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FakeAppPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\VipView.xaml">
-      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Feature\FeaturePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
