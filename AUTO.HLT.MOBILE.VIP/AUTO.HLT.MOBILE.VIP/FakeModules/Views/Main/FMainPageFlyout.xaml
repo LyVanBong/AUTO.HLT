@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main.FMainPageFlyout"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    Title="Flyout"
+    Background="#2CC5D7"
+    BackgroundColor="#2CC5D7">
+    <StackLayout
+        Margin="0"
+        Padding="0"
+        BackgroundColor="#0C0D12"
+        Orientation="Vertical">
+        <StackLayout
+            Padding="15,20"
+            Background="#2CC5D7"
+            BackgroundColor="#2CC5D7"
+            Orientation="Horizontal">
+            <Image
+                Aspect="Fill"
+                HeightRequest="40"
+                Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_user.png}"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="40" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Chào bạn, Khách Hàng"
+                TextColor="#000"
+                VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+        <ScrollView Background="#0C0D12" BackgroundColor="#0C0D12">
+            <StackLayout BackgroundColor="Transparent" Spacing="0">
+                <StackLayout.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="Label">
+                            <Setter Property="Padding" Value="20,10" />
+                            <Setter Property="TextColor" Value="#fff" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </ResourceDictionary>
+                </StackLayout.Resources>
+                <Label Text="Chuyến đi của tôi">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="0" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Thông báo">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="1" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Khuyến mãi">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="2" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Thông tin cá nhân">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="3" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Về chúng tôi">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="4" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Điều khoản và chính sách">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="5" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Giới thiệu bạn bè">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="6" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Góp ý">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="7" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Ngôn ngữ">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="8" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+                <Label Text="Đăng xuất">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="9" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

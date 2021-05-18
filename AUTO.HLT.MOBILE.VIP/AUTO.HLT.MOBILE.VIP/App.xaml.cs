@@ -1,7 +1,11 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
-using AUTO.HLT.MOBILE.VIP.FakeModules.views;
-using AUTO.HLT.MOBILE.VIP.FHomeModule.ViewModel;
+using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.HelperUs;
+using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Home;
+using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main;
+using AUTO.HLT.MOBILE.VIP.FakeModules.Views.HelperUs;
+using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;
+using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
@@ -67,7 +71,10 @@ namespace AUTO.HLT.MOBILE.VIP
 
             #region Phần đăng ký View - ViewModel Fake
 
+            containerRegistry.RegisterForNavigation<FMainPage, FMainViewModel>();
             containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
+            containerRegistry.RegisterForNavigation<FMainPageFlyout, FMainPageFlyoutViewModel>();
+            containerRegistry.RegisterForNavigation<HelperUsPage, HelperUsViewModel>();
 
             #endregion
 

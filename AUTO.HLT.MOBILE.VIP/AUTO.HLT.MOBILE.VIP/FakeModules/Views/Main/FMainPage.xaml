@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main.FMainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:home="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:main="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;assembly=AUTO.HLT.MOBILE.VIP">
+    <FlyoutPage.Flyout>
+        <main:FMainPageFlyout x:Name="FlyoutPage" />
+    </FlyoutPage.Flyout>
+    <FlyoutPage.Detail>
+        <NavigationPage
+            BackgroundColor="#FFC20F"
+            BarBackgroundColor="#FFC20F"
+            BarTextColor="#000">
+            <x:Arguments>
+                <home:FHomePage Background="#FFC20F" BackgroundColor="#FFC20F" />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

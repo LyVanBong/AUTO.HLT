@@ -19,6 +19,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="FakeModules\Resources\icon_f_car1.png" />
+    <None Remove="FakeModules\Resources\icon_f_car2.png" />
+    <None Remove="FakeModules\Resources\icon_f_car3.png" />
+    <None Remove="FakeModules\Resources\icon_f_car4.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_2.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_3.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_4.png" />
+    <None Remove="FakeModules\Resources\icon_f_map_bus_5.png" />
+    <None Remove="FakeModules\Resources\icon_f_notification.png" />
+    <None Remove="FakeModules\Resources\icon_helper_us.png" />
+    <None Remove="FakeModules\Resources\icon_left_arrow.png" />
+    <None Remove="FakeModules\Resources\icon_user.png" />
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <None Remove="Resources\Images\icon_1.png" />
     <None Remove="Resources\Images\icon_2.png" />
@@ -47,6 +60,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car1.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car2.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car3.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_car4.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_2.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_3.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_4.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_5.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_notification.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_helper_us.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_left_arrow.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_user.png" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
     <EmbeddedResource Include="Resources\Images\icon_1.png" />
     <EmbeddedResource Include="Resources\Images\icon_2.png" />
@@ -94,6 +120,9 @@
 
   <ItemGroup>
     <Folder Include="FakeModules\Models\" />
+    <Folder Include="FakeModules\ViewModels\Main\" />
+    <Folder Include="FakeModules\ViewModels\Home\" />
+    <Folder Include="FakeModules\ViewModels\HelperUs\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -124,6 +153,21 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\views\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\HelperUs\HelperUsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Home\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Main\FMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Main\FMainPageFlyout.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\views\FMain\FMainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
