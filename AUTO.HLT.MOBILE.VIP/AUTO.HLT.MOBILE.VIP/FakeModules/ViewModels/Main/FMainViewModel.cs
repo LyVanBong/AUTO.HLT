@@ -40,6 +40,7 @@ namespace AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main
                     case "3":
                         break;
                     case "4":
+                        await NavigationService.NavigateAsync("/FAboutUsPage");
                         break;
                     case "5":
                         await NavigationService.NavigateAsync("/TermsConditionPage");

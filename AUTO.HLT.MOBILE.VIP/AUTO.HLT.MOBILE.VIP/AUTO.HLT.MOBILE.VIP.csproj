@@ -126,6 +126,7 @@
     <Folder Include="FakeModules\ViewModels\Home\" />
     <Folder Include="FakeModules\ViewModels\HelperUs\" />
     <Folder Include="FakeModules\ViewModels\InviteFriend\" />
+    <Folder Include="FakeModules\ViewModels\AboutUs\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
@@ -155,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\Navigation\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\AboutUs\FAboutUsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\views\FHomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
