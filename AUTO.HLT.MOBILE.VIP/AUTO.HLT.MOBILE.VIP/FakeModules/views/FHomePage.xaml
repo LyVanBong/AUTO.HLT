@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.views.FHomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:AUTO.HLT.MOBILE.VIP.FHomeModule.Views;assembly=AUTO.HLT.MOBILE.VIP">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.iOS>0,20,0,0</OnPlatform.iOS>
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <Grid
+        Padding="5,0"
+        BackgroundColor="Black"
+        ColumnSpacing="1"
+        RowSpacing="1">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label
+            x:Name="resultText"
+            Grid.ColumnSpan="4"
+            BackgroundColor="Black"
+            FontAttributes="Bold"
+            FontSize="48"
+            HorizontalTextAlignment="End"
+            LineBreakMode="NoWrap"
+            Text="0"
+            TextColor="White"
+            VerticalTextAlignment="Center" />
+
+        <Button
+            Grid.Row="1"
+            Grid.Column="0"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="7"
+            TextColor="Black" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="8"
+            TextColor="Black" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="2"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="9"
+            TextColor="Black" />
+
+        <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="4"
+            TextColor="Black" />
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="5"
+            TextColor="Black" />
+        <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="6"
+            TextColor="Black" />
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="1"
+            TextColor="Black" />
+        <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="2"
+            TextColor="Black" />
+        <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="3"
+            TextColor="Black" />
+        <Button
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            BackgroundColor="White"
+            BorderRadius="0"
+            Clicked="OnSelectNumber"
+            FontSize="36"
+            Text="0"
+            TextColor="Black" />
+
+        <Button
+            Grid.Row="1"
+            Grid.Column="3"
+            BackgroundColor="{x:Static views:SharedResources.OpButtonBkColor}"
+            BorderRadius="0"
+            Clicked="OnSelectOperator"
+            FontSize="36"
+            Text="÷"
+            TextColor="White" />
+        <Button
+            Grid.Row="2"
+            Grid.Column="3"
+            BackgroundColor="{x:Static views:SharedResources.OpButtonBkColor}"
+            BorderRadius="0"
+            Clicked="OnSelectOperator"
+            FontSize="36"
+            Text="×"
+            TextColor="White" />
+        <Button
+            Grid.Row="3"
+            Grid.Column="3"
+            BackgroundColor="{x:Static views:SharedResources.OpButtonBkColor}"
+            BorderRadius="0"
+            Clicked="OnSelectOperator"
+            FontSize="36"
+            Text="-"
+            TextColor="White" />
+        <Button
+            Grid.Row="4"
+            Grid.Column="3"
+            BackgroundColor="{x:Static views:SharedResources.OpButtonBkColor}"
+            BorderRadius="0"
+            Clicked="OnSelectOperator"
+            FontSize="36"
+            Text="+"
+            TextColor="White" />
+
+        <Button
+            Grid.Row="5"
+            Grid.Column="0"
+            BackgroundColor="#808080"
+            BorderRadius="0"
+            Clicked="OnClear"
+            FontSize="36"
+            Text="C"
+            TextColor="White" />
+
+        <Button
+            Grid.Row="5"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            BackgroundColor="{x:Static views:SharedResources.OpButtonBkColor}"
+            BorderRadius="0"
+            Clicked="OnCalculate"
+            FontSize="36"
+            Text="="
+            TextColor="White" />
+
+    </Grid>
+</ContentPage>

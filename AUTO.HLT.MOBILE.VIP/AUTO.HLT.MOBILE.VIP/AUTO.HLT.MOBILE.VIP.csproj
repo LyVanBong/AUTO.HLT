@@ -31,6 +31,7 @@
     <None Remove="Resources\Images\icon_birthday.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
+    <None Remove="Resources\Images\icon_drop_hear.png" />
     <None Remove="Resources\Images\icon_facebook_connect.png" />
     <None Remove="Resources\Images\icon_filter_friends.png" />
     <None Remove="Resources\Images\icon_follow.png" />
@@ -58,6 +59,7 @@
     <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
+    <EmbeddedResource Include="Resources\Images\icon_drop_hear.png" />
     <EmbeddedResource Include="Resources\Images\icon_facebook_connect.png" />
     <EmbeddedResource Include="Resources\Images\icon_filter_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_follow.png" />
@@ -91,7 +93,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FHomeModule\Models\" />
+    <Folder Include="FakeModules\Models\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -106,9 +108,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\FakeApp\FakeAppPage.xaml.cs">
-      <DependentUpon>FakeAppPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -124,7 +123,7 @@
     <EmbeddedResource Update="Controls\Navigation\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="FHomeModule\Views\FHomePage.xaml">
+    <EmbeddedResource Update="FakeModules\views\FHomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
@@ -132,27 +131,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ChangePassword\ChangePasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\AddLicenseKeyView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FContentPage3.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FContentPage7.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FContentPage8.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FreeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\FakeAppPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeApp\VipView.xaml">
-      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Feature\FeaturePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

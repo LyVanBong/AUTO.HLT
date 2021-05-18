@@ -1,7 +1,7 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using AUTO.HLT.MOBILE.VIP.FakeModules.views;
 using AUTO.HLT.MOBILE.VIP.FHomeModule.ViewModel;
-using AUTO.HLT.MOBILE.VIP.FHomeModule.Views;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
@@ -13,7 +13,6 @@ using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.User;
 using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword;
-using AUTO.HLT.MOBILE.VIP.ViewModels.FakeApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Feature;
 using AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday;
@@ -24,7 +23,6 @@ using AUTO.HLT.MOBILE.VIP.ViewModels.Manage;
 using AUTO.HLT.MOBILE.VIP.ViewModels.Pokes;
 using AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer;
 using AUTO.HLT.MOBILE.VIP.Views.ChangePassword;
-using AUTO.HLT.MOBILE.VIP.Views.FakeApp;
 using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
@@ -67,7 +65,7 @@ namespace AUTO.HLT.MOBILE.VIP
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
 
-            #region Phần đăng ký View - ViewModel của đức
+            #region Phần đăng ký View - ViewModel Fake
 
             containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
 
@@ -90,11 +88,7 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
             containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage8, FContentPage8ViewModel>();
             containerRegistry.RegisterForNavigation<KeyGenerationPage, KeyGenerationViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();
-            containerRegistry.RegisterForNavigation<FakeAppPage, FakeAppViewModel>();
             containerRegistry.RegisterForNavigation<ManagePage, ManageViewModel>();
             containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
