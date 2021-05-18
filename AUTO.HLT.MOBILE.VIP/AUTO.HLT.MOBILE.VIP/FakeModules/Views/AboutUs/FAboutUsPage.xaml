@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.AboutUs.FAboutUsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xaml="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <Grid
+            Padding="0,15"
+            BackgroundColor="Transparent"
+            ColumnDefinitions="50,*"
+            RowDefinitions="Auto,*">
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Aspect="AspectFit"
+                HorizontalOptions="FillAndExpand"
+                Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                VerticalOptions="FillAndExpand">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{xaml:NavigateTo '/FMainPage'}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="Transparent"
+                FontAttributes="Bold"
+                FontSize="16"
+                HorizontalOptions="CenterAndExpand"
+                Text="Về chúng tôi"
+                VerticalOptions="FillAndExpand" />
+            <ScrollView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                Padding="0"
+                BackgroundColor="Transparent">
+                <StackLayout
+                    Padding="10,0"
+                    BackgroundColor="Transparent"
+                    Orientation="Vertical">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Nhà cung cấp dịch vụ trung tâm dữ liệu và dịch vụ điện toán đám mây hàng đầu Việt Nam"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Năm 2008, Viettel đang ở thời kỳ đỉnh cao của lĩnh vực kinh doanh dịch vụ di động, từ một công ty bước chân vào thị trường ở vị trí thứ 4, Viettel trở thành công ty số 1 ở Việt Nam, trở thành một hiện tượng của viễn thông toàn cầu về tốc độ tăng trưởng. Đây cũng là năm mà Viettel cho ra đời một lĩnh vực kinh doanh hoàn toàn mới, không chỉ mới với Viettel mà ngay cả ở Việt Nam – dịch vụ trung tâm dữ liệu (TTDL) với việc thành lập Công ty TNHH Viettel - CHT (tên giao dịch: Viettel IDC). Cùng với những tầm nhìn đầu tư hạ tầng viễn thông khác, Viettel IDC chính là nền tảng đã được Viettel đầu tư trước một bước cho cuộc Cách mạng công nghiệp 4.0 hôm nay.  Viettel IDC tại thời điểm ấy là nhà cung cấp dịch vụ TTDL đạt tiêu chuẩn quốc tế đầu tiên tại Việt Nam. Và đến nay, sau hơn 10 năm phát triển, Viettel IDC vẫn tiếp tục đạt được nhiều thành tựu đầu tiên khác: Là công ty kinh doanh dịch vụ TTDL đầu tiên lớn nhất Việt Nam; trở thành nhà cung cấp dịch vụ điện toán đám mây (Cloud) đầu tiên tại Việt Nam; trở thành nhà cung cấp dịch vụ Cloud có hệ sinh thái dịch vụ đa dạng nhất. Hầu hết các doanh nghiệp, tổ chức lớn của Việt Nam, rất nhiều doanh nghiệp nội dung số hàng đầu thế giới đã lựa chọn dịch vụ của Viettel IDC.  Là doanh nghiệp dịch vụ, chúng tôi nhận thức sâu sắc rằng: Sự thành công bền vững của Viettel IDC đến từ chính sự thành công của khách hàng. Mỗi thành viên của Viettel IDC luôn ghi nhớ điều này để tận tâm phụng sự, mang tới khách hàng những dịch vụ chất lượng tốt nhất, để khách hàng hoàn toàn an tâm, tập trung sáng tạo và phát triển trong hoạt động kinh doanh chính của mình. Hơn cả một nhà cung cấp dịch vụ giải pháp, Viettel IDC là người chăm sóc hệ thống hạ tầng TTDL của khách hàng, đồng hành cùng khách hàng tiến tới thành công."
+                        TextColor="#000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="DỊCH VỤ CUNG CẤP"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Viettel IDC là đơn vị đầu tiên và duy nhất tại Việt Nam cung cấp hệ sinh thái dịch vụ đầy đủ cho doanh nghiệp, bao gồm hơn 25 dịch vụ thuộc các nhóm: Dịch vụ Trung tâm dữ liệu Viettel IDC cung cấp các dịch vụ hạ tầng trung tâm dữ liệu và hạ tầng công nghệ thông tin: Máy chủ, mạng lưu trữ, hệ thống điện, điều hòa, đặt chỗ máy chủ,... để khách hàng vận hành hệ thống CNTT của doanh nghiệp.  Dịch vụ Điện toán đám mây Viettel IDC cung cấp các dịch vụ CNTT trên nền tảng điện toán đám mây, đáp ứng nhu cầu đa dạng về: Tính toán, lưu trữ, mạng, bảo mật, sao lưu dự phòng dữ liệu,... trên nhiều mô hình triển khai: đám mây công cộng, đám mây riêng, đám mây lai."
+                        TextColor="#000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="HẠ TẦNG TRUNG TÂM DỮ LIỆU"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Tính đến thời điểm hiện tại, Viettel IDC có 5 trung tâm dữ liệu đạt tiêu chuẩn quốc tế Rated 3 - TIA 942 trên toàn quốc, đáp ứng nhu cầu đa dạng của cá đơn vụ sử dụng, từ Chính phủ, Ngân hàng cho đến các tổ chức tài chính, các công ty đa quốc gia, cũng như các đơn vị cung cấp dịch vụ số.  - Trung tâm dữ liệu Pháp Vân - Trung tâm dữ liệu Hòa Lạc - Trung tâm dữ liệu Đà Nẵng - Trung tâm dữ liệu Hoàng Hoa Thám - Trung tâm dữ liệu Bình Dương  Các trung tâm dữ liệu của Viettel IDC được xây dựng trong trung tâm và xa trung tâm thành phố, đảm bảo về mặt khoảng cách việc phòng ngừa thảm họa.    Viettel IDC là nền tảng để Khách hàng sáng tạo và bứt phá Chúng tôi có:  Uy tín dẫn đầu: Từ nhà cung cấp dịch vụ luôn giữ vững vị trí số 1 tại Việt Nam. Chất lượng dịch vụ: 5 Trung tâm dữ liệu đạt tiêu chuẩn Rated 3 – TIA 942, quy mô lớn và hiện đại nhất Việt Nam, uptime 99,99%. Hệ sinh thái dịch vụ đa dạng, bảo mật. Triết lý phụng sự: Sứ mệnh của Viettel là phụng sự Tổ quốc, giải quyết các vấn đề của xã hội và các tổ chức, doanh nghiệp. Nếu không tạo ra giá trị cho khách hàng, giúp cho khách hàng thành công thì Viettel IDC không thể tồn tại lâu dài."
+                        TextColor="#000" />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="50" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

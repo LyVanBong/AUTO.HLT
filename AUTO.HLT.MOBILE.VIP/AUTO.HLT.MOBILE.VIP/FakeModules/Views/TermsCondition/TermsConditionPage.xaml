@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition.TermsConditionPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xaml="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <Grid
+            Padding="0,15"
+            BackgroundColor="Transparent"
+            ColumnDefinitions="50,*"
+            RowDefinitions="Auto,*">
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Aspect="AspectFit"
+                HorizontalOptions="FillAndExpand"
+                Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                VerticalOptions="FillAndExpand">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{xaml:NavigateTo '/FMainPage'}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="Transparent"
+                FontAttributes="Bold"
+                FontSize="16"
+                HorizontalOptions="CenterAndExpand"
+                Text="Chính sách và điều khoản"
+                VerticalOptions="FillAndExpand" />
+            <ScrollView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                Padding="0"
+                BackgroundColor="Transparent">
+                <StackLayout
+                    Padding="10,0"
+                    BackgroundColor="Transparent"
+                    Orientation="Vertical">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Giới thiệu chung"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Công ty TNHH Vận tải Hà Sơn Hải Vân mang thương hiệu HASONHAIVAN được thành lập trên cơ sở sát nhập giữa hai công ty vận tải hàng đầu miền Bắc: Công ty Cổ phần vận tải và Du lịch Hà Sơn và Công ty Liên doanh Vận chuyển Quốc tế Hải Vân. Với 20 năm kinh nghiệm chuyên hoạt động trong lĩnh vực vận chuyển hành khách, Hà Sơn Hải Vân trở thành công ty chuyên nghiệp trong lĩnh vực: Kinh doanh vận tải hành khách bằng xe Taxi; Kinh doanh vận tải hành khách bằng xe đường dài bằng xe khách chất lượng cao các tuyến: Hà Nội – Lào Cai; Hòa Bình – Lào Cai; Vinh – Lào Cai; Kinh doanh khai thác bến xe; Kinh doanh giao nhận hàng hóa và chuyển phát nhanh bưu phẩm; Dịch vụ bán vé máy bay. Trong đó, Hà Sơn Hải Vân chiếm thế mạnh về khai thác và phục vụ khách du lịch chuyên tuyến Hà Nội – Lào Cai với lượt khách đạt đến con số hàng triệu người chọn và sử dụng dịch vụ này. Đặc biệt, năm 2004, Hải Vân liên doanh với công ty AC Electrical Accessories International pte.Ltd – một chuyên gia trong lĩnh vực thiết bị điện và Giao thông vận tải của Singapore đã tạo ra hiệu ứng lớn trong lĩnh vực vận chuyển hành khách. Đó cũng là lý do, Hải Vân có những đối tác thuộc phân khúc khách du lịch nước ngoài cao cấp, khách hội nghị, hội thảo, các công ty du lịch và tổ chức lớn hàng đầu tại Việt Nam. Đến nay, Hà Sơn – Hải Vân trở thành thương hiệu hàng đầu về chất lượng trong lĩnh vực vận chuyển hành khách tuyến Hà Nội – Lào Cai ­­, chiếm hơn 50% thị phần vận chuyển hành khách. Đồng thời, doanh nghiệp cũng dẫn đầu về dịch vụ gửi hàng hóa chọn lọc có chất lượng và uy tín tốt nhất trên phạm vi toàn quốc. An toàn, chất lượng dẫn đầu, đáng tin cậy và trung thực là những đức tính cơ bản nhất của thương hiệu HASONHAIVAN."
+                        TextColor="#000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Sứ mệnh"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Sứ mệnh của Hà Sơn - Hải Vân là không ngừng cải tiến để cung cấp cho khách hàng một dịch vụ với những tiện ích tốt nhất và để phát triển bền vững, đem lại cho mỗi thành viên một nghề nghiệp có ý nghĩa và đóng góp tích cực cho cộng đồng. Sứ mệnh ấy là lời cam kết, là nhiệm vụ xuyên suốt quá trình hoạt động của Ban lãnh đạo và tất cả các nhân viên Hà Sơn Hải Vân trong quá trình phát triển. Chúng tôi tâm niệm rằng, chỉ có phục vụ khách hàng bằng uy tín và chất lượng dịch vụ cao nhất mới là cách tốt nhất để chinh phục các khách hàng và đưa công ty ngày càng phát triển."
+                        TextColor="#000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Tầm nhìn"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Được thành lập dựa trên sự sáp nhập của 2 thương hiệu xe lớn của miền Bắc là Hà Sơn và Hải Vân, ngay từ khi ra đời, Hà Sơn Hải Vân đã xác định tầm nhìn sứ mệnh của mình trên con đường xây dựng và phát triển công ty. Đó chính là con đường phát triển bền vững dựa trên năng lực cốt lõi để trở thành công ty hàng đầu trong lĩnh vực vận chuyển hành khách bằng tại Việt Nam. Bằng khát vọng tiên phong, chiến lược đầu tư bài bản cùng đội ngũ nhân sự nhiệt huyết, Hà Sơn Hải Vân tin tưởng sẽ sớm trở thành thương hiệu xe khách hàng đầu trong tâm trí của khách hàng."
+                        TextColor="#000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Giá trị cốt lõi"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Không ngừng cải tiến để cung cấp cho khách hàng một dịch vụ với những tiện ích tốt nhất, phát triển bền vững, mang lại cho mỗi thành viên một nghề nghiệp ý nghĩa, đóng góp tích cực cho cộng đồng, công ty TNHH Vận tải Hà Sơn Hải Vân xác định những yếu tố cốt lõi là: An toàn - Chất lượng cao - Tin cậy - Trung thực - Chất lượng sản phẩm. An toàn: Là tiêu chí đầu tiên của chất lượng dịch vụ Hà Sơn - Hải Vân, dẫn đầu trong ngành vận tải cũng chính là sự an toàn tuyệt đối, giúp khách hàng cảm thấy an tâm tối đa khi sử dụng dịch vụ. Từ nhân viên, đội ngũ đến quản lý đều cần biết cách chăm sóc khách hàng cẩn trọng và đặt sự an toàn của hành khách lên hàng đầu. Chất lượng cao: Chất lượng chính là yếu tố sống còn của thương hiệu chúng tôi. Toàn thể nhân viên của Hà Sơn - Hải Vân luôn đồng lòng đặt chất lượng của sản phẩm và dịch vụ ở ví trí quan trọng nhất. Bởi chúng tôi hiểu rằng, chỉ có chất lượng tốt mới có thể duy trì vị thế dẫn đầu trong thị trường mình đang phục vụ. Tin cậy: Giữ gìn uy tín là một đức tính tốt đẹp của Hà Sơn - Hải Vân. Chúng tôi luôn thực hiện những gì đã hứa, tạo dựng niềm tin với mọi đối tác từ khách hàng, nhà cung cấp, đối tác, nhà đầu tư, tạo cho họ sự tin tưởng về hợp tác lâu dài, vì thế các bên cùng có lợi. Trung thực: Trung thực là đức tính cơ bản của mỗi thành viên của Hà Sơn - Hải Vân. Trong mọi công việc và hoàn cảnh, luôn trung thực với chính bản thân mình, với đồng nghiệp, với khách hàng, với đối tác, tạo dựng niềm tin bởi chính sự chuyên nghiệp và trung thực là đức tính tiêu biểu của Hà Sơn - Hải Vân. Chất lượng sản phẩm: Để đảm bảo chất lượng dịch vụ, ngoài các tiện ích có sẵn, Hà Sơn - Hải Vân luôn cố gắng tạo ra mọi điểm khác biệt có lợi nhất cho hành khách: Tần suất xe nhiều nhất trên tuyến với 15 phút một chuyến; dịch vụ đón trả khách tận nhà tại Hà Nội và Lào Cai và sử dụng ứng dụng đặt vé trên điện thoại giúp tiết kiệm thời gian của khách hàng, chỉ có tại Hà Sơn - Hải Vân. Đặt giá trị cốt lõi cùng lợi ích của khách hàng lên hàng đầu, Hà Sơn - Hải Vân cam kết mang đến cho người sử dụng một dịch vụ an toàn, chất lượng, tiết kiệm nhất."
+                        TextColor="#000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Văn hoá doanh nghiệp"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="16"
+                        Text="Một doanh nghiệp khôn ngoan luôn biết rằng, thành công không nằm ở lợi nhuận trước mắt mà nằm ở các giá trị cốt lõi - văn hóa doanh nghiệp. Chỉ có xây dựng được nội bộ mạnh cùng độ gắn kết cao mới là chìa khóa vàng để đưa doanh nghiệp phát triển bền vững nhất. Tại Hà Sơn Hải Vân, chúng tôi luôn coi văn hóa doanh nghiệp chính là yếu tố nền tảng, là sức mạnh lớn lao, là chất kết dính gắn kết con người Hà Sơn Hải Vân, thúc đẩy mỗi cá nhân không ngừng cố gắng hàng ngày, hàng giờ, đóng góp vào thành công và sự phát triển chung của công ty. Văn hóa doanh nghiệp chúng tôi luôn hướng đến và đề cao đó là: Sự tin tưởng - Trao đổi thẳng thắn - Tinh thần đồng đội - Trao quyền - Một công việc yêu thích và Phong cách làm việc thay đổi. Mỗi con người đều có những năng lực riêng và sẽ chỉ phát huy tốt nhất khi được truyền niềm tin và sự tôn trọng vào khả năng, giá trị và khát vọng của bản thân mình. Do vậy, chúng tôi đặt niềm tin vào nhân viên của mình, khuyến khích các thành viên cởi mở và thẳng thắn với nhau hơn, tin tưởng nhau hơn, khơi gợi cảm hứng để nhân viên khai thác tốt nhất năng lực thông qua các chương trình huấn luyện. Cùng với đó, Hà Sơn Hải Vân cũng xác định chiến lược tạo điều kiện và trao quyền cho đội ngũ nhân viên từ những ngày đầu thành lập công ty, tạo mọi điều kiện để tạo sức mạnh cho từng cá nhân và nhóm, thúc đẩy phương thức tiếp cận có tổ chức để hợp tác làm việc theo nhóm, công nhận cống hiến của mỗi cá nhân, thúc đẩy các thành viên mạnh dạn hành động và đảm nhận trách nhiệm trong công việc, từ đó giúp cho toàn công ty nâng cao hiệu quả hoạt động và đạt các mục tiêu đã đề ra. Bất cứ ai cũng có thế mạnh riêng, việc của chúng tôi là nâng họ lên và làm cho họ tin rằng mình có thể có thể tốt hơn những gì họ đang thể hiện. Hà Sơn Hải Vân là nơi hội tụ của những anh tài trong ngành vận chuyển hành khách, những người không chỉ có tài năng và bản lĩnh mà còn có những phẩm chất đáng quý và thái độ làm việc quyết liệt, lăn xả vì những mục đích tốt đẹp. Công ty không chỉ là nơi làm việc 8 tiếng/ngày, mỗi thành viên còn coi Hà Sơn Hải Vân như ngôi nhà thứ 2 của mình, nơi mọi người tìm thấy cả nhiệt huyết, đam mê và cả tình cảm chân thành, thẳng thắn và quan tâm nhau giữa những người anh em - đồng nghiệp. Chính sự tin tưởng vô điều kiện, đoàn kết chặt chẽ đó sẽ là động lực tạo ra sức mạnh nội lực, đưa Hà Sơn Hải Vân phát triển bền vững trong tương lai"
+                        TextColor="#000" />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="50" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

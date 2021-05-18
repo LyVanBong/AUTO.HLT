@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.HelperUs.HelperUsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:prism="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Padding="0,15" ColumnDefinitions="50,*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                    VerticalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{prism:NavigateTo '/FMainPage'}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Góp ý"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <Frame
+                Margin="10,0"
+                BackgroundColor="#fff"
+                CornerRadius="15"
+                HasShadow="False"
+                HeightRequest="400">
+                <StackLayout Orientation="Vertical">
+                    <Image
+                        Margin="0,10"
+                        Aspect="AspectFit"
+                        HeightRequest="100"
+                        Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_helper_us.png}" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalTextAlignment="Center"
+                        Text="Giúp chúng tôi tốt hơn"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontSize="16"
+                        HorizontalTextAlignment="Center"
+                        Text="Ý kiến của bạn vô cùng quan trọng để BBus có thể tiếp tục hoàn thiện dịch vụ của mình. Xin chân thành cảm ơn!"
+                        VerticalOptions="Center" />
+                    <Editor
+                        x:Name="GopY"
+                        FontSize="16"
+                        Placeholder="Xin cho chúng tôi biết ý kiến của bạn"
+                        TextColor="#000"
+                        VerticalOptions="FillAndExpand" />
+                    <Button
+                        BackgroundColor="#B5B6B8"
+                        Clicked="Button_OnClicked"
+                        CornerRadius="5"
+                        FontSize="16"
+                        Text="Góp ý"
+                        TextColor="#fff" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
