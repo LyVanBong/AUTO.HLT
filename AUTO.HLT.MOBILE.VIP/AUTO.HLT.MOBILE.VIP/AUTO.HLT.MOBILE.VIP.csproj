@@ -19,10 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="FakeModules\Resources\icon_f_booking.png" />
     <None Remove="FakeModules\Resources\icon_f_car1.png" />
     <None Remove="FakeModules\Resources\icon_f_car2.png" />
     <None Remove="FakeModules\Resources\icon_f_car3.png" />
     <None Remove="FakeModules\Resources\icon_f_car4.png" />
+    <None Remove="FakeModules\Resources\icon_f_history_booking.png" />
     <None Remove="FakeModules\Resources\icon_f_map_bus.png" />
     <None Remove="FakeModules\Resources\icon_f_map_bus_2.png" />
     <None Remove="FakeModules\Resources\icon_f_map_bus_3.png" />
@@ -61,10 +63,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_booking.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_car1.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_car2.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_car3.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_car4.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_history_booking.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_2.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_3.png" />
@@ -128,6 +132,8 @@
     <Folder Include="FakeModules\ViewModels\InviteFriend\" />
     <Folder Include="FakeModules\ViewModels\AboutUs\" />
     <Folder Include="FakeModules\ViewModels\MyProfile\" />
+    <Folder Include="FakeModules\ViewModels\MyBooking\" />
+    <Folder Include="FakeModules\ViewModels\Notification\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
@@ -180,6 +186,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\views\FMain\FMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\MyBooking\MyBookingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Notification\NotificationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\Views\Profile\MyProfilePage.xaml">

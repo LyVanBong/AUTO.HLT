@@ -3,6 +3,7 @@
     x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home.FHomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xaml="http://prismlibrary.com"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
     <NavigationPage.TitleView>
         <Grid BackgroundColor="Transparent" ColumnDefinitions="*,60">
@@ -20,7 +21,11 @@
                 HeightRequest="30"
                 HorizontalOptions="CenterAndExpand"
                 Source="{xct:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_f_notification.png}"
-                VerticalOptions="CenterAndExpand" />
+                VerticalOptions="CenterAndExpand">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{xaml:NavigateTo '/NotificationPage'}" />
+                </Image.GestureRecognizers>
+            </Image>
         </Grid>
     </NavigationPage.TitleView>
     <ContentPage.Content>
@@ -88,6 +93,7 @@
                         Grid.ColumnSpan="2"
                         Margin="5,25"
                         BackgroundColor="#0C0D12"
+                        Command="{xaml:NavigateTo '/MyBookingPage'}"
                         CornerRadius="5"
                         FontAttributes="Bold"
                         FontSize="15"

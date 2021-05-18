@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.MyBooking.MyBookingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xaml="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Padding="0,15" ColumnDefinitions="50,*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                    VerticalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{xaml:NavigateTo '/FMainPage'}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Chuyến đi của ôi"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <extensions:TabView SelectedIndex="0" TabIndicatorColor="#000">
+                <extensions:TabViewItem
+                    FontSize="16"
+                    Text="Chuyến đi"
+                    TextColor="#000">
+                    <StackLayout>
+                        <Image
+                            Margin="0,5"
+                            HeightRequest="150"
+                            Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_f_booking.png}" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="25"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="Không có vé sắp đi"
+                            TextColor="#000" />
+                        <Label
+                            Margin="20,0"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Bạn không có vé nào sắp đi trong thời gian tới. Vui lòng quay lại phần đặt vễ."
+                            TextColor="#000" />
+                        <Button
+                            Margin="20"
+                            BackgroundColor="Transparent"
+                            BorderColor="#000"
+                            BorderWidth="1"
+                            Command="{xaml:NavigateTo '/FMainPage'}"
+                            CornerRadius="5"
+                            Text="Quay về đặt vé" />
+                    </StackLayout>
+                </extensions:TabViewItem>
+                <extensions:TabViewItem
+                    FontSize="16"
+                    Text="Lịch sử"
+                    TextColor="#000">
+                    <StackLayout>
+                        <Image
+                            Margin="0,5"
+                            HeightRequest="150"
+                            Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_f_history_booking.png}" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="25"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="Bạn chưa đi chuyến nào"
+                            TextColor="#000" />
+                        <Label
+                            Margin="20,0"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Bạn chưa có vé nào đã đi. Vui long quay lại phần đặt vé."
+                            TextColor="#000" />
+                        <Button
+                            Margin="20"
+                            BackgroundColor="Transparent"
+                            BorderColor="#000"
+                            BorderWidth="1"
+                            Command="{xaml:NavigateTo '/FMainPage'}"
+                            CornerRadius="5"
+                            Text="Quay về đặt vé" />
+                        <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+                            <CheckBox Color="#000" />
+                            <Label
+                                FontSize="16"
+                                Text="Hiển thị chuyến hủy"
+                                TextColor="#000" />
+                        </StackLayout>
+                    </StackLayout>
+                </extensions:TabViewItem>
+            </extensions:TabView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -32,7 +32,7 @@ namespace AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main
                 switch (key)
                 {
                     case "0":
-                        break;
+                        await NavigationService.NavigateAsync("/MyBookingPage");
                         break;
                     case "3":
                         await NavigationService.NavigateAsync("/MyProfilePage");
