@@ -127,6 +127,7 @@
     <Folder Include="FakeModules\ViewModels\HelperUs\" />
     <Folder Include="FakeModules\ViewModels\InviteFriend\" />
     <Folder Include="FakeModules\ViewModels\AboutUs\" />
+    <Folder Include="FakeModules\ViewModels\MyProfile\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
@@ -179,6 +180,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\views\FMain\FMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\Profile\MyProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\Views\TermsCondition\TermsConditionPage.xaml">

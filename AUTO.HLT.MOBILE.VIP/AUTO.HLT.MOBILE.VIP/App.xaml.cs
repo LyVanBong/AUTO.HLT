@@ -5,12 +5,14 @@ using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.HelperUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.InviteFriend;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main;
+using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.MyProfile;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.TermsCondition;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.AboutUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.HelperUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.InviteFriend;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;
+using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Profile;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
@@ -78,6 +80,7 @@ namespace AUTO.HLT.MOBILE.VIP
             #region Phần đăng ký View - ViewModel Fake
 
             containerRegistry.RegisterForNavigation<FAboutUsPage, AboutUsViewModel>();
+            containerRegistry.RegisterForNavigation<MyProfilePage, MyProfileViewModel>();
             containerRegistry.RegisterForNavigation<FMainPage, FMainViewModel>();
             containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
             containerRegistry.RegisterForNavigation<FMainPageFlyout, FMainPageFlyoutViewModel>();

@@ -51,18 +51,6 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <BoxView BackgroundColor="#08090C" HeightRequest="2" />
-                <Label Text="Thông báo">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="1" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
-                <Label Text="Khuyến mãi">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="2" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <BoxView BackgroundColor="#08090C" HeightRequest="2" />
                 <Label Text="Thông tin cá nhân">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FeatureCommand}" CommandParameter="3" />

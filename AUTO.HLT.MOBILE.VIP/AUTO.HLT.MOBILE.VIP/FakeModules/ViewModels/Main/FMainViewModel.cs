@@ -33,11 +33,9 @@ namespace AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main
                 {
                     case "0":
                         break;
-                    case "1":
-                        break;
-                    case "2":
                         break;
                     case "3":
+                        await NavigationService.NavigateAsync("/MyProfilePage");
                         break;
                     case "4":
                         await NavigationService.NavigateAsync("/FAboutUsPage");
