@@ -9,12 +9,12 @@ using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
-namespace AUTO.HLT.MOBILE.VIP.FakeModules.Views.InviteFriend
+namespace AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class InviteFriendPage : ContentPage
+    public partial class TermsConditionPage : ContentPage
     {
-        public InviteFriendPage()
+        public TermsConditionPage()
         {
             InitializeComponent();
         }
@@ -25,10 +25,6 @@ namespace AUTO.HLT.MOBILE.VIP.FakeModules.Views.InviteFriend
             var safeInsets = On<iOS>().SafeAreaInsets();
             safeInsets.Bottom = -20;
             Padding = safeInsets;
-        }
-        private void Button_OnClicked(object sender, EventArgs e)
-        {
-            Sodt.Text = "";
         }
     }
 }

@@ -4,10 +4,12 @@ using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.HelperUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.InviteFriend;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main;
+using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.TermsCondition;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.HelperUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.InviteFriend;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;
+using AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
@@ -78,6 +80,7 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterForNavigation<FMainPageFlyout, FMainPageFlyoutViewModel>();
             containerRegistry.RegisterForNavigation<HelperUsPage, HelperUsViewModel>();
             containerRegistry.RegisterForNavigation<InviteFriendPage, InviteFriendViewModel>();
+            containerRegistry.RegisterForNavigation<TermsConditionPage, TermsConditionViewModel>();
 
             #endregion
 
