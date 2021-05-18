@@ -44,6 +44,7 @@ namespace AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main
                     case "5":
                         break;
                     case "6":
+                        await NavigationService.NavigateAsync("/InviteFriendPage");
                         break;
                     case "7":
                         await NavigationService.NavigateAsync("/HelperUsPage");

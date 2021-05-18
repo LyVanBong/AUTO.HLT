@@ -2,9 +2,11 @@
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.HelperUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Home;
+using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.InviteFriend;
 using AUTO.HLT.MOBILE.VIP.FakeModules.ViewModels.Main;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.HelperUs;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;
+using AUTO.HLT.MOBILE.VIP.FakeModules.Views.InviteFriend;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
@@ -75,6 +77,7 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
             containerRegistry.RegisterForNavigation<FMainPageFlyout, FMainPageFlyoutViewModel>();
             containerRegistry.RegisterForNavigation<HelperUsPage, HelperUsViewModel>();
+            containerRegistry.RegisterForNavigation<InviteFriendPage, InviteFriendViewModel>();
 
             #endregion
 

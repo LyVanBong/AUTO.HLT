@@ -30,6 +30,7 @@
     <None Remove="FakeModules\Resources\icon_f_map_bus_5.png" />
     <None Remove="FakeModules\Resources\icon_f_notification.png" />
     <None Remove="FakeModules\Resources\icon_helper_us.png" />
+    <None Remove="FakeModules\Resources\icon_invite_friend.png" />
     <None Remove="FakeModules\Resources\icon_left_arrow.png" />
     <None Remove="FakeModules\Resources\icon_user.png" />
     <None Remove="Resources\Fonts\FontAwesome5ProSolid900.otf" />
@@ -71,6 +72,7 @@
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_5.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_notification.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_helper_us.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_invite_friend.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_left_arrow.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_user.png" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProSolid900.otf" />
@@ -123,6 +125,7 @@
     <Folder Include="FakeModules\ViewModels\Main\" />
     <Folder Include="FakeModules\ViewModels\Home\" />
     <Folder Include="FakeModules\ViewModels\HelperUs\" />
+    <Folder Include="FakeModules\ViewModels\InviteFriend\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -159,6 +162,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\Views\Home\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\InviteFriend\InviteFriendPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\Views\Main\FMainPage.xaml">

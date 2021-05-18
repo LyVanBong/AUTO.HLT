@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FakeModules.Views.InviteFriend.InviteFriendPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xaml="http://prismlibrary.com"
+    Background="#FFC20F"
+    BackgroundColor="#FFC20F">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Padding="0,15" ColumnDefinitions="50,*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_left_arrow.png}"
+                    VerticalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{xaml:NavigateTo '/FMainPage'}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Giới thiệu bạn bè"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <Image
+                Margin="0,10"
+                Aspect="AspectFit"
+                HeightRequest="200"
+                Source="{extensions:ImageResource Id=AUTO.HLT.MOBILE.VIP.FakeModules.Resources.icon_invite_friend.png}" />
+            <Label
+                Margin="20"
+                FontSize="16"
+                HorizontalTextAlignment="Center"
+                Text="Bạn và người được mời sẽ nhận được Mã Khuyến Mãi khi bạn mời họ sử dụng ứng dụng AUTOVIP"
+                VerticalOptions="Center" />
+            <Entry
+                x:Name="Sodt"
+                Margin="20"
+                FontSize="16"
+                Keyboard="Numeric"
+                Placeholder="Số điện thoại"
+                TextColor="#000" />
+            <Button
+                Margin="20"
+                BackgroundColor="#B48B0F"
+                Clicked="Button_OnClicked"
+                CornerRadius="5"
+                FontSize="16"
+                Text="Mời"
+                TextColor="#fff"
+                VerticalOptions="EndAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
