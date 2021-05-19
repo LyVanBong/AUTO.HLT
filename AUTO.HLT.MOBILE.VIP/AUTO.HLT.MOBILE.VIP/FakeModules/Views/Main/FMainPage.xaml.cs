@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 namespace AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main
 {

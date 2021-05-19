@@ -58,7 +58,8 @@
                             BorderWidth="1"
                             Command="{xaml:NavigateTo '/FMainPage'}"
                             CornerRadius="5"
-                            Text="Quay về đặt vé" />
+                            Text="Quay về đặt vé"
+                            TextColor="#000" />
                     </StackLayout>
                 </extensions:TabViewItem>
                 <extensions:TabViewItem
@@ -89,7 +90,8 @@
                             BorderWidth="1"
                             Command="{xaml:NavigateTo '/FMainPage'}"
                             CornerRadius="5"
-                            Text="Quay về đặt vé" />
+                            Text="Quay về đặt vé"
+                            TextColor="#000" />
                         <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                             <CheckBox Color="#000" />
                             <Label

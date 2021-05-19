@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:home="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:main="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;assembly=AUTO.HLT.MOBILE.VIP">
+    xmlns:main="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;assembly=AUTO.HLT.MOBILE.VIP"
+    IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
     <FlyoutPage.Flyout>
         <main:FMainPageFlyout x:Name="FlyoutPage" />
     </FlyoutPage.Flyout>
@@ -12,9 +13,13 @@
         <NavigationPage
             BackgroundColor="#FFC20F"
             BarBackgroundColor="#FFC20F"
-            BarTextColor="#000">
+            BarTextColor="#000"
+            IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
             <x:Arguments>
-                <home:FHomePage Background="#FFC20F" BackgroundColor="#FFC20F" />
+                <home:FHomePage
+                    Background="#FFC20F"
+                    BackgroundColor="#FFC20F"
+                    IconImageSource="https://api.autohlt.vn/icon_f_menu.png" />
             </x:Arguments>
         </NavigationPage>
     </FlyoutPage.Detail>
