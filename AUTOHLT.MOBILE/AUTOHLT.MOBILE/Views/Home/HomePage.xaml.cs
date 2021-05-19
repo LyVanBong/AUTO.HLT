@@ -1,4 +1,5 @@
 ﻿using System;
+using AUTOHLT.MOBILE.CustomRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
@@ -12,6 +13,9 @@ namespace AUTOHLT.MOBILE.Views.Home
         public HomePage()
         {
             InitializeComponent();
+            var id = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/9322509333" : "ca-app-pub-9881695093256851/1554373561";
+            var adsView = new AdmobView() {AdsUnitId = id };
+            ContentView.Content = adsView;
         }
 
         protected override void OnAppearing()

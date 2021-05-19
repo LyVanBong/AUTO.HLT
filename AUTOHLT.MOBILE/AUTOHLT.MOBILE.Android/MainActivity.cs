@@ -50,9 +50,10 @@ namespace AUTOHLT.MOBILE.Droid
             OtherLibraries();
             LoadApplication(new App(new AndroidInitializer()));
         }
+        
         private void OtherLibraries()
         {
-            MobileAds.Initialize(ApplicationContext);
+            MobileAds.Initialize(ApplicationContext, "ca-app-pub-9881695093256851~9934237096");
             UserDialogs.Init(this);
         }
 

@@ -1,5 +1,4 @@
 ﻿using Foundation;
-using Google.MobileAds;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
@@ -16,7 +15,6 @@ using Syncfusion.XForms.iOS.Graphics;
 using Syncfusion.XForms.iOS.MaskedEdit;
 using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
-using System;
 using UIKit;
 
 
@@ -45,7 +43,7 @@ namespace AUTOHLT.MOBILE.iOS
         
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
-            MobileAds.SharedInstance.Start(CompletionHandler);
+            Google.MobileAds.MobileAds.Configure("ca-app-pub-9881695093256851~8311353609");
             new SfTreeMapRenderer();
             SfDataFormRenderer.Init();
             SfGaugeRenderer.Init();
@@ -64,11 +62,6 @@ namespace AUTOHLT.MOBILE.iOS
             SfCheckBoxRenderer.Init();
             SfGradientViewRenderer.Init();
             SfDataGridRenderer.Init();
-        }
-
-        private void CompletionHandler(InitializationStatus status)
-        {
-            
         }
     }
 
