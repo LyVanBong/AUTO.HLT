@@ -33,27 +33,7 @@
 	<string>UIStatusBarStyleLightContent</string>
 	<key>XSAppIconAssets</key>
 	<string>AppIcon.xcassets/AppIcons.appiconset</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>fb</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb214838516781654</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>214838516781654</string>
-	<key>FacebookDisplayName</key>
-	<string>Bsoft</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>lyft</string>
-		<string>fb</string>
-	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
+  <key>NSPhotoLibraryUsageDescription</key>
 	<string>The library I use requires this permission</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>

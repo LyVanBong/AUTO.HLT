@@ -1,6 +1,5 @@
 ﻿using Foundation;
 using Google.MobileAds;
-using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
@@ -17,6 +16,7 @@ using Syncfusion.XForms.iOS.Graphics;
 using Syncfusion.XForms.iOS.MaskedEdit;
 using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
+using System;
 using UIKit;
 
 
@@ -42,25 +42,10 @@ namespace AUTOHLT.MOBILE.iOS
             LoadApplication(new App(new iOSInitializer()));
             return base.FinishedLaunching(app, options);
         }
-
-        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
-        {
-            return FacebookClientManager.OpenUrl(app, url, options);
-        }
-
-        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
-        {
-            return FacebookClientManager.OpenUrl(application, url, sourceApplication, annotation);
-        }
-        public override void OnActivated(UIApplication uiApplication)
-        {
-            base.OnActivated(uiApplication);
-            FacebookClientManager.OnActivated();
-        }
-
+        
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
-            MobileAds.Configure("ca-app-pub-9881695093256851~8311353609");
+            MobileAds.SharedInstance.Start(CompletionHandler);
             new SfTreeMapRenderer();
             SfDataFormRenderer.Init();
             SfGaugeRenderer.Init();
@@ -72,7 +57,6 @@ namespace AUTOHLT.MOBILE.iOS
             // Add the below line if you are using SfCircularProgressBar.  
             SfCircularProgressBarRenderer.Init();
             SfBadgeViewRenderer.Init();
-            FacebookClientManager.Initialize(app, options);
             SfMaskedEditRenderer.Init();
             SfRadioButtonRenderer.Init();
             new SfBusyIndicatorRenderer();
@@ -80,6 +64,11 @@ namespace AUTOHLT.MOBILE.iOS
             SfCheckBoxRenderer.Init();
             SfGradientViewRenderer.Init();
             SfDataGridRenderer.Init();
+        }
+
+        private void CompletionHandler(InitializationStatus status)
+        {
+            
         }
     }
 
