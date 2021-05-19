@@ -92,9 +92,6 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Plugin.FacebookClient">
-      <Version>2.2.1</Version>
-    </PackageReference>
     <PackageReference Include="Prism.Plugin.Popups">
       <Version>8.0.76</Version>
     </PackageReference>

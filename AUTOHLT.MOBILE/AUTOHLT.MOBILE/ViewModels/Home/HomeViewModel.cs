@@ -749,34 +749,36 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 {
                     UserModel = data;
                     Permission = int.Parse(data.Role);
-                }
-                var money = await _userService.GetMoneyUser(UserModel.UserName);
-                if (money != null)
-                {
-                    if (money.Code > 0)
+                    var money = await _userService.GetMoneyUser(UserModel.UserName);
+                    if (money != null)
                     {
-                        _dataMyMoney = money.Data.Replace(".0000", "");
-                    }
-                    else
-                    {
-                        _dataMyMoney = "0";
-                    }
-                }
-                if (ServiceData != null && ServiceData.Any()) return;
-                ServiceData = new ObservableCollection<ServiceModel>();
-                foreach (var item in _dataHome)
-                {
-                    if (Permission == 2)
-                    {
-                        if (item.UserRole == "2")
+                        if (money.Code > 0)
                         {
-                            ServiceData.Add(item);
+                            _dataMyMoney = money.Data.Replace(".0000", "");
+                        }
+                        else
+                        {
+                            _dataMyMoney = "0";
                         }
                     }
-                    if (Permission == 0)
+                    if (ServiceData != null && ServiceData.Any()) return;
+                    var serviceData = new List<ServiceModel>();
+                    foreach (var item in _dataHome)
                     {
-                        ServiceData.Add(item);
+                        if (Permission == 2)
+                        {
+                            if (item.UserRole == "2")
+                            {
+                                serviceData.Add(item);
+                            }
+                        }
+                        if (Permission == 0)
+                        {
+                            serviceData.Add(item);
+                        }
                     }
+
+                    ServiceData = new ObservableCollection<ServiceModel>(serviceData);
                 }
             }
             catch (Exception e)
@@ -785,10 +787,10 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             }
             finally
             {
-                new Thread(() =>
-               {
-                   NoticeServiceSubscribers();
-               }).Start();
+               // new Thread(() =>
+               //{
+               //    NoticeServiceSubscribers();
+               //}).Start();
                 IsLoading = false;
             }
         }

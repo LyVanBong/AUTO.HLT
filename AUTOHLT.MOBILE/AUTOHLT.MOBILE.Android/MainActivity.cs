@@ -1,14 +1,12 @@
-﻿using System;
-using Acr.UserDialogs;
+﻿using Acr.UserDialogs;
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using Android.Gms.Ads;
 using Android.OS;
 using Java.Security;
-using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
+using System;
+using Android.Gms.Ads;
 
 namespace AUTOHLT.MOBILE.Droid
 {
@@ -52,18 +50,10 @@ namespace AUTOHLT.MOBILE.Droid
             OtherLibraries();
             LoadApplication(new App(new AndroidInitializer()));
         }
-
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-            FacebookClientManager.OnActivityResult(requestCode, resultCode, data);
-        }
-
         private void OtherLibraries()
         {
             MobileAds.Initialize(ApplicationContext);
             UserDialogs.Init(this);
-            FacebookClientManager.Initialize(this);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
