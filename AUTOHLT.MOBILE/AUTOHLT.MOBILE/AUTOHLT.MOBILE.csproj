@@ -117,7 +117,6 @@
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
-    <PackageReference Include="MarcTron.Admob" Version="1.6.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.2.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
