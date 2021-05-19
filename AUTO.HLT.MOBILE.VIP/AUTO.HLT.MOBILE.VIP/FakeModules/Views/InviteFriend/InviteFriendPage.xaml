@@ -43,6 +43,7 @@
             <Entry
                 x:Name="Sodt"
                 Margin="20"
+                BackgroundColor="Transparent"
                 FontSize="16"
                 Keyboard="Numeric"
                 Placeholder="Số điện thoại"
@@ -56,6 +57,7 @@
                 Text="Mời"
                 TextColor="#fff"
                 VerticalOptions="EndAndExpand" />
+            <BoxView BackgroundColor="Transparent" HeightRequest="50" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

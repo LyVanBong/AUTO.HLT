@@ -54,6 +54,7 @@
                         VerticalOptions="Center" />
                     <Editor
                         x:Name="GopY"
+                        BackgroundColor="Transparent"
                         FontSize="16"
                         Placeholder="Xin cho chúng tôi biết ý kiến của bạn"
                         TextColor="#000"

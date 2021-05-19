@@ -30,6 +30,7 @@
     <None Remove="FakeModules\Resources\icon_f_map_bus_3.png" />
     <None Remove="FakeModules\Resources\icon_f_map_bus_4.png" />
     <None Remove="FakeModules\Resources\icon_f_map_bus_5.png" />
+    <None Remove="FakeModules\Resources\icon_f_menu.png" />
     <None Remove="FakeModules\Resources\icon_f_notification.png" />
     <None Remove="FakeModules\Resources\icon_helper_us.png" />
     <None Remove="FakeModules\Resources\icon_invite_friend.png" />
@@ -74,6 +75,7 @@
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_3.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_4.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_map_bus_5.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_menu.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_notification.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_helper_us.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_invite_friend.png" />
