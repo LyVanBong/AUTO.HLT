@@ -99,6 +99,7 @@
                                 Text="Hiển thị chuyến hủy"
                                 TextColor="#000" />
                         </StackLayout>
+                        <BoxView BackgroundColor="Transparent" HeightRequest="50" />
                     </StackLayout>
                 </extensions:TabViewItem>
             </extensions:TabView>

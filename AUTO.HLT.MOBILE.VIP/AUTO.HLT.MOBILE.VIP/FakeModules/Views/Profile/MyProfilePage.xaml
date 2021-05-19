@@ -36,6 +36,7 @@
                 TextColor="#000" />
             <Entry
                 Margin="10,0"
+                BackgroundColor="Transparent"
                 ClearButtonVisibility="WhileEditing"
                 FontSize="16"
                 Text="Khách hàng"
@@ -47,6 +48,7 @@
                 TextColor="#000" />
             <Entry
                 Margin="10,0"
+                BackgroundColor="Transparent"
                 ClearButtonVisibility="WhileEditing"
                 FontSize="16"
                 Keyboard="Numeric"
@@ -59,6 +61,7 @@
                 TextColor="#000" />
             <Entry
                 Margin="10,0"
+                BackgroundColor="Transparent"
                 ClearButtonVisibility="WhileEditing"
                 FontSize="16"
                 Text="khachhang@autovip.com"
