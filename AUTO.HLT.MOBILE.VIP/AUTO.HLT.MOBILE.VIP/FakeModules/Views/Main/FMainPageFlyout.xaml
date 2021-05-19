@@ -4,9 +4,12 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
-    Title="Flyout"
+    Title="MENU"
+    Padding="{OnPlatform iOS='0,20,0,0',
+                         Default='0'}"
     Background="#2CC5D7"
-    BackgroundColor="#2CC5D7">
+    BackgroundColor="#2CC5D7"
+    IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
     <StackLayout
         Margin="0"
         Padding="0"
