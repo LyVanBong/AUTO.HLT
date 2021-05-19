@@ -28,20 +28,20 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.bsoftgroup.auto.hlt</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.10</string>
+	<string>1.0.11</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>XSAppIconAssets</key>
 	<string>AppIcon.xcassets/AppIcons.appiconset</string>
-  <key>NSPhotoLibraryUsageDescription</key>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The library I use requires this permission</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>CFBundleVersion</key>
-	<string>74</string>
-  <key>GADApplicationIdentifier</key>
-  <string>ca-app-pub-9881695093256851~8311353609</string>
-  <key>GADIsAdManagerApp</key>
-  <true/>
+	<string>75</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-9881695093256851~8311353609</string>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 </dict>
 </plist>
