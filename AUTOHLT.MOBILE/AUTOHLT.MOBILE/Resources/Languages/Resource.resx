@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1000000" xml:space="preserve">
-    <value>LogIn</value>
+    <value>Đăng nhập</value>
     <comment>Đăng nhập</comment>
   </data>
   <data name="1000001" xml:space="preserve">
@@ -126,111 +126,111 @@
     <comment>Email</comment>
   </data>
   <data name="1000002" xml:space="preserve">
-    <value>Sign Up</value>
+    <value>Đăng Ký</value>
     <comment>Đăng ký</comment>
   </data>
   <data name="1000003" xml:space="preserve">
-    <value>Or create a new account</value>
+    <value>Hoạc tạo  một tài khoản mới</value>
     <comment>Hoạc tạo  một tài khoản mới</comment>
   </data>
   <data name="1000004" xml:space="preserve">
-    <value>Remember password</value>
+    <value>Ghi nhớ mật khẩu</value>
     <comment>Ghi nhớ mật khẩu</comment>
   </data>
   <data name="1000005" xml:space="preserve">
-    <value>Account</value>
+    <value>Tài khoản</value>
     <comment>Tài khoản</comment>
   </data>
   <data name="1000006" xml:space="preserve">
-    <value>Password</value>
+    <value>Mật khẩu</value>
     <comment>Mật khẩu</comment>
   </data>
   <data name="1000007" xml:space="preserve">
-    <value>Don't have an account?</value>
+    <value>Không có tài khoản?</value>
     <comment>Không có tài khoản?</comment>
   </data>
   <data name="1000008" xml:space="preserve">
-    <value>The system is processing</value>
+    <value>Hệ thống đang xử lý</value>
     <comment>Hệ thống đang xử lý</comment>
   </data>
   <data name="1000009" xml:space="preserve">
-    <value>Already have an account?</value>
+    <value>Đã có tài khoản?</value>
     <comment>Đã có tài khoản?</comment>
   </data>
   <data name="1000010" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Xác nhận mật khẩu</value>
     <comment>Xác nhận mật khẩu</comment>
   </data>
   <data name="1000011" xml:space="preserve">
-    <value>Name</value>
+    <value>Tên</value>
     <comment>Tên</comment>
   </data>
   <data name="1000012" xml:space="preserve">
-    <value>Age</value>
+    <value>Tuổi</value>
     <comment>Tuổi</comment>
   </data>
   <data name="1000013" xml:space="preserve">
-    <value>User name</value>
+    <value>Tài khoản</value>
     <comment>Tài khoản</comment>
   </data>
   <data name="1000014" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Số điện thoại</value>
     <comment>Số điện thoại</comment>
   </data>
   <data name="1000015" xml:space="preserve">
-    <value>Sex</value>
+    <value>Giới tính</value>
     <comment>Giới tính</comment>
   </data>
   <data name="1000016" xml:space="preserve">
-    <value>Male</value>
+    <value>Nam</value>
     <comment>Nam</comment>
   </data>
   <data name="1000017" xml:space="preserve">
-    <value>Female</value>
+    <value>Nữ</value>
     <comment>Nữ</comment>
   </data>
   <data name="1000018" xml:space="preserve">
-    <value>Surplus</value>
+    <value>Số dư</value>
     <comment>Số dư</comment>
   </data>
   <data name="1000019" xml:space="preserve">
-    <value>Transfers</value>
+    <value>Chuyển tiền</value>
     <comment>Chuyển tiền</comment>
   </data>
   <data name="1000020" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Đổi mật khẩu</value>
     <comment>Đổi mật khẩu</comment>
   </data>
   <data name="1000021" xml:space="preserve">
-    <value>Notification</value>
+    <value>Thông báo</value>
     <comment>Thông báo</comment>
   </data>
   <data name="1000022" xml:space="preserve">
-    <value>Revenue</value>
+    <value>Doanh thu</value>
     <comment>Doanh thu</comment>
   </data>
   <data name="1000023" xml:space="preserve">
-    <value>Setting</value>
+    <value>Cài đặt</value>
     <comment>Cài đặt</comment>
   </data>
   <data name="1000024" xml:space="preserve">
-    <value>Top up</value>
+    <value>Nạp tiền</value>
     <comment>Nạp tiền</comment>
   </data>
   <data name="1000025" xml:space="preserve">
-    <value>service</value>
+    <value>Dịch vụ</value>
     <comment>dịch vụ</comment>
   </data>
   <data name="1000026" xml:space="preserve">
-    <value>Interactive</value>
+    <value>Tăng tương tác</value>
     <comment>Tương tác</comment>
   </data>
   <data name="1000027" xml:space="preserve">
-    <value>Work</value>
+    <value>Công việc</value>
     <comment>công việc</comment>
   </data>
   <data name="1000028" xml:space="preserve">
-    <value>Service management section</value>
+    <value>Phần quản lý dịch vụ</value>
     <comment>Phần quản lý dịch vụ</comment>
   </data>
   <data name="1000029" xml:space="preserve">
@@ -254,211 +254,211 @@
     <comment>Buff Follow</comment>
   </data>
   <data name="1000034" xml:space="preserve">
-    <value>Service history</value>
+    <value>Lịch sử dịch vụ</value>
     <comment>Lịch sử dịch vụ</comment>
   </data>
   <data name="1000035" xml:space="preserve">
-    <value>Notification</value>
+    <value>Thông báo</value>
     <comment>Thông báo</comment>
   </data>
   <data name="1000036" xml:space="preserve">
-    <value>Errors arise during processing</value>
+    <value>Lỗi phát sinh trong quá trình xử lý</value>
     <comment>Lỗi phát sinh trong quá trình xử lý</comment>
   </data>
   <data name="1000037" xml:space="preserve">
-    <value>Account already exists</value>
+    <value>Tài khoản đã tồn tại</value>
     <comment>Tài khoản đã tồn tại</comment>
   </data>
   <data name="1000038" xml:space="preserve">
-    <value>Password must be over 6 characters</value>
+    <value>Mật khẩu phải trên 6 ký tự</value>
     <comment>Mật khẩu phải trên 6 ký tự</comment>
   </data>
   <data name="1000039" xml:space="preserve">
-    <value>Password incorrect</value>
+    <value>Mật khẩu không khớp</value>
     <comment>Mật khẩu không khớp</comment>
   </data>
   <data name="1000040" xml:space="preserve">
-    <value>Success</value>
+    <value>Thành công</value>
     <comment>Thành công</comment>
   </data>
   <data name="1000041" xml:space="preserve">
-    <value>Error</value>
+    <value>Lỗi</value>
     <comment>Lỗi</comment>
   </data>
   <data name="1000042" xml:space="preserve">
-    <value>You want to sign out of your account !</value>
+    <value>Bạn muốn đăng xuất khỏi tài khoản của mình !</value>
     <comment>Bạn muốn đăng xuất khỏi tài khoản của mình !</comment>
   </data>
   <data name="1000043" xml:space="preserve">
-    <value>Transfers</value>
+    <value>Chuyển tiền</value>
     <comment>Chuyển tiền</comment>
   </data>
   <data name="1000044" xml:space="preserve">
-    <value>Amount money</value>
+    <value>Số tiền</value>
     <comment>Số tiền</comment>
   </data>
   <data name="1000045" xml:space="preserve">
-    <value>Save to contacts</value>
+    <value>Lưu vào danh bạ</value>
     <comment>Lưu vào danh bạ</comment>
   </data>
   <data name="1000046" xml:space="preserve">
-    <value>Account does not exist</value>
+    <value>Tài khoản không tồn tại</value>
     <comment>Tài khoản không tồn tại</comment>
   </data>
   <data name="1000047" xml:space="preserve">
-    <value>Money transfer is successful</value>
+    <value>Chuyển tiền thành công</value>
     <comment>Chuyển tiền thành công</comment>
   </data>
   <data name="1000048" xml:space="preserve">
-    <value>The amount of money is greater than the amount you have</value>
+    <value>Số tiền lớn hơn số tiền bạn có</value>
     <comment>Số tiền lớn hơn số tiền bạn có</comment>
   </data>
   <data name="1000049" xml:space="preserve">
-    <value>Service pack</value>
+    <value>Gói dịch vụ</value>
     <comment>Gói dịch vụ</comment>
   </data>
   <data name="1000050" xml:space="preserve">
-    <value>Date</value>
+    <value>Ngày sử dụng</value>
     <comment>Ngày sử dụng</comment>
   </data>
   <data name="1000051" xml:space="preserve">
-    <value>Date</value>
-    <comment>Date</comment>
+    <value>ngày</value>
+    <comment>Ngày</comment>
   </data>
   <data name="1000052" xml:space="preserve">
-    <value>Register Service</value>
+    <value>Đăng ký dịch vụ</value>
     <comment>Đăng ký dịch vụ</comment>
   </data>
   <data name="1000053" xml:space="preserve">
-    <value>Using the service</value>
+    <value>Sử dụng dịch vụ</value>
     <comment>Sử dụng dịch vụ</comment>
   </data>
   <data name="1000054" xml:space="preserve">
-    <value>forever</value>
-    <comment>mãi mãi</comment>
+    <value>vĩnh viễn</value>
+    <comment>vĩnh viễn</comment>
   </data>
   <data name="1000055" xml:space="preserve">
-    <value>1 year</value>
+    <value>1 năm</value>
     <comment>1 năm</comment>
   </data>
   <data name="1000056" xml:space="preserve">
-    <value>Price</value>
+    <value>Giá</value>
     <comment>Giá</comment>
   </data>
   <data name="1000057" xml:space="preserve">
-    <value>You buy service {0} {1} / day {2} for {3} VND</value>
-    <comment>Bạn mua dịch vụ {0} {1} {2} với giá {3} VND</comment>
+    <value>Bạn mua dịch vụ {0} {1} / ngày {2} với giá {3} VND</value>
+    <comment>Bạn mua dịch vụ {0} {1} {2} / ngày với giá {3} VND</comment>
   </data>
   <data name="1000058" xml:space="preserve">
-    <value>Use</value>
+    <value>Dùng</value>
     <comment>Dùng</comment>
   </data>
   <data name="1000059" xml:space="preserve">
-    <value>Number</value>
+    <value>Số lượng</value>
     <comment>Số lượng</comment>
   </data>
   <data name="1000060" xml:space="preserve">
-    <value>Posts</value>
+    <value>Bài viết</value>
     <comment>Bài viết</comment>
   </data>
   <data name="1000061" xml:space="preserve">
-    <value>You have run out of service today</value>
+    <value>Bạn đã dùng hết dịch vụ trong ngày hôm nay</value>
     <comment>Bạn đã dùng hết dịch vụ trong ngày hôm nay</comment>
   </data>
   <data name="1000062" xml:space="preserve">
-    <value>Buff eyes view</value>
+    <value>Buff mắt xem</value>
     <comment>Buff mắt xem</comment>
   </data>
   <data name="1000063" xml:space="preserve">
-    <value>Eyes</value>
+    <value>Mắt</value>
     <comment>Mắt</comment>
   </data>
   <data name="1000064" xml:space="preserve">
-    <value>Recharge</value>
+    <value>Nạp tiền</value>
     <comment>Nạp tiền</comment>
   </data>
   <data name="1000065" xml:space="preserve">
-    <value>Amount</value>
+    <value>Số tiền</value>
     <comment>Số tiền</comment>
   </data>
   <data name="1000066" xml:space="preserve">
-    <value>Current balance</value>
+    <value>Số dư hiện tại</value>
     <comment>Số dư hiện tại</comment>
   </data>
   <data name="1000067" xml:space="preserve">
-    <value>You deposit {0} VND for your {1} account!</value>
+    <value>Bạn nạp {0} VND cho tài khoản {1} !</value>
     <comment>Bạn nạp {0} VND cho tài khoản {1} !</comment>
   </data>
   <data name="1000068" xml:space="preserve">
-    <value>Discount</value>
+    <value>Giảm giá</value>
     <comment>Giảm giá</comment>
   </data>
   <data name="1000069" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Đổi mật khẩu</value>
     <comment>Đổi mật khẩu</comment>
   </data>
   <data name="1000070" xml:space="preserve">
-    <value>Account information</value>
+    <value>Thông tin tài khoản</value>
     <comment>Thông tin tài khoản</comment>
   </data>
   <data name="1000071" xml:space="preserve">
-    <value>A new password</value>
+    <value>Mật khẩu mới</value>
     <comment>Mật khẩu mới</comment>
   </data>
   <data name="1000072" xml:space="preserve">
-    <value>Old password</value>
+    <value>Mật khẩu cũ</value>
     <comment>Mật khẩu cũ</comment>
   </data>
   <data name="1000073" xml:space="preserve">
-    <value>Update</value>
+    <value>Cập nhật</value>
     <comment>Cập nhật</comment>
   </data>
   <data name="1000074" xml:space="preserve">
-    <value>Content</value>
+    <value>Nội dung</value>
     <comment>Nội dung</comment>
   </data>
   <data name="1000075" xml:space="preserve">
-    <value>AUTOHLT Joint Stock Company hotline: 0824.726.888 web: autohlt.com</value>
-    <comment>Công ty cổ phần AUTOHLT - đường dây nóng: 0824.726.888 - website: autohlt.com</comment>
+    <value>Công ty cổ phần AUTOHLT - đường dây nóng: 0824.726.888</value>
+    <comment>Công ty cổ phần AUTOHLT - đường dây nóng: 0824.726.888</comment>
   </data>
   <data name="1000076" xml:space="preserve">
-    <value>Buff like</value>
+    <value>Tăng like</value>
     <comment>Tăng like</comment>
   </data>
   <data name="1000077" xml:space="preserve">
-    <value>Buff eyes</value>
+    <value>Tăng mắt xem</value>
     <comment>Tăng mắt xem</comment>
   </data>
   <data name="1000078" xml:space="preserve">
-    <value>Buff 5k friends</value>
+    <value>Tăng 5k bb</value>
     <comment>Tăng 5k bb</comment>
   </data>
   <data name="1000079" xml:space="preserve">
-    <value>Buff sub</value>
+    <value>Tăng theo dõi</value>
     <comment>Tăng theo dõi</comment>
   </data>
   <data name="1000080" xml:space="preserve">
-    <value>Buff like page</value>
+    <value>Tăng like page</value>
     <comment>Tăng like page</comment>
   </data>
   <data name="1000081" xml:space="preserve">
-    <value>Unlock fb</value>
+    <value>Mở khóa fb</value>
     <comment>Mở khóa fb</comment>
   </data>
   <data name="1000082" xml:space="preserve">
-    <value>Security fb</value>
+    <value>Bảo mật fb</value>
     <comment>Bảo mật fb</comment>
   </data>
   <data name="1000083" xml:space="preserve">
-    <value>Filter friends</value>
+    <value>Lọc bạn bè</value>
     <comment>Lọc bạn bè</comment>
   </data>
   <data name="1000084" xml:space="preserve">
-    <value>Support</value>
+    <value>Hố trợ</value>
     <comment>Hố trợ</comment>
   </data>
   <data name="1000085" xml:space="preserve">
-    <value>Package</value>
+    <value>Gói</value>
     <comment>Gói</comment>
   </data>
   <data name="1000086" xml:space="preserve">
@@ -466,91 +466,91 @@
     <comment>Like</comment>
   </data>
   <data name="1000087" xml:space="preserve">
-    <value>View</value>
+    <value>Mắt</value>
     <comment>Mắt</comment>
   </data>
   <data name="1000088" xml:space="preserve">
-    <value>day</value>
+    <value>ngày</value>
     <comment>ngày</comment>
   </data>
   <data name="1000089" xml:space="preserve">
-    <value>in</value>
+    <value>trong</value>
     <comment>trong</comment>
   </data>
   <data name="1000090" xml:space="preserve">
-    <value>The price of  {0} {1} is {2} VND</value>
+    <value>Giá của {0} {1} là {2} VND</value>
     <comment>Giá của {0} {1} với giá {2} VND</comment>
   </data>
   <data name="1000091" xml:space="preserve">
-    <value>Contact</value>
+    <value>Liên hệ trực tiếp</value>
     <comment>Liên hệ trực tiếp</comment>
   </data>
   <data name="1000092" xml:space="preserve">
-    <value>Send require</value>
+    <value>Gửi yêu cầu</value>
     <comment>Gửi yêu cầu</comment>
   </data>
   <data name="1000093" xml:space="preserve">
-    <value>Send require suport</value>
+    <value>Gửi yêu cầu hố trợ</value>
     <comment>Gửi yêu cầu hố trợ</comment>
   </data>
   <data name="1000094" xml:space="preserve">
-    <value>Successfully sent the request to the admin, we will get back to you shortly!</value>
+    <value>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</value>
     <comment>Đã gửi yêu cầu tới admin thành công, chúng tôi sẽ liên lạc lại với bạn ngay !</comment>
   </data>
   <data name="1000095" xml:space="preserve">
-    <value>Connect facebook</value>
+    <value>Kết nối facebook</value>
     <comment>Kết nối facebook</comment>
   </data>
   <data name="1000096" xml:space="preserve">
-    <value>Complete</value>
+    <value>Hoàn thành</value>
     <comment>Hoàn thành</comment>
   </data>
   <data name="1000097" xml:space="preserve">
-    <value>Number of non-interactive people {0} / {1}</value>
+    <value>Số người không tương tác {0} / {1}</value>
     <comment>Số người không tương tác {0} / {1}</comment>
   </data>
   <data name="1000098" xml:space="preserve">
-    <value>No interaction</value>
+    <value>Không tương tác</value>
     <comment>Không tương tác</comment>
   </data>
   <data name="1000099" xml:space="preserve">
-    <value>No filter</value>
+    <value>Không lọc</value>
     <comment>Không lọc</comment>
   </data>
   <data name="1000100" xml:space="preserve">
-    <value>No</value>
+    <value>STT</value>
     <comment>STT</comment>
   </data>
   <data name="1000101" xml:space="preserve">
-    <value>Comment</value>
+    <value>Bình luận</value>
     <comment>Bình luận</comment>
   </data>
   <data name="1000102" xml:space="preserve">
-    <value>choose</value>
-    <comment>chọn</comment>
+    <value>Chọn</value>
+    <comment>Chọn</comment>
   </data>
   <data name="1000103" xml:space="preserve">
-    <value>Status</value>
+    <value>Trạng thái</value>
     <comment>Trạng thái</comment>
   </data>
   <data name="1000104" xml:space="preserve">
-    <value>Filter friends</value>
+    <value>Lọc bạn bè</value>
     <comment>Lọc bạn bè</comment>
   </data>
   <data name="1000105" xml:space="preserve">
-    <value>Automatic heart drop</value>
+    <value>Tự động thả tim</value>
     <comment>Tự động thả tim</comment>
   </data>
   <data name="1000106" xml:space="preserve">
-    <value>Pokes friends</value>
+    <value>Chọc bạn bè</value>
     <comment>Chọc bạn bè</comment>
   </data>
   <data name="1000107" xml:space="preserve">
-    <value>Vip Interaction</value>
+    <value>Tương tác Vip</value>
     <comment>Tương tác Vip</comment>
   </data>
   <data name="1000108" xml:space="preserve">
-    <value>You buy service {0} for {1} VND</value>
+    <value>Bạn mua dịch vụ {0} với giá {2} VND</value>
     <comment>Bạn mua dịch vụ {0} với giá {2} VND</comment>
   </data>
 </root>

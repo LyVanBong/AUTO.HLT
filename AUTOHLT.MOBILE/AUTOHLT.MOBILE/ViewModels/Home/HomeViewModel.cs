@@ -1,20 +1,26 @@
 ﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
 using AUTOHLT.MOBILE.Models.Home;
+using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Models.User;
+using AUTOHLT.MOBILE.Resources.Fonts;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using AUTOHLT.MOBILE.Views.AddFullFriend;
+using AUTOHLT.MOBILE.Views.Agency;
 using AUTOHLT.MOBILE.Views.BuffLikePage;
 using AUTOHLT.MOBILE.Views.BuffSub;
 using AUTOHLT.MOBILE.Views.FilterFriend;
 using AUTOHLT.MOBILE.Views.Pokes;
 using AUTOHLT.MOBILE.Views.SecurityFb;
 using AUTOHLT.MOBILE.Views.SuportCustumer;
+using AUTOHLT.MOBILE.Views.TopUp;
 using AUTOHLT.MOBILE.Views.UnLockFb;
+using AUTOHLT.MOBILE.Views.VipInteraction;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
@@ -27,18 +33,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Models.Telegram;
-using AUTOHLT.MOBILE.Resources.Fonts;
-using AUTOHLT.MOBILE.Services.Guide;
-using AUTOHLT.MOBILE.Views.Agency;
-using AUTOHLT.MOBILE.Views.TopUp;
-using AUTOHLT.MOBILE.Views.VipInteraction;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Color = System.Drawing.Color;
 
 namespace AUTOHLT.MOBILE.ViewModels.Home
 {
@@ -60,148 +58,47 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 {
                     new ServiceModel
                     {
-                        Icon = "icon_like.png",
-                        TitleService = Resource._1000076,
-                        TypeService = 1,
-                        UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_Interactive.png",
-                        TitleService = Resource._1000107,
-                        TypeService = 20,
-                        BadgeView = "Hot",
-                        UserRole = "2",
-                        BadgeType = BadgeType.Error
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_view.png",
-                        TitleService = Resource._1000077,
-                        TypeService = 2,
-                        UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_add_friends.png",
-                        TitleService = Resource._1000078,
-                        TypeService = 4,
-                        UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_auto_boot_hear.png",
-                        TitleService = Resource._1000105,
-                        TypeService = 3,
-                        BadgeView = "Hot",
-                        UserRole = "2",
-                        BadgeType = BadgeType.Error
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_follow.png",
-                        TitleService = Resource._1000079,
-                        TypeService = 5,
-                        UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_like_page.png",
-                        TitleService = Resource._1000080,
-                        TypeService = 6,
-                        UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
                         Icon = "icon_pokes.png",
-                        TitleService = Resource._1000106,
-                        TypeService = 19,
+                        TitleService = "Chọc trên facebook có thể hiểu là cách để gây chú ý để người mình chọc để ý tới mình, ví dụ có thể bạn bè lâu ko nói chuyện chọc qua chọc lại cho biết.",
+                        TypeService = 3,
                         UserRole = "2",
-                        BadgeView = "Free",
+                        BadgeView = "Funny",
                         BadgeType = BadgeType.Warning
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_unlock.png",
-                        TitleService = Resource._1000081,
-                        TypeService = 7,
-                        UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_security_fb.png",
-                        TitleService = Resource._1000082,
-                        TypeService = 8,
-                        UserRole = "2",
                     },
                     new ServiceModel
                     {
                         Icon = "icon_filter_friends.png",
-                        TitleService = Resource._1000083,
-                        TypeService = -1,
+                        TitleService = "Lọc bạn bè không tương tác hoặc có tương tác với nick Facebook của bạn nhằm các mục đích sau: Xoá đi những bạn bè không tương tác, dành chỗ kết bạn cho những người bạn mới. Cải thiện lượng tương tác trên tài khoản của bạn. Giúp công việc kinh doanh online, quảng bá sản phẩm được hiệu quả hơn",
+                        TypeService = 4,
+                        UserRole = "2",
+                        BadgeView = "New",
+                        BadgeType = BadgeType.Info
+                    },
+                    new ServiceModel
+                    {
+                        Icon = "icon_birthday.png",
+                        TitleService = "Chúc mừng sinh nhật - Facebook là nơi mọi người kết nối với bạn bè, người thân, khách hàng cùng như các đối tác chia sẻ sở thích chung và những câu chuyện đời thường, cũng như kỷ niệm những khoảnh khắc quan trọng như ngày sinh nhật.",
+                        TypeService = 5,
                         UserRole = "2",
                         BadgeView = "Free",
-                        BadgeType = BadgeType.Warning
-                    },
-                    new ServiceModel
+                        BadgeType = BadgeType.Success
+                    }, new ServiceModel
                     {
-                        Icon = "icon_customer_support.png",
-                        TitleService = Resource._1000084,
-                        TypeService = 0,
-                        BadgeView = "Support",
+                        Icon = "icon_add_friend.png",
+                        TitleService = "Kết bạn facebook để trao đổi thông tin giao lưu và tìm kiếm các khách hàng tiềm năng trong công việc kinh doanh online trên facebook hoặc các sàn thương mại điện tử.",
+                        TypeService = 6,
                         UserRole = "2",
+                        BadgeView = "Hot",
+                        BadgeType = BadgeType.Error
                     },
                     new ServiceModel
                     {
-                        Icon = "icon_agency.png",
-                        TitleService = "Đăng ký đại lý",
-                        TypeService = 21,
-                        BadgeView = "Register",
-                        BadgeType = BadgeType.Info,
+                        Icon = "icon_connection.png",
+                        TitleService = "Kết nỗi facebook",
+                        TypeService = 7,
                         UserRole = "2",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_revenue.png",
-                        TitleService = Resource._1000022,
-                        TypeService = 9,
-                        UserRole = "0",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_settings.png",
-                        TitleService = Resource._1000023,
-                        TypeService = 10,
-                        UserRole = "0",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_top_up.png",
-                        TitleService = Resource._1000024,
-                        TypeService = 11,
-                        UserRole = "0",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_service.png",
-                        TitleService = Resource._1000025,
-                        TypeService = 12,
-                        UserRole = "0",
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_work.png",
-                        TitleService = Resource._1000027,
-                        TypeService = 13,
-                        UserRole = "1",
-                        BadgeView = "Employees"
-                    },
-                    new ServiceModel
-                    {
-                        Icon = "icon_history.png",
-                        TitleService = Resource._1000034,
-                        TypeService = 14,
-                        UserRole = "0",
+                        BadgeView = "Connect",
+                        BadgeType = BadgeType.Primary
                     },
                 };
 
@@ -241,7 +138,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private string _dataMyMoney;
         private string _iconShowMoney;
         private IGuideService _guideService;
-
+        
         public ICommand ShowMyMoneyCommand { get; private set; }
         public string IconShowMoney
         {
@@ -761,23 +658,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         }
                     }
                     if (ServiceData != null && ServiceData.Any()) return;
-                    var serviceData = new List<ServiceModel>();
-                    foreach (var item in _dataHome)
-                    {
-                        if (Permission == 2)
-                        {
-                            if (item.UserRole == "2")
-                            {
-                                serviceData.Add(item);
-                            }
-                        }
-                        if (Permission == 0)
-                        {
-                            serviceData.Add(item);
-                        }
-                    }
-
-                    ServiceData = new ObservableCollection<ServiceModel>(serviceData);
+                    
+                    ServiceData = new ObservableCollection<ServiceModel>(_dataHome);
                 }
             }
             catch (Exception e)
