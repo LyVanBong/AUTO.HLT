@@ -22,7 +22,6 @@
                 <RowDefinition Height="110" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
             <BoxView
                 Grid.Row="0"
@@ -344,10 +343,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </customRenderer:CustomCollectionViewRenderer>
-            <ContentView x:Name="ContentView" Grid.Row="5" />
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="6"
+                Grid.RowSpan="5"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

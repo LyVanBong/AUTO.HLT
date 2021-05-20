@@ -1,5 +1,4 @@
-﻿using Acr.UserDialogs;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
 using AUTOHLT.MOBILE.Models.Home;
 using AUTOHLT.MOBILE.Models.User;
@@ -817,58 +816,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
 
             return null;
         }
-        /// <summary>
-        /// Gửi thông báo đang ký mỗi khách hàng
-        /// </summary>
-        /// <returns></returns>
-        private async void NoticeServiceSubscribers()
-        {
-            try
-            {
-                if (_startNotification) return;
-                _startNotification = true;
-                _nameModels = _nameModels == null ? await GetDataname() : _nameModels;
-                if (_nameModels != null && _nameModels.Any())
-                {
-                    var random = new Random();
-
-                    Device.StartTimer(TimeSpan.FromSeconds(15), () =>
-                    {
-                        var name = _nameModels[random.Next(_nameModels.Count - 1)];
-                        var number = string.Format(new CultureInfo("en-US"), "{0:0,0}",
-                            decimal.Parse(random.Next(1000, 6000000) + ""));
-                        var cmt = new string[]
-                        {
-                            " đăng ký gói tăng like 1 năm",
-                            " đăng ký gói tăng like vính viễn",
-                            " đăng ký gói tăng mắt xem livestream 1 năm",
-                            " đăng ký gói tăng mắt xem livestream vính viễn",
-                            " sử dụng dịch vụ thêm full 5k bạn bè",
-                            $" Sử dụng dich vụ tăng { number} theo dõi trang cá nhân",
-                            $" đăng ký dịch vụ tăng {number} like page",
-                            " đã sử dụng dịch vụ mở khoán fb thành công",
-                            " báo mật fb cá nhân",
-
-                        };
-                        var messager = $"{name.full_name} {cmt[random.Next(cmt.Length - 1)]}";
-                        UserDialogs.Instance.Toast(new ToastConfig(messager)
-                        {
-
-                            BackgroundColor = Color.WhiteSmoke,
-                            Message = messager,
-                            Position = ToastPosition.Bottom,
-                            MessageTextColor = Color.Red,
-                        });
-                        return _startNotification;
-                    });
-                }
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-        }
-
+        
         /// <summary>
         /// đăng xuất khỏi tài khoản
         /// </summary>

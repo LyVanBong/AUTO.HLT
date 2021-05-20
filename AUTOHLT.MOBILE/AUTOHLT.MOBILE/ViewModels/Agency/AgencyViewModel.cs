@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using Acr.UserDialogs;
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Resources.Languages;
@@ -137,15 +136,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Agency
             }
             catch (Exception e)
             {
-                var messager = "Bạn vui lòng liên hệ trực tiếp để được hố trợ thêm!";
-                UserDialogs.Instance.Toast(new ToastConfig(messager)
-                {
-
-                    BackgroundColor = System.Drawing.Color.WhiteSmoke,
-                    Message = messager,
-                    Position = ToastPosition.Top,
-                    MessageTextColor = Color.DarkGray,
-                });
                 Crashes.TrackError(e);
             }
             finally

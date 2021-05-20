@@ -1,12 +1,10 @@
-﻿using Acr.UserDialogs;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Java.Security;
 using Prism;
 using Prism.Ioc;
 using System;
-using Android.Gms.Ads;
 
 namespace AUTOHLT.MOBILE.Droid
 {
@@ -53,8 +51,7 @@ namespace AUTOHLT.MOBILE.Droid
         
         private void OtherLibraries()
         {
-            MobileAds.Initialize(ApplicationContext, "ca-app-pub-9881695093256851~9934237096");
-            UserDialogs.Init(this);
+           
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

@@ -43,7 +43,6 @@ namespace AUTOHLT.MOBILE.iOS
         
         private void OtherLibraries(UIApplication app, NSDictionary options)
         {
-            Google.MobileAds.MobileAds.Configure("ca-app-pub-9881695093256851~8311353609");
             new SfTreeMapRenderer();
             SfDataFormRenderer.Init();
             SfGaugeRenderer.Init();
