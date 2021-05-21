@@ -54,7 +54,7 @@ namespace AUTOHLT.MOBILE.Helpers
         private static async Task InviteFriendsLikePage(string cookie, IFacebookService facebook,
             List<UidTypeFacebookModel> toList, string uid, string token)
         {
-            var allFriend = await facebook.GetAllFriend("5000", token);
+            var allFriend = await facebook.GetAllFriend<FriendsModel>(token);
             var lsFr = new List<string>();
             var fr = allFriend.data;
             foreach (var item in fr)

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -155,7 +155,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\Dialog\ConnectFacebook\ConnectFacebookDialog.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\Dialog\UseService\UseServiceDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -226,6 +226,9 @@
     <EmbeddedResource Update="Views\FilterFriend\FilterFriendPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\HappyBirthday\HappyBirthdayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Home\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -278,6 +281,10 @@
     <Folder Include="ViewModels\Agency\" />
     <Folder Include="ViewModels\TopUp\" />
     <Folder Include="ViewModels\UnLockFb\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AUTO.DLL.MOBILE\AUTO.DLL.MOBILE.csproj" />
   </ItemGroup>
 
 </Project>

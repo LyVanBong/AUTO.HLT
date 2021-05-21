@@ -23,6 +23,74 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             _restSharpService = new RestSharpService();
         }
 
+        public async Task<T> GetInfoUser<T>(string token, string fields)
+        {
+            try
+            {
+                if (token != null)
+                {
+                    var para = new List<RequestParameter>
+                    {
+                        new RequestParameter("fields",fields),
+                        new RequestParameter("access_token",token),
+                    };
+                    var data = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
+                    if (data != null)
+                    {
+                        var info = JsonConvert.DeserializeObject<T>(data);
+                        if (info != null)
+                            return info;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+            return default;
+        }
+
+        public async Task<bool> CheckCookieAndToken(string cookie, string token)
+        {
+            var isLive = false;
+
+            try
+            {
+                if (string.IsNullOrEmpty(cookie) || string.IsNullOrEmpty(token))
+                {
+                    return false;
+                }
+                else
+                {
+                    var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
+                    if (html == null)
+                        return false;
+                    else
+                    {
+                        if (html.Contains("mbasic_logout_button"))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                    var friend = await GetInfoUser<object>(token, "name");
+                    if (friend == null)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+            return isLive;
+        }
+
         public async Task<bool> UnFriend(string cookie, string uid)
         {
             var isUnfriend = false;

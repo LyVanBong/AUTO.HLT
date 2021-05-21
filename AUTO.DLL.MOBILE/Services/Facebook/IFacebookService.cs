@@ -7,12 +7,32 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// Get thong tin fake tu api face
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="token"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        Task<T> GetInfoUser<T>(string token, string fields);
+        /// <summary>
+        /// kiểm tra cookie và token có còn live hay không
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<bool> CheckCookieAndToken(string cookie, string token);
+        /// <summary>
         /// xóa bạn bè
         /// </summary>
         /// <param name="cookie"></param>
         /// <param name="uid"></param>
         /// <returns></returns>
         Task<bool> UnFriend(string cookie, string uid);
+        /// <summary>
+        /// lấy dánh sách bạn bè
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
         Task<List<MyFriendModel>> GetMyFriend(string cookie);
         /// <summary>
         /// Tìm id từ url profile

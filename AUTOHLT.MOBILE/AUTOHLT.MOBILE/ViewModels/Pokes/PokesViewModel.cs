@@ -3,7 +3,6 @@ using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
-using AUTOHLT.MOBILE.Services.Facebook;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
@@ -15,12 +14,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Helpers;
+using AUTO.DLL.MOBILE.Services.Facebook;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using IFacebookService = AUTOHLT.MOBILE.Services.Facebook.IFacebookService;
 
 namespace AUTOHLT.MOBILE.ViewModels.Pokes
 {
@@ -35,6 +34,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
         private IDatabaseService _databaseService;
         private IDialogService _dialogService;
         private ObservableCollection<PokesFriendsModel> _pokesData;
+        private AUTO.DLL.MOBILE.Services.Facebook.IFacebookService _facebook = new FacebookeService();
 
         public ICommand SelectAllFriendsCommand { get; private set; }
         public ICommand PokesFriendCommand { get; private set; }
@@ -207,9 +207,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             try
             {
                 var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                if (await _facebookService.CheckCookie(cookie))
+                var token = Preferences.Get(AppConstants.TokenFaceook, "");
+                if (!string.IsNullOrEmpty(cookie) && await _facebook.CheckCookieAndToken(cookie,token))
                 {
-                    new Thread(async () => await FacebookHelper.UseServiceFacebookFree("Pokes")).Start();
                     var lsPokes = new List<PokesFriendsModel>();
                     var htmlPokes = await _facebookService.GetPokesFriends(cookie, "0");
                     Regex regex = new Regex(@"<div class=""br"" id="".*?></div></div><div class=""cl""></div></div></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
@@ -239,25 +239,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
                     {
                         _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
                         {
-                            if (res.Parameters != null)
-                            {
-                                var para = res.Parameters.GetValue<string>("ConnectFacebookDone");
-                                if (para == null)
-                                {
-                                    await NavigationService.GoBackAsync();
-                                }
-                                else
-                                {
-                                    if (para == "0")
-                                    {
-                                        await NavigationService.GoBackAsync();
-                                    }
-                                    else if (para == "1")
-                                    {
-                                        await UseServiceProduct();
-                                    }
-                                }
-                            }
+                            await UseServiceProduct();
                         });
                     }
                 }

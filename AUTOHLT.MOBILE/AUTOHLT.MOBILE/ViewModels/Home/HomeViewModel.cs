@@ -10,17 +10,13 @@ using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.Product;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
-using AUTOHLT.MOBILE.Views.AddFullFriend;
-using AUTOHLT.MOBILE.Views.Agency;
-using AUTOHLT.MOBILE.Views.BuffLikePage;
-using AUTOHLT.MOBILE.Views.BuffSub;
+using AUTOHLT.MOBILE.Views.AccountInformation;
+using AUTOHLT.MOBILE.Views.ChangePassword;
 using AUTOHLT.MOBILE.Views.FilterFriend;
+using AUTOHLT.MOBILE.Views.HappyBirthday;
 using AUTOHLT.MOBILE.Views.Pokes;
-using AUTOHLT.MOBILE.Views.SecurityFb;
 using AUTOHLT.MOBILE.Views.SuportCustumer;
 using AUTOHLT.MOBILE.Views.TopUp;
-using AUTOHLT.MOBILE.Views.UnLockFb;
-using AUTOHLT.MOBILE.Views.VipInteraction;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
@@ -104,29 +100,14 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
 
         private Dictionary<int, string> ServiceFunctions = new Dictionary<int, string>
         {
-            {-1,nameof(FilterFriendPage) },
-            {0,nameof(SuportCustumerPage) },
-            {1,"BuffLikePage" },
-            {2,"BuffEyesViewPage" },
-            {3,"InteractivePage" },
-            {4,nameof(AddFullFriendPage) },
-            {5,nameof(BuffSubPage) },
-            {6,nameof(BuffLikePagePage) },
-            {7,nameof(UnLockFbPage) },
-            {8,nameof(SecurityFbPage) },
-            {9,"" },
-            {10,"" },
-            {11,"RechargeCustomersPage" },
-            {12,"" },
-            {13,"" },
-            {14,"" },
-            {15,"TransferPage" },
-            {16,"ChangePasswordPage" },
-            {17,"" },
-            {18,"AccountInformationPage" },
-            {19,nameof(PokesPage) },
-            {20,nameof(VipInteractionPage) },
-            {21,nameof(AgencyPage) },
+            {0,nameof(AccountInformationPage) },
+            {1,nameof(ChangePasswordPage) },
+            {2,nameof(SuportCustumerPage) },
+            {3,nameof(PokesPage) },
+            {4,nameof(FilterFriendPage) },
+            {5,nameof(HappyBirthdayPage) },
+            {6,nameof(FilterFriendPage) },
+            {7,nameof(FilterFriendPage) },
         };
         private string[] _paraDialogSheet = new string[]
             {"1000 bạn bè", "2000 bạn bè", "3000 bạn bè", "4000 bạn bè", "5000 bạn bè","Xem hướng dẫn"};
@@ -268,23 +249,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     if (para != null)
                         key = int.Parse(para);
                 }
-
-                if (key == 4)
-                {
-                    await AddFriends();
-                }
-                else if (key == 8)
-                {
-                    await ServiceSecurityFacebook();
-                }
-                else if (key == 5 || key == 6)
-                {
-                    BuffService(key + "");
-                }
-                else
-                {
-                    await NavigationService.NavigateAsync(ServiceFunctions[key]);
-                }
+                await NavigationService.NavigateAsync(ServiceFunctions[key]);
             }
             catch (Exception e)
             {

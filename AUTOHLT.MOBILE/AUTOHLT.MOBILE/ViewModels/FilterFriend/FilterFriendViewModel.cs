@@ -367,7 +367,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         {
             try
             {
-                var data = await _facebookService.GetAllFriend(numberFriends, token);
+                var data = await _facebookService.GetAllFriend<FriendsModel>(token,"",numberFriends);
                 return data;
             }
             catch (Exception e)

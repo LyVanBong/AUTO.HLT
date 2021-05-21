@@ -4,70 +4,95 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
-    xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
-    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
-    xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
-    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    xmlns:xaml="http://prismlibrary.com"
+    xmlns:customRenderer1="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
+    xmlns:prism="http://prismlibrary.com"
+    Margin="0"
     Padding="0"
-    xaml:DialogLayout.CloseOnBackgroundTapped="False"
-    xaml:DialogLayout.RelativeHeightRequest=".8"
-    xaml:DialogLayout.RelativeWidthRequest=".95"
-    BackgroundColor="{StaticResource Gray-White}"
-    BorderColor="{StaticResource Gray-600}"
-    CornerRadius="20"
+    prism:DialogLayout.CloseOnBackgroundTapped="False"
+    prism:DialogLayout.RelativeHeightRequest=".85"
+    prism:DialogLayout.RelativeWidthRequest=".9"
+    BackgroundColor="#ffffff"
+    CornerRadius="10"
     HasShadow="True">
     <Grid
         Margin="0"
         Padding="0"
-        ColumnDefinitions="*,60"
-        ColumnSpacing="0"
-        RowDefinitions="40,*"
-        RowSpacing="0">
-        <Grid.Resources>
-            <Style TargetType="textInputLayout:SfTextInputLayout">
-                <Setter Property="ContainerType" Value="Outlined" />
-                <Setter Property="Margin" Value="10,5" />
-                <Setter Property="OutlineCornerRadius" Value="5" />
-            </Style>
-        </Grid.Resources>
+        BackgroundColor="Transparent"
+        ColumnDefinitions="*,*"
+        RowDefinitions="40,*,50">
         <BoxView
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             BackgroundColor="{StaticResource HeaderHome}"
-            CornerRadius="20,20,0,0" />
+            CornerRadius="10,10,0,0" />
         <Label
-            Grid.Row="0"
-            Grid.Column="0"
-            BackgroundColor="{StaticResource HeaderHome}"
-            HorizontalOptions="CenterAndExpand"
-            Text="{markupExtensions:Translate 1000095}"
-            TextColor="{StaticResource Gray-White}"
-            VerticalOptions="CenterAndExpand" />
-        <Label
-            Grid.Row="0"
-            Grid.Column="1"
-            BackgroundColor="{StaticResource HeaderHome}"
-            FontFamily="Awesome5ProSolid"
-            FontSize="25"
-            HorizontalOptions="CenterAndExpand"
-            Text="{x:Static icon:FontAwesome5ProSolid.Times}"
-            TextColor="{StaticResource Gray-White}"
-            VerticalOptions="CenterAndExpand">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CloseCommand}" />
-            </Label.GestureRecognizers>
-        </Label>
-        <customRenderer:WebViewRenderer
-            Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             BackgroundColor="Transparent"
-            IsVisible="{Binding IsVisibleWebview}"
-            Source="{Binding UriFacebook}" />
-        <controls:LoadingView
+            FontSize="20"
+            HorizontalOptions="CenterAndExpand"
+            Text="Kết nối"
+            TextColor="#fff"
+            VerticalOptions="CenterAndExpand" />
+        <customRenderer1:WebViewRenderer
             Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Source="{Binding UrlFacebook}" />
+
+        <Button
+            x:Name="ConnectFacebook"
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="5"
+            Padding="0"
+            Command="{Binding FuntionCommand}"
+            CommandParameter="0"
+            CornerRadius="10"
+            IsEnabled="{Binding IsVisibleConnect}"
+            Text="Kết nối ngay">
+            <Button.Triggers>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference ConnectFacebook}, Path=IsEnabled}"
+                    TargetType="Button"
+                    Value="True">
+                    <Setter Property="Button.TextColor" Value="#fff" />
+                    <Setter Property="Button.BackgroundColor" Value="{StaticResource HeaderHome}" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference ConnectFacebook}, Path=IsEnabled}"
+                    TargetType="Button"
+                    Value="False">
+                    <Setter Property="Button.TextColor" Value="{StaticResource HeaderHome}" />
+                    <Setter Property="Button.BorderColor" Value="{StaticResource HeaderHome}" />
+                    <Setter Property="Button.BorderWidth" Value="1" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="5"
+            Padding="0"
+            BackgroundColor="#fff"
+            BorderColor="Red"
+            BorderWidth="1"
+            Command="{Binding FuntionCommand}"
+            CommandParameter="1"
+            CornerRadius="10"
+            Text="Thôi"
+            TextColor="Red" />
+        <BoxView
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#fff"
+            IsVisible="{Binding IsLoading}" />
+        <controls:LoadingView
+            Grid.Row="0"
+            Grid.RowSpan="3"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             IsVisible="{Binding IsLoading}" />
