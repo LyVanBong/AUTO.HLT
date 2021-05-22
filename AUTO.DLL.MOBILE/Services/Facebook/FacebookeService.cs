@@ -23,6 +23,88 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             _restSharpService = new RestSharpService();
         }
 
+        public async Task<(string Jazoest, string Fbdtsg)> Getarameter(string cookie)
+        {
+            var jazoest = "";
+            var fbdtsg = "";
+            try
+            {
+                var html = await _restSharpService.GetAsync("https://d.facebook.com/", null, cookie);
+                jazoest = Regex.Match(html, @"/><input type=""hidden"" name=""jazoest"" value=""(.*?)"" autocomplete=""off"" /><input type=""hidden"" name=""privacyx""")?.Groups[1]?.Value;
+                fbdtsg = Regex.Match(html, @"id=""mbasic-composer-form""><input type=""hidden"" name=""fb_dtsg"" value=""(.*?)""")?.Groups[1]?.Value;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+            return (jazoest, fbdtsg);
+        }
+
+        public async Task<bool> PokeFriend(string cookie, PokesFriendsModel friend)
+        {
+            var isPoke = false;
+            try
+            {
+                var getPara = await Getarameter(cookie);
+                var fb_dtsg = getPara.Fbdtsg;
+                var jazoest = getPara.Jazoest;
+                if (!string.IsNullOrEmpty(fb_dtsg) && !string.IsNullOrEmpty(jazoest))
+                {
+                    var para = new List<RequestParameter>
+                    {
+                        new RequestParameter("fb_dtsg",fb_dtsg),
+                        new RequestParameter("jazoest",jazoest)
+                    };
+                    var uri = $"https://m.facebook.com/pokes/inline/?dom_id_replace={friend.DomIdReplace}&is_hide=0&poke_target={friend.UId}&ext={friend.Ext}&hash={friend.Hash}";
+                    var html = await _restSharpService.PostAsync(uri, para, cookie);
+                    if (html.Contains("mbasic_logout_button"))
+                        isPoke = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+            return isPoke;
+        }
+
+        public async Task<List<PokesFriendsModel>> GetFriendPoke(string cookie)
+        {
+            List<PokesFriendsModel> data = null;
+            try
+            {
+                var html = await _restSharpService.GetAsync(@"https://d.facebook.com/pokes/?show_outgoing=0", null, cookie);
+                Regex regex = new Regex(@"<div class=""br"" id="".*?></div></div><div class=""cl""></div></div></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
+                var matchCollection = regex.Matches(html);
+                if (matchCollection.Any())
+                {
+                    data = new List<PokesFriendsModel>();
+                    foreach (Match match in matchCollection)
+                    {
+                        var machData = match.Value;
+                        var poke = new PokesFriendsModel();
+                        poke.FullName = Regex.Match(machData, @"<a class=""cc"" href="".*?"">(.*?)</a>")
+                            ?.Groups[1]?.Value;
+                        poke.IsPokes = false;
+                        var uri = Regex.Match(machData, @"/pokes/inline/\?dom_id_replace(.*?)""")?.Groups[1]?.Value;
+                        poke.Ext = Regex.Match(uri, @";ext=(.*?)&")?.Groups[1]?.Value;
+                        poke.Hash = Regex.Match($"{uri}\"", @";hash=(.*?)""")?.Groups[1]?.Value;
+                        poke.UId = Regex.Match(uri, @";poke_target=(.*?)&")?.Groups[1]?.Value;
+                        poke.DomIdReplace = Regex.Match(uri, @"=(.*?)&amp;is_hide")?.Groups[1]?.Value;
+                        poke.UrlAvatar =
+                            HttpUtility.HtmlDecode(Regex.Match(machData, @"(https://scontent.*?)""")?.Groups[1]?.Value);
+                        data.Add(poke);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Lỗi : " + e.ToString());
+            }
+
+            return data;
+        }
+
         public async Task<T> GetInfoUser<T>(string token, string fields)
         {
             try
@@ -58,30 +140,30 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             {
                 if (string.IsNullOrEmpty(cookie) || string.IsNullOrEmpty(token))
                 {
-                    return false;
+                    isLive = false;
                 }
                 else
                 {
                     var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
                     if (html == null)
-                        return false;
+                        isLive = false;
                     else
                     {
                         if (html.Contains("mbasic_logout_button"))
                         {
-                            return true;
+                            isLive = true;
                         }
                         else
                         {
-                            return false;
+                            isLive = false;
                         }
                     }
 
                     var friend = await GetInfoUser<object>(token, "name");
                     if (friend == null)
-                        return false;
+                        isLive = false;
                     else
-                        return true;
+                        isLive = true;
                 }
             }
             catch (Exception e)

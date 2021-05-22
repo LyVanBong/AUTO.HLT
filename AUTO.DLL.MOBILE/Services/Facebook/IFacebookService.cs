@@ -7,6 +7,25 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// Lấy tham số cho việc sử dụng api facebook
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        Task<(string Jazoest, string Fbdtsg)> Getarameter(string cookie);
+        /// <summary>
+        /// Choc ban be
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="friend"></param>
+        /// <returns></returns>
+        Task<bool> PokeFriend(string cookie, PokesFriendsModel friend);
+        /// <summary>
+        /// Lấy danh sách bạn bè có thế chọc
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        Task<List<PokesFriendsModel>> GetFriendPoke(string cookie);
+        /// <summary>
         /// Get thong tin fake tu api face
         /// </summary>
         /// <typeparam name="T"></typeparam>

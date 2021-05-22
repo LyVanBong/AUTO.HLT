@@ -1,48 +1,32 @@
-﻿using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
-using AUTOHLT.MOBILE.Models.Facebook;
-using AUTOHLT.MOBILE.Resources.Languages;
-using AUTOHLT.MOBILE.Services.Database;
-using AUTOHLT.MOBILE.Services.Product;
-using AUTOHLT.MOBILE.Services.User;
-using Microsoft.AppCenter.Crashes;
-using Prism.Navigation;
-using Prism.Services;
-using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Prism.Navigation;
+using Xamarin.CommunityToolkit.ObjectModel;
+using AUTO.DLL.MOBILE.Models.Facebook;
 using AUTO.DLL.MOBILE.Services.Facebook;
+using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using AUTOHLT.MOBILE.Resources.Languages;
+using Microsoft.AppCenter.Crashes;
+using Prism.Services;
+using Prism.Services.Dialogs;
 using Xamarin.Essentials;
-using Xamarin.Forms;
-using IFacebookService = AUTOHLT.MOBILE.Services.Facebook.IFacebookService;
 
 namespace AUTOHLT.MOBILE.ViewModels.Pokes
 {
     public class PokesViewModel : ViewModelBase
     {
-        private bool _isLoading;
-        private IFacebookService _facebookService;
-        private IProductService _productService;
-        private string[] _packetPokesFriends = new string[] { "Gói dùng trong 30 ngày", "Gói dùng trong 180 ngày", "Gói dùng trong 365 ngày" };
-        private IPageDialogService _pageDialogService;
-        private IUserService _userService;
-        private IDatabaseService _databaseService;
+        private bool _isLoading = true;
+        private ObservableRangeCollection<PokesFriendsModel> _pokesData;
+        private IFacebookService _facebook = new FacebookeService();
         private IDialogService _dialogService;
-        private ObservableCollection<PokesFriendsModel> _pokesData;
-        private AUTO.DLL.MOBILE.Services.Facebook.IFacebookService _facebook = new FacebookeService();
+        private IPageDialogService _pageDialogService;
+        private bool _isCheckPoke;
 
-        public ICommand SelectAllFriendsCommand { get; private set; }
         public ICommand PokesFriendCommand { get; private set; }
-        public ObservableCollection<PokesFriendsModel> PokesData
-        {
-            get => _pokesData;
-            set => SetProperty(ref _pokesData, value);
-        }
+        public ICommand SelectAllFriendsCommand { get; private set; }
 
         public bool IsLoading
         {
@@ -50,31 +34,26 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IProductService productService, IPageDialogService pageDialogService, IUserService userService, IDatabaseService databaseService, IDialogService dialogService) : base(navigationService)
+        public ObservableRangeCollection<PokesFriendsModel> PokesData
         {
-            _dialogService = dialogService;
-            _databaseService = databaseService;
-            _userService = userService;
-            _pageDialogService = pageDialogService;
-            _productService = productService;
-            _facebookService = facebookService;
-            PokesFriendCommand = new Command<PokesFriendsModel>(PokesFriend);
-            SelectAllFriendsCommand = new Command(SelectAllFriends);
+            get => _pokesData;
+            set => SetProperty(ref _pokesData, value);
         }
 
-        private void SelectAllFriends()
+        public PokesViewModel(INavigationService navigationService, IDialogService dialogService, IPageDialogService pageDialogService) : base(navigationService)
         {
+            _pageDialogService = pageDialogService;
+            _dialogService = dialogService;
+            PokesFriendCommand = new AsyncCommand<object>(async (friend) => await PokesFriend(friend));
+            SelectAllFriendsCommand = new AsyncCommand(async () => await SelectAllFriends());
+        }
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
             try
             {
-                if (IsLoading) return;
-                IsLoading = true;
-                if (PokesData.Any())
-                {
-                    foreach (var item in PokesData)
-                    {
-                        item.IsPokes = !item.IsPokes;
-                    }
-                }
+                await InitData();
             }
             catch (Exception e)
             {
@@ -86,62 +65,104 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             }
         }
 
-        private async void PokesFriend(PokesFriendsModel obj)
+        private async Task InitData()
         {
+            var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+            if (!string.IsNullOrEmpty(cookie))
+            {
+                var getPoke = await _facebook.GetFriendPoke(cookie);
+                if (getPoke != null && getPoke.Any())
+                {
+                    PokesData = new ObservableRangeCollection<PokesFriendsModel>(getPoke);
+                }
+            }
+            else
+            {
+                var result = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
+                    "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
+                if (result)
+                {
+                    _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
+                    {
+                        var lspoke =
+                            await _facebook.GetFriendPoke(Preferences.Get(AppConstants.CookieFacebook, ""));
+                        if (lspoke != null && lspoke.Any())
+                        {
+                            PokesData = new ObservableRangeCollection<PokesFriendsModel>(lspoke);
+                        }
+                    });
+                }
+            }
+        }
+
+        private async Task SelectAllFriends()
+        {
+            if (PokesData != null && PokesData.Any())
+            {
+                _isCheckPoke = !_isCheckPoke;
+                foreach (var friend in PokesData)
+                {
+                    friend.IsPokes = _isCheckPoke;
+                }
+            }
+        }
+
+        private async Task PokesFriend(object obj)
+        {
+            if (IsLoading) return;
+            IsLoading = true;
             try
             {
-                if (IsLoading) return;
-                IsLoading = true;
-                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                var paraFb = await _facebookService.GetParamaterFacebook(cookie);
-                var fbDtsg = Regex.Match(paraFb, @"><input type=""hidden"" name=""fb_dtsg"" value=""(.*?)""")?.Groups[1]?.Value;
-                var jazoest = Regex.Match(paraFb, @"/><input type=""hidden"" name=""jazoest"" value=""(.*?)""")?.Groups[1]?.Value;
-                if (string.IsNullOrWhiteSpace(cookie) && string.IsNullOrWhiteSpace(fbDtsg) && string.IsNullOrWhiteSpace(jazoest))
+                if (obj is PokesFriendsModel)
                 {
-                    var result = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                        "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
-                    if (result)
+                    var friend = obj as PokesFriendsModel;
+                    var isPoke = await _facebook.PokeFriend(Preferences.Get(AppConstants.CookieFacebook, ""), friend);
+                    if (isPoke)
                     {
-                        _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
-                        {
-                            await UseServiceProduct();
-                        });
-                    }
-                }
-                else
-                {
-                    if (obj != null)
-                    {
-                        var res = await PokesMyFriend(obj, cookie, fbDtsg, jazoest);
-                        if (res)
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} thành công !",
-                                "OK");
-                        else
-                            await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {obj.FullName} lỗi !",
-                                "OK");
+                        await _pageDialogService.DisplayAlertAsync("Thông báo",
+                            "Chọc bạn " + friend.FullName + " thành công !", "OK");
+                        PokesData.Remove(friend);
                     }
                     else
                     {
-                        if (PokesData.Any())
+                        await _pageDialogService.DisplayAlertAsync("Thông báo",
+                            "Chọc bạn " + friend.FullName + " chưa thành công !", "OK");
+                    }
+                }
+                else
+                {
+                    if (PokesData != null && PokesData.Any())
+                    {
+                        var lsPoke = PokesData.Where(x => x.IsPokes).ToList();
+                        if (lsPoke.Any())
                         {
-                            var data = PokesData.Where(x => x.IsPokes).ToList();
-                            if (data.Any())
+                            var numPoke = 0;
+                            foreach (var fr in lsPoke)
                             {
-                                var total = 0;
-                                foreach (var item in data)
+                                var isPoke = await _facebook.PokeFriend(Preferences.Get(AppConstants.CookieFacebook, ""), fr);
+                                if (isPoke)
                                 {
-                                    var res = await PokesMyFriend(item, cookie, fbDtsg, jazoest);
-                                    if (res)
-                                    {
-                                        total++;
-                                        PokesData.Remove(item);
-                                    }
+                                    numPoke++;
+                                    PokesData.Remove(fr);
                                 }
-                                await _pageDialogService.DisplayAlertAsync(Resource._1000021, $"Bạn chọc {total} bạn bè thành công !",
-                                    "OK");
+                            }
+
+                            if (numPoke > 0)
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Đã chọc " + numPoke + " bạn bè thành công", "OK");
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Lỗi vui lòng thực hiện lại", "OK");
                             }
                         }
                     }
+                    else
+                    {
+                        await InitData();
+                    }
                 }
             }
             catch (Exception e)
@@ -151,102 +172,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Pokes
             finally
             {
                 IsLoading = false;
-            }
-        }
-
-        private async Task<bool> PokesMyFriend(PokesFriendsModel obj, string cookie, string fbDtsg, string jazoest)
-        {
-            try
-            {
-                var pokeFr = await _facebookService.PokesFriends(cookie, obj.UId, obj.Ext, obj.Hash, fbDtsg, jazoest, obj.DomIdReplace);
-                if (pokeFr.Contains("mbasic_logout_button"))
-                {
-                    PokesData.Remove(obj);
-                    return true;
-                }
-                else
-                    return false;
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-                return false;
-            }
-        }
-
-        public override void Initialize(INavigationParameters parameters)
-        {
-            base.Initialize(parameters);
-            IsLoading = true;
-        }
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-            InitializeData();
-        }
-
-        private async void InitializeData()
-        {
-            try
-            {
-                await UseServiceProduct();
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-            finally
-            {
-                IsLoading = false;
-            }
-
-        }
-        private async Task UseServiceProduct()
-        {
-            try
-            {
-                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                var token = Preferences.Get(AppConstants.TokenFaceook, "");
-                if (!string.IsNullOrEmpty(cookie) && await _facebook.CheckCookieAndToken(cookie,token))
-                {
-                    var lsPokes = new List<PokesFriendsModel>();
-                    var htmlPokes = await _facebookService.GetPokesFriends(cookie, "0");
-                    Regex regex = new Regex(@"<div class=""br"" id="".*?></div></div><div class=""cl""></div></div></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
-                    MatchCollection matchCollection = regex.Matches(htmlPokes);
-                    foreach (Match match in matchCollection)
-                    {
-                        var data = match.Value;
-                        var poke = new PokesFriendsModel();
-                        poke.FullName = Regex.Match(data, @"<a class=""cc"" href="".*?"">(.*?)</a>")
-                            ?.Groups[1]?.Value;
-                        poke.IsPokes = false;
-                        var uri = Regex.Match(data, @"/pokes/inline/\?dom_id_replace(.*?)""")?.Groups[1]?.Value;
-                        poke.Ext = Regex.Match(uri, @";ext=(.*?)&")?.Groups[1]?.Value;
-                        poke.Hash = Regex.Match($"{uri}\"", @";hash=(.*?)""")?.Groups[1]?.Value;
-                        poke.UId = Regex.Match(uri, @";poke_target=(.*?)&")?.Groups[1]?.Value;
-                        poke.DomIdReplace = Regex.Match(uri, @"=(.*?)&amp;is_hide")?.Groups[1]?.Value;
-                        lsPokes.Add(poke);
-                    }
-
-                    PokesData = new ObservableCollection<PokesFriendsModel>(lsPokes);
-                }
-                else
-                {
-                    var result = await _pageDialogService.DisplayAlertAsync(Resource._1000021,
-                        "Bạn cần kết nối với facebook của mình để sử dụng tinh năng này !", "OK", "Cancel");
-                    if (result)
-                    {
-                        _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (res) =>
-                        {
-                            await UseServiceProduct();
-                        });
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
             }
         }
     }

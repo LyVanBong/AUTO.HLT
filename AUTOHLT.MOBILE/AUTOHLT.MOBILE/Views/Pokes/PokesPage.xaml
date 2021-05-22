@@ -20,7 +20,8 @@
             <Label
                 Grid.Row="1"
                 Margin="10,0"
-                Text="Danh sách bạn bè có thể chọc" />
+                Text="Danh sách bạn bè có thể chọc"
+                VerticalOptions="CenterAndExpand" />
 
             <StackLayout
                 Grid.Row="2"
@@ -29,14 +30,15 @@
                 Orientation="Horizontal"
                 Spacing="0">
                 <Button
-                    Margin="10,0"
+                    Margin="5,0"
                     BackgroundColor="#dff3e3"
                     BorderColor="#c9cbff"
                     BorderWidth="1"
                     Command="{Binding PokesFriendCommand}"
+                    CommandParameter="1"
                     CornerRadius="10"
                     HorizontalOptions="FillAndExpand"
-                    Text="Chọc toàn bộ" />
+                    Text="Chọc bạn bè" />
                 <Image
                     Margin="10,0"
                     Aspect="AspectFit"
@@ -56,6 +58,13 @@
                 <customRenderer:CustomCollectionViewRenderer.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </customRenderer:CustomCollectionViewRenderer.ItemsLayout>
+                <customRenderer:CustomCollectionViewRenderer.EmptyView>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Text="Hiện tại không có bạn bè nào có thể chọc"
+                        TextColor="{StaticResource HeaderHome}"
+                        VerticalTextAlignment="Center" />
+                </customRenderer:CustomCollectionViewRenderer.EmptyView>
                 <customRenderer:CustomCollectionViewRenderer.ItemTemplate>
                     <DataTemplate>
                         <effectsView:SfEffectsView
@@ -74,8 +83,8 @@
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="0"
-                                    Margin="10"
-                                    Source="{markupExtensions:ImageResource icon_pokes_user.png}" />
+                                    Margin="0"
+                                    Source="{Binding UrlAvatar}" />
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"

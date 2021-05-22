@@ -176,27 +176,23 @@
                 IndicatorSize="10"
                 IndicatorsShape="Circle"
                 SelectedIndicatorColor="#fc5404" />
-            <Grid
+            <Button
                 Grid.Row="3"
-                HorizontalOptions="Center"
-                RowDefinitions="*,40">
-                <Button
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="0"
-                    Padding="0"
-                    BackgroundColor="#f6f5f5"
-                    BorderColor="#cf0000"
-                    BorderWidth="2"
-                    Clicked="Button_OnClicked"
-                    CornerRadius="10"
-                    FontAttributes="Bold"
-                    FontSize="15"
-                    Opacity=".8"
-                    Text="Tìm hiểu thêm"
-                    TextColor="#4a47a3"
-                    WidthRequest="350" />
-            </Grid>
+                Margin="50,0"
+                Padding="0"
+                BackgroundColor="#f6f5f5"
+                BorderColor="#cf0000"
+                BorderWidth="2"
+                Clicked="Button_OnClicked"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                FontSize="15"
+                HeightRequest="40"
+                Opacity=".8"
+                Text="Tìm hiểu thêm"
+                TextColor="#4a47a3"
+                VerticalOptions="End"
+                WidthRequest="350" />
 
             <!--  danh sach dich vu phai tra tien  -->
             <customRenderer:CustomCollectionViewRenderer
