@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Essentials;
 
 namespace AUTOHLT.MOBILE.Services.Facebook
 {
@@ -22,7 +23,119 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             _requestProvider = requestProvider;
             _restSharpService = restSharpService;
         }
+        public async Task<bool> CheckCookieAndToken()
+        {
+            try
+            {
+                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                var token = Preferences.Get(AppConstants.TokenFaceook, "");
+                if (string.IsNullOrEmpty(cookie) || string.IsNullOrEmpty(token))
+                {
+                    return false;
+                }
+                else
+                {
+                    var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
+                    if (html == null)
+                        return false;
+                    else
+                    {
+                        if (html.Contains("mbasic_logout_button"))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
 
+                    var friend = await GetInfoUser();
+                    if (friend == null)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+                return false;
+            }
+        }
+        public async Task<NamePictureUserModel> GetInfoUser(string fields = "name,picture")
+        {
+            try
+            {
+                var accessToken = Preferences.Get(AppConstants.TokenFaceook, "");
+                if (accessToken != null)
+                {
+                    var para = new List<RequestParameter>
+                    {
+                        new RequestParameter("fields",fields),
+                        new RequestParameter("access_token",accessToken),
+                    };
+                    var data = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me", para);
+                    if (data != null)
+                    {
+                        var info = JsonConvert.DeserializeObject<NamePictureUserModel>(data);
+                        if (info != null)
+                            return info;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+            return null;
+        }
+        public async Task<string> SendMessageFacebook(string body, string ids)
+        {
+            try
+            {
+                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                var fbPara = await GeJazoestAndFbdtsg(cookie);
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("fb_dtsg",fbPara.Fbdtsg),
+                    new RequestParameter("jazoest",fbPara.Jazoest),
+                    new RequestParameter("body",body),
+                    new RequestParameter($"ids[{ids}]",ids),
+                };
+                var data = await _restSharpService.PostAsync(@"https://d.facebook.com/messages/send/?icm=1", parameters, cookie);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+
+            return null;
+        }
+        public async Task<string> PostNewsOnFacebookFriend(string target, string message)
+        {
+            try
+            {
+                var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                var fbPara = await GeJazoestAndFbdtsg(cookie);
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("fb_dtsg",fbPara.Fbdtsg),
+                    new RequestParameter("jazoest",fbPara.Jazoest),
+                    new RequestParameter("target",target),
+                    new RequestParameter($"message",message),
+                };
+                var data = await _restSharpService.PostAsync($"https://m.facebook.com/a/wall.php?id={target}", parameters, cookie);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+
+            return null;
+        }
         public async Task<(string Jazoest, string Fbdtsg)> GeJazoestAndFbdtsg(string cookie)
         {
             try
@@ -159,6 +272,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
 
         public async Task<bool> CheckCookie(string cookie)
         {
+            var isCookieLive = false;
             try
             {
                 var html = await _restSharpService.GetAsync(AppConstants.UriLoginFacebook, null, cookie);
@@ -168,15 +282,16 @@ namespace AUTOHLT.MOBILE.Services.Facebook
                 {
                     if (html.Contains("mbasic_logout_button"))
                     {
-                        return true;
+                        isCookieLive = true;
                     }
                 }
-                return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Crashes.TrackError(e);
             }
+
+            return isCookieLive;
         }
 
         public async Task<string> UnFriend(string fb_dtsg, string jazoest, string friend_id, string cookie)
@@ -198,25 +313,24 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             }
         }
 
-        public async Task<FriendsModel> GetAllFriend(string fields, string accessToken)
+        public async Task<T> GetAllFriend<T>(string accessToken, string fields = "name,picture{url}", string limit = "5000")
         {
             try
             {
                 var parameters = new List<RequestParameter>
                 {
-                    new RequestParameter("fields","name,picture{url}"),
-                    new RequestParameter("limit",fields),
+                    new RequestParameter("fields",fields),
+                    new RequestParameter("limit",limit),
                     new RequestParameter("access_token",accessToken),
                 };
                 var json = await _restSharpService.GetAsync("https://graph.facebook.com/v9.0/me/friends", parameters);
-                if (json != null)
-                    return JsonConvert.DeserializeObject<FriendsModel>(json);
-                return null;
+                return JsonConvert.DeserializeObject<T>(json);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Crashes.TrackError(e);
             }
+            return default;
         }
 
         public async Task<string> GetFriendsDoNotInteract(string fbDtsg, string q)

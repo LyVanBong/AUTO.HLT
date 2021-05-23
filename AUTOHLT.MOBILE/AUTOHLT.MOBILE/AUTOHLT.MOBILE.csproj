@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,12 +19,16 @@
     <None Remove="Resources\Fonts\RobotoRegular.ttf" />
     <None Remove="Resources\Images\hinhnen.jpg" />
     <None Remove="Resources\Images\icon_account.png" />
+    <None Remove="Resources\Images\icon_add_friend.png" />
     <None Remove="Resources\Images\icon_add_friends.png" />
     <None Remove="Resources\Images\icon_add_topup.png" />
     <None Remove="Resources\Images\icon_agency.png" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
+    <None Remove="Resources\Images\icon_auto_vip.png" />
+    <None Remove="Resources\Images\icon_birthday.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_comments.png" />
+    <None Remove="Resources\Images\icon_connection.png" />
     <None Remove="Resources\Images\icon_customer_support.png" />
     <None Remove="Resources\Images\icon_eye_view.png" />
     <None Remove="Resources\Images\icon_f1.png" />
@@ -72,11 +76,15 @@
     <EmbeddedResource Include="Resources\Fonts\RobotoRegular.ttf" />
     <EmbeddedResource Include="Resources\Images\hinhnen.jpg" />
     <EmbeddedResource Include="Resources\Images\icon_account.png" />
+    <EmbeddedResource Include="Resources\Images\icon_add_friend.png" />
     <EmbeddedResource Include="Resources\Images\icon_add_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_agency.png" />
     <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
+    <EmbeddedResource Include="Resources\Images\icon_auto_vip.png" />
+    <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />
+    <EmbeddedResource Include="Resources\Images\icon_connection.png" />
     <EmbeddedResource Include="Resources\Images\icon_customer_support.png" />
     <EmbeddedResource Include="Resources\Images\icon_eye_view.png" />
     <EmbeddedResource Include="Resources\Images\icon_f1.png" />
@@ -149,7 +157,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\Dialog\ConnectFacebook\ConnectFacebookDialog.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\Dialog\UseService\UseServiceDialog.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -162,10 +170,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Languages\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -222,7 +226,10 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FilterFriend\FilterFriendPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\HappyBirthday\HappyBirthdayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Home\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -263,11 +270,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\Languages\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
     <Compile Update="Views\FakeUpApp\ContentPage.xaml.cs">
       <DependentUpon>ContentPage.xaml</DependentUpon>
     </Compile>
@@ -281,6 +283,10 @@
     <Folder Include="ViewModels\Agency\" />
     <Folder Include="ViewModels\TopUp\" />
     <Folder Include="ViewModels\UnLockFb\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AUTO.DLL.MOBILE\AUTO.DLL.MOBILE.csproj" />
   </ItemGroup>
 
 </Project>

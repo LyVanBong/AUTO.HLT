@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Xamarin.Forms.Internals;
 
 namespace AUTOHLT.MOBILE.Services.RestSharp
 {
@@ -17,7 +16,6 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
         public RestSharpService()
         {
             _client = new RestClient();
-            _client.Timeout = -1;
         }
         private void CreateClients(string uri, Method method = Method.GET)
         {
@@ -88,6 +86,7 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
         }
         public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
+            var html = "";
             try
             {
                 CreateClients(uri);
@@ -103,12 +102,14 @@ namespace AUTOHLT.MOBILE.Services.RestSharp
 
                 var response = await _client.ExecuteAsync(_request);
 
-                return response.Content;
+                html = response.Content;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Crashes.TrackError(e);
             }
+
+            return html;
         }
 
         public async Task<string> PostAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)

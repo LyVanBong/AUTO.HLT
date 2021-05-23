@@ -93,7 +93,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Interactive
         {
             try
             {
-                var data = await _facebookService.GetAllFriend(numberFriends, token);
+                var data = await _facebookService.GetAllFriend<FriendsModel>(token, "", numberFriends);
                 return data;
             }
             catch (Exception e)

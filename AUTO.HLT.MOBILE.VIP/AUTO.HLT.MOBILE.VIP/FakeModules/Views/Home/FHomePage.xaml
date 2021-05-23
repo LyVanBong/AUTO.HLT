@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:xaml="http://prismlibrary.com"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
+    IconImageSource="https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/icon_f_menu.png?alt=media&amp;token=100412a2-34cc-4e0c-b301-2bac943986df">
     <NavigationPage.TitleView>
         <Grid BackgroundColor="Transparent" ColumnDefinitions="*,60">
             <Label

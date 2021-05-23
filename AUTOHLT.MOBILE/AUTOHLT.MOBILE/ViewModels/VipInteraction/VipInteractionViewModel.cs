@@ -92,7 +92,7 @@ namespace AUTOHLT.MOBILE.ViewModels.VipInteraction
         {
             try
             {
-                var data = await _facebookService.GetAllFriend(numberFriends, token);
+                var data = await _facebookService.GetAllFriend<FriendsModel>(token,"","");
                 return data;
             }
             catch (Exception e)
