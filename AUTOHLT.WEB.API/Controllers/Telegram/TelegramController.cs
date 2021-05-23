@@ -9,7 +9,7 @@ namespace AUTOHLT.WEB.API.Controllers.Telegram
     [RoutePrefix("api/version3/Telegram")]
     public class TelegramController : ApiController
     {
-        private string _idChatWork2 = "-588406460";
+        private string _idChatWork2 = "-1001488986757";
         /// <summary>
         /// Gửi tin nhắn telegram
         /// </summary>

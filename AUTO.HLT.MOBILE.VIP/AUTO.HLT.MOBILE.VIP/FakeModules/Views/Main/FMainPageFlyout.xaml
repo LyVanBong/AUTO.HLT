@@ -9,7 +9,7 @@
                          Default='0'}"
     Background="#2CC5D7"
     BackgroundColor="#2CC5D7"
-    IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
+    IconImageSource="https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/icon_f_menu.png?alt=media&amp;token=100412a2-34cc-4e0c-b301-2bac943986df">
     <StackLayout
         Margin="0"
         Padding="0"

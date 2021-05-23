@@ -3,12 +3,12 @@ using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
-namespace AUTOHLT.MOBILE.Views.FilterFriend
+namespace AUTOHLT.MOBILE.Views.HappyBirthday
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FilterFriendPage : ContentPage
+    public partial class HappyBirthdayPage : ContentPage
     {
-        public FilterFriendPage()
+        public HappyBirthdayPage()
         {
             InitializeComponent();
         }

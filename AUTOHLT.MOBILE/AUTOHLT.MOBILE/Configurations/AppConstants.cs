@@ -2,6 +2,10 @@
 {
     public static class AppConstants
     {
+        /// <summary>
+        /// lấy token xong
+        /// </summary>
+        public const string GetTokenDone = "GetTokenDone";
         public const string HdNapTien = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         public const string HdChuyenTien = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         public const string HdTangLike = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
@@ -60,7 +64,7 @@
         /// <summary>
         /// Uri đăng nhập facebook
         /// </summary>
-        public const string UriLoginFacebook = "https://d.facebook.com/";
+        public const string UriLoginFacebook = "https://m.facebook.com/";
         public const string UriLoginFacebook2 = "https://m.facebook.com/";
 
         /// <summary>

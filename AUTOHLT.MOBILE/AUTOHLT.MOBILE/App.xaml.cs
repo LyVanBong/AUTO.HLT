@@ -22,6 +22,7 @@ using AUTOHLT.MOBILE.ViewModels.BuffLikes;
 using AUTOHLT.MOBILE.ViewModels.ChangePassword;
 using AUTOHLT.MOBILE.ViewModels.FakeUpApp;
 using AUTOHLT.MOBILE.ViewModels.FilterFriend;
+using AUTOHLT.MOBILE.ViewModels.HappyBirthday;
 using AUTOHLT.MOBILE.ViewModels.Home;
 using AUTOHLT.MOBILE.ViewModels.Interactive;
 using AUTOHLT.MOBILE.ViewModels.Login;
@@ -43,6 +44,7 @@ using AUTOHLT.MOBILE.Views.BuffSub;
 using AUTOHLT.MOBILE.Views.ChangePassword;
 using AUTOHLT.MOBILE.Views.FakeUpApp;
 using AUTOHLT.MOBILE.Views.FilterFriend;
+using AUTOHLT.MOBILE.Views.HappyBirthday;
 using AUTOHLT.MOBILE.Views.Home;
 using AUTOHLT.MOBILE.Views.Interactive;
 using AUTOHLT.MOBILE.Views.Login;
@@ -89,7 +91,7 @@ namespace AUTOHLT.MOBILE
 
             containerRegistry.RegisterDialog<TopUpDialog, TopUpDialogViewModel>();
             containerRegistry.RegisterDialog<OtpDialog, OtpViewModel>();
-            containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookeViewModel>();
+            containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
             containerRegistry.RegisterDialog<BuffDialog, BuffDialogViewModel>();
             containerRegistry.RegisterDialog<UseServiceDialog, UseServiceDialogViewModel>();
 
@@ -118,7 +120,8 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
-            containerRegistry.RegisterForNavigation<Views.TopUp.TopUpPage, ViewModels.TopUp.TopUpViewModel>();
+            containerRegistry.RegisterForNavigation<TopUpPage, TopUpViewModel>();
+            containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<AgencyPage, AgencyViewModel>();
             containerRegistry.RegisterForNavigation<VipInteractionPage, VipInteractionViewModel>();
             containerRegistry.RegisterForNavigation<FContentPage2, FContentPage2ViewModel>();

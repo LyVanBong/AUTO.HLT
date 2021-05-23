@@ -17,12 +17,12 @@
             BackgroundColor="{StaticResource Gray-White}"
             RowSpacing="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="80" />
-                <RowDefinition Height="110" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
             <BoxView
                 Grid.Row="0"
@@ -71,7 +71,7 @@
             <Frame
                 Grid.Row="1"
                 Grid.RowSpan="2"
-                Margin="20,10"
+                Margin="20,5"
                 Padding="0"
                 BackgroundColor="{StaticResource Gray-White}"
                 BorderColor="{StaticResource Gray-300}"
@@ -79,10 +79,10 @@
                 HasShadow="True">
                 <Grid
                     Margin="0"
-                    Padding="10"
-                    ColumnDefinitions="*,*,*,*"
+                    Padding="5"
+                    ColumnDefinitions="*,*,*"
                     ColumnSpacing="0"
-                    RowDefinitions="60,*,30"
+                    RowDefinitions="*,30"
                     RowSpacing="0">
                     <Grid.Resources>
                         <Style TargetType="BoxView">
@@ -91,209 +91,123 @@
                             <Setter Property="Margin" Value="2" />
                         </Style>
                         <Style TargetType="Image">
-                            <Setter Property="Margin" Value="15" />
+                            <Setter Property="Margin" Value="5" />
                             <Setter Property="Aspect" Value="AspectFit" />
                         </Style>
                     </Grid.Resources>
-                    <Grid
-                        Grid.Row="0"
+                    <Label
+                        Grid.Row="1"
                         Grid.Column="0"
-                        Grid.ColumnSpan="4"
-                        Margin="0"
-                        Padding="0"
-                        ColumnDefinitions="*,Auto"
-                        RowDefinitions="*,*">
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            HorizontalOptions="FillAndExpand"
-                            TextColor="{StaticResource Gray-800}"
-                            VerticalOptions="CenterAndExpand">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span
-                                        FontFamily="Awesome5ProSolid"
-                                        FontSize="16"
-                                        Text="{x:Static icon:FontAwesome5ProSolid.MoneyCheckAlt}" />
-                                    <Span Text=" " />
-                                    <Span FontSize="16" Text="{markupExtensions:Translate 1000018}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            HorizontalOptions="FillAndExpand"
-                            TextColor="{StaticResource Gray-800}">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span
-                                        FontFamily="Awesome5DuotoneSolid"
-                                        FontSize="16"
-                                        Text="{Binding IconShowMoney}">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ShowMyMoneyCommand}" />
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                    <Span Text=" " />
-                                    <Span FontSize="16" Text="{Binding MoneyUser, Converter={StaticResource StringToMyMoney}}" />
-                                    <Span Text=" " />
-                                    <Span
-                                        FontAttributes="Bold"
-                                        FontSize="16"
-                                        Text="đ" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <BoxView
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            BackgroundColor="#02A802"
-                            CornerRadius="5,2,2,5" />
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Margin="6,0"
-                            Text="{markupExtensions:Translate 1000024}"
-                            TextColor="#fff"
-                            VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TopUpMoneyCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            FontFamily="Awesome5ProSolid"
-                            FontSize="22"
-                            HorizontalOptions="CenterAndExpand"
-                            Text="{x:Static icon:FontAwesome5ProSolid.PlusCircle}"
-                            TextColor="#02A802"
-                            VerticalOptions="Start">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TopUpMoneyCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
-                    <Label
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        FontSize="12"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{markupExtensions:Translate 1000019}" />
-                    <Label
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        FontSize="12"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{markupExtensions:Translate 1000006}" />
-                    <Label
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        FontSize="12"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{markupExtensions:Translate 1000021}" />
-                    <Label
-                        Grid.Row="2"
-                        Grid.Column="3"
                         FontSize="12"
                         HorizontalOptions="CenterAndExpand"
                         Text="{markupExtensions:Translate 1000005}" />
                     <Image
-                        Grid.Row="1"
+                        Grid.Row="0"
                         Grid.Column="0"
-                        Source="{markupExtensions:ImageResource icon_transfer.png}" />
-                    <Image
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Source="{markupExtensions:ImageResource icon_change_password.png}" />
-                    <badge:SfBadgeView
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Margin="0"
-                        Padding="0"
-                        BadgeText="">
-                        <badge:SfBadgeView.BadgeSettings>
-                            <badge:BadgeSetting
-                                BadgeAnimation="Scale"
-                                BadgePosition="TopRight"
-                                BadgeType="{Binding BadgeType}"
-                                CornerRadius="5"
-                                FontSize="8"
-                                TextPadding="2" />
-                        </badge:SfBadgeView.BadgeSettings>
-                        <badge:SfBadgeView.Content>
-                            <Image Source="{markupExtensions:ImageResource icon_notification.png}" />
-                        </badge:SfBadgeView.Content>
-                    </badge:SfBadgeView>
-
-                    <Image
-                        Grid.Row="1"
-                        Grid.Column="3"
                         Source="{markupExtensions:ImageResource icon_account.png}" />
+
                     <BoxView
-                        Grid.Row="1"
+                        Grid.Row="0"
                         Grid.RowSpan="2"
                         Grid.Column="0">
                         <BoxView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="15" />
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="0" />
                         </BoxView.GestureRecognizers>
                     </BoxView>
-                    <BoxView
+                    <Label
                         Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="12"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{markupExtensions:Translate 1000006}" />
+                    <Image
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Source="{markupExtensions:ImageResource icon_change_password.png}" />
+                    <BoxView
+                        Grid.Row="0"
                         Grid.RowSpan="2"
                         Grid.Column="1">
                         <BoxView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="16" />
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="1" />
                         </BoxView.GestureRecognizers>
                     </BoxView>
-                    <BoxView
+                    <Label
                         Grid.Row="1"
+                        Grid.Column="2"
+                        FontSize="12"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{markupExtensions:Translate 1000084}" />
+                    <Image
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Source="{markupExtensions:ImageResource icon_customer_support.png}" />
+
+                    <BoxView
+                        Grid.Row="0"
                         Grid.RowSpan="2"
                         Grid.Column="2">
                         <BoxView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="17" />
-                        </BoxView.GestureRecognizers>
-                    </BoxView>
-                    <BoxView
-                        Grid.Row="1"
-                        Grid.RowSpan="2"
-                        Grid.Column="3">
-                        <BoxView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="18" />
+                            <TapGestureRecognizer Command="{Binding NavigationCommand}" CommandParameter="2" />
                         </BoxView.GestureRecognizers>
                     </BoxView>
                 </Grid>
             </Frame>
-            <ScrollView
-                x:Name="ScrollViewWebcome"
+
+            <CarouselView
+                x:Name="CarouselView"
                 Grid.Row="3"
-                Margin="0"
-                Padding="0"
-                HorizontalScrollBarVisibility="Never"
-                Orientation="Horizontal">
-                <Label
-                    x:Name="LabelWebcome"
-                    Padding="5,0"
-                    FontSize="14"
-                    HorizontalOptions="FillAndExpand"
-                    LineBreakMode="NoWrap"
-                    Text="{markupExtensions:Translate 1000075}"
-                    VerticalOptions="FillAndExpand" />
-            </ScrollView>
-            <!--  danh sach dich vu phai tra tien  -->
-            <customRenderer:CustomCollectionViewRenderer
+                Grid.RowSpan="2"
+                Margin="10"
+                IndicatorView="indicatorView"
+                IsScrollAnimated="True">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Aspect="AspectFit" Source="{Binding UrlImage}" />
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView
+                x:Name="indicatorView"
                 Grid.Row="4"
                 Margin="10,0"
+                HorizontalOptions="CenterAndExpand"
+                IndicatorColor="#e1e5ea"
+                IndicatorSize="10"
+                IndicatorsShape="Circle"
+                SelectedIndicatorColor="#fc5404" />
+            <Button
+                Grid.Row="3"
+                Margin="50,0"
+                Padding="0"
+                BackgroundColor="#f6f5f5"
+                BorderColor="#cf0000"
+                BorderWidth="2"
+                Clicked="Button_OnClicked"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                FontSize="15"
+                HeightRequest="40"
+                Opacity=".8"
+                Text="Tìm hiểu thêm"
+                TextColor="#4a47a3"
+                VerticalOptions="End"
+                WidthRequest="350" />
+
+            <!--  danh sach dich vu phai tra tien  -->
+            <customRenderer:CustomCollectionViewRenderer
+                Grid.Row="5"
+                Margin="10,0"
+                Background="#fff"
                 BackgroundColor="#fff"
                 ItemsSource="{Binding ServiceData}"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
-                        HorizontalItemSpacing="5"
+                        HorizontalItemSpacing="10"
                         Orientation="Vertical"
-                        Span="3"
-                        VerticalItemSpacing="5" />
+                        Span="1"
+                        VerticalItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.Footer>
                     <StackLayout BackgroundColor="#fff" HeightRequest="30" />
@@ -306,37 +220,39 @@
                             BackgroundColor="{StaticResource Gray-100}"
                             BorderColor="{StaticResource Gray-300}"
                             CornerRadius="10"
-                            HasShadow="False"
-                            HeightRequest="120">
-                            <Grid
+                            HasShadow="False">
+                            <badge:SfBadgeView
                                 Margin="0"
-                                Padding="0"
-                                RowDefinitions="*,30">
-                                <badge:SfBadgeView
-                                    Grid.Row="0"
-                                    Margin="5"
-                                    Padding="0"
-                                    BadgeText="{Binding BadgeView}">
-                                    <badge:SfBadgeView.BadgeSettings>
-                                        <badge:BadgeSetting
-                                            BadgeAnimation="Scale"
-                                            BadgePosition="TopRight"
-                                            BadgeType="{Binding BadgeType}"
-                                            CornerRadius="5"
-                                            FontSize="12" />
-                                    </badge:SfBadgeView.BadgeSettings>
-                                    <badge:SfBadgeView.Content>
-                                        <Image Source="{Binding IconService}" />
-                                    </badge:SfBadgeView.Content>
-                                </badge:SfBadgeView>
-                                <Label
-                                    Grid.Row="1"
-                                    FontAttributes="Bold"
-                                    FontSize="10"
-                                    HorizontalOptions="Center"
-                                    Text="{Binding TitleService}"
-                                    VerticalOptions="Center" />
-                            </Grid>
+                                Padding="10,12,50,10"
+                                BadgeText="{Binding BadgeView}">
+                                <badge:SfBadgeView.BadgeSettings>
+                                    <badge:BadgeSetting
+                                        BadgeAnimation="Scale"
+                                        BadgePosition="TopRight"
+                                        BadgeType="{Binding BadgeType}"
+                                        CornerRadius="5"
+                                        FontSize="12" />
+                                </badge:SfBadgeView.BadgeSettings>
+                                <badge:SfBadgeView.Content>
+                                    <Grid
+                                        Margin="0"
+                                        Padding="0"
+                                        ColumnDefinitions="80,*">
+                                        <Image
+                                            Grid.Column="0"
+                                            BackgroundColor="Transparent"
+                                            Source="{Binding IconService}" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontAttributes="Bold"
+                                            FontSize="15"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="{Binding TitleService}"
+                                            TextColor="#000"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </badge:SfBadgeView.Content>
+                            </badge:SfBadgeView>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference PageHome}, Path=BindingContext.NavigationCommand}" CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
@@ -344,7 +260,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </customRenderer:CustomCollectionViewRenderer>
-            <ContentView x:Name="ContentView" Grid.Row="5" />
             <controls:LoadingView
                 Grid.Row="0"
                 Grid.RowSpan="6"

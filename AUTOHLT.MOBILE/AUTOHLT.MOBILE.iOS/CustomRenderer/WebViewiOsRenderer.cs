@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Text.RegularExpressions;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.iOS.CustomRenderer;
-using Foundation;
+using System.Linq;
+using System.Text.RegularExpressions;
 using WebKit;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -23,13 +22,9 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
             }
         }
     }
-
     public class CookieNavigationDelegate : WKNavigationDelegate
     {
-        private bool _hasToken;
         private bool _hasCookie;
-        private bool _hasFb_d;
-        private bool _hasJazoest;
         public override async void DidFinishNavigation(WKWebView webView, WKNavigation navigation)
         {
             if (!_hasCookie)
@@ -47,37 +42,10 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
 
                         if (data.Contains("c_user="))
                         {
+                            _hasCookie = true;
                             var ck = data.TrimEnd(';');
                             Preferences.Set(AppConstants.CookieFacebook, ck);
                             MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetCookieDone);
-                            _hasCookie = true;
-                            var jsData = await webView.EvaluateJavaScriptAsync("document.body.innerHTML");
-                            var html = jsData.ToString();
-                            if (!string.IsNullOrWhiteSpace(html))
-                            {
-                                if (!_hasFb_d)
-                                {
-                                    var fbDtsg = Regex.Match(html, @"name=""fb_dtsg"" value=""(.*?)""").Groups[1].Value;
-                                    if (!string.IsNullOrWhiteSpace(fbDtsg))
-                                    {
-                                        Preferences.Set(AppConstants.Fb_Dtsg, fbDtsg);
-                                        _hasFb_d = true;
-                                    }
-                                }
-                                if (!_hasJazoest)
-                                {
-                                    var jazoest = Regex.Match(html, @"name=""jazoest"" value=""(.*?)""").Groups[1].Value;
-                                    if (!string.IsNullOrWhiteSpace(jazoest))
-                                    {
-                                        Preferences.Set(AppConstants.Jazoest, jazoest);
-                                        _hasJazoest = true;
-                                    }
-                                }
-                            }
-                            if (!_hasToken)
-                            {
-                                webView.LoadRequest(NSUrlRequest.FromUrl(new NSUrl(AppConstants.UriGetTokenFacebook)));
-                            }
                         }
                     }
                 });
@@ -90,25 +58,14 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
                 var html = jsData.ToString();
                 if (!string.IsNullOrWhiteSpace(html))
                 {
-                    if (!_hasToken)
+                    var data = Regex.Match(html, @"\,\\\""accessToken\\\""\:\\\""(.*?)\\\""\,\\\""useLocalFilePreview\\\""\:true\,")?.Groups[1]?.Value;
+                    if (!string.IsNullOrWhiteSpace(data))
                     {
-                        var data = Regex.Match(html, @"\,\\\""accessToken\\\""\:\\\""(.*?)\\\""\,\\\""useLocalFilePreview\\\""\:true\,")?.Groups[1]?.Value;
-                        if (!string.IsNullOrWhiteSpace(data))
-                        {
-                            Preferences.Set(AppConstants.TokenFaceook, data);
-                            _hasToken = true;
-                        }
+                        _hasCookie = false;
+                        Preferences.Set(AppConstants.TokenFaceook, data);
+                        MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetTokenDone);
                     }
                 }
-            }
-
-            if (_hasToken && _hasFb_d && _hasCookie && _hasJazoest)
-            {
-                MessagingCenter.Send<App>((App)Xamarin.Forms.Application.Current, AppConstants.GetokenDone);
-                _hasCookie = false;
-                _hasFb_d = false;
-                _hasJazoest = false;
-                _hasToken = false;
             }
         }
     }

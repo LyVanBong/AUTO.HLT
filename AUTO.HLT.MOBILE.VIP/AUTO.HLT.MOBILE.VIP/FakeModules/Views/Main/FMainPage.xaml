@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:home="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Home;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:main="clr-namespace:AUTO.HLT.MOBILE.VIP.FakeModules.Views.Main;assembly=AUTO.HLT.MOBILE.VIP"
-    IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
+    IconImageSource="https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/icon_f_menu.png?alt=media&amp;token=100412a2-34cc-4e0c-b301-2bac943986df">
     <FlyoutPage.Flyout>
         <main:FMainPageFlyout x:Name="FlyoutPage" />
     </FlyoutPage.Flyout>
@@ -14,12 +14,12 @@
             BackgroundColor="#FFC20F"
             BarBackgroundColor="#FFC20F"
             BarTextColor="#000"
-            IconImageSource="https://api.autohlt.vn/icon_f_menu.png">
+            IconImageSource="https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/icon_f_menu.png?alt=media&amp;token=100412a2-34cc-4e0c-b301-2bac943986df">
             <x:Arguments>
                 <home:FHomePage
                     Background="#FFC20F"
                     BackgroundColor="#FFC20F"
-                    IconImageSource="https://api.autohlt.vn/icon_f_menu.png" />
+                    IconImageSource="https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/icon_f_menu.png?alt=media&amp;token=100412a2-34cc-4e0c-b301-2bac943986df" />
             </x:Arguments>
         </NavigationPage>
     </FlyoutPage.Detail>
