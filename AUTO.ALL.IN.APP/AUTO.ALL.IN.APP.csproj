@@ -164,7 +164,7 @@
       <Version>90.0.4430.2400</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfBusyIndicator.WPF">
-      <Version>19.1.0.63</Version>
+      <Version>19.1.0.64</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>5.0.2</Version>

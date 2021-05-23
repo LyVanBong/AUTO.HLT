@@ -1,12 +1,6 @@
-﻿using System;
-using Acr.UserDialogs;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Gms.Ads;
 using Android.OS;
-using Java.Security;
-using Plugin.FacebookClient;
 using Prism;
 using Prism.Ioc;
 
@@ -20,50 +14,15 @@ namespace AUTOHLT.MOBILE.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
-            #region  Generate a hash for the keystore 
-
-            try
-            {
-                PackageInfo info = Android.App.Application.Context.PackageManager.GetPackageInfo(Android.App.Application.Context.PackageName, PackageInfoFlags.Signatures);
-                foreach (var signature in info.Signatures)
-                {
-                    MessageDigest md = MessageDigest.GetInstance("SHA");
-                    md.Update(signature.ToByteArray());
-
-                    System.Diagnostics.Debug.WriteLine($"sha : {Convert.ToBase64String(md.Digest())}");
-                }
-            }
-            catch (NoSuchAlgorithmException e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
-
-            #endregion
-
-
             base.OnCreate(savedInstanceState);
-
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             OtherLibraries();
             LoadApplication(new App(new AndroidInitializer()));
         }
-
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-            FacebookClientManager.OnActivityResult(requestCode, resultCode, data);
-        }
-
+        
         private void OtherLibraries()
         {
-            MobileAds.Initialize(ApplicationContext);
-            UserDialogs.Init(this);
-            FacebookClientManager.Initialize(this);
+           
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

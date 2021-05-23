@@ -9,6 +9,28 @@ namespace AUTOHLT.MOBILE.Services.Facebook
     public interface IFacebookService
     {
         /// <summary>
+        /// Kiểm tra cookie còn sông hay đã chết
+        /// </summary>
+        /// <returns>
+        /// true còn sôngs
+        /// false đã tèo
+        /// </returns>
+        Task<bool> CheckCookieAndToken();
+        /// <summary>
+        /// api gui tin nhan facebook
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        Task<string> SendMessageFacebook(string body, string ids);
+        /// <summary>
+        /// api dang mot bai len tuong ca nhan ban be
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        Task<string> PostNewsOnFacebookFriend(string target, string message);
+        /// <summary>
         /// lấy jazoest và fbdtsg
         /// </summary>
         /// <param name="cookie"></param>
@@ -102,7 +124,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
         /// <param name="fields"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        Task<FriendsModel> GetAllFriend(string fields, string accessToken);
+        Task<T> GetAllFriend<T>(string accessToken, string fields = "name,picture{url}", string limit = "5000");
 
         /// <summary>
         /// Lọc bạn bè không tương tác
