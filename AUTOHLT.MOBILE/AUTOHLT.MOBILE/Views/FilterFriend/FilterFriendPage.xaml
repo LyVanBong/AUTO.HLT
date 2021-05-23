@@ -75,7 +75,7 @@
                     Command="{Binding ConnectFacebookCommand}"
                     CornerRadius="10"
                     FontSize="12"
-                    Text="Kết nối facebook"
+                    Text="Danh sách lọc"
                     TextColor="#000" />
                 <Button
                     Grid.Column="1"

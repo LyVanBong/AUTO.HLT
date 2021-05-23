@@ -61,15 +61,16 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                         UserRole = "2",
                         BadgeView = "Free",
                         BadgeType = BadgeType.Success
-                    }, new ServiceModel
-                    {
-                        Icon = "icon_add_friend.png",
-                        TitleService = "Kết bạn facebook để trao đổi thông tin giao lưu và tìm kiếm các khách hàng tiềm năng trong công việc kinh doanh online trên facebook hoặc các sàn thương mại điện tử.",
-                        TypeService = 6,
-                        UserRole = "2",
-                        BadgeView = "Hot",
-                        BadgeType = BadgeType.Error
-                    },
+                    }, 
+                    //new ServiceModel
+                    //{
+                    //    Icon = "icon_add_friend.png",
+                    //    TitleService = "Kết bạn facebook để trao đổi thông tin giao lưu và tìm kiếm các khách hàng tiềm năng trong công việc kinh doanh online trên facebook hoặc các sàn thương mại điện tử.",
+                    //    TypeService = 6,
+                    //    UserRole = "2",
+                    //    BadgeView = "Hot",
+                    //    BadgeType = BadgeType.Error
+                    //},
                     new ServiceModel
                     {
                         Icon = "icon_connection.png",

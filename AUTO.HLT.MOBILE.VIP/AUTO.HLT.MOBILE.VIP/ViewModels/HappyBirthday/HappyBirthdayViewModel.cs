@@ -161,11 +161,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
                             var day = item?.birthday;
                             if (!string.IsNullOrEmpty(day))
                             {
-                                if (item.id == "100010625826662")
-                                {
-                                    Console.WriteLine();
-                                }
-
                                 var d = day.Split('/');
                                 var ngay = int.Parse(d[1]);
                                 var thang = int.Parse(d[0]);

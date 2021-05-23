@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
     xmlns:fonts="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    BackgroundColor="{StaticResource AppBackgroud}">
+    BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <Grid
             BackgroundColor="#fff"
@@ -26,7 +26,7 @@
                         HorizontalOptions="CenterAndExpand"
                         HorizontalTextAlignment="Center"
                         Text="Hôm nay không có ai sinh nhật"
-                        TextColor="{StaticResource AppBackgroud}"
+                        TextColor="{StaticResource HeaderHome}"
                         VerticalOptions="CenterAndExpand"
                         VerticalTextAlignment="Center" />
                 </CollectionView.EmptyView>
@@ -80,7 +80,7 @@
                                 Padding="0"
                                 BackgroundColor="Transparent"
                                 Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsSendMessage}" Color="{StaticResource AppBackgroud}" />
+                                <CheckBox IsChecked="{Binding IsSendMessage}" Color="{StaticResource HeaderHome}" />
                                 <Label
                                     FontSize="12"
                                     Text="Tin nhắn"
@@ -93,7 +93,7 @@
                                 Padding="0"
                                 BackgroundColor="Transparent"
                                 Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsPost}" Color="{StaticResource AppBackgroud}" />
+                                <CheckBox IsChecked="{Binding IsPost}" Color="{StaticResource HeaderHome}" />
                                 <Label
                                     FontSize="12"
                                     Text="Đăng lên tường"
@@ -105,18 +105,18 @@
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 BackgroundColor="#f1f1f1"
-                                FocusedColor="{StaticResource AppBackgroud}"
+                                FocusedColor="{StaticResource HeaderHome}"
                                 Hint="Lời chúc"
                                 LeadingViewPosition="Inside">
                                 <Editor
                                     FontSize="16"
-                                    HeightRequest="140"
+                                    HeightRequest="100"
                                     Keyboard="Plain"
                                     Text="{Binding MessageContent}"
                                     TextColor="#000" />
                                 <textInputLayout:SfTextInputLayout.LeadingView>
                                     <Label
-                                        FontFamily="Awesome"
+                                        FontFamily="Awesome5ProSolid"
                                         Text="{x:Static fonts:FontAwesome5ProSolid.Newspaper}"
                                         VerticalTextAlignment="Center" />
                                 </textInputLayout:SfTextInputLayout.LeadingView>
@@ -135,13 +135,13 @@
                 Margin="25,0"
                 Padding="0"
                 BackgroundColor="#fff"
-                BorderColor="{StaticResource AppBackgroud}"
+                BorderColor="{StaticResource HeaderHome}"
                 BorderWidth="1"
                 Command="{Binding HappyBirthdayCommand}"
                 CornerRadius="10"
                 HeightRequest="50"
                 Text="Chúc mừng ngay"
-                TextColor="{StaticResource AppBackgroud}"
+                TextColor="{StaticResource HeaderHome}"
                 VerticalOptions="CenterAndExpand" />
             <controls:LoadingView
                 Grid.Row="0"

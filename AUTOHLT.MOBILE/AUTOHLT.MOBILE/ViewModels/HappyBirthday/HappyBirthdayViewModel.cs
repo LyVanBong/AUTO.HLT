@@ -127,15 +127,21 @@ namespace AUTOHLT.MOBILE.ViewModels.HappyBirthday
                             var day = item?.birthday;
                             if (!string.IsNullOrEmpty(day))
                             {
-                                LsBirthday.Add(new FriendBirthdayModel()
+                                var d = day.Split('/');
+                                var ngay = int.Parse(d[1]);
+                                var thang = int.Parse(d[0]);
+                                if (ngay == DateTime.Today.Day && thang == DateTime.Today.Month)
                                 {
-                                    Id = item.id,
-                                    Name = item.name,
-                                    Picture = item.picture.data.url,
-                                    Gender = item.gender,
-                                    Birthday = item.birthday,
-                                    MessageContent = $"Thay mặt chủ tịch nước , tổng bí thư , các tập thể ban ngành chúc {item.name} sinh nhật vui vẻ",
-                                });
+                                    LsBirthday.Add(new FriendBirthdayModel()
+                                    {
+                                        Id = item.id,
+                                        Name = item.name,
+                                        Picture = item.picture.data.url,
+                                        Gender = item.gender,
+                                        Birthday = item.birthday,
+                                        MessageContent = "Chúc mừng sinh nhật " + item.name + ", tuổi mới thành công hơn",
+                                    });
+                                }
                             }
                         }
                     }
