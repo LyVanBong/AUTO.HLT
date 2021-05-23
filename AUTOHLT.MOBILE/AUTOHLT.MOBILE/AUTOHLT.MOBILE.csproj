@@ -24,6 +24,7 @@
     <None Remove="Resources\Images\icon_add_topup.png" />
     <None Remove="Resources\Images\icon_agency.png" />
     <None Remove="Resources\Images\icon_auto_boot_hear.png" />
+    <None Remove="Resources\Images\icon_auto_vip.png" />
     <None Remove="Resources\Images\icon_birthday.png" />
     <None Remove="Resources\Images\icon_change_password.png" />
     <None Remove="Resources\Images\icon_comments.png" />
@@ -79,6 +80,7 @@
     <EmbeddedResource Include="Resources\Images\icon_add_friends.png" />
     <EmbeddedResource Include="Resources\Images\icon_agency.png" />
     <EmbeddedResource Include="Resources\Images\icon_auto_boot_hear.png" />
+    <EmbeddedResource Include="Resources\Images\icon_auto_vip.png" />
     <EmbeddedResource Include="Resources\Images\icon_birthday.png" />
     <EmbeddedResource Include="Resources\Images\icon_change_password.png" />
     <EmbeddedResource Include="Resources\Images\icon_comments.png" />

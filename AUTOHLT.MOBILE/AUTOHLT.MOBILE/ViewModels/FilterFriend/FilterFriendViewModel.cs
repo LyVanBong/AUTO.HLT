@@ -1,11 +1,15 @@
 ﻿using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using AUTOHLT.MOBILE.Helpers;
 using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Facebook;
+using AUTOHLT.MOBILE.Services.Guide;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,10 +17,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
-using AUTOHLT.MOBILE.Helpers;
-using AUTOHLT.MOBILE.Services.Guide;
-using Prism.Services.Dialogs;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -97,7 +97,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         }
 
         public ICommand HDSDCommand { get; private set; }
-        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialogService,IGuideService guideService) : base(navigationService)
+        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialogService, IGuideService guideService) : base(navigationService)
         {
             _guideService = guideService;
             _dialogService = dialogService;
@@ -265,12 +265,12 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                     else
                     {
                         _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (result) =>
-                         {
-                             token = Preferences.Get(AppConstants.TokenFaceook, "");
-                             cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                             fbdtsg = await _facebookService.GeJazoestAndFbdtsg(cookie);
-                             await StartFillterFriend(token, cookie, fbdtsg.Fbdtsg);
-                         });
+                        {
+                            token = Preferences.Get(AppConstants.TokenFaceook, "");
+                            cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                            fbdtsg = await _facebookService.GeJazoestAndFbdtsg(cookie);
+                            await StartFillterFriend(token, cookie, fbdtsg.Fbdtsg);
+                        });
                     }
                 }
             }
@@ -367,8 +367,8 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         {
             try
             {
-                var data = await _facebookService.GetAllFriend<FriendsModel>(token,"",numberFriends);
-                return data;
+                //var data = await _facebookService.GetAllFriend(numberFriends, token);
+                //return data;
             }
             catch (Exception e)
             {
