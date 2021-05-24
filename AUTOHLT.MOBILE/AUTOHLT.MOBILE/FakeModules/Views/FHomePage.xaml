@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.FakeModules.Views.FHomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="70,*" RowDefinitions="70,*">
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0"
+                Aspect="AspectFit"
+                Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_autohlt.png}" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="25"
+                Text="AUTOHLT"
+                TextColor="#000"
+                VerticalOptions="CenterAndExpand" />
+            <ScrollView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                Padding="20,0"
+                BackgroundColor="Transparent"
+                Orientation="Vertical">
+                <StackLayout BackgroundColor="Transparent" Orientation="Vertical">
+                    <Label
+                        FontSize="16"
+                        Text="Xin chào khach hang"
+                        TextColor="#000"
+                        VerticalOptions="Center" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

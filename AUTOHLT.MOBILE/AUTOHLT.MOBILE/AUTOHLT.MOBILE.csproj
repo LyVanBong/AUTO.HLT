@@ -11,6 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="FakeModules\Resources\icon_f_app.JPEG" />
+    <None Remove="FakeModules\Resources\icon_f_autohlt.png" />
+    <None Remove="FakeModules\Resources\icon_f_balloons.png" />
+    <None Remove="FakeModules\Resources\icon_f_fireworks.png" />
+    <None Remove="FakeModules\Resources\icon_f_trip.jpg" />
+    <None Remove="FakeModules\Resources\icon_f_user_profile.png" />
+    <None Remove="FakeModules\Resources\iocn_f_balloon.png" />
     <None Remove="Resources\Fonts\FontAwesome5BrandsRegular400.otf" />
     <None Remove="Resources\Fonts\FontAwesome5DuotoneSolid900.otf" />
     <None Remove="Resources\Fonts\FontAwesome5ProLight300.otf" />
@@ -68,6 +75,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_app.JPEG" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_autohlt.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_balloons.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_fireworks.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_trip.jpg" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_user_profile.png" />
+    <EmbeddedResource Include="FakeModules\Resources\iocn_f_balloon.png" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5BrandsRegular400.otf" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5DuotoneSolid900.otf" />
     <EmbeddedResource Include="Resources\Fonts\FontAwesome5ProLight300.otf" />
@@ -171,6 +185,18 @@
     <EmbeddedResource Update="Controls\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\FHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\FIntroducePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\FMain2Page.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FakeModules\Views\FProfilePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="ThemesApp\LightTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -196,33 +222,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ChangePassword\ChangePasswordPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage2.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage3.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage4.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage5.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage6.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage7.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\FContentPage8.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\HomePageF.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\FakeUpApp\ContentPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FilterFriend\FilterFriendPage.xaml">
@@ -270,15 +269,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\FakeUpApp\ContentPage.xaml.cs">
-      <DependentUpon>ContentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\SuportCustumer\SuportCustomerPage.xaml.cs">
       <DependentUpon>SuportCustomerPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="FakeModules\Models\" />
     <Folder Include="ViewModels\BuffSub\" />
     <Folder Include="ViewModels\Agency\" />
     <Folder Include="ViewModels\TopUp\" />
