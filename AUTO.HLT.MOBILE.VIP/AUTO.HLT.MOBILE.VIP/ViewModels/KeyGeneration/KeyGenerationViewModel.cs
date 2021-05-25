@@ -40,8 +40,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         private int _countAgecy;
         private string _searchAgecyTxt;
         private UserModel _agecy;
-        private string _amountKey;
+        private string _amountKey = "10";
         private ILicenseKeyService _licenseKeyService;
+        private string _numDateUseKey = "365";
 
         public string UserName
         {
@@ -126,6 +127,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
         }
 
         public ICommand CreateKeyCommand { get; private set; }
+
+        public string NumDateUseKey
+        {
+            get => _numDateUseKey;
+            set => SetProperty(ref _numDateUseKey, value);
+        }
+
         public KeyGenerationViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, ITelegramService telegramService, IUserService userService, ILicenseKeyService licenseKeyService) : base(navigationService)
         {
             _licenseKeyService = licenseKeyService;
@@ -147,11 +155,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.KeyGeneration
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                if (Agecy != null && !string.IsNullOrEmpty(Agecy.ID) && !string.IsNullOrEmpty(AmountKey) && Agecy.Role == 3)
+                if (Agecy != null && !string.IsNullOrEmpty(Agecy.ID) && !string.IsNullOrEmpty(AmountKey) && !string.IsNullOrEmpty(NumDateUseKey) && Agecy.Role == 3)
                 {
                     if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo " + AmountKey + " mã bản quyền cho đại lý " + Agecy.Name, "OK", "Thôi"))
                     {
-                        var createKey = await _licenseKeyService.CreateLicense(Agecy.ID, AmountKey);
+                        var createKey = await _licenseKeyService.CreateLicense(Agecy.ID, AmountKey,NumDateUseKey);
                         if (createKey != null && createKey.Code > 0)
                         {
                             await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()

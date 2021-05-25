@@ -32,13 +32,13 @@ namespace AUTOHLT.MOBILE.Views.Home
                 {
                     Id = 1,
                     Title = "anh 1",
-                    UrlImage = @"https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/ads_autovip_banner_1.png?alt=media&token=dd91efb5-78ad-4343-bfe5-0480d277f010"
+                    UrlImage = @"https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/ads_autovip_banner_1.jpg?alt=media&token=e3a04e1b-3468-4772-a191-40b206aa6698"
                 },
                 new AutoVip()
                 {
                     Id = 2,
                     Title = "anh 2",
-                    UrlImage = "https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/ads_autovip_banner_2.png?alt=media&token=2c256eea-feca-4d8d-ace7-9bb8b2ff44d1"
+                    UrlImage = "https://firebasestorage.googleapis.com/v0/b/autohlt.appspot.com/o/ads_autovip_banner_2.jpg?alt=media&token=ed1b8bce-f047-4b94-b07d-85aa6d4135d4"
                 },
             };
             Device.StartTimer(TimeSpan.FromSeconds(5), () =>

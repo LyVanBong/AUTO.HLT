@@ -758,6 +758,7 @@
           <Property Type="DateTime" Name="DateActive" Nullable="true" Precision="23" />
           <Property Type="String" Name="HistoryUseProduct" Nullable="true" />
           <Property Type="Guid" Name="LicenseKey" Nullable="false" />
+          <Property Type="Int32" Name="TypeKey" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_LayNguoiGioiThieuChoKhach_Result">
           <Property Type="Guid" Name="ID" Nullable="false" />
@@ -1088,6 +1089,7 @@
                 <ScalarProperty Name="DateActive" ColumnName="DateActive" />
                 <ScalarProperty Name="HistoryUseProduct" ColumnName="HistoryUseProduct" />
                 <ScalarProperty Name="LicenseKey" ColumnName="LicenseKey" />
+                <ScalarProperty Name="TypeKey" ColumnName="TypeKey" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

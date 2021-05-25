@@ -1,4 +1,11 @@
-﻿using AUTO.DLL.MOBILE.Services.Facebook;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using AUTO.DLL.MOBILE.Models.Facebook;
+using AUTO.DLL.MOBILE.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Facebook;
@@ -7,23 +14,15 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTO.DLL.MOBILE.Models.Facebook;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using IFacebookService = AUTO.HLT.MOBILE.VIP.Services.Facebook.IFacebookService;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
 {
     public class FilterFriendViewModel : ViewModelBase
     {
         private bool _isLoading;
-        private IFacebookService _facebookService;
+        private IFacebookService _facebookService = new FacebookeService();
         private string _idFacebook;
         private string _nameUserFacebook;
         private string _avatarFacebook;
@@ -44,11 +43,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
 
         private IPageDialogService _pageDialogService;
         private IDialogService _dialogService;
-        private ILicenseKeyService _licenseKeyService;
         private int _numberPost = 15;
-
-        private AUTO.DLL.MOBILE.Services.Facebook.IFacebookService _facebook = new FacebookeService();
         private List<MyFriendModel> _doNotInteract;
+        private ILicenseKeyService _licenseKeyService;
 
         public ICommand FilterFriendsCommand { get; private set; }
 
@@ -97,12 +94,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             set => SetProperty(ref _numberPost, value);
         }
 
-        public FilterFriendViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialogService, ILicenseKeyService licenseKeyService) : base(navigationService)
+        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService, ILicenseKeyService licenseKeyService) : base(navigationService)
         {
             _licenseKeyService = licenseKeyService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
-            _facebookService = facebookService;
             FilterFriendsCommand = new Command(FilterFriends);
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
@@ -131,7 +127,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                                     var num = 0;
                                     foreach (var item in data)
                                     {
-                                        var isUnFriend = await _facebook.UnFriend(cookie, item.Uid);
+                                        var isUnFriend = await _facebookService.UnFriend(cookie, item.Uid);
                                         if (isUnFriend)
                                         {
                                             num++;
@@ -162,7 +158,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             {
                 if (!string.IsNullOrWhiteSpace(token) && !string.IsNullOrWhiteSpace(cookie) && !string.IsNullOrWhiteSpace(limit))
                 {
-                    var data = await _facebookService.GetInfoUser();
+                    var data = await _facebookService.GetInfoUser<NamePictureUserModel>(Preferences.Get(AppConstants.TokenFaceook, ""), "name,picture");
                     if (data != null)
                     {
                         IdFacebook = data.id;
@@ -234,22 +230,16 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         {
             try
             {
-                var license = await _licenseKeyService.CheckLicenseForUser();
-                if (license == null)
-                {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng hơn", "OK");
-                    await NavigationService.GoBackAsync();
-                }
-                else
+                if (IsLoading) return;
+                IsLoading = true;
+                var licenkey = await _licenseKeyService.CheckLicenseForUser();
+                if (licenkey != null && licenkey.CountEndDate > 0)
                 {
                     if (string.IsNullOrWhiteSpace(IdFacebook))
                     {
-                        if (IsLoading) return;
-                        IsLoading = true;
                         var token = Preferences.Get(AppConstants.TokenFaceook, "");
                         var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                        if (await _facebookService.CheckCookieAndToken())
+                        if (await _facebookService.CheckCookieAndToken(cookie, token))
                         {
                             await StartFillterFriend(token, cookie, NumberPost + "");
                         }
@@ -264,6 +254,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                         }
                     }
                 }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo",
+                          "Bạn cần nâng cấp tài khoản để sử dụng đầy đủ tính năng hơn", "OK");
+                }
             }
             catch (Exception e)
             {
@@ -271,21 +266,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             }
             finally { IsLoading = false; }
         }
-
-        public override void Initialize(INavigationParameters parameters)
-        {
-            base.Initialize(parameters);
-            IsLoading = true;
-        }
-
         private async Task CheckFriendsReaction(string cookie, string token, string limit)
         {
             try
             {
-                _doNotInteract = await _facebook.GetMyFriend(cookie);
+                _doNotInteract = await _facebookService.GetMyFriend(cookie);
                 if (_doNotInteract != null && _doNotInteract.Any())
                 {
-                    var lsUid = await _facebook.GetUIdFromPost(cookie, token, limit);
+                    var lsUid = await _facebookService.GetUIdFromPost(cookie, token, limit);
                     if (lsUid != null && lsUid.Any())
                     {
                         foreach (var friend in _doNotInteract)
@@ -293,6 +281,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                             var reaction = lsUid.Count(x => x == friend.Uid);
                             if (reaction > 0)
                             {
+                                friend.IsSelected = true;
                                 friend.Interactive = reaction;
                                 friend.Status = "Có tương tác";
                             }
@@ -310,12 +299,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             {
                 Crashes.TrackError(e);
             }
-        }
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-            IsLoading = false;
         }
     }
 }

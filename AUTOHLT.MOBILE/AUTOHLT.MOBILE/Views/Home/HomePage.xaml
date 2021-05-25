@@ -245,11 +245,20 @@
                                         <Label
                                             Grid.Column="1"
                                             FontAttributes="Bold"
-                                            FontSize="15"
                                             HorizontalOptions="StartAndExpand"
-                                            Text="{Binding TitleService}"
                                             TextColor="#000"
-                                            VerticalOptions="Center" />
+                                            VerticalOptions="Center">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span
+                                                        FontAttributes="Bold"
+                                                        FontSize="20"
+                                                        Text="{Binding TitleService}"
+                                                        TextColor="{StaticResource HeaderHome}" />
+                                                    <Span FontSize="14" Text="{Binding TitleDetail}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                     </Grid>
                                 </badge:SfBadgeView.Content>
                             </badge:SfBadgeView>

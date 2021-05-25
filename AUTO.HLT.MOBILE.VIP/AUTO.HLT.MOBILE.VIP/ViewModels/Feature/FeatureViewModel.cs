@@ -151,7 +151,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Feature
                         else
                         {
                             var info = await _licenseKeyService.CheckLicenseForUser();
-                            if (info != null)
+                            if (info != null && info.CountEndDate > -1)
                             {
                                 var json = "";
                                 var number = int.Parse(Number);

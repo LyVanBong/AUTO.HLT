@@ -16,14 +16,14 @@ namespace AUTO.HLT.MOBILE.VIP.Services.LicenseKey
             _requestProvider = requestProvider;
         }
 
-        public async Task<ResponseModel<string>> CreateLicense(string idUser, string amountKey)
+        public async Task<ResponseModel<string>> CreateLicense(string idUser, string amountKey, string numDateUseKey)
         {
             try
             {
                 var para = new List<RequestParameter>
                 {
                     new RequestParameter("IdUserAgecy",idUser),
-                    new RequestParameter("TypeKey","1"),
+                    new RequestParameter("TypeKey",numDateUseKey),
                     new RequestParameter("AmountKey",amountKey),
                 };
                 var data = await _requestProvider.PostAsync<string>("LicenseKey/Creates", para);
