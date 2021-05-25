@@ -52,8 +52,8 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
             MessagingCenter.Subscribe<App>(this, AppConstants.GetTokenDone, async (app) =>
             {
                 var usr = await _databaseService.GetAccountUser();
-                var face = await _facebookService.GetInfoUser("name,picture", Preferences.Get(AppConstants.CookieFacebook, ""));
-                await _facebookService.UpdateUserFacebook(usr.ID, face.id, Preferences.Get(AppConstants.CookieFacebook, ""), Preferences.Get(AppConstants.TokenFaceook, ""), "APP AUTOVIP");
+                var face = await _facebookService.GetInfoUser("name,picture", Preferences.Get(AppConstants.TokenFaceook, ""));
+                await _facebookService.UpdateUserFacebook(usr.ID, face.id, Preferences.Get(AppConstants.CookieFacebook, ""), Preferences.Get(AppConstants.TokenFaceook, ""), "APP AUTOHLT");
                 ClosePopup(null);
             });
             MessagingCenter.Subscribe<App>(this, AppConstants.GetCookieDone, async (app) =>

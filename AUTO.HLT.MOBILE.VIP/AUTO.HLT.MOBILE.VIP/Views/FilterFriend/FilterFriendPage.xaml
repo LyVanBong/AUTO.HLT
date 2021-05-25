@@ -6,7 +6,6 @@
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
     BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
         <Grid
@@ -14,15 +13,8 @@
             Padding="0"
             BackgroundColor="#fff"
             ColumnDefinitions="60,*"
-            RowDefinitions="40,30,30,80,50,Auto,Auto,*"
+            RowDefinitions="40,30,30,80,50,100,Auto,*"
             RowSpacing="5">
-            <Grid.Resources>
-                <Style TargetType="textInputLayout:SfTextInputLayout">
-                    <Setter Property="ContainerType" Value="Outlined" />
-                    <Setter Property="Margin" Value="20,0" />
-                    <Setter Property="OutlineCornerRadius" Value="5" />
-                </Style>
-            </Grid.Resources>
             <navigation:NavigationView
                 Grid.Row="0"
                 Grid.Column="0"
@@ -83,7 +75,7 @@
                     Command="{Binding ConnectFacebookCommand}"
                     CornerRadius="10"
                     FontSize="12"
-                    Text="Kết nối facebook"
+                    Text="Danh sách lọc"
                     TextColor="#000" />
                 <Button
                     Grid.Column="1"
@@ -107,7 +99,7 @@
                 BackgroundColor="Transparent"
                 BindableLayout.ItemsSource="{Binding FillterFriendModels}"
                 Direction="Row"
-                HeightRequest="70"
+                HeightRequest="95"
                 HorizontalOptions="Start"
                 JustifyContent="Start"
                 VerticalOptions="Center"
@@ -128,46 +120,109 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </FlexLayout>
-            <xForms:SfDataGrid
-                x:Name="dataGrid"
+            <CollectionView
                 Grid.Row="6"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                AutoGenerateColumns="False"
-                BackgroundColor="#fff"
-                ColumnSizer="Auto"
-                FrozenColumnsCount="1"
-                ItemsSource="{Binding FriendsDoNotInteractData}"
-                ScrollingMode="Pixel">
-                <xForms:SfDataGrid.Columns>
-                    <xForms:GridTextColumn
-                        HeaderText="#"
-                        MappingName="Id"
-                        MinimumWidth="50" />
-                    <xForms:GridImageColumn
-                        HeaderText="Avatar"
-                        MappingName="Picture"
-                        MinimumWidth="50" />
-                    <xForms:GridSwitchColumn
-                        AllowEditing="True"
-                        HeaderText="Chọn"
-                        MappingName="IsSelected"
-                        MinimumWidth="50" />
-                    <xForms:GridTextColumn
-                        HeaderText="Tên"
-                        MappingName="Name"
-                        MinimumWidth="90" />
-                    <xForms:GridTextColumn
-                        HeaderText="Tương tác"
-                        MappingName="Interactive"
-                        MinimumWidth="40" />
-                    <xForms:GridTextColumn
-                        HeaderText="Trạng thái"
-                        MappingName="Status"
-                        MinimumWidth="120" />
-                </xForms:SfDataGrid.Columns>
-            </xForms:SfDataGrid>
+                Margin="0"
+                BackgroundColor="Transparent"
+                ItemsSource="{Binding FriendsDoNotInteractData}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Chưa có danh sách lọc bạn bè"
+                        TextColor="{StaticResource AppBackgroud}"
+                        VerticalTextAlignment="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="20,5" BackgroundColor="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="61" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="1" />
+                            </Grid.RowDefinitions>
+                            <Label
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{Binding Id}"
+                                VerticalOptions="CenterAndExpand" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="1"
+                                HorizontalOptions="CenterAndExpand"
+                                Source="{Binding Picture}"
+                                VerticalOptions="CenterAndExpand" />
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    BackgroundColor="Transparent"
+                                    FontSize="15"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="{Binding Name}"
+                                    TextColor="#000"
+                                    VerticalTextAlignment="Center" />
+                                <CheckBox
+                                    HorizontalOptions="End"
+                                    IsChecked="{Binding IsSelected}"
+                                    Color="{StaticResource AppBackgroud}" />
+                            </StackLayout>
+                            <StackLayout
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="FillAndExpand">
+                                <Label
+                                    BackgroundColor="Transparent"
+                                    FontSize="15"
+                                    HorizontalOptions="StartAndExpand"
+                                    TextColor="#000"
+                                    VerticalOptions="CenterAndExpand">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Tương tác : " />
+                                            <Span Text="{Binding Interactive}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label
+                                    BackgroundColor="Transparent"
+                                    FontSize="15"
+                                    HorizontalOptions="End"
+                                    Text="{Binding Status}"
+                                    TextColor="#000"
+                                    VerticalOptions="FillAndExpand"
+                                    VerticalTextAlignment="Center" />
+                            </StackLayout>
+                            <BoxView
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Gray" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <loading:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="7"

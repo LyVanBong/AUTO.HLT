@@ -12,8 +12,9 @@ namespace AUTO.HLT.MOBILE.VIP.Services.LicenseKey
         /// </summary>
         /// <param name="idUser"></param>
         /// <param name="amountKey"></param>
+        /// <param name="numDateUseKey"></param>
         /// <returns></returns>
-        Task<ResponseModel<string>> CreateLicense(string idUser,string amountKey);
+        Task<ResponseModel<string>> CreateLicense(string idUser,string amountKey,string numDateUseKey);
         /// <summary>
         /// lấy dánh sách key bản quyền do đại lý đã mua
         /// </summary>

@@ -49,6 +49,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         private ITelegramService _telegramService;
         private ObservableCollection<ItemMenuModel> _listItemMenus;
         private IVersionAppService _versionAppService;
+        private bool _isUpdate;
 
         public ObservableCollection<ItemMenuModel> ListItemMenus
         {
@@ -103,10 +104,17 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             UseFeatureCommand = new AsyncCommand<ItemMenuModel>(UseFeature);
         }
 
+        public override void OnResume()
+        {
+            base.OnResume();
+            new Thread(CheckVerionApplication).Start();
+        }
+
         private async void CheckVerionApplication()
         {
             try
             {
+                if (_isUpdate) return;
                 var data = await _versionAppService.CheckVersionApp();
                 if (data != null && data.Code > 0 && data.Data != null)
                 {
@@ -115,6 +123,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     var build = int.Parse(VersionTracking.CurrentBuild);
                     if (version.Version > build)
                     {
+                        _isUpdate = true;
                         Device.BeginInvokeOnMainThread(async () =>
                         {
                             await _pageDialogService.DisplayAlertAsync("Thông báo",
@@ -123,10 +132,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                             if (DeviceInfo.Platform == DevicePlatform.Android)
                             {
                                 await Browser.OpenAsync(sotreUri[0], BrowserLaunchMode.SystemPreferred);
+                                _isUpdate = false;
                             }
                             else if (DeviceInfo.Platform == DevicePlatform.iOS)
                             {
                                 await Browser.OpenAsync(sotreUri[1], BrowserLaunchMode.SystemPreferred);
+                                _isUpdate = false;
                             }
                         });
                     }
@@ -238,6 +249,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                         }
                     }
                 }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo",
+                        "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
+                }
             }
             catch (Exception e)
             {
@@ -295,6 +311,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                             }
                         }
                     }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Thông báo",
+                        "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
                 }
             }
             catch (Exception e)
@@ -507,13 +528,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
 
         private async Task CheckLicenseKey()
         {
-            LicenseKey = await _licenseKeyService.CheckLicenseForUser();
-            if (LicenseKey != null)
+            var lkey = await _licenseKeyService.CheckLicenseForUser();
+            if (lkey != null && lkey.CountEndDate > -1)
             {
+                LicenseKey = lkey;
                 LicenseView = new VipView();
             }
             else
             {
+                LicenseKey = null;
                 LicenseView = new FreeView();
             }
         }

@@ -18,8 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using AUTOHLT.MOBILE.Services.VersionAppService;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -33,6 +35,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private bool _isLoading;
         private IDialogService _dialogService;
         private ObservableCollection<ServiceModel> _serviceData;
+        private bool _isUpdate;
+        private IVersionAppService _versionAppService;
         private List<ServiceModel> _dataHome = new List<ServiceModel>
                 {
                     new ServiceModel
@@ -118,13 +122,57 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         }
 
         public ICommand LogoutCommand { get; private set; }
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService) : base(navigationService)
         {
+            _versionAppService = versionAppService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             LogoutCommand = new Command(LogoutAccount);
             NavigationCommand = new Command<Object>(NavigationPageService);
+        }
+        public override void OnResume()
+        {
+            base.OnResume();
+            new Thread(CheckVerionApplication).Start();
+        }
+        private async void CheckVerionApplication()
+        {
+            try
+            {
+                if (_isUpdate) return;
+                var data = await _versionAppService.CheckVersionApp();
+                if (data != null && data.Code > 0 && data.Data != null)
+                {
+                    var version = data.Data;
+                    var sotreUri = version.Note.Split(';');
+                    var build = int.Parse(VersionTracking.CurrentBuild);
+                    if (version.Version > build)
+                    {
+                        _isUpdate = true;
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                "Đã có phiên bản mới, vui lòng cập nhật để sử dụng tính năng ổn định nhất",
+                                "Cập nhật ngay");
+                            if (DeviceInfo.Platform == DevicePlatform.Android)
+                            {
+                                await Browser.OpenAsync(sotreUri[0], BrowserLaunchMode.SystemPreferred);
+                                _isUpdate = false;
+                            }
+                            else if (DeviceInfo.Platform == DevicePlatform.iOS)
+                            {
+                                await Browser.OpenAsync(sotreUri[1], BrowserLaunchMode.SystemPreferred);
+                                _isUpdate = false;
+                            }
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
         }
         private async void NavigationPageService(Object obj)
         {
@@ -183,6 +231,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 }
                 ServiceData = new ObservableCollection<ServiceModel>(_dataHome);
             }
+            new Thread(CheckVerionApplication).Start();
             IsLoading = false;
         }
 

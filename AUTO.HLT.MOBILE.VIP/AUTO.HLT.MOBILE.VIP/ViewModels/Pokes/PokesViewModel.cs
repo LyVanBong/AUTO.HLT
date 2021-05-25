@@ -178,7 +178,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
         {
             base.OnNavigatedTo(parameters);
             var license = await _licenseKeyService.CheckLicenseForUser();
-            if (license != null)
+            if (license != null && license.CountEndDate > -1)
             {
                 InitializeData();
             }

@@ -135,8 +135,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
                     var friend = data.data;
                     _licenseKeyModel = await _licenseKeyService.CheckLicenseForUser();
                     LsBirthday = new ObservableCollection<FriendBirthdayModel>();
-                    if (_licenseKeyModel == null)
+                    if (_licenseKeyModel == null || _licenseKeyModel.CountEndDate < 0)
                     {
+                        _licenseKeyModel = null;
                         foreach (var item in friend)
                         {
                             var day = item?.birthday;

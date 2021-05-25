@@ -15,6 +15,7 @@ using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Services.VersionAppService;
 using AUTOHLT.MOBILE.ViewModels.AccountInformation;
 using AUTOHLT.MOBILE.ViewModels.AddFullFriend;
 using AUTOHLT.MOBILE.ViewModels.Agency;
@@ -106,6 +107,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register Service
 
+            containerRegistry.Register<IVersionAppService, VersionAppService>();
             containerRegistry.Register<IGuideService, GuideService>();
             containerRegistry.Register<IFacebookService, FacebookeService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
