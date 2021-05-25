@@ -3,6 +3,8 @@ using AUTOHLT.MOBILE.Controls.Dialog.BuffService;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Controls.Dialog.UseService;
 using AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp;
+using AUTOHLT.MOBILE.FakeModules.ViewModels;
+using AUTOHLT.MOBILE.FakeModules.Views;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
 using AUTOHLT.MOBILE.Services.Guide;
@@ -13,6 +15,7 @@ using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.RestSharp;
 using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Services.VersionAppService;
 using AUTOHLT.MOBILE.ViewModels.AccountInformation;
 using AUTOHLT.MOBILE.ViewModels.AddFullFriend;
 using AUTOHLT.MOBILE.ViewModels.Agency;
@@ -20,7 +23,6 @@ using AUTOHLT.MOBILE.ViewModels.BuffEyesView;
 using AUTOHLT.MOBILE.ViewModels.BuffLikePage;
 using AUTOHLT.MOBILE.ViewModels.BuffLikes;
 using AUTOHLT.MOBILE.ViewModels.ChangePassword;
-using AUTOHLT.MOBILE.ViewModels.FakeUpApp;
 using AUTOHLT.MOBILE.ViewModels.FilterFriend;
 using AUTOHLT.MOBILE.ViewModels.HappyBirthday;
 using AUTOHLT.MOBILE.ViewModels.Home;
@@ -42,7 +44,6 @@ using AUTOHLT.MOBILE.Views.BuffLikePage;
 using AUTOHLT.MOBILE.Views.BuffLikes;
 using AUTOHLT.MOBILE.Views.BuffSub;
 using AUTOHLT.MOBILE.Views.ChangePassword;
-using AUTOHLT.MOBILE.Views.FakeUpApp;
 using AUTOHLT.MOBILE.Views.FilterFriend;
 using AUTOHLT.MOBILE.Views.HappyBirthday;
 using AUTOHLT.MOBILE.Views.Home;
@@ -65,7 +66,6 @@ using Syncfusion.Licensing;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
-using ContentPage = AUTOHLT.MOBILE.Views.FakeUpApp.ContentPage;
 
 namespace AUTOHLT.MOBILE
 {
@@ -87,6 +87,14 @@ namespace AUTOHLT.MOBILE
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #region App fake
+
+            containerRegistry.RegisterForNavigation<FIntroducePage, FIntroduceViewModel>();
+            containerRegistry.RegisterForNavigation<FMain2Page, FMainViewModel>();
+            containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
+            containerRegistry.RegisterForNavigation<FProfilePage, FProfileViewModel>();
+
+            #endregion
             #region Registering the Dialog service
 
             containerRegistry.RegisterDialog<TopUpDialog, TopUpDialogViewModel>();
@@ -99,6 +107,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register Service
 
+            containerRegistry.Register<IVersionAppService, VersionAppService>();
             containerRegistry.Register<IGuideService, GuideService>();
             containerRegistry.Register<IFacebookService, FacebookeService>();
             containerRegistry.Register<IRestSharpService, RestSharpService>();
@@ -124,14 +133,6 @@ namespace AUTOHLT.MOBILE
             containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<AgencyPage, AgencyViewModel>();
             containerRegistry.RegisterForNavigation<VipInteractionPage, VipInteractionViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage2, FContentPage2ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage3, FContentPage3ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage4, FContentPage4ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage5, FContentPage5ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage6, FContentPage6ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage7, FContentPage7ViewModel>();
-            containerRegistry.RegisterForNavigation<FContentPage8, FContentPage8ViewModel>();
-            containerRegistry.RegisterForNavigation<ContentPage, ContentViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<BuffSubPage, BuffLikePageViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
@@ -140,7 +141,6 @@ namespace AUTOHLT.MOBILE
             containerRegistry.RegisterForNavigation<UnLockFbPage, UnLockFbViewModel>();
             containerRegistry.RegisterForNavigation<BuffLikePagePage, BuffLikePageViewModel>();
             containerRegistry.RegisterForNavigation<AddFullFriendPage, AddFullFriendViewModel>();
-            containerRegistry.RegisterForNavigation<HomePageF, HomeFViewModel>();
             containerRegistry.RegisterForNavigation<InteractivePage, InteractiveViewModel>();
             containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordViewModels>();
             containerRegistry.RegisterForNavigation<AccountInformationPage, AccountInformationViewModel>();

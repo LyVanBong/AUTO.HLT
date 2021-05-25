@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.FakeModules.Views.FProfilePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="Transparent">
+    <ContentPage.Content>
+        <Grid BackgroundColor="Transparent" RowDefinitions="50,50,50,*">
+            <BoxView
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Margin="0"
+                BackgroundColor="#FC6C22"
+                CornerRadius="0,0,40,40" />
+            <Frame
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Margin="30,0"
+                Padding="10"
+                CornerRadius="10"
+                HasShadow="True">
+                <Grid
+                    ColumnDefinitions="80,*"
+                    RowDefinitions="*,*,*"
+                    VerticalOptions="CenterAndExpand">
+                    <Image
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Grid.Column="0"
+                        Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_user_profile.png}" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Khách Hàng"
+                        TextColor="#000"
+                        VerticalOptions="CenterAndExpand" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="15"
+                        Text="khachhang@autohlt.vn"
+                        TextColor="#000"
+                        VerticalOptions="CenterAndExpand" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="XEM THÔNG TIN"
+                        TextColor="#FC6C22"
+                        VerticalOptions="CenterAndExpand" />
+                    <BoxView
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        BackgroundColor="Transparent">
+                        <BoxView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToFeatureCommand}" CommandParameter="0" />
+                        </BoxView.GestureRecognizers>
+                    </BoxView>
+                </Grid>
+            </Frame>
+            <ScrollView Grid.Row="2" Grid.RowSpan="2">
+                <StackLayout
+                    Padding="0,60,0,0"
+                    Orientation="Vertical"
+                    Spacing="10">
+                    <StackLayout.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="TextColor" Value="#000" />
+                                <Setter Property="Padding" Value="30,5" />
+                            </Style>
+                            <Style TargetType="BoxView">
+                                <Setter Property="BackgroundColor" Value="#fff" />
+                            </Style>
+                        </ResourceDictionary>
+                    </StackLayout.Resources>
+                    <BoxView HeightRequest="4" />
+                    <Label Text="Thay đổi mật khẩu">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToFeatureCommand}" CommandParameter="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="4" />
+                    <Label Text="Ngôn ngữ">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToFeatureCommand}" CommandParameter="2" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="4" />
+                    <Label Text="Giới thiệu về autohlt">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToFeatureCommand}" CommandParameter="3" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="4" />
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Phiên bản : " TextColor="#000" />
+                                <Span Text="{Binding VersionApp}" TextColor="#FC6C22" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <BoxView HeightRequest="4" />
+                    <Label Text="Đánh giá">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToFeatureCommand}" CommandParameter="4" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="4" />
+                    <Label Text="Đăng xuất">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToFeatureCommand}" CommandParameter="5" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="4" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

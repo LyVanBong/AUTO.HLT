@@ -13,5 +13,6 @@ namespace AUTOHLT.MOBILE.Models.Home
         public string BadgeView { get; set; }
         public string UserRole { get; set; }
         public BadgeType BadgeType { get; set; }
+        public string TitleDetail { get; set; }
     }
 }

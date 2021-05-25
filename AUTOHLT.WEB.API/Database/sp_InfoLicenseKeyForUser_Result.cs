@@ -16,5 +16,6 @@ namespace AUTOHLT.WEB.API.Database
         public Nullable<System.DateTime> DateActive { get; set; }
         public string HistoryUseProduct { get; set; }
         public System.Guid LicenseKey { get; set; }
+        public Nullable<int> TypeKey { get; set; }
     }
 }

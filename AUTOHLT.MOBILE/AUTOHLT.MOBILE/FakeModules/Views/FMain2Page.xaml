@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    x:Class="AUTOHLT.MOBILE.FakeModules.Views.FMain2Page"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:androidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:views="clr-namespace:AUTOHLT.MOBILE.FakeModules.Views;assembly=AUTOHLT.MOBILE"
+    Padding="{OnPlatform iOS='0,20',
+                         Default='0'}"
+    androidSpecific:TabbedPage.ToolbarPlacement="Bottom"
+    BackgroundColor="#e4efe7"
+    BarBackgroundColor="#fff"
+    SelectedTabColor="#FC6C22"
+    UnselectedTabColor="#868686">
+    <!--  Pages can be added as references or inline  -->
+    <views:FHomePage Title="Trang chủ" IconImageSource="icon_f_home.png" />
+    <ContentPage Title="Yêu thích" IconImageSource="icon_f_love.png">
+        <StackLayout BackgroundColor="Transparent">
+            <Label
+                Padding="0,10"
+                BackgroundColor="Transparent"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="Yêu thích"
+                TextColor="#000"
+                VerticalOptions="Start" />
+            <BoxView BackgroundColor="#FC6C22" HeightRequest="2" />
+            <Image
+                Margin="20"
+                HeightRequest="250"
+                Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_balloons.png}" />
+            <Label
+                FontSize="18"
+                HorizontalOptions="CenterAndExpand"
+                Text="Chưa có mục yêu thích nào"
+                VerticalOptions="Center" />
+            <Button
+                Margin="60,0"
+                BackgroundColor="#FC6C22"
+                Clicked="Button_OnClicked"
+                CornerRadius="20"
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="Khám phá thêm"
+                TextColor="#fff" />
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Đặt chố của tôi" IconImageSource="icon_f_order.png">
+        <StackLayout BackgroundColor="Transparent">
+            <Label
+                Padding="0,10"
+                BackgroundColor="Transparent"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="Phòng của tôi"
+                TextColor="#000"
+                VerticalOptions="Start" />
+            <BoxView BackgroundColor="#FC6C22" HeightRequest="2" />
+            <Image
+                Margin="20"
+                HeightRequest="250"
+                Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_fireworks.png}" />
+            <Label
+                FontSize="18"
+                HorizontalOptions="CenterAndExpand"
+                Text="Bạn chưa đặt phòng nào"
+                VerticalOptions="Center" />
+            <Button
+                Margin="60,0"
+                BackgroundColor="#FC6C22"
+                Command="{Binding GoBackHomeCommand}"
+                CornerRadius="20"
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="Khám phá thêm"
+                TextColor="#fff" />
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Tin nhắn" IconImageSource="icon_f_messager.png">
+        <StackLayout BackgroundColor="Transparent">
+            <Label
+                Padding="0,10"
+                BackgroundColor="Transparent"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="Tim nhắn"
+                TextColor="#000"
+                VerticalOptions="Start" />
+            <BoxView BackgroundColor="#FC6C22" HeightRequest="2" />
+            <Image
+                Margin="20"
+                HeightRequest="250"
+                Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.iocn_f_balloon.png}" />
+            <Label
+                FontSize="18"
+                HorizontalOptions="CenterAndExpand"
+                Text="Hiện tại bạn chưa có tin nhắn nào"
+                VerticalOptions="Center" />
+        </StackLayout>
+    </ContentPage>
+    <views:FProfilePage Title="Tài khoản" IconImageSource="icon_f_profile.png" />
+</TabbedPage>

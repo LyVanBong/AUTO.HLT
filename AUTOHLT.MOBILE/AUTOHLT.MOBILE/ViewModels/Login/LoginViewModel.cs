@@ -1,4 +1,6 @@
-﻿using AUTOHLT.MOBILE.Helpers;
+﻿using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.FakeModules.Views;
+using AUTOHLT.MOBILE.Helpers;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Login;
@@ -10,8 +12,6 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.Views.FakeUpApp;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -173,7 +173,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
                         if (UserName == "khachhang")
                         {
-                            await NavigationService.NavigateAsync(nameof(HomePageF));
+                            await NavigationService.NavigateAsync(nameof(FMain2Page));
                         }
                         else
                         {

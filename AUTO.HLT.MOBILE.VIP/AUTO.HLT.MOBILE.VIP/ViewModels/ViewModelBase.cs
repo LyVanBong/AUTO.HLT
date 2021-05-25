@@ -1,9 +1,10 @@
-﻿using Prism.Mvvm;
+﻿using Prism.AppModel;
+using Prism.Mvvm;
 using Prism.Navigation;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible,IApplicationLifecycleAware
     {
         protected INavigationService NavigationService { get; private set; }
 
@@ -37,6 +38,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels
         public virtual void Destroy()
         {
 
+        }
+
+        public virtual void OnResume()
+        {
+            
+        }
+
+        public virtual void OnSleep()
+        {
         }
     }
 }
