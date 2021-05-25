@@ -38,43 +38,37 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     new ServiceModel
                     {
                         Icon = "icon_pokes.png",
-                        TitleService = "Chọc trên facebook có thể hiểu là cách để gây chú ý để người mình chọc để ý tới mình, ví dụ có thể bạn bè lâu ko nói chuyện chọc qua chọc lại cho biết.",
+                        TitleService = "Chọc bạn bè\n",
+                        TitleDetail = "Chọc trên facebook có thể hiểu là cách để gây chú ý để người mình chọc để ý tới mình, ví dụ có thể bạn bè lâu ko nói chuyện chọc qua chọc lại cho biết.",
                         TypeService = 3,
                         UserRole = "2",
-                        BadgeView = "Funny",
+                        BadgeView = "Miễn phí",
                         BadgeType = BadgeType.Warning
                     },
                     new ServiceModel
                     {
                         Icon = "icon_filter_friends.png",
-                        TitleService = "Lọc bạn bè không tương tác hoặc có tương tác với nick Facebook của bạn nhằm các mục đích sau: Xoá đi những bạn bè không tương tác, dành chỗ kết bạn cho những người bạn mới. Cải thiện lượng tương tác trên tài khoản của bạn. Giúp công việc kinh doanh online, quảng bá sản phẩm được hiệu quả hơn",
+                        TitleService = "Lọc bạn bè\n",
+                        TitleDetail = "Lọc bạn bè không tương tác hoặc có tương tác với nick Facebook của bạn nhằm các mục đích sau: Xoá đi những bạn bè không tương tác, dành chỗ kết bạn cho những người bạn mới. Cải thiện lượng tương tác trên tài khoản của bạn. Giúp công việc kinh doanh online, quảng bá sản phẩm được hiệu quả hơn",
                         TypeService = 4,
                         UserRole = "2",
-                        BadgeView = "New",
+                        BadgeView = "Miễn phí",
                         BadgeType = BadgeType.Info
                     },
                     new ServiceModel
                     {
                         Icon = "icon_birthday.png",
-                        TitleService = "Chúc mừng sinh nhật - Facebook là nơi mọi người kết nối với bạn bè, người thân, khách hàng cùng như các đối tác chia sẻ sở thích chung và những câu chuyện đời thường, cũng như kỷ niệm những khoảnh khắc quan trọng như ngày sinh nhật.",
+                        TitleService = "Gửi lời mừng sinh nhật\n",
+                        TitleDetail = "Chúc mừng sinh nhật facebook là nơi mọi người kết nối với bạn bè, người thân, khách hàng cùng như các đối tác chia sẻ sở thích chung và những câu chuyện đời thường, cũng như kỷ niệm những khoảnh khắc quan trọng như ngày sinh nhật.",
                         TypeService = 5,
                         UserRole = "2",
-                        BadgeView = "Free",
+                        BadgeView = "Miễn phí",
                         BadgeType = BadgeType.Success
-                    }, 
-                    //new ServiceModel
-                    //{
-                    //    Icon = "icon_add_friend.png",
-                    //    TitleService = "Kết bạn facebook để trao đổi thông tin giao lưu và tìm kiếm các khách hàng tiềm năng trong công việc kinh doanh online trên facebook hoặc các sàn thương mại điện tử.",
-                    //    TypeService = 6,
-                    //    UserRole = "2",
-                    //    BadgeView = "Hot",
-                    //    BadgeType = BadgeType.Error
-                    //},
+                    },
                     new ServiceModel
                     {
                         Icon = "icon_connection.png",
-                        TitleService = "Kết nỗi facebook",
+                        TitleService = "Kết nỗi facebook\n",
                         TypeService = 7,
                         UserRole = "2",
                         BadgeView = "Connect",
@@ -83,7 +77,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                     new ServiceModel
                     {
                         Icon = "icon_auto_vip.png",
-                        TitleService = "AUTO VIP là công cụ tăng tương tác không giới hạn\nTại sao nên chọn AUTO VIP\nĐơn giản dễ sử dụngSử dụng đơn giản, dễ dàng cài đặt và vận hành nhanh chóng chỉ với vài chạm.\nSupport 24/7Luôn luôn lắng nghe và cải thiện giải pháp không ngừng nhằm phục vụ tốt nhất",
+                        TitleService = "AUTO VIP\n",
+                        TitleDetail = "AUTO VIP là công cụ tăng tương tác không giới hạn\nTại sao nên chọn AUTO VIP\nĐơn giản dễ sử dụngSử dụng đơn giản, dễ dàng cài đặt và vận hành nhanh chóng chỉ với vài chạm.\nSupport 24/7Luôn luôn lắng nghe và cải thiện giải pháp không ngừng nhằm phục vụ tốt nhất",
                         TypeService = 8,
                         UserRole = "2",
                         BadgeView = "AUTOVIP",

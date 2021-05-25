@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.FakeModules.Views.FIntroducePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    Padding="{OnPlatform iOS='0,20',
+                         Default='0'}"
+    BackgroundColor="#fff">
+    <ContentPage.Content>
+        <Grid
+            BackgroundColor="Transparent"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="40,*"
+            VerticalOptions="FillAndExpand">
+            <controls:NavigationView
+                Grid.Row="0"
+                HeightRequest="40"
+                Text="Giới thiệu về autohlt" />
+            <ScrollView Grid.Row="1" BackgroundColor="Transparent">
+                <StackLayout
+                    Padding="20"
+                    BackgroundColor="Transparent"
+                    Orientation="Vertical"
+                    Spacing="10">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Về AUTOHLT"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="15"
+                        Text="AUTOHLT là nền tảng chia sẻ và đặt Chỗ Nghỉ (Chỗ Ở) ra đời năm 2016.  Chúng tôi kết nối nhu cầu thuê Chỗ Nghỉ bao gồm: biệt thự nghỉ dưỡng, khách sạn, nhà riêng, chung cư… của Khách hàng đến các Chủ Nhà và ngược lại. Thông qua việc cho thuê Chỗ Nghỉ, Chủ Nhà có thể kiếm được một nguồn thu nhập cao và ổn định. Đối với Khách hàng thì đó là việc được trải nghiệm những không gian độc đáo, mới lạ, tiện nghi… với mức giá tốt nhất.  Hiện tại, AUTOHLT đã kết nối dịch vụ của mình đến hầu hết các địa điểm trong nước và sẵn sàng chinh phục các thị trường quốc tế sôi động, tiềm năng như Nhật Bản, Hàn Quốc… Với mạng lưới hơn 15.000 Chỗ Nghỉ được đội ngũ chuyên gia kiểm soát chất lượng, sàng lọc kỹ càng, AUTOHLT cung cấp những trải nghiệm du lịch thực sự đáng giá.  Để đặt Chỗ Nghỉ, bạn có thể sử dụng linh hoạt Laptop, Điện thoại thông minh, Smart Tivi… trên giao diện web và ứng dụng AUTOHLT. "
+                        TextColor="#000" />
+                    <Image Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_trip.jpg}" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Ứng dụng AUTOHLT"
+                        TextColor="#000" />
+                    <Label
+                        FontSize="15"
+                        Text="Với thiết kế đẹp mắt, tính năng thông minh, AUTOHLT app khiến những chân trời xa xôi nằm gọn trong lòng bàn tay của bạn. Phiên bản Android và ios"
+                        TextColor="#000" />
+                    <Image Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_app.JPEG}" />
+                    <Label
+                        FontSize="15"
+                        Text="Không chỉ cung cấp dịch vụ lưu trú, AUTOHLT còn là một không gian truyền cảm hứng cho các tín đồ du lịch. Tại đây, bạn tìm thấy niềm đam mê trên những chuyến hành trình trải nghiệm."
+                        TextColor="#000" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
