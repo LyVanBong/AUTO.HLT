@@ -3,9 +3,14 @@
     x:Class="AUTOHLT.MOBILE.FakeModules.Views.FHomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit">
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="Transparent">
     <ContentPage.Content>
-        <Grid ColumnDefinitions="70,*" RowDefinitions="70,*">
+        <Grid
+            BackgroundColor="Transparent"
+            ColumnDefinitions="60,*"
+            RowDefinitions="60,2,*"
+            RowSpacing="0">
             <Image
                 Grid.Row="0"
                 Grid.Column="0"
@@ -20,8 +25,14 @@
                 Text="AUTOHLT"
                 TextColor="#000"
                 VerticalOptions="CenterAndExpand" />
-            <ScrollView
+            <BoxView
                 Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="#FC6C22"
+                HeightRequest="2" />
+            <ScrollView
+                Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Margin="0"
@@ -30,10 +41,155 @@
                 Orientation="Vertical">
                 <StackLayout BackgroundColor="Transparent" Orientation="Vertical">
                     <Label
-                        FontSize="16"
-                        Text="Xin chào khach hang"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Xin chào khach hang bạn muỗn đi đâu"
                         TextColor="#000"
                         VerticalOptions="Center" />
+                    <SearchBar Placeholder="Tìm kiếm thử Lào cai" />
+                    <CollectionView
+                        BackgroundColor="Transparent"
+                        HeightRequest="80"
+                        ItemsSource="{Binding CityData}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout
+                                    BackgroundColor="Transparent"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Orientation="Vertical"
+                                    VerticalOptions="CenterAndExpand">
+                                    <Image
+                                        Margin="0"
+                                        Aspect="AspectFill"
+                                        HeightRequest="50"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Source="{Binding UriImage}"
+                                        WidthRequest="50">
+                                        <Image.Clip>
+                                            <EllipseGeometry
+                                                Center="25,25"
+                                                RadiusX="25"
+                                                RadiusY="25" />
+                                        </Image.Clip>
+                                    </Image>
+                                    <Label
+                                        FontSize="14"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="{Binding Title}"
+                                        TextColor="#000" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Gợi ý từ AUTOHLT"
+                        TextColor="#000"
+                        VerticalOptions="Center" />
+                    <CollectionView
+                        BackgroundColor="Transparent"
+                        HeightRequest="230"
+                        ItemsSource="{Binding SuggestionsPlacesData}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout
+                                    BackgroundColor="Transparent"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Orientation="Vertical"
+                                    Spacing="0"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="250">
+                                    <Image
+                                        Margin="0"
+                                        Aspect="AspectFill"
+                                        HeightRequest="160"
+                                        HorizontalOptions="StartAndExpand"
+                                        Source="{Binding UriImage}"
+                                        WidthRequest="250" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding Title}"
+                                        TextColor="#000" />
+                                    <Label
+                                        FontSize="14"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="{Binding Detail}"
+                                        TextColor="#000" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Trải nghiệm đáng nhớ"
+                        TextColor="#000"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        LineBreakMode="WordWrap"
+                        MaxLines="4"
+                        Text="Ở mỗi thành phố xa nôi, giữ lại cho mình một chốn dừng chân ấm áp"
+                        TextColor="#000" />
+                    <CollectionView BackgroundColor="Transparent" ItemsSource="{Binding PlacesData}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Padding="10"
+                                    BackgroundColor="Transparent"
+                                    RowDefinitions="160,auto,auto,2">
+                                    <Image
+                                        Grid.Row="0"
+                                        Margin="0"
+                                        Aspect="AspectFill"
+                                        HeightRequest="160"
+                                        HorizontalOptions="StartAndExpand"
+                                        Source="{Binding UriImage}"
+                                        WidthRequest="250" />
+                                    <Image
+                                        Grid.Row="0"
+                                        Margin="5"
+                                        extensions:IconTintColorEffect.TintColor="#FC6C22"
+                                        Aspect="AspectFit"
+                                        HeightRequest="30"
+                                        HorizontalOptions="End"
+                                        Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_heart.png}"
+                                        VerticalOptions="Start"
+                                        WidthRequest="30" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding Title}"
+                                        TextColor="#000" />
+                                    <Label
+                                        Grid.Row="2"
+                                        FontSize="14"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="{Binding Detail}"
+                                        TextColor="#000" />
+                                    <BoxView
+                                        Grid.Row="3"
+                                        BackgroundColor="#FC6C22"
+                                        HeightRequest="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
             </ScrollView>
         </Grid>

@@ -15,6 +15,7 @@
     <None Remove="FakeModules\Resources\icon_f_autohlt.png" />
     <None Remove="FakeModules\Resources\icon_f_balloons.png" />
     <None Remove="FakeModules\Resources\icon_f_fireworks.png" />
+    <None Remove="FakeModules\Resources\icon_f_heart.png" />
     <None Remove="FakeModules\Resources\icon_f_trip.jpg" />
     <None Remove="FakeModules\Resources\icon_f_user_profile.png" />
     <None Remove="FakeModules\Resources\iocn_f_balloon.png" />
@@ -79,6 +80,7 @@
     <EmbeddedResource Include="FakeModules\Resources\icon_f_autohlt.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_balloons.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_fireworks.png" />
+    <EmbeddedResource Include="FakeModules\Resources\icon_f_heart.png" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_trip.jpg" />
     <EmbeddedResource Include="FakeModules\Resources\icon_f_user_profile.png" />
     <EmbeddedResource Include="FakeModules\Resources\iocn_f_balloon.png" />
@@ -275,7 +277,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FakeModules\Models\" />
     <Folder Include="ViewModels\BuffSub\" />
     <Folder Include="ViewModels\Agency\" />
     <Folder Include="ViewModels\TopUp\" />
