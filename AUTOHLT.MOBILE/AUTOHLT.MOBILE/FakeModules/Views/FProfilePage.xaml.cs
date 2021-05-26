@@ -15,8 +15,9 @@ namespace AUTOHLT.MOBILE.FakeModules.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            On<iOS>().SetUseSafeArea(true);
             var safeInsets = On<iOS>().SafeAreaInsets();
-            safeInsets.Left = 20;
+            safeInsets.Bottom = 0;
             Padding = safeInsets;
         }
     }
