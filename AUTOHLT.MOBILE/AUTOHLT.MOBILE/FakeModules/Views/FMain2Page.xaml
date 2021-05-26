@@ -15,7 +15,10 @@
     UnselectedTabColor="#868686">
     <!--  Pages can be added as references or inline  -->
     <views:FHomePage Title="Trang chủ" IconImageSource="icon_f_home.png" />
-    <ContentPage Title="Yêu thích" IconImageSource="icon_f_love.png">
+    <ContentPage
+        Title="Yêu thích"
+        BackgroundColor="#e4efe7"
+        IconImageSource="icon_f_love.png">
         <StackLayout BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
@@ -48,7 +51,10 @@
                 TextColor="#fff" />
         </StackLayout>
     </ContentPage>
-    <ContentPage Title="Đặt chố của tôi" IconImageSource="icon_f_order.png">
+    <ContentPage
+        Title="Đặt chố của tôi"
+        BackgroundColor="#e4efe7"
+        IconImageSource="icon_f_order.png">
         <StackLayout BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
@@ -81,7 +87,10 @@
                 TextColor="#fff" />
         </StackLayout>
     </ContentPage>
-    <ContentPage Title="Tin nhắn" IconImageSource="icon_f_messager.png">
+    <ContentPage
+        Title="Tin nhắn"
+        BackgroundColor="#e4efe7"
+        IconImageSource="icon_f_messager.png">
         <StackLayout BackgroundColor="Transparent">
             <Label
                 Padding="0,10"

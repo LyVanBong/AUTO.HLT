@@ -5,9 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
     xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
-    Padding="{OnPlatform iOS='0,20',
-                         Default='0'}"
-    BackgroundColor="#fff">
+    BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <Grid
             BackgroundColor="Transparent"
@@ -18,7 +16,7 @@
                 Grid.Row="0"
                 HeightRequest="40"
                 Text="Giới thiệu về autohlt" />
-            <ScrollView Grid.Row="1" BackgroundColor="Transparent">
+            <ScrollView Grid.Row="1" BackgroundColor="#e4efe7">
                 <StackLayout
                     Padding="20"
                     BackgroundColor="Transparent"
