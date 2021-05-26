@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.FakeModules.ViewModels;
+﻿using AUTOHLT.MOBILE.FakeModules.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +12,6 @@ namespace AUTOHLT.MOBILE.FakeModules.Views
         {
             InitializeComponent();
         }
-
         private void Button_OnClicked(object sender, EventArgs e)
         {
             var vm = BindingContext as FMainViewModel;

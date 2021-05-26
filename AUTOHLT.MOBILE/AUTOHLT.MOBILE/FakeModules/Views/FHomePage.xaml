@@ -4,10 +4,11 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
-    BackgroundColor="Transparent">
+    Padding="{OnPlatform iOS='0,20,0,0'}"
+    BackgroundColor="#e4efe7">
     <ContentPage.Content>
         <Grid
-            BackgroundColor="Transparent"
+            BackgroundColor="#e4efe7"
             ColumnDefinitions="60,*"
             RowDefinitions="60,2,*"
             RowSpacing="0">
@@ -46,7 +47,7 @@
                         Text="Xin chào khach hang bạn muỗn đi đâu"
                         TextColor="#000"
                         VerticalOptions="Center" />
-                    <SearchBar Placeholder="Tìm kiếm thử Lào cai" />
+                    <SearchBar BackgroundColor="Transparent" Placeholder="Tìm kiếm thử Lào cai" />
                     <CollectionView
                         BackgroundColor="Transparent"
                         HeightRequest="80"
