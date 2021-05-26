@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Google.MobileAds;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
@@ -28,6 +29,7 @@ namespace AUTO.HLT.MOBILE.VIP.iOS
 
             #region Thư viên ngoài
 
+            MobileAds.SharedInstance.Start(CompletionHandler);
             Syncfusion.XForms.iOS.Buttons.SfSegmentedControlRenderer.Init();
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
@@ -39,6 +41,10 @@ namespace AUTO.HLT.MOBILE.VIP.iOS
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private void CompletionHandler(InitializationStatus status)
+        {
         }
     }
 
