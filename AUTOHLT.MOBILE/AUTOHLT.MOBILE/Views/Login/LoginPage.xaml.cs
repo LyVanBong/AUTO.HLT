@@ -22,8 +22,9 @@ namespace AUTOHLT.MOBILE.Views.Login
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            On<iOS>().SetUseSafeArea(true);
             var safeInsets = On<iOS>().SafeAreaInsets();
-            safeInsets.Left = 20;
+            safeInsets.Bottom = -20;
             Padding = safeInsets;
         }
     }

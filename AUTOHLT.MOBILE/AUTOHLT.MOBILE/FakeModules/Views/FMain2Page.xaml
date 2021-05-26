@@ -6,8 +6,6 @@
     xmlns:androidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
     xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
     xmlns:views="clr-namespace:AUTOHLT.MOBILE.FakeModules.Views;assembly=AUTOHLT.MOBILE"
-    Padding="{OnPlatform iOS='0,20',
-                         Default='0'}"
     androidSpecific:TabbedPage.ToolbarPlacement="Bottom"
     BackgroundColor="#e4efe7"
     BarBackgroundColor="#fff"
@@ -19,7 +17,7 @@
         Title="Yêu thích"
         BackgroundColor="#e4efe7"
         IconImageSource="icon_f_love.png">
-        <StackLayout BackgroundColor="Transparent">
+        <StackLayout Padding="0,20,0,0" BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
                 BackgroundColor="Transparent"
@@ -55,7 +53,7 @@
         Title="Đặt chố của tôi"
         BackgroundColor="#e4efe7"
         IconImageSource="icon_f_order.png">
-        <StackLayout BackgroundColor="Transparent">
+        <StackLayout Padding="0,20,0,0" BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
                 BackgroundColor="Transparent"
@@ -91,7 +89,7 @@
         Title="Tin nhắn"
         BackgroundColor="#e4efe7"
         IconImageSource="icon_f_messager.png">
-        <StackLayout BackgroundColor="Transparent">
+        <StackLayout Padding="0,20,0,0" BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
                 BackgroundColor="Transparent"
