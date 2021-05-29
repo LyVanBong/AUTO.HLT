@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:badge="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
     xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
     xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTOHLT.MOBILE"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
@@ -20,9 +21,10 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="200" />
+                <RowDefinition Height="180" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <BoxView
                 Grid.Row="0"
@@ -194,7 +196,6 @@
                 VerticalOptions="End"
                 WidthRequest="350" />
 
-            <!--  danh sach dich vu phai tra tien  -->
             <customRenderer:CustomCollectionViewRenderer
                 Grid.Row="5"
                 Margin="10,0"
@@ -269,9 +270,11 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </customRenderer:CustomCollectionViewRenderer>
+            <controls1:MTAdView Grid.Row="5" AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261', iOS='ca-app-pub-9881695093256851/3882334607'}" />
+
             <controls:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="6"
+                Grid.RowSpan="7"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
