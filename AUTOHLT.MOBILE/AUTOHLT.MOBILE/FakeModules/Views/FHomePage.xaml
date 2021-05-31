@@ -51,6 +51,9 @@
                     <CollectionView
                         BackgroundColor="Transparent"
                         HeightRequest="80"
+                        x:Name="collectionCity"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectCityCommand}"
                         ItemsSource="{Binding CityData}">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
@@ -93,7 +96,11 @@
                         VerticalOptions="Center" />
                     <CollectionView
                         BackgroundColor="Transparent"
+                       
                         HeightRequest="230"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectCityCommand}"
+                        
                         ItemsSource="{Binding SuggestionsPlacesData}">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
@@ -142,7 +149,10 @@
                         MaxLines="4"
                         Text="Ở mỗi thành phố xa nôi, giữ lại cho mình một chốn dừng chân ấm áp"
                         TextColor="#000" />
-                    <CollectionView BackgroundColor="Transparent" ItemsSource="{Binding PlacesData}">
+                    <CollectionView SelectionMode="Single"
+                                    x:Name="SuggestionPlaces"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference SuggestionPlaces},Path=SelectedItem}"
+                        SelectionChangedCommand="{Binding DetailCommand}" BackgroundColor="Transparent" ItemsSource="{Binding PlacesData}">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="2" />
                         </CollectionView.ItemsLayout>

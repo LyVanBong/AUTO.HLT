@@ -1,123 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.FakeModules.Models;
-using AUTOHLT.MOBILE.FakeModules.Views;
-using AUTOHLT.MOBILE.Resources.Languages;
-using AUTOHLT.MOBILE.Services.Database;
+﻿using AUTOHLT.MOBILE.FakeModules.Models;
 using AUTOHLT.MOBILE.ViewModels;
-using AUTOHLT.MOBILE.Views.AccountInformation;
-using AUTOHLT.MOBILE.Views.ChangePassword;
 using Prism.Navigation;
+using System.Collections.Generic;
+using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
-using Prism.Navigation.TabbedPages;
-using Prism.Services;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.FakeModules.ViewModels
 {
-    public class FMainViewModel : ViewModelBase
+    class FListProductViewModel : ViewModelBase
     {
-        private IPageDialogService _pageDialogService;
-        private IDatabaseService _databaseService;
-        private bool _isRunFeature;
-        private List<CityModel> _cityData = new List<CityModel>()
-        {
-            new CityModel()
-            {
-                Title = "Quanh đây",
-                UriImage = "https://image.flaticon.com/icons/png/512/3313/3313928.png"
-            },
-            new CityModel()
-            {
-                Title = "Hà Nội",
-                UriImage = "https://cdn.luxstay.com/home/location/location_1_1559734709.png"
-            },
-            new CityModel()
-            {
-                Title = "TP. Hồ Chí Minh",
-                UriImage = "https://cdn.luxstay.com/home/location/location_5_1559735011.png"
-            },
-            new CityModel()
-            {
-                Title = "Vũng Tàu",
-                UriImage = "https://cdn.luxstay.com/home/location/location_10_1559303118.png"
-            },
-            new CityModel()
-            {
-                Title = "Đà Lạt",
-                UriImage = "https://cdn.luxstay.com/home/location/location_4_1559786177.png"
-            },
-            new CityModel()
-            {
-                Title = "Đà Nẵng",
-                UriImage = "https://cdn.luxstay.com/home/location/location_16_1559303173.png"
-            },
-            new CityModel()
-            {
-                Title = "Nha Trang",
-                UriImage = "https://cdn.luxstay.com/home/location/location_1_1559373089.png"
-            },
-            new CityModel()
-            {
-                Title = "Quảng Ninh",
-                UriImage = "https://cdn.luxstay.com/home/location/location_5_1559786196.png"
-            },
-            new CityModel()
-            {
-                Title = "Hội An",
-                UriImage = "https://cdn.luxstay.com/home/location/location_6_1559786202.png"
-            },
-
-        };
-
-        private List<SuggestionsPlacesModel> _suggestionsPlacesData = new List<SuggestionsPlacesModel>()
-        {
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_2_1614588617.jpg",
-                Title = "Vũng Tàu Biệt thự hồ bơi",
-                Detail = "Những căn biệt thự có hồ bơi dành cho kỳ nghỉ của bạn tại Vũng Tàu",
-            },
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_1_1614588454.jpg",
-                Title = "Vi vu ngoại thành Hà Nội",
-                Detail = "Trải nghiệm không gian thoáng đãng cho chuyến đi ngay gần Hà Nội",
-            },
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_1_1614660728.jpg",
-                Title = "Hà Nội nội thành lãng mạn",
-                Detail = "Không gian lãng mạn dành cho cặp đôi tại trung tâm Hà Nội",
-            },
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_2_1615794965.jpg",
-                Title = "Sài Gòn cần là có ngay",
-                Detail = "Những căn homestay có 01 phòng ngủ tại Sài Gòn có thể đặt nhanh chóng",
-            },
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_1_1584606781.jpg",
-                Title = "Bể bơi & BBQ",
-                Detail = "Trải nghiệm đẳng cấp tại những căn homestay có bể bơi đẹp và khu vực BBQ ấm cúng.",
-            },
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_2_1584606872.jpg",
-                Title = "Siêu giảm giá!",
-                Detail = "Top chỗ ở giảm giá đến 50% từ các chủ nhà thân thiện trên Luxstay.",
-            },
-            new SuggestionsPlacesModel()
-            {
-                UriImage = "https://cdn.luxstay.com/home/apartment/apartment_10_1584602562.jpg",
-                Title = "Gần Trung tâm!",
-                Detail = "Dễ dàng di chuyển khắp nơi với top chỗ ở khu vực trung tâm thành phố Hồ Chí Minh",
-            },
-        };
-
         private List<SuggestionsPlacesModel> _placesData = new List<SuggestionsPlacesModel>()
         {
            new SuggestionsPlacesModel()
@@ -366,86 +257,20 @@ new SuggestionsPlacesModel()
 
             }
         };
-        public ICommand GoToFeatureCommand { get; private set; }
-        public string VersionApp => AppInfo.VersionString + " (" + AppInfo.BuildString + ")";
-        public ICommand GoBackHomeCommand { get; private set; }
-
-        public List<CityModel> CityData
-        {
-            get => _cityData;
-            set => SetProperty(ref _cityData, value);
-        }
-
-        public List<SuggestionsPlacesModel> SuggestionsPlacesData
-        {
-            get => _suggestionsPlacesData;
-            set => SetProperty(ref _suggestionsPlacesData, value);
-        }
-
         public List<SuggestionsPlacesModel> PlacesData
         {
             get => _placesData;
             set => SetProperty(ref _placesData, value);
         }
-        public ICommand SelectCityCommand { get; private set; }
         public ICommand DetailCommand { get; private set; }
-        public FMainViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
+        public FListProductViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _databaseService = databaseService;
-            _pageDialogService = pageDialogService;
-            GoToFeatureCommand = new AsyncCommand<string>(async (key) => await GoToFeature(key));
-            GoBackHomeCommand = new AsyncCommand(async () => await GoBackHome());
-            SelectCityCommand = new AsyncCommand(async () => await NavigationService.NavigateAsync("FListProductPage"));
-            DetailCommand = new AsyncCommand<SuggestionsPlacesModel>(async (places) => 
+            DetailCommand = new AsyncCommand<SuggestionsPlacesModel>(async (places) =>
             {
                 var para = new NavigationParameters();
                 para.Add("DetailProduct", places);
                 await NavigationService.NavigateAsync("FDetailProductPage", para, false, true);
             });
-        }
-
-        private async Task GoToFeature(string key)
-        {
-            if (_isRunFeature) return;
-            _isRunFeature = true;
-            var num = int.Parse(key);
-            switch (num)
-            {
-                case 0:
-                    await NavigationService.NavigateAsync(nameof(AccountInformationPage));
-                    break;
-                case 1:
-                    await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
-                    break;
-                case 2:
-                    await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        "Ứng dụng AUTOHLT đang sử dụng ngôn ngữ tiếng việt", "OK");
-                    break;
-                case 3:
-                    await NavigationService.NavigateAsync(nameof(FIntroducePage));
-                    break;
-                case 4:
-                    var urlAppInStore = Device.RuntimePlatform == Device.Android ? @"https://play.google.com/store/apps/details?id=com.bsoftgroup.auto.hlt" : @"https://apps.apple.com/vn/app/autohlt/id1542743307";
-                    await Launcher.TryOpenAsync(urlAppInStore);
-                    break;
-                case 5:
-                    var res = await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000042, "OK", "Cancel");
-                    if (res)
-                    {
-                        Preferences.Clear();
-                        await _databaseService.DeleteAccontUser();
-                        await NavigationService.NavigateAsync("/LoginPage");
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            _isRunFeature = false;
-        }
-        private async Task GoBackHome()
-        {
-            await NavigationService.SelectTabAsync("FHomePage");
         }
     }
 }
