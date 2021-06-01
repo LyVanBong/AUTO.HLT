@@ -49,9 +49,12 @@
                         VerticalOptions="Center" />
                     <SearchBar BackgroundColor="Transparent" Placeholder="Tìm kiếm thử Lào cai" />
                     <CollectionView
+                        x:Name="collectionCity"
                         BackgroundColor="Transparent"
                         HeightRequest="80"
-                        ItemsSource="{Binding CityData}">
+                        ItemsSource="{Binding CityData}"
+                        SelectionChangedCommand="{Binding SelectCityCommand}"
+                        SelectionMode="Single">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
                         </CollectionView.ItemsLayout>
@@ -94,7 +97,9 @@
                     <CollectionView
                         BackgroundColor="Transparent"
                         HeightRequest="230"
-                        ItemsSource="{Binding SuggestionsPlacesData}">
+                        ItemsSource="{Binding SuggestionsPlacesData}"
+                        SelectionChangedCommand="{Binding SelectCityCommand}"
+                        SelectionMode="Single">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
                         </CollectionView.ItemsLayout>
@@ -142,7 +147,13 @@
                         MaxLines="4"
                         Text="Ở mỗi thành phố xa nôi, giữ lại cho mình một chốn dừng chân ấm áp"
                         TextColor="#000" />
-                    <CollectionView BackgroundColor="Transparent" ItemsSource="{Binding PlacesData}">
+                    <CollectionView
+                        x:Name="SuggestionPlaces"
+                        BackgroundColor="Transparent"
+                        ItemsSource="{Binding PlacesData}"
+                        SelectionChangedCommand="{Binding DetailCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference SuggestionPlaces}, Path=SelectedItem}"
+                        SelectionMode="Single">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="2" />
                         </CollectionView.ItemsLayout>
@@ -167,6 +178,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="30"
                                         HorizontalOptions="End"
+                                        
                                         Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_heart.png}"
                                         VerticalOptions="Start"
                                         WidthRequest="30" />
