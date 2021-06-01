@@ -178,7 +178,6 @@
                                         Aspect="AspectFit"
                                         HeightRequest="30"
                                         HorizontalOptions="End"
-                                        
                                         Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_heart.png}"
                                         VerticalOptions="Start"
                                         WidthRequest="30" />
