@@ -1,7 +1,9 @@
-﻿using AUTOHLT.MOBILE.FakeModules.Models;
+﻿using System;
+using AUTOHLT.MOBILE.FakeModules.Models;
 using AUTOHLT.MOBILE.ViewModels;
 using Prism.Navigation;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 
@@ -269,8 +271,15 @@ new SuggestionsPlacesModel()
             {
                 var para = new NavigationParameters();
                 para.Add("DetailProduct", places);
-                await NavigationService.NavigateAsync("FDetailProductPage", para, false, true);
+                await NavigationService.NavigateAsync("FDetailProductPage", para);
             });
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            var random = new Random();
+            PlacesData = PlacesData.Skip(random.Next(1,30)).Take(10).OrderBy(x=>x.Title).ToList();
         }
     }
 }

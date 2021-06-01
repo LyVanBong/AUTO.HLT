@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.FakeModules.Models;
@@ -395,13 +397,23 @@ new SuggestionsPlacesModel()
             _pageDialogService = pageDialogService;
             GoToFeatureCommand = new AsyncCommand<string>(async (key) => await GoToFeature(key));
             GoBackHomeCommand = new AsyncCommand(async () => await GoBackHome());
-            SelectCityCommand = new AsyncCommand(async () => await NavigationService.NavigateAsync("FListProductPage"));
-            DetailCommand = new AsyncCommand<SuggestionsPlacesModel>(async (places) => 
+            SelectCityCommand = new AsyncCommand(async () =>
+            {
+                await NavigationService.NavigateAsync("FListProductPage");
+            });
+            DetailCommand = new AsyncCommand<SuggestionsPlacesModel>(async (places) =>
             {
                 var para = new NavigationParameters();
                 para.Add("DetailProduct", places);
-                await NavigationService.NavigateAsync("FDetailProductPage", para, false, true);
+                await NavigationService.NavigateAsync("FDetailProductPage", para);
             });
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            var random = new Random();
+            PlacesData = PlacesData.Skip(random.Next(1, 30)).Take(10).OrderBy(x => x.Title).ToList();
         }
 
         private async Task GoToFeature(string key)
