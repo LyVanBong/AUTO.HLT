@@ -270,7 +270,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </customRenderer:CustomCollectionViewRenderer>
-            <controls1:MTAdView Grid.Row="5" AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261', iOS='ca-app-pub-9881695093256851/3882334607'}" />
+            <controls1:MTAdView Grid.Row="6" AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261', iOS='ca-app-pub-9881695093256851/3882334607'}" />
 
             <controls:LoadingView
                 Grid.Row="0"
