@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.Gms.Ads;
 using Android.OS;
 using Prism;
 using Prism.Ioc;
@@ -17,6 +18,11 @@ namespace AUTO.HLT.MOBILE.VIP.Droid
 
             base.OnCreate(savedInstanceState);
 
+            #region Thư viện ngoài
+
+            MobileAds.Initialize(ApplicationContext);
+
+            #endregion
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }

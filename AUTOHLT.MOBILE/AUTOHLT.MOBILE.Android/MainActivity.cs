@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.Gms.Ads;
 using Android.OS;
 using Prism;
 using Prism.Ioc;
@@ -15,14 +16,14 @@ namespace AUTOHLT.MOBILE.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             OtherLibraries();
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }
         
         private void OtherLibraries()
         {
-           
+            MobileAds.Initialize(ApplicationContext);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
