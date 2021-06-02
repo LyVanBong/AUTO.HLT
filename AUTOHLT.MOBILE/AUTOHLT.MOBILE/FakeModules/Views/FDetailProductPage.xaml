@@ -7,7 +7,7 @@
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     BackgroundColor="#e4efe7">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Start">
+        <StackLayout VerticalOptions="Start" BackgroundColor="Transparent">
             <controls:NavigationView HeightRequest="40" Text="Chi tiết phong cảnh" />
             <Grid
                 Padding="10"
