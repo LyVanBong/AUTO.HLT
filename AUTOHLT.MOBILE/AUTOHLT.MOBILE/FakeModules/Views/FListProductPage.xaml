@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls"
-    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit">
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="#e4efe7">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Start">
             <controls:NavigationView HeightRequest="40" Text="Một số phong cảnh đẹp" />
