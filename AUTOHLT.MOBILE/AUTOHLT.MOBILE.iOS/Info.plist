@@ -38,6 +38,10 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>CFBundleVersion</key>
-	<string>82</string>
+	<string>83</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-9881695093256851~8311353609</string>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 </dict>
 </plist>
