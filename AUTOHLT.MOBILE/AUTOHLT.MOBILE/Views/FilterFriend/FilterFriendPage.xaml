@@ -4,8 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-    xmlns:xForms="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
     BackgroundColor="{StaticResource HeaderHome}">
     <ContentPage.Content>
         <Grid
@@ -13,7 +13,7 @@
             Padding="0"
             BackgroundColor="#fff"
             ColumnDefinitions="60,*"
-            RowDefinitions="40,30,30,80,50,100,Auto,*"
+            RowDefinitions="40,30,30,80,50,100,Auto,{OnPlatform iOS='120', Default='100'}"
             RowSpacing="5">
             <controls:NavigationView
                 Grid.Row="0"
@@ -60,6 +60,7 @@
                     Text="{Binding NumberPost}"
                     TextColor="#000" />
             </textInputLayout:SfTextInputLayout>
+
             <Grid
                 Grid.Row="4"
                 Grid.Column="0"
@@ -223,6 +224,13 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <controls1:MTAdView
+                Grid.Row="7"
+                Margin="{OnPlatform iOS='0,0,0,20',
+                                    Default='0'}"
+                AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261',
+                                   iOS='ca-app-pub-9881695093256851/3882334607'}"
+                BackgroundColor="Transparent" />
             <controls:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="7"
