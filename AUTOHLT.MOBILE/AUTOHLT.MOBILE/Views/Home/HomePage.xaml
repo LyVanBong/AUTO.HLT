@@ -24,7 +24,7 @@
                 <RowDefinition Height="120" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="100" />
+                <RowDefinition Height="{OnPlatform iOS='120', Default='100'}" />
             </Grid.RowDefinitions>
             <BoxView
                 Grid.Row="0"
@@ -273,6 +273,7 @@
             </customRenderer:CustomCollectionViewRenderer>
             <controls1:MTAdView
                 Grid.Row="6"
+                Margin="0,0,0,20"
                 AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261',
                                    iOS='ca-app-pub-9881695093256851/3882334607'}"
                 BackgroundColor="Transparent" />
