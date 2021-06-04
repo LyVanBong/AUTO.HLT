@@ -21,10 +21,10 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="180" />
+                <RowDefinition Height="120" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
             <BoxView
                 Grid.Row="0"
@@ -165,7 +165,7 @@
                 IsScrollAnimated="True">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Image Aspect="AspectFit" Source="{Binding UrlImage}" />
+                        <Image Aspect="Fill" Source="{Binding UrlImage}" />
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
@@ -198,6 +198,7 @@
 
             <customRenderer:CustomCollectionViewRenderer
                 Grid.Row="5"
+                Grid.RowSpan="2"
                 Margin="10,0"
                 Background="#fff"
                 BackgroundColor="#fff"
@@ -270,7 +271,11 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </customRenderer:CustomCollectionViewRenderer>
-            <controls1:MTAdView Grid.Row="6" AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261', iOS='ca-app-pub-9881695093256851/3882334607'}" />
+            <controls1:MTAdView
+                Grid.Row="6"
+                AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261',
+                                   iOS='ca-app-pub-9881695093256851/3882334607'}"
+                BackgroundColor="Transparent" />
 
             <controls:LoadingView
                 Grid.Row="0"
