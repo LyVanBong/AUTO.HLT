@@ -23,7 +23,6 @@ namespace AUTOHLT.MOBILE.Views.Home
             base.OnAppearing();
             On<iOS>().SetUseSafeArea(true);
             var safeInsets = On<iOS>().SafeAreaInsets();
-            safeInsets.Bottom = -20;
             Padding = safeInsets;
             _starTimer = true;
             this.CarouselView.ItemsSource = new List<AutoVip>()
