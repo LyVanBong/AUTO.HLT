@@ -13,7 +13,7 @@
             Padding="0"
             BackgroundColor="#fff"
             ColumnDefinitions="60,*"
-            RowDefinitions="40,30,30,80,50,100,Auto,{OnPlatform iOS='120', Default='100'}"
+            RowDefinitions="40,30,30,80,50,100,Auto,120"
             RowSpacing="5">
             <controls:NavigationView
                 Grid.Row="0"
