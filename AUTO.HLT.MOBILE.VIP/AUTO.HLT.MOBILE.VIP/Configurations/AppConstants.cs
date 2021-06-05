@@ -1,7 +1,21 @@
-﻿namespace AUTO.HLT.MOBILE.VIP.Configurations
+﻿using Xamarin.Forms;
+
+namespace AUTO.HLT.MOBILE.VIP.Configurations
 {
     public static class AppConstants
     {
+        /// <summary>
+        /// Quảng cáo banner
+        /// </summary>
+        public static string BannerAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/5751542362" : "ca-app-pub-9881695093256851/3879416866";
+        /// <summary>
+        /// Quản cáo Interstitial
+        /// </summary>
+        public static string InterstitialAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/5978773075" : "ca-app-pub-9881695093256851/6134685748";
+        /// <summary>
+        /// Quảng cáo Rewarded
+        /// </summary>
+        public static string RewardedAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/4246889003" : "ca-app-pub-9881695093256851/7256195725";
         /// <summary>
         /// id nhon chat telegram thong bao
         /// </summary>

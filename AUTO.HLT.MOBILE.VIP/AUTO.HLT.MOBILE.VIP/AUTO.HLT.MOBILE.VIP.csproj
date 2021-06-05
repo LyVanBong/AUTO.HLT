@@ -153,6 +153,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\GoogleAdmob\GoogleAdmobView.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
     <Compile Update="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
