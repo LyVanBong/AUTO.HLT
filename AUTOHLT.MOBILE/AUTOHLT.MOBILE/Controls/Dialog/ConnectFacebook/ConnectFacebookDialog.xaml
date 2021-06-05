@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
     xmlns:customRenderer1="clr-namespace:AUTOHLT.MOBILE.CustomRenderer;assembly=AUTOHLT.MOBILE"
     xmlns:prism="http://prismlibrary.com"
     Margin="0"
@@ -19,7 +20,7 @@
         Padding="0"
         BackgroundColor="Transparent"
         ColumnDefinitions="*,*"
-        RowDefinitions="40,*,50">
+        RowDefinitions="40,*,100,50">
         <BoxView
             Grid.Row="0"
             Grid.Column="0"
@@ -37,13 +38,20 @@
             VerticalOptions="CenterAndExpand" />
         <customRenderer1:WebViewRenderer
             Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Source="{Binding UrlFacebook}" />
-
+        <controls1:MTAdView
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261',
+                               iOS='ca-app-pub-9881695093256851/3882334607'}"
+            BackgroundColor="Transparent" />
         <Button
             x:Name="ConnectFacebook"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Margin="5"
             Padding="0"
@@ -71,7 +79,7 @@
             </Button.Triggers>
         </Button>
         <Button
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             Margin="5"
             Padding="0"

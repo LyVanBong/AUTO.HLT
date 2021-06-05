@@ -89,6 +89,8 @@ namespace AUTOHLT.MOBILE
         {
             #region App fake
 
+            containerRegistry.RegisterForNavigation<FDetailProductPage, FDetailProductViewModel>();
+            containerRegistry.RegisterForNavigation<FListProductPage, FListProductViewModel>();
             containerRegistry.RegisterForNavigation<FIntroducePage, FIntroduceViewModel>();
             containerRegistry.RegisterForNavigation<FMain2Page, FMainViewModel>();
             containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();

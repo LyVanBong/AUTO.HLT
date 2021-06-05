@@ -6,8 +6,6 @@
     xmlns:androidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
     xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
     xmlns:views="clr-namespace:AUTOHLT.MOBILE.FakeModules.Views;assembly=AUTOHLT.MOBILE"
-    Padding="{OnPlatform iOS='0,20',
-                         Default='0'}"
     androidSpecific:TabbedPage.ToolbarPlacement="Bottom"
     BackgroundColor="#e4efe7"
     BarBackgroundColor="#fff"
@@ -15,8 +13,11 @@
     UnselectedTabColor="#868686">
     <!--  Pages can be added as references or inline  -->
     <views:FHomePage Title="Trang chủ" IconImageSource="icon_f_home.png" />
-    <ContentPage Title="Yêu thích" IconImageSource="icon_f_love.png">
-        <StackLayout BackgroundColor="Transparent">
+    <ContentPage
+        Title="Yêu thích"
+        BackgroundColor="#e4efe7"
+        IconImageSource="icon_f_love.png">
+        <StackLayout Padding="0,20,0,0" BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
                 BackgroundColor="Transparent"
@@ -48,8 +49,11 @@
                 TextColor="#fff" />
         </StackLayout>
     </ContentPage>
-    <ContentPage Title="Đặt chố của tôi" IconImageSource="icon_f_order.png">
-        <StackLayout BackgroundColor="Transparent">
+    <ContentPage
+        Title="Đặt chố của tôi"
+        BackgroundColor="#e4efe7"
+        IconImageSource="icon_f_order.png">
+        <StackLayout Padding="0,20,0,0" BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
                 BackgroundColor="Transparent"
@@ -81,8 +85,11 @@
                 TextColor="#fff" />
         </StackLayout>
     </ContentPage>
-    <ContentPage Title="Tin nhắn" IconImageSource="icon_f_messager.png">
-        <StackLayout BackgroundColor="Transparent">
+    <ContentPage
+        Title="Tin nhắn"
+        BackgroundColor="#e4efe7"
+        IconImageSource="icon_f_messager.png">
+        <StackLayout Padding="0,20,0,0" BackgroundColor="Transparent">
             <Label
                 Padding="0,10"
                 BackgroundColor="Transparent"

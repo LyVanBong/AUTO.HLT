@@ -22,6 +22,7 @@ using System.Threading;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Services.VersionAppService;
+using MarcTron.Plugin;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -101,6 +102,8 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {6,nameof(FilterFriendPage) },
         };
 
+        private string _interstitialId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/2887853102" : "ca-app-pub-9881695093256851/1957914813";
+        private string _rewardedId= Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/9660063449" : "ca-app-pub-9881695093256851/4790880141";
         public ObservableCollection<ServiceModel> ServiceData
         {
             get => _serviceData;
@@ -130,6 +133,15 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             _databaseService = databaseService;
             LogoutCommand = new Command(LogoutAccount);
             NavigationCommand = new Command<Object>(NavigationPageService);
+            CrossMTAdmob.Current.OnInterstitialLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowInterstitial();
+            };
+            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowRewardedVideo();
+            };
+            CrossMTAdmob.Current.LoadInterstitial(_interstitialId);
         }
         public override void OnResume()
         {
@@ -180,6 +192,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {
                 if (IsLoading) return;
                 IsLoading = true;
+                CrossMTAdmob.Current.LoadRewardedVideo(_rewardedId);
                 var key = -1;
                 var data = obj is ServiceModel;
                 if (data)

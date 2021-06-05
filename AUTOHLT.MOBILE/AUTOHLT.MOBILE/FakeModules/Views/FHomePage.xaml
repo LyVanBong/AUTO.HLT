@@ -4,10 +4,11 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
-    BackgroundColor="Transparent">
+    Padding="{OnPlatform iOS='0,20,0,0'}"
+    BackgroundColor="#e4efe7">
     <ContentPage.Content>
         <Grid
-            BackgroundColor="Transparent"
+            BackgroundColor="#e4efe7"
             ColumnDefinitions="60,*"
             RowDefinitions="60,2,*"
             RowSpacing="0">
@@ -46,11 +47,14 @@
                         Text="Xin chào khach hang bạn muỗn đi đâu"
                         TextColor="#000"
                         VerticalOptions="Center" />
-                    <SearchBar Placeholder="Tìm kiếm thử Lào cai" />
+                    <SearchBar BackgroundColor="Transparent" Placeholder="Tìm kiếm thử Lào cai" />
                     <CollectionView
+                        x:Name="collectionCity"
                         BackgroundColor="Transparent"
                         HeightRequest="80"
-                        ItemsSource="{Binding CityData}">
+                        ItemsSource="{Binding CityData}"
+                        SelectionChangedCommand="{Binding SelectCityCommand}"
+                        SelectionMode="Single">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
                         </CollectionView.ItemsLayout>
@@ -93,7 +97,9 @@
                     <CollectionView
                         BackgroundColor="Transparent"
                         HeightRequest="230"
-                        ItemsSource="{Binding SuggestionsPlacesData}">
+                        ItemsSource="{Binding SuggestionsPlacesData}"
+                        SelectionChangedCommand="{Binding SelectCityCommand}"
+                        SelectionMode="Single">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
                         </CollectionView.ItemsLayout>
@@ -141,7 +147,13 @@
                         MaxLines="4"
                         Text="Ở mỗi thành phố xa nôi, giữ lại cho mình một chốn dừng chân ấm áp"
                         TextColor="#000" />
-                    <CollectionView BackgroundColor="Transparent" ItemsSource="{Binding PlacesData}">
+                    <CollectionView
+                        x:Name="SuggestionPlaces"
+                        BackgroundColor="Transparent"
+                        ItemsSource="{Binding PlacesData}"
+                        SelectionChangedCommand="{Binding DetailCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference SuggestionPlaces}, Path=SelectedItem}"
+                        SelectionMode="Single">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="2" />
                         </CollectionView.ItemsLayout>
