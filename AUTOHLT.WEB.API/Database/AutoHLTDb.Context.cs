@@ -978,7 +978,7 @@ namespace AUTOHLT.WEB.API.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetVersionApp_Result>("sp_GetVersionApp", idVersionParameter);
         }
     
-        public virtual int sp_UpdateVersionApplication(Nullable<int> id, Nullable<int> version, string note)
+        public virtual int sp_UpdateVersionApplication(Nullable<int> id, Nullable<int> version)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -988,11 +988,7 @@ namespace AUTOHLT.WEB.API.Database
                 new ObjectParameter("Version", version) :
                 new ObjectParameter("Version", typeof(int));
     
-            var noteParameter = note != null ?
-                new ObjectParameter("Note", note) :
-                new ObjectParameter("Note", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdateVersionApplication", idParameter, versionParameter, noteParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdateVersionApplication", idParameter, versionParameter);
         }
     }
 }

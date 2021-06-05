@@ -219,7 +219,6 @@
         <Function Name="sp_UpdateVersionApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
           <Parameter Name="Version" Type="int" Mode="In" />
-          <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ThemNguoiGioiThieu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -578,7 +577,6 @@
           <FunctionImport Name="sp_UpdateVersionApplication">
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Version" Mode="In" Type="Int32" />
-            <Parameter Name="Note" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllHistoryUserSevice_Result">
