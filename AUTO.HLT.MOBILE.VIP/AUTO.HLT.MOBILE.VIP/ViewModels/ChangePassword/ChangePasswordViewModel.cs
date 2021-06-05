@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Helpers;
 using AUTO.HLT.MOBILE.VIP.Models.User;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
@@ -10,6 +12,7 @@ using Prism.Navigation;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
 {
@@ -21,7 +24,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
         private string _newPassword;
         private string _currentPassword;
         private IUserService _userService;
-
+        private ContentView _adModView;
+        public ContentView AdModView
+        {
+            get => _adModView;
+            set => SetProperty(ref _adModView, value);
+        }
         public bool IsLoading
         {
             get => _isLoading;
@@ -48,6 +56,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             ChangePassworkCommand = new AsyncCommand(async () => await ChangePasswork());
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
+            {
+                AdModView = new GoogleAdmobView();
+            }
         }
 
         private async Task ChangePasswork()

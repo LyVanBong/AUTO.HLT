@@ -7,11 +7,13 @@
     <ContentView.Content>
         <Label
             Margin="5"
+            BackgroundColor="Transparent"
             FontSize="18"
-            HorizontalOptions="CenterAndExpand"
+            HorizontalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center"
             Text="Miễn phí - (Nâng cấp)"
-            TextColor="#fff"
-            VerticalOptions="CenterAndExpand">
+            TextColor="#fc5404"
+            VerticalOptions="FillAndExpand">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding UpgradeAccountCommand}" CommandParameter="0" />
             </Label.GestureRecognizers>
