@@ -11,10 +11,14 @@
     <ContentPage.Content>
         <Grid
             BackgroundColor="#fff"
-            RowDefinitions="40,*,80,10"
+            RowDefinitions="40,Auto,*,80,10"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Chúc mừng sinh nhật" />
-            <CollectionView Grid.Row="1" ItemsSource="{Binding LsBirthday}">
+            <ContentView
+                x:Name="AdmodViewgg"
+                Grid.Row="1"
+                Content="{Binding AdModView}" />
+            <CollectionView Grid.Row="2" ItemsSource="{Binding LsBirthday}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="15"
@@ -132,7 +136,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button
-                Grid.Row="2"
+                Grid.Row="3"
                 Margin="25,0"
                 Padding="0"
                 BackgroundColor="#fff"
@@ -145,7 +149,7 @@
                 TextColor="{StaticResource AppBackgroud}"
                 VerticalOptions="CenterAndExpand" />
             <loading:LoadingView
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.RowSpan="4"
                 IsVisible="{Binding IsLoading}" />
         </Grid>

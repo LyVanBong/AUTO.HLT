@@ -19,8 +19,10 @@ using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Notification;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Profile;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels;
+using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
@@ -86,6 +88,7 @@ namespace AUTO.HLT.MOBILE.VIP
         {
             #region Module Free
 
+            containerRegistry.RegisterForNavigation<BuffAPostPage, BuffAPostViewModel>();
             containerRegistry.RegisterForNavigation<FreeHomePage, FreeHomeViewModel>();
 
             #endregion

@@ -5,6 +5,10 @@ namespace AUTO.HLT.MOBILE.VIP.Configurations
     public static class AppConstants
     {
         /// <summary>
+        /// hiển thị quảng cáo
+        /// </summary>
+        public const string AddAdmod = "GoogleAdmod";
+        /// <summary>
         /// Quảng cáo banner
         /// </summary>
         public static string BannerAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/5751542362" : "ca-app-pub-9881695093256851/3879416866";

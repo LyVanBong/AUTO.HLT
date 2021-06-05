@@ -139,6 +139,7 @@
     <Folder Include="FakeModules\ViewModels\Notification\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
     <Folder Include="FreeModules\Models\" />
+    <Folder Include="FreeModules\ViewModels\BuffAPost\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -205,6 +206,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FakeModules\Views\TermsCondition\TermsConditionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FreeModules\Views\BuffAPost\BuffAPostPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FreeModules\Views\Home\FreeHomePage.xaml">
