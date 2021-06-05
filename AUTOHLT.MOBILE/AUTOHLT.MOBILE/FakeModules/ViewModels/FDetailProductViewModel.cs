@@ -46,7 +46,7 @@ new SuggestionsPlacesModel()
 new SuggestionsPlacesModel()
             {
                 UriImage = "https://cdn.luxstay.com/rooms/66757/large/room_66757_1_1579005667.jpg",
-                Title = "★DREAM HOUSE Villa 21★★★★",
+                Title = "DREAM HOUSE Villa 21",
                 Detail = "20 khách · 4 Phòng ngủ · 4 Phòng tắm",
 
             }, new SuggestionsPlacesModel()
@@ -94,13 +94,13 @@ new SuggestionsPlacesModel()
             }, new SuggestionsPlacesModel()
             {
                 UriImage = "https://cdn.luxstay.com/admins/12/wgh7-0vDHhM30ov7QbVORG1P.png",
-                Title = "★ Victory Villa ★ Sân Vườn - Hồ Bơi - Karaoke ★★★★★",
+                Title = " Victory Villa  Sân Vườn - Hồ Bơi - Karaoke ",
                 Detail = "30 khách · 4 Phòng ngủ · 4 Phòng tắm",
 
             }, new SuggestionsPlacesModel()
             {
                 UriImage = "https://cdn.luxstay.com/users/306204/TXzJFk8FDUY772nUyvadQ7jf.jpg",
-                Title = "★DREAM HOUSE Villa NGỌC TƯỚC",
+                Title = "DREAM HOUSE Villa NGỌC TƯỚC",
                 Detail = "25 khách · 5 Phòng ngủ · 6 Phòng tắm",
 
             }, new SuggestionsPlacesModel()
