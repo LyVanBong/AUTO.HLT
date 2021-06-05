@@ -6,9 +6,12 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
 {
@@ -20,7 +23,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
         private InfoIntroducetorModel _introducetor;
         private IDatabaseService _databaseService;
         private string _versionApp;
-
+        private ContentView _adModView;
+        public ContentView AdModView
+        {
+            get => _adModView;
+            set => SetProperty(ref _adModView, value);
+        }
         public bool IsLoading
         {
             get => _isLoading;
@@ -86,6 +94,10 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
             base.OnNavigatedTo(parameters);
             var data = await _loginService.Introducetor();
             Introducetor = data?.Data;
+            if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
+            {
+                AdModView = new GoogleAdmobView();
+            }
             IsLoading = false;
         }
     }

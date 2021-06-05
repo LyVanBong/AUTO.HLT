@@ -226,6 +226,8 @@
             </CollectionView>
             <controls1:MTAdView
                 Grid.Row="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 Margin="{OnPlatform iOS='0,0,0,20',
                                     Default='0'}"
                 AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261',

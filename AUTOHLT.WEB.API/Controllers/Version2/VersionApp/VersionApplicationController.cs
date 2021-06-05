@@ -61,7 +61,7 @@ namespace AUTOHLT.WEB.API.Controllers.Version2.VersionApp
             var veri = await Verifying(Request);
             if (veri != null && veri.UserName != null && input != null && input.VersionApp != null)
             {
-                var update = DatabaseAutohlt.sp_UpdateVersionApplication(input.IdApp, input.VersionApp, input.NoteApp);
+                var update = DatabaseAutohlt.sp_UpdateVersionApplication(input.IdApp, input.VersionApp);
                 if (update > 0)
                 {
                     return Ok(new ResponseModel<int>()

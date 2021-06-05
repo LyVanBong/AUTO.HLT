@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AUTO.HLT.MOBILE.VIP.Views.Home.HomePage"
+    x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home.FreeHomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:googleAdmob="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:icon="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:fonts="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     BackgroundColor="{StaticResource AppBackgroud}">
     <ContentPage.Content>
         <Grid
             Margin="0"
             Padding="0"
             BackgroundColor="#f2f2f2"
-            RowDefinitions="100,Auto,Auto,*,60"
+            RowDefinitions="100,Auto,Auto,*,150,60"
             RowSpacing="{OnPlatform Android='0',
                                     iOS='10'}">
             <BoxView
@@ -48,7 +49,7 @@
                             FontAttributes="Bold"
                             FontFamily="Awesome"
                             FontSize="20"
-                            Text="{x:Static fonts:FontAwesome5ProSolid.PowerOff}"
+                            Text="{x:Static icon:FontAwesome5ProSolid.PowerOff}"
                             TextColor="Red">
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding LogoutCommant}" />
@@ -73,7 +74,7 @@
                 SelectionMode="Single"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.Footer>
-                    <BoxView BackgroundColor="Transparent" HeightRequest="{OnPlatform iOS='1', Android='100'}" />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="170" />
                 </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
@@ -111,13 +112,14 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <googleAdmob:GoogleAdmobView Grid.Row="4" BackgroundColor="Transparent" />
             <BoxView
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="0"
                 BackgroundColor="{StaticResource AppBackgroud}"
                 CornerRadius="50,50,0,0" />
             <Frame
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="0,-40,0,0"
                 Padding="0"
                 BackgroundColor="{StaticResource AppBackgroud}"
@@ -139,7 +141,7 @@
             </Frame>
             <loading:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="5"
+                Grid.RowSpan="6"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

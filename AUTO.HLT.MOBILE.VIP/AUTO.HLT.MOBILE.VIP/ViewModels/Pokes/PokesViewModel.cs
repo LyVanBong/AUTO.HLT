@@ -3,6 +3,7 @@ using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Models.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -14,8 +15,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Models.Home;
-using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
+using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -26,11 +26,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
         private bool _isLoading;
         private IFacebookService _facebookService;
         private IPageDialogService _pageDialogService;
-        private IDatabaseService _databaseService;
         private IDialogService _dialogService;
         private ObservableCollection<PokesFriendsModel> _pokesData;
-        private ILicenseKeyService _licenseKeyService;
-
+        private ContentView _adModView;
+        public ContentView AdModView
+        {
+            get => _adModView;
+            set => SetProperty(ref _adModView, value);
+        }
         public ICommand SelectAllFriendsCommand { get; private set; }
         public ICommand PokesFriendCommand { get; private set; }
         public ObservableCollection<PokesFriendsModel> PokesData
@@ -45,11 +48,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService, ILicenseKeyService licenseKeyService) : base(navigationService)
+        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService) : base(navigationService)
         {
-            _licenseKeyService = licenseKeyService;
             _dialogService = dialogService;
-            _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
             PokesFriendCommand = new Command<PokesFriendsModel>(PokesFriend);
@@ -174,19 +175,16 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
             IsLoading = true;
         }
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            var license = await _licenseKeyService.CheckLicenseForUser();
-            if (license != null && license.CountEndDate > -1)
+            InitializeData();
+
+            if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
-                InitializeData();
-            }
-            else
-            {
-                await _pageDialogService.DisplayAlertAsync("Thông báo",
-                       "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng hơn", "OK");
-                await NavigationService.GoBackAsync();
+                AdModView = new GoogleAdmobView() { HeightRequest = 150 };
+                if (Device.RuntimePlatform == Device.iOS)
+                    AdModView.Padding = new Thickness(0, 0, 0, 20);
             }
         }
 

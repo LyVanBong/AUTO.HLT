@@ -1,21 +1,22 @@
-﻿using System;
+﻿using AUTO.DLL.MOBILE.Models.Facebook;
+using AUTO.DLL.MOBILE.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
+using AUTO.HLT.MOBILE.VIP.Models.Facebook;
+using Microsoft.AppCenter.Crashes;
+using Prism.Navigation;
+using Prism.Services;
+using Prism.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.DLL.MOBILE.Models.Facebook;
-using AUTO.DLL.MOBILE.Services.Facebook;
-using AUTO.HLT.MOBILE.VIP.Configurations;
-using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
-using AUTO.HLT.MOBILE.VIP.Models.Facebook;
-using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
-using Microsoft.AppCenter.Crashes;
-using Prism.Navigation;
-using Prism.Services;
-using Prism.Services.Dialogs;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
 {
@@ -45,8 +46,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         private IDialogService _dialogService;
         private int _numberPost = 15;
         private List<MyFriendModel> _doNotInteract;
-        private ILicenseKeyService _licenseKeyService;
-
+        private ContentView _adModView;
+        public ContentView AdModView
+        {
+            get => _adModView;
+            set => SetProperty(ref _adModView, value);
+        }
         public ICommand FilterFriendsCommand { get; private set; }
 
         public ICommand FillterCommand { get; private set; }
@@ -94,15 +99,26 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             set => SetProperty(ref _numberPost, value);
         }
 
-        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService, ILicenseKeyService licenseKeyService) : base(navigationService)
+        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
         {
-            _licenseKeyService = licenseKeyService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             FilterFriendsCommand = new Command(FilterFriends);
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
         }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
+            {
+                AdModView = new GoogleAdmobView() { HeightRequest = 120 };
+                if (Device.RuntimePlatform == Device.iOS)
+                    AdModView.Padding = new Thickness(0, 0, 0, 20);
+            }
+        }
+
         private async void FilterFriends()
         {
             try
@@ -232,33 +248,25 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var licenkey = await _licenseKeyService.CheckLicenseForUser();
-                if (licenkey != null && licenkey.CountEndDate > 0)
+                if (string.IsNullOrWhiteSpace(IdFacebook))
                 {
-                    if (string.IsNullOrWhiteSpace(IdFacebook))
+                    var token = Preferences.Get(AppConstants.TokenFaceook, "");
+                    var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
+                    if (await _facebookService.CheckCookieAndToken(cookie, token))
                     {
-                        var token = Preferences.Get(AppConstants.TokenFaceook, "");
-                        var cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                        if (await _facebookService.CheckCookieAndToken(cookie, token))
+                        await StartFillterFriend(token, cookie, NumberPost + "");
+                    }
+                    else
+                    {
+                        _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (result) =>
                         {
+                            token = Preferences.Get(AppConstants.TokenFaceook, "");
+                            cookie = Preferences.Get(AppConstants.CookieFacebook, "");
                             await StartFillterFriend(token, cookie, NumberPost + "");
-                        }
-                        else
-                        {
-                            _dialogService.ShowDialog(nameof(ConnectFacebookDialog), null, async (result) =>
-                            {
-                                token = Preferences.Get(AppConstants.TokenFaceook, "");
-                                cookie = Preferences.Get(AppConstants.CookieFacebook, "");
-                                await StartFillterFriend(token, cookie, NumberPost + "");
-                            });
-                        }
+                        });
                     }
                 }
-                else
-                {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo",
-                          "Bạn cần nâng cấp tài khoản để sử dụng đầy đủ tính năng hơn", "OK");
-                }
+
             }
             catch (Exception e)
             {
