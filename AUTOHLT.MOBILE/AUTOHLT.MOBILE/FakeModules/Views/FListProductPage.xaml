@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTOHLT.MOBILE.FakeModules.Views.FListProductPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="#e4efe7">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Start" BackgroundColor="Transparent">
+            <controls:NavigationView HeightRequest="40" Text="Một số phong cảnh đẹp" />
+            <CollectionView
+                x:Name="CollectionView"
+                BackgroundColor="Transparent"
+                ItemsSource="{Binding PlacesData}"
+                SelectionChangedCommand="{Binding DetailCommand}"
+                SelectionChangedCommandParameter="{Binding Source={x:Reference CollectionView}, Path=SelectedItem}"
+                SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            RowDefinitions="160,auto,auto,2">
+                            <Image
+                                Grid.Row="0"
+                                Margin="0"
+                                Aspect="AspectFill"
+                                HeightRequest="260"
+                                HorizontalOptions="FillAndExpand"
+                                Source="{Binding UriImage}" />
+                            <Image
+                                Grid.Row="0"
+                                Margin="5"
+                                extensions:IconTintColorEffect.TintColor="#FC6C22"
+                                Aspect="AspectFit"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                Source="{extensions:ImageResource Id=AUTOHLT.MOBILE.FakeModules.Resources.icon_f_heart.png}"
+                                VerticalOptions="Start" />
+                            <Label
+                                Grid.Row="1"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{Binding Title}"
+                                TextColor="#000" />
+                            <Label
+                                Grid.Row="2"
+                                FontSize="18"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{Binding Detail}"
+                                TextColor="#000" />
+                            <BoxView
+                                Grid.Row="3"
+                                BackgroundColor="#FC6C22"
+                                HeightRequest="2" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

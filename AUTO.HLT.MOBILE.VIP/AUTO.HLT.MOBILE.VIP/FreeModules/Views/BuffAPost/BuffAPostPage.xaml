@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost.BuffAPostPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:googleAdmob="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:icon="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    BackgroundColor="{StaticResource AppBackgroud}">
+    <ContentPage.Content>
+        <Grid
+            Margin="0"
+            Padding="0"
+            BackgroundColor="#fff"
+            ColumnDefinitions="3*,2*"
+            RowDefinitions="50,50,Auto,60,*"
+            RowSpacing="10">
+            <Grid.Resources>
+                <Style TargetType="textInputLayout:SfTextInputLayout">
+                    <Setter Property="ContainerType" Value="Outlined" />
+                    <Setter Property="Margin" Value="10,0" />
+                    <Setter Property="OutlineCornerRadius" Value="5" />
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="CornerRadius" Value="10" />
+                    <Setter Property="Margin" Value="10,5" />
+                    <Setter Property="TextColor" Value="#fff" />
+                </Style>
+            </Grid.Resources>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="{StaticResource AppBackgroud}"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Title}"
+                TextColor="#fff"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center" />
+            <textInputLayout:SfTextInputLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                FocusedColor="{StaticResource AppBackgroud}"
+                Hint="Số lượng"
+                LeadingViewPosition="Inside"
+                TrailingViewPosition="Inside">
+                <Entry
+                    ClearButtonVisibility="WhileEditing"
+                    Keyboard="Numeric"
+                    ReturnType="Next"
+                    Text="{Binding Number}" />
+                <textInputLayout:SfTextInputLayout.TrailingView>
+                    <Label FontAttributes="Bold" Text="{Binding MaxNumber}" />
+                </textInputLayout:SfTextInputLayout.TrailingView>
+                <textInputLayout:SfTextInputLayout.LeadingView>
+                    <Label
+                        FontFamily="Awesome"
+                        Text="{x:Static icon:FontAwesome5ProSolid.Star}"
+                        VerticalTextAlignment="Center" />
+                </textInputLayout:SfTextInputLayout.LeadingView>
+            </textInputLayout:SfTextInputLayout>
+            <textInputLayout:SfTextInputLayout
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                FocusedColor="{StaticResource AppBackgroud}"
+                Hint="Đường dẫn"
+                LeadingViewPosition="Inside">
+                <Editor
+                    HeightRequest="140"
+                    Keyboard="Plain"
+                    Text="{Binding Content}" />
+                <textInputLayout:SfTextInputLayout.LeadingView>
+                    <Label
+                        FontFamily="Awesome"
+                        Text="{x:Static icon:FontAwesome5ProSolid.Newspaper}"
+                        VerticalTextAlignment="Center" />
+                </textInputLayout:SfTextInputLayout.LeadingView>
+            </textInputLayout:SfTextInputLayout>
+            <Button
+                Grid.Row="3"
+                Grid.Column="0"
+                BackgroundColor="{StaticResource AppBackgroud}"
+                Command="{Binding RunFeatureCommand}"
+                CommandParameter="0"
+                Text="Sử dụng" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="1"
+                BackgroundColor="Tomato"
+                Command="{Binding RunFeatureCommand}"
+                CommandParameter="1"
+                Text="Thoát" />
+            <googleAdmob:GoogleAdmobView
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2" />
+            <loading:LoadingView
+                Grid.Row="1"
+                Grid.RowSpan="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="{Binding IsLoading}" />
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

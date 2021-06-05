@@ -1,4 +1,4 @@
-﻿namespace AUTOHLT.MOBILE.Resources.Fonts
+﻿namespace AUTO.HLT.MOBILE.VIP.Resources.Fonts
 {
     static class FontAwesome5ProSolid
     {

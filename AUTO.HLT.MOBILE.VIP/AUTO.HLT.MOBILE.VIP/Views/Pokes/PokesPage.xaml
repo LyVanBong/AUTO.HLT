@@ -13,7 +13,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="#fff"
-            RowDefinitions="40,35,40,*"
+            RowDefinitions="40,35,40,*,Auto"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Chọc bạn bè" />
 
@@ -53,6 +53,9 @@
                 Grid.Row="3"
                 Margin="10"
                 ItemsSource="{Binding PokesData}">
+                <CollectionView.Footer>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="{Binding Source={x:Reference AdmodViewgg}, Path=HeightRequest}" />
+                </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -106,7 +109,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
+            <ContentView
+                x:Name="AdmodViewgg"
+                Grid.Row="4"
+                Content="{Binding AdModView}" />
             <controls1:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="3"

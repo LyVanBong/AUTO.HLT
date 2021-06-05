@@ -11,6 +11,7 @@ using System.Windows.Input;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using Newtonsoft.Json;
 using Prism.Services;
@@ -34,6 +35,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         private IDatabaseService _databaseService;
         private bool _isLoading;
         private ITelegramService _telegramService;
+        private ILicenseKeyService _licenseKeyService;
 
         public View ContentLoginPage
         {
@@ -93,8 +95,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             set => SetProperty(ref _isLoading, value);
         }
 
-        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService) : base(navigationService)
+        public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService, ITelegramService telegramService, ILicenseKeyService licenseKeyService) : base(navigationService)
         {
+            _licenseKeyService = licenseKeyService;
             _telegramService = telegramService;
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
@@ -337,7 +340,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 var login = await _loginService.Login(user, pwd);
                 if (login != null && login.Code > 0 & login.Data != null)
                 {
-                    App.UserLogin = login.Data;
+                    var dataLogin = login.Data;
+                    App.UserLogin = dataLogin;
                     if (IsSavePasswd)
                     {
                         Preferences.Set(nameof(IsSavePasswd), true);
@@ -346,15 +350,23 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     {
                         Preferences.Set(nameof(IsSavePasswd), false);
                     }
-                    await _databaseService.SetAccountUser(login.Data);
-                    Preferences.Set(AppConstants.Authorization, login.Data.Jwt);
+                    await _databaseService.SetAccountUser(dataLogin);
+                    Preferences.Set(AppConstants.Authorization, dataLogin.Jwt);
                     if (UserName.ToUpper() == "KHACHHANG")
                     {
                         await NavigationService.NavigateAsync("/FMainPage", null, false, true);
                     }
                     else
                     {
-                        await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                        var licenseKey = await _licenseKeyService.CheckLicenseForUser();
+                        if ((licenseKey != null && licenseKey.CountEndDate > -1) || dataLogin.Role == 0 || dataLogin.Role == 3)
+                        {
+                            await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                        }
+                        else
+                        {
+                            await NavigationService.NavigateAsync("/FreeHomePage", null, false, true);
+                        }
                     }
                 }
                 else
