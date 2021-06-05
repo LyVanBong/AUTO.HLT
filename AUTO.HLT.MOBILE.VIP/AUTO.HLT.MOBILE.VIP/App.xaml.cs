@@ -18,6 +18,10 @@ using AUTO.HLT.MOBILE.VIP.FakeModules.Views.MyBooking;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Notification;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Profile;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition;
+using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels;
+using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
@@ -80,6 +84,11 @@ namespace AUTO.HLT.MOBILE.VIP
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #region Module Free
+
+            containerRegistry.RegisterForNavigation<FreeHomePage, FreeHomeViewModel>();
+
+            #endregion
 
             #region Phần đăng ký View - ViewModel Fake
 
