@@ -3,7 +3,7 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.Home.AddLicenseKeyView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:local="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     BackgroundColor="Transparent">
     <ContentView.Content>

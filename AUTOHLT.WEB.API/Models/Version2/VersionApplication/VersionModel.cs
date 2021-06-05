@@ -4,6 +4,6 @@
     {
         public int? IdApp { get; set; }
         public int? VersionApp { get; set; }
-        public string NoteApp { get; set; }
+        //public string NoteApp { get; set; }
     }
 }

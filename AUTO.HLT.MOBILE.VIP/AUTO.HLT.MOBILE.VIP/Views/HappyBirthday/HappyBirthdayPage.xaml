@@ -3,7 +3,7 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Views.HappyBirthday.HappyBirthdayPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:icon="clr-namespace:AUTOHLT.MOBILE.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
+    xmlns:icon="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
@@ -11,10 +11,14 @@
     <ContentPage.Content>
         <Grid
             BackgroundColor="#fff"
-            RowDefinitions="40,*,80,10"
+            RowDefinitions="40,Auto,*,80,10"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Chúc mừng sinh nhật" />
-            <CollectionView Grid.Row="1" ItemsSource="{Binding LsBirthday}">
+            <ContentView
+                x:Name="AdmodViewgg"
+                Grid.Row="1"
+                Content="{Binding AdModView}" />
+            <CollectionView Grid.Row="2" ItemsSource="{Binding LsBirthday}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="15"
@@ -132,7 +136,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button
-                Grid.Row="2"
+                Grid.Row="3"
                 Margin="25,0"
                 Padding="0"
                 BackgroundColor="#fff"
@@ -145,7 +149,7 @@
                 TextColor="{StaticResource AppBackgroud}"
                 VerticalOptions="CenterAndExpand" />
             <loading:LoadingView
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.RowSpan="4"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
