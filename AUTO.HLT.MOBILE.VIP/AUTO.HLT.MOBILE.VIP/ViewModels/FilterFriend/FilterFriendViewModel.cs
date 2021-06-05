@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
 {
@@ -113,6 +114,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
                 AdModView = new GoogleAdmobView() { HeightRequest = 120 };
+                if (Device.RuntimePlatform == Device.iOS)
+                    AdModView.Padding = new Thickness(0, 0, 0, 20);
             }
         }
 

@@ -7,7 +7,6 @@ using Prism.Services;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.VerifyOtp;
 using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Services.Telegram;
 using Newtonsoft.Json;
