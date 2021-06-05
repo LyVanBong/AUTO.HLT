@@ -156,6 +156,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             switch (id)
             {
                 case 1:
+                case 2:
                     var para = new NavigationParameters();
                     para.Add("TypeFeature", item);
                     await NavigationService.NavigateAsync(nameof(FeaturePage), para);
@@ -171,12 +172,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                     break;
                 case 6:
                     await NavigationService.NavigateAsync(nameof(HappyBirthdayPage));
-                    break;
-                case 9:
-                    await NavigationService.NavigateAsync(nameof(ManagePage));
-                    break;
-                case 10:
-                    await NavigationService.NavigateAsync(nameof(KeyGenerationPage));
                     break;
                 case 11:
                     await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
@@ -258,6 +253,14 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                     Role = 99,
                     BgColor = Color.FromHex("e40017"),
                     Icon = "icon_like.png"
+                },
+                new ItemMenuModel()
+                {
+                    Id = 2,
+                    TitleItem = "Tăng người theo dõi",
+                    Role = 99,
+                    BgColor = Color.FromHex("e45017"),
+                    Icon = "icon_follow.png"
                 },
                 new ItemMenuModel()
                 {

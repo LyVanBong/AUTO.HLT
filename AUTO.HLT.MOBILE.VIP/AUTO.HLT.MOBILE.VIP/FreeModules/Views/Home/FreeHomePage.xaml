@@ -3,6 +3,7 @@
     x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home.FreeHomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:googleAdmob="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:icon="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
@@ -12,7 +13,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="#f2f2f2"
-            RowDefinitions="100,Auto,Auto,*,60"
+            RowDefinitions="100,Auto,Auto,*,150,60"
             RowSpacing="{OnPlatform Android='0',
                                     iOS='10'}">
             <BoxView
@@ -73,7 +74,7 @@
                 SelectionMode="Single"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.Footer>
-                    <BoxView BackgroundColor="Transparent" HeightRequest="{OnPlatform iOS='1', Android='100'}" />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="170" />
                 </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
@@ -111,13 +112,17 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <BoxView
+            <googleAdmob:GoogleAdmobView
                 Grid.Row="4"
+                Grid.RowSpan="2"
+                BackgroundColor="Transparent" />
+            <BoxView
+                Grid.Row="5"
                 Margin="0"
                 BackgroundColor="{StaticResource AppBackgroud}"
                 CornerRadius="50,50,0,0" />
             <Frame
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="0,-40,0,0"
                 Padding="0"
                 BackgroundColor="{StaticResource AppBackgroud}"
@@ -139,7 +144,7 @@
             </Frame>
             <loading:LoadingView
                 Grid.Row="0"
-                Grid.RowSpan="5"
+                Grid.RowSpan="6"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
