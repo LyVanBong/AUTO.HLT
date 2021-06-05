@@ -1,22 +1,19 @@
-﻿using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+﻿using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
 using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
-using AUTO.HLT.MOBILE.VIP.Services.Facebook;
-using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
-using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.VersionApp;
 using AUTO.HLT.MOBILE.VIP.ViewModels;
 using AUTO.HLT.MOBILE.VIP.Views.ChangePassword;
-using AUTO.HLT.MOBILE.VIP.Views.Feature;
 using AUTO.HLT.MOBILE.VIP.Views.FilterFriend;
 using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
-using AUTO.HLT.MOBILE.VIP.Views.KeyGeneration;
-using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
+using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -27,9 +24,6 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Configurations;
-using AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost;
-using MarcTron.Plugin;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -49,7 +43,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
         private ObservableCollection<ItemMenuModel> _listItemMenus;
         private IVersionAppService _versionAppService;
         private bool _isUpdate;
-       
+
 
         public ObservableCollection<ItemMenuModel> ListItemMenus
         {
@@ -88,7 +82,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
 
         public ICommand ConnectFacebookCommand { get; private set; }
         public ICommand UseFeatureCommand { get; private set; }
-      
+
         public FreeHomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService) : base(navigationService)
         {
             _versionAppService = versionAppService;
@@ -107,11 +101,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             {
                 CrossMTAdmob.Current.ShowRewardedVideo();
             };
-            new Thread(async () =>
-            {
-                await Task.Delay(TimeSpan.FromSeconds(8));
-                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
-            }).Start();
+            CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
         }
 
         public override void OnResume()
@@ -165,34 +155,40 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             IsLoading = true;
             var id = item.Id;
             var para = new NavigationParameters();
-            para.Add(AppConstants.AddAdmod, AppConstants.AddAdmod);
+            para.Add(AppConstants.AddAdmod, nameof(AppConstants.AddAdmod));
             switch (id)
             {
                 case 1:
                 case 2:
                     para.Add("TypeFeature", item);
-                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
+
                     await NavigationService.NavigateAsync(nameof(BuffAPostPage), para);
+                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     break;
                 case 5:
+
+                    await NavigationService.NavigateAsync(nameof(PokesPage), para);
                     CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
-                    await NavigationService.NavigateAsync(nameof(PokesPage));
                     break;
                 case 4:
+
+                    await NavigationService.NavigateAsync(nameof(FilterFriendPage), para);
                     CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
-                    await NavigationService.NavigateAsync(nameof(FilterFriendPage));
                     break;
                 case 8:
+
+                    await NavigationService.NavigateAsync(nameof(SuportCustumerPage), para);
                     CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
-                    await NavigationService.NavigateAsync(nameof(SuportCustumerPage));
                     break;
                 case 6:
+
+                    await NavigationService.NavigateAsync(nameof(HappyBirthdayPage), para);
                     CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
-                    await NavigationService.NavigateAsync(nameof(HappyBirthdayPage));
                     break;
                 case 11:
+
+                    await NavigationService.NavigateAsync(nameof(ChangePasswordPage), para);
                     CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
-                    await NavigationService.NavigateAsync(nameof(ChangePasswordPage));
                     break;
                 default:
                     break;

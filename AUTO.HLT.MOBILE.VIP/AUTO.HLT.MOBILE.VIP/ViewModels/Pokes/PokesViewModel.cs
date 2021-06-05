@@ -183,6 +183,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
                 AdModView = new GoogleAdmobView() { HeightRequest = 150 };
+                if (Device.RuntimePlatform == Device.iOS)
+                    AdModView.Padding = new Thickness(0, 0, 0, 20);
             }
         }
 
