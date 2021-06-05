@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
     xmlns:controls="clr-namespace:AUTOHLT.MOBILE.Controls;assembly=AUTOHLT.MOBILE"
+    xmlns:controls1="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     BackgroundColor="{StaticResource HeaderHome}">
@@ -115,6 +116,12 @@
                 FontSize="18"
                 IsEnabled="{Binding IsEnabledButton}"
                 Text="{markupExtensions:Translate 1000073}" />
+
+            <controls1:MTAdView
+                Grid.Row="7"
+                AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/6246496261',
+                                   iOS='ca-app-pub-9881695093256851/3882334607'}"
+                BackgroundColor="Transparent" />
 
             <controls:LoadingView
                 Grid.Row="0"
