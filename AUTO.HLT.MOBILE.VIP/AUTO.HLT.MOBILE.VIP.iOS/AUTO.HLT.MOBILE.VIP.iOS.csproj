@@ -190,6 +190,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs">
+      <Version>7.1.0.514</Version>
+    </PackageReference>
     <PackageReference Include="MarcTron.Admob">
       <Version>1.6.1</Version>
     </PackageReference>
