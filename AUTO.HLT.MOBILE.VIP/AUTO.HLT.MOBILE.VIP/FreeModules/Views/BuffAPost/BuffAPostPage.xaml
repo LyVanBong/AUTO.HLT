@@ -99,7 +99,8 @@
             <googleAdmob:GoogleAdmobView
                 Grid.Row="4"
                 Grid.Column="0"
-                Grid.ColumnSpan="2" />
+                Grid.ColumnSpan="2"
+                Padding="0,0,0,20" />
             <loading:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="4"

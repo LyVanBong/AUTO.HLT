@@ -12,7 +12,8 @@
             HorizontalOptions="FillAndExpand"
             HorizontalTextAlignment="Center"
             Text="Miễn phí - (Nâng cấp)"
-            TextColor="#fc5404"
+            TextColor="#f7fd04"
+            TextDecorations="Underline"
             VerticalOptions="FillAndExpand">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding UpgradeAccountCommand}" CommandParameter="0" />

@@ -141,7 +141,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {
                 CrossMTAdmob.Current.ShowRewardedVideo();
             };
-            CrossMTAdmob.Current.LoadInterstitial(_interstitialId);
         }
         public override void OnResume()
         {

@@ -11,6 +11,7 @@ using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.ViewModels;
+using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
@@ -65,6 +66,10 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
             _licenseKeyService = licenseKeyService;
             _pageDialogService = pageDialogService;
             RunFeatureCommand = new AsyncCommand<string>(RunFeature);
+            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowRewardedVideo();
+            };
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -80,8 +85,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
                     await CheckAcountUseService();
                 }
             }
-
             IsLoading = false;
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
         }
 
         private async Task CheckAcountUseService()

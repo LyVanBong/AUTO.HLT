@@ -28,7 +28,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.bsoftgroup.auto.hlt</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.14</string>
+	<string>1.0.15</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>XSAppIconAssets</key>
@@ -38,7 +38,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>CFBundleVersion</key>
-	<string>90</string>
+	<string>92</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9881695093256851~8311353609</string>
 	<key>GADIsAdManagerApp</key>
