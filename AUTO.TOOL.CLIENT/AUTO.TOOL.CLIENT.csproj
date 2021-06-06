@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <Authors>BSoftTeam</Authors>
+    <Product>Auto Tool</Product>
+    <Description>Auto Tool</Description>
+    <Copyright>2021@BSoftTeam</Copyright>
+    <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
+    <RootNamespace>AUTO.TOOL.CLIENT</RootNamespace>
+    <PackageId>AUTO.TOOL.CLIENT</PackageId>
+    <AssemblyName>AUTO.TOOL.CLIENT</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
