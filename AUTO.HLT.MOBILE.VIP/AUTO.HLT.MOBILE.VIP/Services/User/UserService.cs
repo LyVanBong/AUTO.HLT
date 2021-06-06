@@ -19,6 +19,54 @@ namespace AUTO.HLT.MOBILE.VIP.Services.User
             _restSharpService = restSharpService;
             _requestProvider = requestProvider;
         }
+
+        public async Task<int> SetPriceUser(string userName, string price)
+        {
+            var data = 0;
+            try
+            {
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("UserName",userName),
+                    new RequestParameter("Price",price),
+                };
+                var res = await _restSharpService.PutAsync("https://api.autohlt.vn/api/v1/user/SetMoney", parameters);
+                var obj = JsonConvert.DeserializeObject<ResponseModel<int>>(res);
+                if (obj != null)
+                {
+                    data = obj.Data;
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+
+            return data;
+        }
+
+        public async Task<int> GetPriceUser(string userName)
+        {
+            var data = 0;
+            try
+            {
+                var parameters = new List<RequestParameter>()
+                {
+                    new RequestParameter("UserName",userName),
+                };
+                var res = await _restSharpService.GetAsync("http://api.autohlt.vn/api/v1/user/getpriceuser", parameters);
+                var obj = JsonConvert.DeserializeObject<ResponseModel<int>>(res);
+                if (obj != null)
+                    data = obj.Data;
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+
+            return data;
+        }
+
         public async Task<ResponseModel<List<UserModel>>> GetAllUser()
         {
             try

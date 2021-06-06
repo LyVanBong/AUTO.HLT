@@ -24,6 +24,7 @@
                 VerticalOptions="CenterAndExpand">
                 <Entry
                     BackgroundColor="Transparent"
+                    ClearButtonVisibility="WhileEditing"
                     FontSize="12"
                     Keyboard="Plain"
                     ReturnCommand="{Binding UpgradeAccountCommand}"
