@@ -202,57 +202,58 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             try
             {
-                if (_licenseKey != null)
+
+                var infoFace =
+                    await _facebookService.GetInfoUser();
+                if (infoFace != null && infoFace.name != null)
                 {
-                    var infoFace =
-                        await _facebookService.GetInfoUser();
-                    if (infoFace != null && infoFace.name != null)
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo",
+                        $"Bạn muốn cài đặt xem story cho tài khoản facebook {infoFace?.name}", "Cài ngay",
+                        "Thôi"))
                     {
-                        if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                            $"Bạn muốn cài đặt xem story cho tài khoản facebook {infoFace?.name}", "Cài ngay",
-                            "Thôi"))
+                        var user = await _databaseService.GetAccountUser();
+                        var content = new ContentSendTelegramModel()
                         {
-                            var user = await _databaseService.GetAccountUser();
-                            var content = new ContentSendTelegramModel()
+                            Ten_Thong_Bao = item?.TitleItem,
+                            So_Luong = 1,
+                            Id_Nguoi_Dung = user?.ID,
+                            Ghi_Chu = new
                             {
-                                Ten_Thong_Bao = item?.TitleItem,
-                                So_Luong = 1,
-                                Id_Nguoi_Dung = user?.ID,
-                                Ghi_Chu = new
-                                {
-                                    Ten = user?.Name,
-                                    Tai_Khoan = user?.UserName,
-                                    So_dien_thoai = user?.NumberPhone,
-                                    Id_facebook = infoFace?.id,
-                                    Ten_facebook = infoFace?.name,
-                                    Avatar_facebook = infoFace?.picture?.data?.url,
-                                    Ngay_Het_Han = _licenseKey.EndDate,
-                                    So_Ngay_Con_Lai = _licenseKey.CountEndDate
-                                },
-                                Noi_Dung_Thong_Bao = new
-                                {
-                                    Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
-                                    Token = Preferences.Get(AppConstants.TokenFaceook, ""),
-                                }
-                            };
-                            var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                JsonConvert.SerializeObject(content, Formatting.Indented));
-                            if (send != null && send.ok)
+                                Ten = user?.Name,
+                                Tai_Khoan = user?.UserName,
+                                So_dien_thoai = user?.NumberPhone,
+                                Id_facebook = infoFace?.id,
+                                Ten_facebook = infoFace?.name,
+                                Avatar_facebook = infoFace?.picture?.data?.url,
+                                Ngay_Het_Han = _licenseKey.EndDate,
+                                So_Ngay_Con_Lai = _licenseKey.CountEndDate
+                            },
+                            Noi_Dung_Thong_Bao = new
                             {
-                                await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                                Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
+                                Token = Preferences.Get(AppConstants.TokenFaceook, ""),
                             }
-                            else
-                            {
-                                await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                    "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
-                            }
+                        };
+                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                            JsonConvert.SerializeObject(content, Formatting.Indented));
+                        if (send != null && send.ok)
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
                         }
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
+                    {
+                        await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                        await SeeStoryFacebook(item);
+                    }
                 }
             }
             catch (Exception e)
@@ -265,57 +266,57 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             try
             {
-                if (_licenseKey != null)
+                var infoFace =
+                    await _facebookService.GetInfoUser();
+                if (infoFace != null && infoFace.name != null)
                 {
-                    var infoFace =
-                        await _facebookService.GetInfoUser();
-                    if (infoFace != null && infoFace.name != null)
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo",
+                        $"Bạn muốn kết bạn theo gợi ý cho tài khoản facebook {infoFace?.name}", "Cài ngay",
+                        "Thôi"))
                     {
-                        if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                            $"Bạn muốn kết bạn theo gợi ý cho tài khoản facebook {infoFace?.name}", "Cài ngay",
-                            "Thôi"))
+                        var user = await _databaseService.GetAccountUser();
+                        var content = new ContentSendTelegramModel()
                         {
-                            var user = await _databaseService.GetAccountUser();
-                            var content = new ContentSendTelegramModel()
+                            Ten_Thong_Bao = item?.TitleItem,
+                            So_Luong = 1,
+                            Id_Nguoi_Dung = user?.ID,
+                            Ghi_Chu = new
                             {
-                                Ten_Thong_Bao = item?.TitleItem,
-                                So_Luong = 1,
-                                Id_Nguoi_Dung = user?.ID,
-                                Ghi_Chu = new
-                                {
-                                    Ten = user?.Name,
-                                    Tai_Khoan = user?.UserName,
-                                    So_dien_thoai = user?.NumberPhone,
-                                    Id_facebook = infoFace?.id,
-                                    Ten_facebook = infoFace?.name,
-                                    Avatar_facebook = infoFace?.picture?.data?.url,
-                                    Ngay_Het_Han = _licenseKey.EndDate,
-                                    So_Ngay_Con_Lai = _licenseKey.CountEndDate
-                                },
-                                Noi_Dung_Thong_Bao = new
-                                {
-                                    Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
-                                    Token = Preferences.Get(AppConstants.TokenFaceook, ""),
-                                }
-                            };
-                            var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                JsonConvert.SerializeObject(content, Formatting.Indented));
-                            if (send != null && send.ok)
+                                Ten = user?.Name,
+                                Tai_Khoan = user?.UserName,
+                                So_dien_thoai = user?.NumberPhone,
+                                Id_facebook = infoFace?.id,
+                                Ten_facebook = infoFace?.name,
+                                Avatar_facebook = infoFace?.picture?.data?.url,
+                                Ngay_Het_Han = _licenseKey.EndDate,
+                                So_Ngay_Con_Lai = _licenseKey.CountEndDate
+                            },
+                            Noi_Dung_Thong_Bao = new
                             {
-                                await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                                Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
+                                Token = Preferences.Get(AppConstants.TokenFaceook, ""),
                             }
-                            else
-                            {
-                                await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                    "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
-                            }
+                        };
+                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                            JsonConvert.SerializeObject(content, Formatting.Indented));
+                        if (send != null && send.ok)
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
                         }
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
+                    {
+                        await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                        await AddFriendsSuggestion(item);
+                    }
                 }
             }
             catch (Exception e)
@@ -333,68 +334,60 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             try
             {
-                if (_licenseKey != null)
+                if (await _facebookService.CheckCookieAndToken())
                 {
-                    if (await _facebookService.CheckCookieAndToken())
+                    var infoFace =
+                        await _facebookService.GetInfoUser();
+                    if (infoFace != null && infoFace.name != null)
                     {
-                        var infoFace =
-                            await _facebookService.GetInfoUser();
-                        if (infoFace != null && infoFace.name != null)
+                        if (await _pageDialogService.DisplayAlertAsync("Thông báo",
+                            $"Bạn muốn cài tự động cho tài khoản facebook {infoFace?.name}", "Cài ngay",
+                            "Thôi"))
                         {
-                            if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                $"Bạn muốn cài tự động cho tài khoản facebook {infoFace?.name}", "Cài ngay",
-                                "Thôi"))
+                            var user = await _databaseService.GetAccountUser();
+                            var content = new ContentSendTelegramModel()
                             {
-                                var user = await _databaseService.GetAccountUser();
-                                var content = new ContentSendTelegramModel()
+                                Ten_Thong_Bao = item?.TitleItem,
+                                So_Luong = 1,
+                                Id_Nguoi_Dung = user?.ID,
+                                Ghi_Chu = new
                                 {
-                                    Ten_Thong_Bao = item?.TitleItem,
-                                    So_Luong = 1,
-                                    Id_Nguoi_Dung = user?.ID,
-                                    Ghi_Chu = new
-                                    {
-                                        Ten = user?.Name,
-                                        Tai_Khoan = user?.UserName,
-                                        So_dien_thoai = user?.NumberPhone,
-                                        Id_facebook = infoFace?.id,
-                                        Ten_facebook = infoFace?.name,
-                                        Avatar_facebook = infoFace?.picture?.data?.url,
-                                        Ngay_Het_Han = _licenseKey.EndDate,
-                                        So_Ngay_Con_Lai = _licenseKey.CountEndDate
-                                    },
-                                    Noi_Dung_Thong_Bao = new
-                                    {
-                                        Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
-                                        Token = Preferences.Get(AppConstants.TokenFaceook, ""),
-                                    }
-                                };
-                                var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                        JsonConvert.SerializeObject(content, Formatting.Indented));
-                                if (send != null && send.ok)
+                                    Ten = user?.Name,
+                                    Tai_Khoan = user?.UserName,
+                                    So_dien_thoai = user?.NumberPhone,
+                                    Id_facebook = infoFace?.id,
+                                    Ten_facebook = infoFace?.name,
+                                    Avatar_facebook = infoFace?.picture?.data?.url,
+                                    Ngay_Het_Han = _licenseKey.EndDate,
+                                    So_Ngay_Con_Lai = _licenseKey.CountEndDate
+                                },
+                                Noi_Dung_Thong_Bao = new
                                 {
-                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                                    Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
+                                    Token = Preferences.Get(AppConstants.TokenFaceook, ""),
                                 }
-                                else
-                                {
-                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
-                                }
+                            };
+                            var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                    JsonConvert.SerializeObject(content, Formatting.Indented));
+                            if (send != null && send.ok)
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
                             }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
+                            }
+                        }
 
-                        }
-                    }
-                    else
-                    {
-                        if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
-                        {
-                            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
-                            await SetupAuto(item);
-                        }
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        "Bạn nên nâng cấp tài khoản để sử dụng đầy đủ tính năng", "OK");
+                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
+                    {
+                        await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                        await SetupAuto(item);
+                    }
                 }
             }
             catch (Exception e)

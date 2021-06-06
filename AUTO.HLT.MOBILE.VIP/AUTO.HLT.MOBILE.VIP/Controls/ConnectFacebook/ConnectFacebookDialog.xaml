@@ -19,7 +19,7 @@
         Padding="0"
         BackgroundColor="Transparent"
         ColumnDefinitions="*,*"
-        RowDefinitions="40,*,50">
+        RowDefinitions="40,*,120,50">
         <BoxView
             Grid.Row="0"
             Grid.Column="0"
@@ -37,13 +37,20 @@
             VerticalOptions="CenterAndExpand" />
         <customRenderer:WebViewRenderer
             Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Source="{Binding UrlFacebook}" />
-
+        <ContentView
+            x:Name="AdmodViewgg"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="Transparent"
+            Content="{Binding AdModView}" />
         <Button
             x:Name="ConnectFacebook"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Margin="5"
             Padding="0"
@@ -71,7 +78,7 @@
             </Button.Triggers>
         </Button>
         <Button
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             Margin="5"
             Padding="0"
@@ -85,14 +92,14 @@
             TextColor="Red" />
         <BoxView
             Grid.Row="0"
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             BackgroundColor="#fff"
             IsVisible="{Binding IsLoading}" />
         <loading:LoadingView
             Grid.Row="0"
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             IsVisible="{Binding IsLoading}" />

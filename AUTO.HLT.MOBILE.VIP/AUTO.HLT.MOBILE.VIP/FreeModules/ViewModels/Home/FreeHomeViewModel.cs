@@ -93,15 +93,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
             ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
             UseFeatureCommand = new AsyncCommand<ItemMenuModel>(UseFeature);
-            CrossMTAdmob.Current.OnInterstitialLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowInterstitial();
-            };
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowRewardedVideo();
-            };
-            CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
         }
 
         public override void OnResume()
@@ -161,34 +152,22 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                 case 1:
                 case 2:
                     para.Add("TypeFeature", item);
-
                     await NavigationService.NavigateAsync(nameof(BuffAPostPage), para);
-                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     break;
                 case 5:
-
                     await NavigationService.NavigateAsync(nameof(PokesPage), para);
-                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     break;
                 case 4:
-
                     await NavigationService.NavigateAsync(nameof(FilterFriendPage), para);
-                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     break;
                 case 8:
-
                     await NavigationService.NavigateAsync(nameof(SuportCustumerPage), para);
-                    CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
                     break;
                 case 6:
-
                     await NavigationService.NavigateAsync(nameof(HappyBirthdayPage), para);
-                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     break;
                 case 11:
-
                     await NavigationService.NavigateAsync(nameof(ChangePasswordPage), para);
-                    CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
                     break;
                 default:
                     break;
@@ -205,7 +184,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             if (IsLoading)
                 return;
             IsLoading = true;
-            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+            var para = new DialogParameters();
+            para.Add(AppConstants.AddAdmod, nameof(AppConstants.AddAdmod));
+            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog), para);
             IsLoading = false;
         }
         /// <summary>

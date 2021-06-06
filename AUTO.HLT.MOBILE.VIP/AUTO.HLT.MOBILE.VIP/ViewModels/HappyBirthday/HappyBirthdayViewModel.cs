@@ -11,6 +11,7 @@ using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
 using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
+using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Prism.Services;
 using Prism.Services.Dialogs;
@@ -54,6 +55,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             _facebookService = facebookService;
 
             HappyBirthdayCommand = new AsyncCommand(HappyBirthday);
+
+            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowRewardedVideo();
+            };
         }
 
         private async Task HappyBirthday()
@@ -106,20 +112,17 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             base.OnNavigatedTo(parameters);
             try
             {
-                IsLoading = true;
                 if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
                 {
                     AdModView = new GoogleAdmobView() { HeightRequest = 150 };
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                 }
                 await InitData();
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
-            }
-            finally
-            {
-                IsLoading = false;
             }
         }
 

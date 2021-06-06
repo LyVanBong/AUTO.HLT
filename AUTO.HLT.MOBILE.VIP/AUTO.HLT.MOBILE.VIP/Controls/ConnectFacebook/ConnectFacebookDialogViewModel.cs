@@ -5,6 +5,7 @@ using Prism.Services.Dialogs;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -22,7 +23,12 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
         private bool _isLoading;
         private IFacebookService _facebookService;
         private IDatabaseService _databaseService;
-
+        private ContentView _adModView;
+        public ContentView AdModView
+        {
+            get => _adModView;
+            set => SetProperty(ref _adModView, value);
+        }
         public ICommand FuntionCommand { get; private set; }
 
         public string UrlFacebook
@@ -98,9 +104,11 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            IsLoading = true;
             UrlFacebook = AppConstants.UriLoginFacebook;
-            IsLoading = false;
+            if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
+            {
+                AdModView = new GoogleAdmobView();
+            }
         }
     }
 }
