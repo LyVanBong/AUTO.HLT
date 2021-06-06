@@ -13,7 +13,6 @@ using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
-using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -201,6 +200,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                 if (IsLoading)
                     return;
                 IsLoading = true;
+                var para = new NavigationParameters();
+                para.Add("UpgradeAccount", "UpgradeAccount");
+                await NavigationService.NavigateAsync("/HomePage", para);
             }
             catch (Exception e)
             {

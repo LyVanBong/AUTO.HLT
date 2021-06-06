@@ -8,11 +8,12 @@
         <Label
             Margin="5"
             BackgroundColor="Transparent"
+            FontAttributes="Bold"
             FontSize="18"
             HorizontalOptions="FillAndExpand"
             HorizontalTextAlignment="Center"
             Text="Miễn phí - (Nâng cấp)"
-            TextColor="#f7fd04"
+            TextColor="#fff"
             TextDecorations="Underline"
             VerticalOptions="FillAndExpand">
             <Label.GestureRecognizers>
