@@ -112,10 +112,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <googleAdmob:GoogleAdmobView
-                Grid.Row="4"
-                Grid.RowSpan="2"
-                BackgroundColor="Transparent" />
+            <googleAdmob:GoogleAdmobView Grid.Row="4" BackgroundColor="Transparent" />
             <BoxView
                 Grid.Row="5"
                 Margin="0"

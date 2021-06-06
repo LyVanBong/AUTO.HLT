@@ -7,6 +7,7 @@ using AUTO.HLT.MOBILE.VIP.Helpers;
 using AUTO.HLT.MOBILE.VIP.Models.User;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.User;
+using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -56,14 +57,20 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             ChangePassworkCommand = new AsyncCommand(async () => await ChangePasswork());
+            CrossMTAdmob.Current.OnInterstitialLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowInterstitial();
+            };
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
                 AdModView = new GoogleAdmobView();
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
             }
         }
 

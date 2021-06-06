@@ -9,6 +9,7 @@ using System.Windows.Input;
 using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using MarcTron.Plugin;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -56,6 +57,10 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
             _loginService = loginService;
             SuportCommand = new AsyncCommand<string>(Suport);
             VersionApp = VersionTracking.CurrentVersion + " (" + VersionTracking.CurrentBuild + ")";
+            CrossMTAdmob.Current.OnInterstitialLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowInterstitial();
+            };
         }
 
         private async Task Suport(string arg)
@@ -94,11 +99,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
             base.OnNavigatedTo(parameters);
             var data = await _loginService.Introducetor();
             Introducetor = data?.Data;
+            IsLoading = false;
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
                 AdModView = new GoogleAdmobView();
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
             }
-            IsLoading = false;
         }
     }
 }

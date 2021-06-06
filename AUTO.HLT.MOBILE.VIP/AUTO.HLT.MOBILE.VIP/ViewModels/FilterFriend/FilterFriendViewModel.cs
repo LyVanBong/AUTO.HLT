@@ -14,8 +14,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MarcTron.Plugin;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
 {
@@ -105,14 +107,22 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             FilterFriendsCommand = new Command(FilterFriends);
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
+            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
+            {
+                CrossMTAdmob.Current.ShowRewardedVideo();
+            };
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
-                AdModView = new GoogleAdmobView() { HeightRequest = 120 };
+                AdModView = new GoogleAdmobView() { HeightRequest = 150 };
+                if (Device.RuntimePlatform == Device.iOS)
+                    AdModView.Padding = new Thickness(0, 0, 0, 20);
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
             }
         }
 
