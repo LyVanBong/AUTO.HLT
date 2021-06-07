@@ -14,7 +14,7 @@
             Padding="0"
             BackgroundColor="#fff"
             ColumnDefinitions="3*,2*"
-            RowDefinitions="50,50,Auto,60,*"
+            RowDefinitions="50,50,Auto,60,60,*"
             RowSpacing="10">
             <Grid.Resources>
                 <Style TargetType="textInputLayout:SfTextInputLayout">
@@ -96,14 +96,26 @@
                 Command="{Binding RunFeatureCommand}"
                 CommandParameter="1"
                 Text="Thoát" />
-            <googleAdmob:GoogleAdmobView
+            <Button
                 Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="30,0"
+                BackgroundColor="Transparent"
+                BorderColor="{StaticResource AppBackgroud}"
+                BorderWidth="1"
+                Command="{Binding RunFeatureCommand}"
+                CommandParameter="2"
+                Text="Hưỡng dẫn kiếm xu đổi like"
+                TextColor="{StaticResource AppBackgroud}" />
+            <googleAdmob:GoogleAdmobView
+                Grid.Row="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Padding="0,0,0,20" />
             <loading:LoadingView
                 Grid.Row="1"
-                Grid.RowSpan="4"
+                Grid.RowSpan="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 IsVisible="{Binding IsLoading}" />

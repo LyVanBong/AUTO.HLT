@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
+using Color = System.Drawing.Color;
 
 namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
 {
@@ -53,26 +54,45 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             };
             CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad += (sender, args) =>
             {
-                UserDialogs.Instance.Toast("Xem quảng cáo lỗi", TimeSpan.FromSeconds(2));
+                ShowToast("Xem quảng cáo lỗi");
                 _isRunSeenAdmod = false;
             };
             CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication += (sender, args) =>
             {
-                UserDialogs.Instance.Toast("Bạn đang rời khỏi ứng dụng có thể không được tính xu", TimeSpan.FromSeconds(2));
+                ShowToast("Bạn đang rời khỏi ứng dụng có thể không được tính xu");
             };
             CrossMTAdmob.Current.OnRewardedVideoAdCompleted += (sender, args) =>
             {
-                UserDialogs.Instance.Toast("Bạn đã được thưởng 2 xu !", TimeSpan.FromSeconds(3));
-                _tmpPrice += 2;
-                MyPrice += _tmpPrice;
+                ShowToast("Bạn đã được thưởng 2 xu !");
+                _tmpPrice += 4;
+                MyPrice += 4;
             };
             CrossMTAdmob.Current.OnRewardedVideoAdClosed += (sender, args) =>
             {
+                Title = "Bắt đầu kiếm xu";
                 Task.Delay(TimeSpan.FromSeconds(1)).Await();
                 SeenAdmod().Await();
             };
         }
 
+        private void ShowToast(string message, int time = 5)
+        {
+            try
+            {
+                UserDialogs.Instance.Toast(new ToastConfig(message)
+                {
+                    Position = ToastPosition.Top,
+                    Message = message,
+                    BackgroundColor = Color.Black,
+                    Duration = TimeSpan.FromSeconds(time),
+                    MessageTextColor = Color.WhiteSmoke,
+                });
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -110,7 +130,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 Title = num + "";
                 if (num == 3)
                 {
-                    Title = "Bắt đầu kiếm xu";
                     CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     return false;
                 }

@@ -29,6 +29,7 @@ using AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.Guide;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
@@ -98,6 +99,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             #region Phần đăng ký View - ViewModel Fake
 
+            containerRegistry.Register<IGuideService, GuideService>();
             containerRegistry.RegisterForNavigation<NotificationPage, NotificationViewModel>();
             containerRegistry.RegisterForNavigation<MyBookingPage, MyBookingViewModel>();
             containerRegistry.RegisterForNavigation<FAboutUsPage, AboutUsViewModel>();
