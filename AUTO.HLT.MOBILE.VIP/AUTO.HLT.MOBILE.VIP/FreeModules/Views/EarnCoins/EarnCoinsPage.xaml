@@ -3,10 +3,8 @@
     x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins.EarnCoinsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:effectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:googleAdmob="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
-    xmlns:markupExtensions="clr-namespace:AUTO.HLT.MOBILE.VIP.MarkupExtensions;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     BackgroundColor="{StaticResource AppBackgroud}">
@@ -36,7 +34,7 @@
                 <Label FontSize="16" TextColor="{StaticResource AppBackgroud}">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{Binding MyPrice ,StringFormat='{0:N0}'}" />
+                            <Span Text="{Binding MyPrice, StringFormat='{0:N0}'}" />
                             <Span Text=" xu" />
                         </FormattedString>
                     </Label.FormattedText>
@@ -54,7 +52,7 @@
                     TextColor="#000" />
                 <Label
                     FontSize="15"
-                    Text="Xem 1 lượt quảng cáo đổi 2 xu"
+                    Text="Xem 1 lượt quảng cáo đổi 4 xu"
                     TextColor="#000" />
                 <Label
                     Padding="30,5"
