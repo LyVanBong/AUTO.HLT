@@ -64,10 +64,11 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             {
                 UserDialogs.Instance.Toast("Bạn đã được thưởng 2 xu !", TimeSpan.FromSeconds(3));
                 _tmpPrice += 2;
-                MyPrice += _tmpPrice;
+                MyPrice += 2;
             };
             CrossMTAdmob.Current.OnRewardedVideoAdClosed += (sender, args) =>
             {
+                Title = "Bắt đầu kiếm xu";
                 Task.Delay(TimeSpan.FromSeconds(1)).Await();
                 SeenAdmod().Await();
             };
@@ -110,7 +111,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 Title = num + "";
                 if (num == 3)
                 {
-                    Title = "Bắt đầu kiếm xu";
                     CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
                     return false;
                 }
