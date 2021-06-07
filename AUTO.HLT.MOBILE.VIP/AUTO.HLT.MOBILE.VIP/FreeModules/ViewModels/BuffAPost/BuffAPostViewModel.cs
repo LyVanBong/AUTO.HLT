@@ -1,15 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Configurations;
+﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Models.Home;
-using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
-using AUTO.HLT.MOBILE.VIP.Models.UseService;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Guide;
-using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.User;
 using AUTO.HLT.MOBILE.VIP.ViewModels;
@@ -18,6 +12,9 @@ using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
@@ -94,7 +91,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
                 }
             }
             IsLoading = false;
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(3));
             CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
         }
 
@@ -154,10 +151,11 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
 
                         break;
                     case "2":
+                        await NavigationService.NavigateAsync("EarnCoinsPage");
                         var url = await _guideService.GetGuide();
                         if (!string.IsNullOrEmpty(url))
                             await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
-                        await NavigationService.NavigateAsync("EarnCoinsPage");
+                        
                         break;
                     default:
                         break;

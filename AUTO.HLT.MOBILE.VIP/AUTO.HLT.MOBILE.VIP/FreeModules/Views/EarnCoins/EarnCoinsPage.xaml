@@ -59,16 +59,31 @@
                     FontSize="15"
                     Text="100 xu bằng 100 like hoặc 100 lượt theo dõi trang cá nhân"
                     TextColor="#000" />
-                <Button
-                    Margin="60,0"
-                    BackgroundColor="Transparent"
-                    BorderColor="{StaticResource AppBackgroud}"
-                    BorderWidth="1"
-                    Command="{Binding SeenAdmodCommand}"
-                    CornerRadius="10"
-                    FontSize="16"
-                    Text="{Binding Title}"
-                    TextColor="{StaticResource AppBackgroud}" />
+
+                <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                    <Button
+                        Margin="20,0"
+                        Padding="20,0"
+                        BackgroundColor="Transparent"
+                        BorderColor="{StaticResource AppBackgroud}"
+                        BorderWidth="1"
+                        Command="{Binding SeenAdmodCommand}"
+                        CornerRadius="10"
+                        FontSize="16"
+                        Text="{Binding Title}"
+                        TextColor="{StaticResource AppBackgroud}" />
+                    <Button
+                        Margin="20,0"
+                        Padding="20,0"
+                        BackgroundColor="Transparent"
+                        BorderColor="Red"
+                        BorderWidth="1"
+                        Command="{Binding StopSeenAdmodCommand}"
+                        CornerRadius="10"
+                        FontSize="16"
+                        Text="Tạm dừng"
+                        TextColor="{StaticResource Secondary}" />
+                </StackLayout>
             </StackLayout>
             <googleAdmob:GoogleAdmobView Grid.Row="3" Padding="0,0,0,20" />
             <loading:LoadingView
