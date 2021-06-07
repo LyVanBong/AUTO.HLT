@@ -8,6 +8,7 @@ using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Models.Telegram;
 using AUTO.HLT.MOBILE.VIP.Models.UseService;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.Guide;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.User;
@@ -18,6 +19,7 @@ using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 
 namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
 {
@@ -34,6 +36,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
         private bool _isLoading;
         private IUserService _userService;
         private string _userName;
+        private IGuideService _guideService;
 
         public ICommand RunFeatureCommand { get; set; }
 
@@ -61,8 +64,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService) : base(navigationService)
+        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService) : base(navigationService)
         {
+            _guideService = guideService;
             _userService = userService;
             _databaseService = databaseService;
             _telegramService = telegramService;
@@ -148,6 +152,12 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
                             }
                         }
 
+                        break;
+                    case "2":
+                        var url = await _guideService.GetGuide();
+                        if (!string.IsNullOrEmpty(url))
+                            await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+                        await NavigationService.NavigateAsync("EarnCoinsPage");
                         break;
                     default:
                         break;
