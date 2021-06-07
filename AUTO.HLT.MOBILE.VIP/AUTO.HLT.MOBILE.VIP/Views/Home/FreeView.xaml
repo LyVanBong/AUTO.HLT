@@ -7,12 +7,12 @@
     <ContentView.Content>
         <StackLayout
             Margin="0"
-            Padding="10"
+            Padding="0"
             BackgroundColor="Transparent"
             Orientation="Vertical"
             Spacing="5">
             <Label
-                Margin="5"
+                Margin="0"
                 BackgroundColor="Transparent"
                 FontAttributes="Bold"
                 FontSize="18"
@@ -27,6 +27,7 @@
                 </Label.GestureRecognizers>
             </Label>
             <Label
+                Padding="5"
                 FontAttributes="Bold"
                 FontSize="18"
                 HorizontalOptions="CenterAndExpand"
