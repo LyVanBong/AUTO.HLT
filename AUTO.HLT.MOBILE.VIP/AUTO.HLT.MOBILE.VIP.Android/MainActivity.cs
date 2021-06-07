@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content.PM;
 using Android.Gms.Ads;
 using Android.OS;
@@ -19,7 +20,7 @@ namespace AUTO.HLT.MOBILE.VIP.Droid
             base.OnCreate(savedInstanceState);
 
             #region Thư viện ngoài
-
+            UserDialogs.Init(this);
             MobileAds.Initialize(ApplicationContext);
 
             #endregion
