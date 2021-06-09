@@ -4,6 +4,7 @@ using AUTOHLT.MOBILE.FakeModules.ViewModels;
 using AUTOHLT.MOBILE.FakeModules.Views;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
+using AUTOHLT.MOBILE.Services.GoogleAdmob;
 using AUTOHLT.MOBILE.Services.Guide;
 using AUTOHLT.MOBILE.Services.HistoryService;
 using AUTOHLT.MOBILE.Services.Login;
@@ -59,6 +60,8 @@ namespace AUTOHLT.MOBILE
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+            containerRegistry.RegisterSingleton<IGoogleAdmobService, GoogleAdmobService>();
             #region App fake
 
             containerRegistry.RegisterForNavigation<FDetailProductPage, FDetailProductViewModel>();
@@ -70,7 +73,7 @@ namespace AUTOHLT.MOBILE
 
             #endregion
             #region Registering the Dialog service
-            
+
             containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
 
             #endregion
@@ -98,7 +101,7 @@ namespace AUTOHLT.MOBILE
             #endregion
 
             #region Register For Navigation
-            
+
             containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();

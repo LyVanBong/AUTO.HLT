@@ -29,6 +29,7 @@ using AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Services.Guide;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
@@ -89,6 +90,9 @@ namespace AUTO.HLT.MOBILE.VIP
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+            containerRegistry.RegisterSingleton<IGoogleAdmobService, GoogleAdmobService>();
+
             #region Module Free
 
             containerRegistry.RegisterForNavigation<EarnCoinsPage, EarnCoinsViewModel>();

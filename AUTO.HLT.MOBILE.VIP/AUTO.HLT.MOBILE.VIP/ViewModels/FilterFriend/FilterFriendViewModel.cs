@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using MarcTron.Plugin;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -48,6 +49,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         private int _numberPost = 15;
         private List<MyFriendModel> _doNotInteract;
         private ContentView _adModView;
+        private IGoogleAdmobService _googleAdmobService;
+
         public ContentView AdModView
         {
             get => _adModView;
@@ -100,17 +103,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             set => SetProperty(ref _numberPost, value);
         }
 
-        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService) : base(navigationService)
+        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             FilterFriendsCommand = new Command(FilterFriends);
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowRewardedVideo();
-            };
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -121,8 +121,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                 AdModView = new GoogleAdmobView() { HeightRequest = 150 };
                 if (Device.RuntimePlatform == Device.iOS)
                     AdModView.Padding = new Thickness(0, 0, 0, 20);
-                await Task.Delay(TimeSpan.FromSeconds(5));
-                CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
+                await Task.Delay(TimeSpan.FromSeconds(3));
+                _googleAdmobService.ShowRewardedVideo();
             }
         }
 
@@ -296,12 +296,12 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
                             var reaction = lsUid.Count(x => x == friend.Uid);
                             if (reaction > 0)
                             {
-                                friend.IsSelected = true;
                                 friend.Interactive = reaction;
                                 friend.Status = "Có tương tác";
                             }
                             else
                             {
+                                friend.IsSelected = true;
                                 friend.Status = "Chưa tương tác";
                             }
                         }

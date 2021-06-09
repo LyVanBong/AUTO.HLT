@@ -269,12 +269,12 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
                             var reaction = lsUid.Count(x => x == friend.Uid);
                             if (reaction > 0)
                             {
-                                friend.IsSelected = true;
                                 friend.Interactive = reaction;
                                 friend.Status = "Có tương tác";
                             }
                             else
                             {
+                                friend.IsSelected = true;
                                 friend.Status = "Chưa tương tác";
                             }
                         }

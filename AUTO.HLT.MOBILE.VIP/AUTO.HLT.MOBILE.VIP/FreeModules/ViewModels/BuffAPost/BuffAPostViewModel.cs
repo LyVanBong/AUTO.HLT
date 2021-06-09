@@ -15,6 +15,7 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
@@ -34,6 +35,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
         private IUserService _userService;
         private string _userName;
         private IGuideService _guideService;
+        private IGoogleAdmobService _googleAdmobService;
 
         public ICommand RunFeatureCommand { get; set; }
 
@@ -61,18 +63,15 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService) : base(navigationService)
+        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _guideService = guideService;
             _userService = userService;
             _databaseService = databaseService;
             _telegramService = telegramService;
             _pageDialogService = pageDialogService;
             RunFeatureCommand = new AsyncCommand<string>(RunFeature);
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowRewardedVideo();
-            };
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -92,7 +91,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
             }
             IsLoading = false;
             await Task.Delay(TimeSpan.FromSeconds(3));
-            CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
+            _googleAdmobService.ShowRewardedVideo();
         }
 
         private async Task CheckAcountUseService()
@@ -155,7 +154,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
                         var url = await _guideService.GetGuide();
                         if (!string.IsNullOrEmpty(url))
                             await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
-                        
+
                         break;
                     default:
                         break;

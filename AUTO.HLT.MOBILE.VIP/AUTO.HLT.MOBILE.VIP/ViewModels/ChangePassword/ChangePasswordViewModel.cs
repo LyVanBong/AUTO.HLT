@@ -6,6 +6,7 @@ using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Helpers;
 using AUTO.HLT.MOBILE.VIP.Models.User;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Services.User;
 using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
@@ -26,6 +27,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
         private string _currentPassword;
         private IUserService _userService;
         private ContentView _adModView;
+        private IGoogleAdmobService _googleAdmobService;
         public ContentView AdModView
         {
             get => _adModView;
@@ -51,16 +53,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
             set => SetProperty(ref _currentPassword, value);
         }
 
-        public ChangePasswordViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService) : base(navigationService)
+        public ChangePasswordViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, IUserService userService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _userService = userService;
             _databaseService = databaseService;
             _pageDialogService = pageDialogService;
             ChangePassworkCommand = new AsyncCommand(async () => await ChangePasswork());
-            CrossMTAdmob.Current.OnInterstitialLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowInterstitial();
-            };
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -69,8 +68,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.ChangePassword
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
                 AdModView = new GoogleAdmobView();
-                await Task.Delay(TimeSpan.FromSeconds(5));
-                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmod);
+                await Task.Delay(TimeSpan.FromSeconds(3));
+                _googleAdmobService.ShowRewardedVideo();
             }
         }
 

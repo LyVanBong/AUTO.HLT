@@ -6,10 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FreeModules\Models\**" />
     <Compile Remove="Resources\Languages\**" />
     <Compile Remove="Resources\Svg\**" />
+    <EmbeddedResource Remove="FreeModules\Models\**" />
     <EmbeddedResource Remove="Resources\Languages\**" />
     <EmbeddedResource Remove="Resources\Svg\**" />
+    <None Remove="FreeModules\Models\**" />
     <None Remove="Resources\Languages\**" />
     <None Remove="Resources\Svg\**" />
   </ItemGroup>
@@ -141,7 +144,6 @@
     <Folder Include="FakeModules\ViewModels\MyBooking\" />
     <Folder Include="FakeModules\ViewModels\Notification\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
-    <Folder Include="FreeModules\Models\" />
     <Folder Include="FreeModules\ViewModels\BuffAPost\" />
     <Folder Include="FreeModules\ViewModels\EarnCoins\" />
     <Folder Include="Models\VersionApp\" />
