@@ -20,13 +20,17 @@ using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Profile;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost;
+using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Models.Login;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
+using AUTO.HLT.MOBILE.VIP.Services.Guide;
 using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
 using AUTO.HLT.MOBILE.VIP.Services.Login;
 using AUTO.HLT.MOBILE.VIP.Services.RequestProvider;
@@ -86,8 +90,12 @@ namespace AUTO.HLT.MOBILE.VIP
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+            containerRegistry.RegisterSingleton<IGoogleAdmobService, GoogleAdmobService>();
+
             #region Module Free
 
+            containerRegistry.RegisterForNavigation<EarnCoinsPage, EarnCoinsViewModel>();
             containerRegistry.RegisterForNavigation<BuffAPostPage, BuffAPostViewModel>();
             containerRegistry.RegisterForNavigation<FreeHomePage, FreeHomeViewModel>();
 
@@ -95,6 +103,7 @@ namespace AUTO.HLT.MOBILE.VIP
 
             #region Phần đăng ký View - ViewModel Fake
 
+            containerRegistry.Register<IGuideService, GuideService>();
             containerRegistry.RegisterForNavigation<NotificationPage, NotificationViewModel>();
             containerRegistry.RegisterForNavigation<MyBookingPage, MyBookingViewModel>();
             containerRegistry.RegisterForNavigation<FAboutUsPage, AboutUsViewModel>();

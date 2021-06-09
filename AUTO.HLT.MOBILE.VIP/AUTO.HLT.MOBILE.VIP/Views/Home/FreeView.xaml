@@ -5,19 +5,41 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BackgroundColor="Transparent">
     <ContentView.Content>
-        <Label
-            Margin="5"
+        <StackLayout
+            Margin="0"
+            Padding="0"
             BackgroundColor="Transparent"
-            FontSize="18"
-            HorizontalOptions="FillAndExpand"
-            HorizontalTextAlignment="Center"
-            Text="Miễn phí - (Nâng cấp)"
-            TextColor="#f7fd04"
-            TextDecorations="Underline"
-            VerticalOptions="FillAndExpand">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding UpgradeAccountCommand}" CommandParameter="0" />
-            </Label.GestureRecognizers>
-        </Label>
+            Orientation="Vertical"
+            Spacing="5">
+            <Label
+                Margin="0"
+                BackgroundColor="Transparent"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="Miễn phí - (Nâng cấp)"
+                TextColor="#fff"
+                TextDecorations="Underline"
+                VerticalOptions="FillAndExpand">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UpgradeAccountCommand}" CommandParameter="0" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                Padding="5"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalOptions="CenterAndExpand"
+                TextColor="{StaticResource Gray-White}"
+                VerticalOptions="CenterAndExpand">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding MyPrice, StringFormat='{0:N0}'}" />
+                        <Span Text=" xu" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
     </ContentView.Content>
 </ContentView>

@@ -416,14 +416,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             try
             {
-                if (IsLoading)
-                    return;
-                IsLoading = true;
                 switch (arg)
                 {
-                    case "0":
-                        LicenseView = new AddLicenseKeyView();
-                        break;
                     case "1":
                         if (Key != null)
                         {
@@ -454,6 +448,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                                 }, Formatting.Indented);
                                 await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti,
                                     messager);
+                                await NavigationService.NavigateAsync("/HomePage", null, false, true);
                             }
                             else
                             {
@@ -469,7 +464,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
 
                         break;
                     case "2":
-                        LicenseView = new FreeView();
+                        if (await _pageDialogService.DisplayAlertAsync("Thông báo",
+                            "Bạn muỗn nâng cấp tài khoản sau !", "Để sau", "Nâng cấp luôn"))
+                        {
+                            await NavigationService.NavigateAsync("/FreeHomePage", null, false, true);
+                        }
                         break;
                     default:
                         break;
@@ -478,10 +477,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             catch (Exception e)
             {
                 Crashes.TrackError(e);
-            }
-            finally
-            {
-                IsLoading = false;
             }
         }
 
@@ -515,8 +510,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     });
                 }
             }
+
+            if (parameters != null && parameters.ContainsKey("UpgradeAccount"))
+            {
+                LicenseView = new AddLicenseKeyView();
+            }
+            else
+                IsLoading = false;
             new Thread(CheckVerionApplication).Start();
-            IsLoading = false;
         }
 
         private async Task CheckLicenseKey()

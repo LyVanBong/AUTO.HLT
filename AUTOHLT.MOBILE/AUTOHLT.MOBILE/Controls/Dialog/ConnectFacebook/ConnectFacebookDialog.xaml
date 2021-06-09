@@ -38,7 +38,6 @@
             VerticalOptions="CenterAndExpand" />
         <customRenderer1:WebViewRenderer
             Grid.Row="1"
-            Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Source="{Binding UrlFacebook}" />

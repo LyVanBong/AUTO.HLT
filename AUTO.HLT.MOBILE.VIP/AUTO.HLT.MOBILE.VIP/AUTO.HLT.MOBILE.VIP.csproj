@@ -6,10 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FreeModules\Models\**" />
     <Compile Remove="Resources\Languages\**" />
     <Compile Remove="Resources\Svg\**" />
+    <EmbeddedResource Remove="FreeModules\Models\**" />
     <EmbeddedResource Remove="Resources\Languages\**" />
     <EmbeddedResource Remove="Resources\Svg\**" />
+    <None Remove="FreeModules\Models\**" />
     <None Remove="Resources\Languages\**" />
     <None Remove="Resources\Svg\**" />
   </ItemGroup>
@@ -58,6 +61,7 @@
     <None Remove="Resources\Images\icon_key_generation.png" />
     <None Remove="Resources\Images\icon_like.png" />
     <None Remove="Resources\Images\icon_manager.png" />
+    <None Remove="Resources\Images\icon_money.png" />
     <None Remove="Resources\Images\icon_pokes.png" />
     <None Remove="Resources\Images\icon_pokes_user.png" />
     <None Remove="Resources\Images\icon_select_all_pokes.png" />
@@ -103,12 +107,14 @@
     <EmbeddedResource Include="Resources\Images\icon_key_generation.png" />
     <EmbeddedResource Include="Resources\Images\icon_like.png" />
     <EmbeddedResource Include="Resources\Images\icon_manager.png" />
+    <EmbeddedResource Include="Resources\Images\icon_money.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes.png" />
     <EmbeddedResource Include="Resources\Images\icon_pokes_user.png" />
     <EmbeddedResource Include="Resources\Images\icon_select_all_pokes.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
     <PackageReference Include="MarcTron.Admob" Version="1.6.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.2.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
@@ -138,8 +144,8 @@
     <Folder Include="FakeModules\ViewModels\MyBooking\" />
     <Folder Include="FakeModules\ViewModels\Notification\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
-    <Folder Include="FreeModules\Models\" />
     <Folder Include="FreeModules\ViewModels\BuffAPost\" />
+    <Folder Include="FreeModules\ViewModels\EarnCoins\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -209,6 +215,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FreeModules\Views\BuffAPost\BuffAPostPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FreeModules\Views\EarnCoins\EarnCoinsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FreeModules\Views\Home\FreeHomePage.xaml">

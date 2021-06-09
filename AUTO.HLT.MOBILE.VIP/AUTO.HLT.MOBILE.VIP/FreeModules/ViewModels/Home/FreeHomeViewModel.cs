@@ -13,7 +13,6 @@ using AUTO.HLT.MOBILE.VIP.Views.HappyBirthday;
 using AUTO.HLT.MOBILE.VIP.Views.Home;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
-using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -24,6 +23,8 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins;
+using AUTO.HLT.MOBILE.VIP.Services.User;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -43,6 +44,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
         private ObservableCollection<ItemMenuModel> _listItemMenus;
         private IVersionAppService _versionAppService;
         private bool _isUpdate;
+        private IUserService _userService;
 
 
         public ObservableCollection<ItemMenuModel> ListItemMenus
@@ -82,9 +84,15 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
 
         public ICommand ConnectFacebookCommand { get; private set; }
         public ICommand UseFeatureCommand { get; private set; }
-
-        public FreeHomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService) : base(navigationService)
+        private int _myPrice;
+        public int MyPrice
         {
+            get => _myPrice;
+            set => SetProperty(ref _myPrice, value);
+        }
+        public FreeHomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService, IUserService userService) : base(navigationService)
+        {
+            _userService = userService;
             _versionAppService = versionAppService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
@@ -93,6 +101,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             UpgradeAccountCommand = new AsyncCommand<string>(UpgradeAccount);
             ConnectFacebookCommand = new AsyncCommand(ConnectFacebook);
             UseFeatureCommand = new AsyncCommand<ItemMenuModel>(UseFeature);
+            ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
         }
 
         public override void OnResume()
@@ -169,6 +178,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                 case 11:
                     await NavigationService.NavigateAsync(nameof(ChangePasswordPage), para);
                     break;
+                case 12:
+                    await NavigationService.NavigateAsync(nameof(EarnCoinsPage));
+                    break;
                 default:
                     break;
             }
@@ -201,6 +213,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                 if (IsLoading)
                     return;
                 IsLoading = true;
+                var para = new NavigationParameters();
+                para.Add("UpgradeAccount", "UpgradeAccount");
+                await NavigationService.NavigateAsync("/HomePage", para);
             }
             catch (Exception e)
             {
@@ -217,7 +232,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
             base.OnNavigatedTo(parameters);
             IsLoading = true;
             InfoUser = await _databaseService.GetAccountUser();
-            ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
+            MyPrice = await _userService.GetPriceUser(InfoUser.UserName);
             IsLoading = false;
             new Thread(CheckVerionApplication).Start();
         }
@@ -280,6 +295,14 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
                     Role = 99,
                     BgColor = Color.FromHex("161d6f"),
                     Icon = "icon_birthday.png"
+                },
+                new ItemMenuModel()
+                {
+                    Id = 12,
+                    TitleItem = "Kiếm xu",
+                    Role = 99,
+                    BgColor = Color.FromHex("eca9f5"),
+                    Icon = "icon_money.png"
                 },
                 new ItemMenuModel()
                 {
