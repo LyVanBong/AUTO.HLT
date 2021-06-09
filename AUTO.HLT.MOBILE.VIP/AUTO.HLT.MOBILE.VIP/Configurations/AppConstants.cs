@@ -15,11 +15,11 @@ namespace AUTO.HLT.MOBILE.VIP.Configurations
         /// <summary>
         /// Quản cáo Interstitial
         /// </summary>
-        public static string InterstitialAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/5978773075" : "ca-app-pub-9881695093256851/6134685748";
+        public static string InterstitialAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/5978773075" : "ca-app-pub-9881695093256851/6134685748";
         /// <summary>
         /// Quảng cáo Rewarded
         /// </summary>
-        public static string RewardedAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/4246889003" : "ca-app-pub-9881695093256851/7256195725";
+        public static string RewardedAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/4246889003" : "ca-app-pub-9881695093256851/7256195725";
         /// <summary>
         /// id nhon chat telegram thong bao
         /// </summary>
