@@ -9,6 +9,7 @@ using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
@@ -23,6 +24,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         private IDatabaseService _databaseService;
         private string _userName;
         private int _tmpPrice;
+        private IGoogleAdmobService _googleAdmobService;
 
         public bool IsLoading
         {
@@ -39,20 +41,22 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         }
 
         public ICommand StopSeenAdmodCommand { get; private set; }
-        public EarnCoinsViewModel(INavigationService navigationService, IUserService userService, IDatabaseService databaseService) : base(navigationService)
+        public EarnCoinsViewModel(INavigationService navigationService, IUserService userService, IDatabaseService databaseService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _databaseService = databaseService;
             _userService = userService;
             StopSeenAdmodCommand = new AsyncCommand(async () =>
             {
                 _isRunSeenAdmod = false;
-                Title = "Bắt đầu kiếm xu";
+                Title = "Tạm dừng kiếm xu";
                 if (_tmpPrice > 0)
                 {
                     await _userService.SetPriceUser(_userName,
                         (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
                     _tmpPrice = 0;
                 }
+                Title = "Bắt đầu kiếm xu";
             });
             SeenAdmodCommand = new AsyncCommand(async () =>
             {
@@ -61,32 +65,18 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 await SeenAdmod();
             });
             Title = "Bắt đầu kiếm xu";
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                if (_isRunSeenAdmod)
-                    CrossMTAdmob.Current.ShowRewardedVideo();
-            };
-            CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad += (sender, args) =>
-            {
-                ShowToast("Xem quảng cáo lỗi");
-                Title = "Bắt đầu kiếm xu";
-            };
-            CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication += (sender, args) =>
-            {
-                ShowToast("Bạn đang rời khỏi ứng dụng có thể không được tính xu");
-            };
-            CrossMTAdmob.Current.OnRewardedVideoAdCompleted += (sender, args) =>
-            {
-                ShowToast("Bạn đã được thưởng 4 xu !");
-                _tmpPrice += 4;
-                MyPrice += 4;
-            };
-            CrossMTAdmob.Current.OnRewardedVideoAdClosed += (sender, args) =>
-            {
-                Title = "Bắt đầu kiếm xu";
-                if (_isRunSeenAdmod)
-                    SeenAdmod().Await();
-            };
+            _googleAdmobService.IsRewarded = true;
+            _googleAdmobService.SubscribeRewardedVideo(RewardedVideoAdCompleted);
+        }
+
+        private async void RewardedVideoAdCompleted()
+        {
+            ShowToast("Bạn đã được thưởng 4 xu !");
+            _tmpPrice += 4;
+            MyPrice += 4;
+            Title = "Bắt đầu kiếm xu";
+            if (_isRunSeenAdmod)
+                await SeenAdmod();
         }
 
         private void ShowToast(string message, int time = 5)
@@ -138,6 +128,8 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         public override async void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
+            _googleAdmobService.IsRewarded = false;
+            _googleAdmobService.UnSubscribeRewardedVideo(RewardedVideoAdCompleted);
             _isRunSeenAdmod = false;
             await _userService.SetPriceUser(_userName, (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
             _tmpPrice = 0;
@@ -150,8 +142,8 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 Title = "Bắt đầu kiếm xu";
                 return;
             }
-            Title = "Quảng cáo sẽ hiển thị sau 3s";
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            Title = "Quảng cáo sẽ có sau 3s";
+            await Task.Delay(TimeSpan.FromSeconds(1));
             var num = 1;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -159,7 +151,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 if (num == 3)
                 {
                     if (_isRunSeenAdmod)
-                        CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
+                        _googleAdmobService.ShowRewardedVideo();
                     else Title = "Bắt đầu kiếm xu";
                     return false;
                 }

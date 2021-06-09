@@ -1,7 +1,11 @@
-﻿namespace AUTOHLT.MOBILE.Configurations
+﻿using Xamarin.Forms;
+
+namespace AUTOHLT.MOBILE.Configurations
 {
     public static class AppConstants
     {
+        public static string InterstitialId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/2887853102" : "ca-app-pub-9881695093256851/1957914813";
+        public static string RewardedId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/9660063449" : "ca-app-pub-9881695093256851/4790880141";
         /// <summary>
         /// lấy token xong
         /// </summary>
