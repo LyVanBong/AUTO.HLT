@@ -53,7 +53,8 @@
                     ClearButtonVisibility="WhileEditing"
                     Keyboard="Numeric"
                     ReturnType="Next"
-                    Text="{Binding Number}" />
+                    Text="{Binding Number}"
+                    TextColor="{StaticResource AppBackgroud}" />
                 <textInputLayout:SfTextInputLayout.TrailingView>
                     <Label FontAttributes="Bold" Text="{Binding MaxNumber}" />
                 </textInputLayout:SfTextInputLayout.TrailingView>
@@ -74,7 +75,8 @@
                 <Editor
                     HeightRequest="140"
                     Keyboard="Plain"
-                    Text="{Binding Content}" />
+                    Text="{Binding Content}"
+                    TextColor="{StaticResource AppBackgroud}" />
                 <textInputLayout:SfTextInputLayout.LeadingView>
                     <Label
                         FontFamily="Awesome"
