@@ -152,7 +152,12 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 {
                     if (_isRunSeenAdmod)
                         _googleAdmobService.ShowRewardedVideo();
-                    else Title = "Bắt đầu kiếm xu";
+                    else
+                    {
+                        _isRunSeenAdmod = false;
+                        Title = "Bắt đầu kiếm xu";
+                    }
+
                     return false;
                 }
                 num++;
