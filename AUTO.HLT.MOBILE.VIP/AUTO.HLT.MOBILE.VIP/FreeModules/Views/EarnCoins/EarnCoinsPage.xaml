@@ -13,13 +13,12 @@
             Margin="0"
             Padding="0"
             BackgroundColor="#fff"
-            RowDefinitions="40,150,Auto,*"
+            RowDefinitions="40,Auto,*"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Kiếm xu" />
 
-            <googleAdmob:GoogleAdmobView Grid.Row="1" />
             <StackLayout
-                Grid.Row="2"
+                Grid.Row="1"
                 Padding="0,20"
                 BackgroundColor="Transparent"
                 Spacing="5">
@@ -31,6 +30,11 @@
                         </Style>
                     </ResourceDictionary>
                 </StackLayout.Resources>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Xem quảng cáo đổi xu"
+                    TextColor="#000" />
                 <Label FontSize="16" TextColor="{StaticResource AppBackgroud}">
                     <Label.FormattedText>
                         <FormattedString>
@@ -46,11 +50,6 @@
                     Source="{xct:ImageResource Id=AUTO.HLT.MOBILE.VIP.Resources.Images.icon_money.png}"
                     WidthRequest="128" />
                 <Label
-                    FontAttributes="Bold"
-                    FontSize="20"
-                    Text="Xem quảng cáo đổi xu"
-                    TextColor="#000" />
-                <Label
                     FontSize="15"
                     Text="Xem 1 lượt quảng cáo đổi 4 xu"
                     TextColor="#000" />
@@ -62,7 +61,7 @@
 
                 <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                     <Button
-                        Margin="20,0"
+                        Margin="10,0"
                         Padding="20,0"
                         BackgroundColor="Transparent"
                         BorderColor="{StaticResource AppBackgroud}"
@@ -73,7 +72,7 @@
                         Text="{Binding Title}"
                         TextColor="{StaticResource AppBackgroud}" />
                     <Button
-                        Margin="20,0"
+                        Margin="10,0"
                         Padding="20,0"
                         BackgroundColor="Transparent"
                         BorderColor="Red"
@@ -85,10 +84,10 @@
                         TextColor="{StaticResource Secondary}" />
                 </StackLayout>
             </StackLayout>
-            <googleAdmob:GoogleAdmobView Grid.Row="3" Padding="0,0,0,20" />
+            <googleAdmob:GoogleAdmobView Grid.Row="2" Padding="0,0,0,20" />
             <loading:LoadingView
                 Grid.Row="1"
-                Grid.RowSpan="3"
+                Grid.RowSpan="2"
                 IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>

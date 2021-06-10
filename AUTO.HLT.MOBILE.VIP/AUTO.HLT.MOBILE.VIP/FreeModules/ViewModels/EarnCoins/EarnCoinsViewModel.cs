@@ -128,11 +128,11 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         public override async void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
+            await _userService.SetPriceUser(_userName, (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
+            _tmpPrice = 0;
             _googleAdmobService.IsRewarded = false;
             _googleAdmobService.UnSubscribeRewardedVideo(RewardedVideoAdCompleted);
             _isRunSeenAdmod = false;
-            await _userService.SetPriceUser(_userName, (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
-            _tmpPrice = 0;
         }
 
         private async Task SeenAdmod()
