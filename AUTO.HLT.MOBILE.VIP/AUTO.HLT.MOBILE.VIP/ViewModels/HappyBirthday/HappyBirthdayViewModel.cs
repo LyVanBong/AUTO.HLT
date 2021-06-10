@@ -1,20 +1,19 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Configurations;
+using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
+using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Models.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using MarcTron.Plugin;
+using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
-using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
-using AUTO.HLT.MOBILE.VIP.Models.LicenseKey;
-using AUTO.HLT.MOBILE.VIP.Services.LicenseKey;
-using MarcTron.Plugin;
-using Microsoft.AppCenter.Crashes;
-using Prism.Services;
-using Prism.Services.Dialogs;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -29,6 +28,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
         private bool _isLoading;
         private IDialogService _dialog;
         private ContentView _adModView;
+        private IGoogleAdmobService _googleAdmobService;
         public ContentView AdModView
         {
             get => _adModView;
@@ -48,18 +48,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             set => SetProperty(ref _isLoading, value);
         }
 
-        public HappyBirthdayViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialog) : base(navigationService)
+        public HappyBirthdayViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialog, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _dialog = dialog;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
 
             HappyBirthdayCommand = new AsyncCommand(HappyBirthday);
 
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowRewardedVideo();
-            };
         }
 
         private async Task HappyBirthday()
@@ -115,8 +112,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
                 if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
                 {
                     AdModView = new GoogleAdmobView() { HeightRequest = 150 };
-                    await Task.Delay(TimeSpan.FromSeconds(5));
-                    CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
+                    await Task.Delay(TimeSpan.FromSeconds(3));
+                    _googleAdmobService.ShowRewardedVideo();
                 }
                 await InitData();
             }

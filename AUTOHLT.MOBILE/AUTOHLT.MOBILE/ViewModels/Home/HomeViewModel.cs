@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using AUTOHLT.MOBILE.Services.GoogleAdmob;
 using AUTOHLT.MOBILE.Services.VersionAppService;
 using MarcTron.Plugin;
 using Xamarin.Essentials;
@@ -102,8 +103,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {6,nameof(FilterFriendPage) },
         };
 
-        private string _interstitialId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/2887853102" : "ca-app-pub-9881695093256851/1957914813";
-        private string _rewardedId= Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/9660063449" : "ca-app-pub-9881695093256851/4790880141";
+        private IGoogleAdmobService _googleAdmobService;
         public ObservableCollection<ServiceModel> ServiceData
         {
             get => _serviceData;
@@ -125,22 +125,15 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         }
 
         public ICommand LogoutCommand { get; private set; }
-        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService) : base(navigationService)
+        public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _versionAppService = versionAppService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             LogoutCommand = new Command(LogoutAccount);
             NavigationCommand = new Command<Object>(NavigationPageService);
-            CrossMTAdmob.Current.OnInterstitialLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowInterstitial();
-            };
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowRewardedVideo();
-            };
         }
         public override void OnResume()
         {
@@ -191,7 +184,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                CrossMTAdmob.Current.LoadRewardedVideo(_rewardedId);
+                _googleAdmobService.ShowInterstitial();
                 var key = -1;
                 var data = obj is ServiceModel;
                 if (data)

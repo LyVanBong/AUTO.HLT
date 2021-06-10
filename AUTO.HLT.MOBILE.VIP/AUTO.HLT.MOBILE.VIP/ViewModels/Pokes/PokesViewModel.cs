@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using MarcTron.Plugin;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -29,6 +30,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
         private IDialogService _dialogService;
         private ObservableCollection<PokesFriendsModel> _pokesData;
         private ContentView _adModView;
+        private IGoogleAdmobService _googleAdmobService;
         public ContentView AdModView
         {
             get => _adModView;
@@ -48,17 +50,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService) : base(navigationService)
+        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
+            _googleAdmobService = googleAdmobService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
             PokesFriendCommand = new Command<PokesFriendsModel>(PokesFriend);
             SelectAllFriendsCommand = new Command(SelectAllFriends);
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += (sender, args) =>
-            {
-                CrossMTAdmob.Current.ShowRewardedVideo();
-            };
         }
 
         private void SelectAllFriends()
@@ -189,8 +188,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
                 AdModView = new GoogleAdmobView() { HeightRequest = 150 };
                 if (Device.RuntimePlatform == Device.iOS)
                     AdModView.Padding = new Thickness(0, 0, 0, 20);
-                await Task.Delay(TimeSpan.FromSeconds(5));
-                CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmod);
+                await Task.Delay(TimeSpan.FromSeconds(3));
+                _googleAdmobService.ShowRewardedVideo();
             }
         }
 
