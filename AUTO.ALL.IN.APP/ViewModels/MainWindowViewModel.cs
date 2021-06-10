@@ -212,29 +212,29 @@ namespace AUTO.ALL.IN.APP.ViewModels
         private long _stt = 1;
         private async Task AddLogger(LoggerModel logger)
         {
-            try
-            {
-                var pathLog = AppDomain.CurrentDomain.BaseDirectory + "\\DATA\\LOGGER\\Log-" + logger.Uid + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt";
-                if (DataLogger == null)
-                {
-                    DataLogger = new ObservableCollection<LoggerModel>();
-                }
-                if (!File.Exists(pathLog))
-                {
-                    if (DataLogger.Any())
-                        DataLogger.Clear();
-                    _stt = 1;
-                }
+            //try
+            //{
+            //    var pathLog = AppDomain.CurrentDomain.BaseDirectory + "\\DATA\\LOGGER\\Log-" + logger.Uid + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt";
+            //    if (DataLogger == null)
+            //    {
+            //        DataLogger = new ObservableCollection<LoggerModel>();
+            //    }
+            //    if (!File.Exists(pathLog))
+            //    {
+            //        if (DataLogger.Any())
+            //            DataLogger.Clear();
+            //        _stt = 1;
+            //    }
 
-                logger.No = _stt++;
-                Notification = $"[{logger.No}]-[{logger.DateTime}]-[{logger.TypeLogger}]-[{logger.Uid}]-[{logger.UidFriend}]-[{logger.LoggerContent}]-[{logger.Note}]";
-                File.AppendAllLines(pathLog, new[] { Notification });
-                App.Current.Dispatcher.Invoke(() => DataLogger.Add(logger));
-            }
-            catch (Exception e)
-            {
-                //await ShowMessageError(e, nameof(AddLogger));
-            }
+            //    logger.No = _stt++;
+            //    Notification = $"[{logger.No}]-[{logger.DateTime}]-[{logger.TypeLogger}]-[{logger.Uid}]-[{logger.UidFriend}]-[{logger.LoggerContent}]-[{logger.Note}]";
+            //    File.AppendAllLines(pathLog, new[] { Notification });
+            //    App.Current.Dispatcher.Invoke(() => DataLogger.Add(logger));
+            //}
+            //catch (Exception e)
+            //{
+            //    //await ShowMessageError(e, nameof(AddLogger));
+            //}
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
