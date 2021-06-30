@@ -3,7 +3,6 @@
     x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins.EarnCoinsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:googleAdmob="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:navigation="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Navigation;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
@@ -13,7 +12,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="#fff"
-            RowDefinitions="40,Auto,*"
+            RowDefinitions="40,*"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Kiếm xu" />
 
@@ -84,11 +83,7 @@
                         TextColor="{StaticResource Secondary}" />
                 </StackLayout>
             </StackLayout>
-            <googleAdmob:GoogleAdmobView Grid.Row="2" Padding="0,0,0,20" />
-            <loading:LoadingView
-                Grid.Row="1"
-                Grid.RowSpan="2"
-                IsVisible="{Binding IsLoading}" />
+            <loading:LoadingView Grid.Row="1" IsVisible="{Binding IsLoading}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
