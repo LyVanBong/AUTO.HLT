@@ -12,7 +12,7 @@
             Margin="0"
             Padding="0"
             BackgroundColor="#fff"
-            RowDefinitions="40,*"
+            RowDefinitions="40,Auto,*"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Kiếm xu" />
 
