@@ -1,5 +1,6 @@
-﻿@using Blazored.Toast.Configuration
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
+
+@inject NavigationManager _navigationManager
 
 <div class="page">
     <div class="sidebar">
@@ -7,9 +8,19 @@
     </div>
 
     <div class="main">
-        @*<div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-            </div>*@
+        <div class="top-row px-4">
+            <div class="float-right">
+                <button type="submit" @onclick=@Login class="btn btn-outline-danger mb-2">
+                    <span class="oi oi-account-logout"></span> Đăng xuất
+                </button>
+                <button type="submit" @onclick=@Login class="btn btn-outline-primary mb-2">
+                    <span class="oi oi-account-login"></span> Đăng nhập
+                </button>
+                <button type="submit" @onclick=@Sigup class="btn btn-outline-success mb-2">
+                    <span class="oi oi-account-logout"></span> Đăng ký
+                </button>
+            </div>
+        </div>
 
         <div class="content px-4">
             @Body
@@ -17,12 +28,13 @@
     </div>
 </div>
 
-<BlazoredToasts Position="ToastPosition.BottomRight"
-                Timeout="5"
-                IconType="IconType.Material"
-                SuccessClass="success-toast-override"
-                SuccessIcon="fa fa-thumbs-up"
-                ErrorIcon="fa fa-bug" />
-
-
-
+@code {
+    private void Login()
+    {
+        _navigationManager.NavigateTo("/login");
+    }
+    private void Sigup()
+    {
+        _navigationManager.NavigateTo("/sigup");
+    }
+}

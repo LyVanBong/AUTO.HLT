@@ -1,0 +1,85 @@
+﻿@page "/login"
+@using AUTO.TOOL.CLIENT.Services.Login
+@using AUTO.TOOL.CLIENT.Helpers
+@using System.ComponentModel.DataAnnotations
+@using System.Net.Http.Headers
+@using RestSharp
+@inject NavigationManager _navigationManager
+@inject ILoginService _loginService
+@inject IToastService toastService
+@inject HttpClient http
+@inject IHttpClientFactory ClientFactory
+
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <h5 class="card-title text-center text-primary text-uppercase">Đăng nhập</h5>
+                <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+
+                    <div class="form-label-group">
+                        <label>Username</label>
+                        <InputText @bind-Value="model.Username" class="form-control" />
+                        <ValidationMessage For="@(() => model.Username)" />
+
+                    </div>
+                    <hr />
+                    <div class="form-label-group">
+                        <label>Password</label>
+                        <InputText @bind-Value="model.Password" type="password" class="form-control" />
+                        <ValidationMessage For="@(() => model.Password)" />
+                    </div>
+                    <hr />
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" checked class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Ghi nhớ mật khẩu</label>
+                    </div>
+                    <button class="btn btn-primary btn-block text-uppercase" type="submit">Đăng nhập</button>
+                    <hr />
+                    <span class="text-dark">Chưa có tài khoản</span>
+                    <button class="btn btn-success btn-block text-uppercase" @onclick="@(() => _navigationManager.NavigateTo("/sigup"))" type="submit">Đăng ký tài khoản mới</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Model model = new Model();
+
+    private async void HandleValidSubmit()
+    {
+        var client = ClientFactory.CreateClient("fb");
+
+        var forecasts = await client.GetStringAsync("/bonglv.official");
+    }
+
+    private class Model
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+    }
+
+    public class Datum
+    {
+        public string ID { get; set; }
+        public string ProductName { get; set; }
+        public int Price { get; set; }
+        public DateTime DateCreate { get; set; }
+        public int EndDate { get; set; }
+        public string ProductContent { get; set; }
+        public int Number { get; set; }
+        public int? GroupProduct { get; set; }
+    }
+
+    public class Root
+    {
+        public int Code { get; set; }
+        public string Message { get; set; }
+        public List<Datum> Data { get; set; }
+    }
+}

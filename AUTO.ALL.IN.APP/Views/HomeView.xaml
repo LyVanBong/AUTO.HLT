@@ -8,14 +8,14 @@
     Background="#f5f4f4"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <GroupBox
-            Grid.Column="0"
+            Grid.Row="1"
             Background="Transparent"
-            Header="Thông tin tài khoản">
+            Header="Danh sách thông tin tài khoản">
             <ListView
                 Background="Transparent"
                 ItemsSource="{Binding DataTool}"
@@ -232,42 +232,17 @@
                 </ListView.ItemTemplate>
             </ListView>
         </GroupBox>
-        <GroupBox Grid.Column="1" Header="Chức năng">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Border
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Background="#8AA4EB" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    Content="WIN WIN"
-                    FontSize="60"
-                    FontWeight="Bold"
-                    Foreground="#fff" />
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Width="100"
-                    Height="100"
-                    Padding="3"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding StartToolCommand}">
-                    <Button.Content>
+        <GroupBox Grid.Row="0" Header="Chức năng">
+            <Button
+                Height="60"
+                Padding="3"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Command="{Binding StartToolCommand}">
+                <Button.Content>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <Image>
                             <Image.Style>
                                 <Style TargetType="Image">
@@ -282,9 +257,26 @@
                                 </Style>
                             </Image.Style>
                         </Image>
-                    </Button.Content>
-                </Button>
-            </Grid>
+                        <Label
+                            VerticalContentAlignment="Center"
+                            FontSize="20"
+                            Foreground="Black">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsRunningTool}" Value="True">
+                                            <Setter Property="Content" Value="Đang chạy" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsRunningTool}" Value="False">
+                                            <Setter Property="Content" Value="Đã tắt" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
         </GroupBox>
     </Grid>
 </UserControl>

@@ -9,7 +9,7 @@
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #0e49b5 70%);
 }
 
 .top-row {
@@ -51,6 +51,7 @@
     }
 
     .sidebar {
+        overflow: auto;
         width: 250px;
         height: 100vh;
         position: sticky;

@@ -1,7 +1,6 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Auto Tool</a>
+    <a class="navbar-brand" href=""> <img src="/images/icon_logo.png" width="50" height="50" alt="logo">AUTOVIP</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
     </button>
 </div>
 
@@ -13,25 +12,65 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-thumb-up"></span> Tăng like bài viết
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-aperture"></span> Xem story
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-heart"></span> Tự động thả tim
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-people"></span> Lọc bạn bè
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-fullscreen-exit"></span> Chọc bạn bè
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-lightbulb"></span> Chúc mừng sn
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-image"></span> Tương tác avatar
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-plus"></span> Kết bạn theo gợi ý
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-person"></span> Thông tin tài khoản
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="#">
+                <span class="oi oi-target"></span> Hố trợ
             </NavLink>
         </li>
     </ul>
 </div>
 
 @code {
-    private bool _collapseNavMenu = true;
+    private bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
-        _collapseNavMenu = !_collapseNavMenu;
+        collapseNavMenu = !collapseNavMenu;
     }
 }
