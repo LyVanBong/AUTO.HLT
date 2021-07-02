@@ -8,13 +8,13 @@
     Padding="0"
     BackgroundColor="Transparent">
     <ContentView.Content>
-        <controls:MTAdView
+        <!--<controls:MTAdView
             x:Name="myAds"
             AdsId="{OnPlatform Android='ca-app-pub-9881695093256851/5751542362',
                                iOS='ca-app-pub-9881695093256851/3879416866'}"
             BackgroundColor="Transparent"
             MinimumHeightRequest="{OnIdiom Phone='120',
-                                           Default='150'}" />
-
+                                           Default='150'}"
+            PersonalizedAds="False" />-->
     </ContentView.Content>
 </ContentView>

@@ -32,13 +32,13 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.11</string>
+	<string>1.0.12</string>
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-9881695093256851~7173700590</string>
+	<string>ca-app-pub-4860238666617747~7576807071</string>
 	<key>GADIsAdManagerApp</key>
 	<true/>
 	<key>SKAdNetworkItems</key>

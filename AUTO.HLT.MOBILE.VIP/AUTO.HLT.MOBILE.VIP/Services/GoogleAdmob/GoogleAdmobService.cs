@@ -17,6 +17,8 @@ namespace AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob
 
         public GoogleAdmobService()
         {
+            CrossMTAdmob.Current.UserPersonalizedAds = false;
+
             #region Interstitial
 
             CrossMTAdmob.Current.OnInterstitialClosed += InterstitialClosed;
