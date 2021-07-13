@@ -1,9 +1,9 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
-using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Models.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -15,8 +15,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
-using MarcTron.Plugin;
+using AUTO.HLT.MOBILE.VIP.Services.User;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -29,13 +28,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
         private IPageDialogService _pageDialogService;
         private IDialogService _dialogService;
         private ObservableCollection<PokesFriendsModel> _pokesData;
-        private ContentView _adModView;
         private IGoogleAdmobService _googleAdmobService;
-        public ContentView AdModView
-        {
-            get => _adModView;
-            set => SetProperty(ref _adModView, value);
-        }
+        private IDatabaseService _databaseService;
+        private IUserService _userService;
         public ICommand SelectAllFriendsCommand { get; private set; }
         public ICommand PokesFriendCommand { get; private set; }
         public ObservableCollection<PokesFriendsModel> PokesData
@@ -50,12 +45,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService, IGoogleAdmobService googleAdmobService) : base(navigationService)
+        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService, IGoogleAdmobService googleAdmobService, IUserService userService) : base(navigationService)
         {
             _googleAdmobService = googleAdmobService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
+            _databaseService = databaseService;
+            _userService = userService;
             PokesFriendCommand = new Command<PokesFriendsModel>(PokesFriend);
             SelectAllFriendsCommand = new Command(SelectAllFriends);
         }
@@ -185,11 +182,27 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
 
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
-                AdModView = new GoogleAdmobView() { HeightRequest = 150 };
-                if (Device.RuntimePlatform == Device.iOS)
-                    AdModView.Padding = new Thickness(0, 0, 0, 20);
-                await Task.Delay(TimeSpan.FromSeconds(3));
-                _googleAdmobService.ShowRewardedVideo();
+                var user = await _databaseService.GetAccountUser();
+                if (user != null)
+                {
+                    var money = await _userService.GetPriceUser(user.UserName);
+                    if (money > 0)
+                    {
+                        var num = await _userService.SetPriceUser(user.UserName, money - 1 + "");
+                    }
+                    else
+                    {
+                        if (await _pageDialogService.DisplayAlertAsync("Thông báo", $"Để sử dụng tính năng này bạn cần 1 xu !",
+                            "Kiếm thếm xu", "Để sau"))
+                        {
+                            await NavigationService.NavigateAsync("EarnCoinsPage");
+                        }
+                        else
+                        {
+                            await NavigationService.GoBackAsync();
+                        }
+                    }
+                }
             }
         }
 

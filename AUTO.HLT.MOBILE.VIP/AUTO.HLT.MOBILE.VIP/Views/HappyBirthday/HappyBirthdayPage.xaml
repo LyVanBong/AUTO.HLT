@@ -14,10 +14,6 @@
             RowDefinitions="40,Auto,*,80,10"
             RowSpacing="0">
             <navigation:NavigationView Grid.Row="0" Text="Chúc mừng sinh nhật" />
-            <ContentView
-                x:Name="AdmodViewgg"
-                Grid.Row="1"
-                Content="{Binding AdModView}" />
             <CollectionView Grid.Row="2" ItemsSource="{Binding LsBirthday}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout

@@ -128,9 +128,6 @@
                 Margin="0"
                 BackgroundColor="Transparent"
                 ItemsSource="{Binding FriendsDoNotInteractData}">
-                <CollectionView.Footer>
-                    <BoxView BackgroundColor="Transparent" HeightRequest="{Binding Source={x:Reference AdmodViewgg}, Path=HeightRequest}" />
-                </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -226,12 +223,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <ContentView
-                x:Name="AdmodViewgg"
-                Grid.Row="7"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Content="{Binding AdModView}" />
             <loading:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="7"

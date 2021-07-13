@@ -109,12 +109,7 @@ namespace AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob
             Debug.WriteLine("When it's closed : " + DateTime.Now);
             _isShowInterstitial = true;
         }
-
-        public void ShowInterstitial()
-        {
-            CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialAdmodId);
-        }
-
+        
         public void ShowRewardedVideo()
         {
             CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmodId);

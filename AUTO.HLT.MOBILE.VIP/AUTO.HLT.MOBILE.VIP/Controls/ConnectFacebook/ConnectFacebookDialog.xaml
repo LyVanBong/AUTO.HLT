@@ -40,13 +40,6 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Source="{Binding UrlFacebook}" />
-        <ContentView
-            x:Name="AdmodViewgg"
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            BackgroundColor="Transparent"
-            Content="{Binding AdModView}" />
         <Button
             x:Name="ConnectFacebook"
             Grid.Row="3"

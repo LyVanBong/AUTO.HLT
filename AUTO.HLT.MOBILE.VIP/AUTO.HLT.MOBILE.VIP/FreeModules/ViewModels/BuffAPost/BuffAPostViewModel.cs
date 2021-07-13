@@ -7,7 +7,6 @@ using AUTO.HLT.MOBILE.VIP.Services.Guide;
 using AUTO.HLT.MOBILE.VIP.Services.Telegram;
 using AUTO.HLT.MOBILE.VIP.Services.User;
 using AUTO.HLT.MOBILE.VIP.ViewModels;
-using MarcTron.Plugin;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
@@ -15,7 +14,6 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
@@ -35,7 +33,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
         private IUserService _userService;
         private string _userName;
         private IGuideService _guideService;
-        private IGoogleAdmobService _googleAdmobService;
 
         public ICommand RunFeatureCommand { get; set; }
 
@@ -63,9 +60,8 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService, IGoogleAdmobService googleAdmobService) : base(navigationService)
+        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService) : base(navigationService)
         {
-            _googleAdmobService = googleAdmobService;
             _guideService = guideService;
             _userService = userService;
             _databaseService = databaseService;
@@ -90,8 +86,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
                 }
             }
             IsLoading = false;
-            await Task.Delay(TimeSpan.FromSeconds(3));
-            _googleAdmobService.ShowRewardedVideo();
         }
 
         private async Task CheckAcountUseService()

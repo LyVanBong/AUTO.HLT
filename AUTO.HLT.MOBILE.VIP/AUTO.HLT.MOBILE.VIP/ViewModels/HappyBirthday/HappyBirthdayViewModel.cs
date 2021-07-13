@@ -1,9 +1,8 @@
 ﻿using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
-using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Models.Facebook;
 using AUTO.HLT.MOBILE.VIP.Services.Facebook;
-using MarcTron.Plugin;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -13,7 +12,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.User;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -27,13 +27,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
         private IPageDialogService _pageDialogService;
         private bool _isLoading;
         private IDialogService _dialog;
-        private ContentView _adModView;
         private IGoogleAdmobService _googleAdmobService;
-        public ContentView AdModView
-        {
-            get => _adModView;
-            set => SetProperty(ref _adModView, value);
-        }
+        private IDatabaseService _databaseService;
+        private IUserService _userService;
         public ObservableCollection<FriendBirthdayModel> LsBirthday
         {
             get => _lsBirthday;
@@ -48,12 +44,14 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             set => SetProperty(ref _isLoading, value);
         }
 
-        public HappyBirthdayViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialog, IGoogleAdmobService googleAdmobService) : base(navigationService)
+        public HappyBirthdayViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDialogService dialog, IGoogleAdmobService googleAdmobService, IDatabaseService databaseService, IUserService userService) : base(navigationService)
         {
             _googleAdmobService = googleAdmobService;
             _dialog = dialog;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
+            _databaseService = databaseService;
+            _userService = userService;
 
             HappyBirthdayCommand = new AsyncCommand(HappyBirthday);
 
@@ -111,9 +109,27 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.HappyBirthday
             {
                 if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
                 {
-                    AdModView = new GoogleAdmobView() { HeightRequest = 150 };
-                    await Task.Delay(TimeSpan.FromSeconds(3));
-                    _googleAdmobService.ShowRewardedVideo();
+                    var user = await _databaseService.GetAccountUser();
+                    if (user != null)
+                    {
+                        var money = await _userService.GetPriceUser(user.UserName);
+                        if (money > 0)
+                        {
+                            var num = await _userService.SetPriceUser(user.UserName, money - 1 + "");
+                        }
+                        else
+                        {
+                            if (await _pageDialogService.DisplayAlertAsync("Thông báo", $"Để sử dụng tính năng này bạn cần 1 xu !",
+                                "Kiếm thếm xu", "Để sau"))
+                            {
+                                await NavigationService.NavigateAsync("EarnCoinsPage");
+                            }
+                            else
+                            {
+                                await NavigationService.GoBackAsync();
+                            }
+                        }
+                    }
                 }
                 await InitData();
             }

@@ -3,7 +3,6 @@
     x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost.BuffAPostPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:googleAdmob="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:icon="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
@@ -110,11 +109,6 @@
                 CommandParameter="2"
                 Text="Hưỡng dẫn kiếm xu đổi like"
                 TextColor="{StaticResource AppBackgroud}" />
-            <googleAdmob:GoogleAdmobView
-                Grid.Row="5"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Padding="0,0,0,20" />
             <loading:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="5"

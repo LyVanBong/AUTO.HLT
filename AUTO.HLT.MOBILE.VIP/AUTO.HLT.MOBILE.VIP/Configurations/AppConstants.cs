@@ -9,17 +9,9 @@ namespace AUTO.HLT.MOBILE.VIP.Configurations
         /// </summary>
         public const string AddAdmod = "GoogleAdmod";
         /// <summary>
-        /// Quảng cáo banner
-        /// </summary>
-        public static string BannerAdmod = Device.RuntimePlatform == Device.Android ? "ca-app-pub-4860238666617747/5695382211" : "ca-app-pub-4860238666617747/4382300541";
-        /// <summary>
-        /// Quản cáo Interstitial
-        /// </summary>
-        public static string InterstitialAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/5978773075" : "ca-app-pub-9881695093256851/6134685748";
-        /// <summary>
         /// Quảng cáo Rewarded
         /// </summary>
-        public static string RewardedAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-4860238666617747/2728353815" : "ca-app-pub-4860238666617747/2401050750";
+        public static string RewardedAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-3396541164996014/4218712657" : "ca-app-pub-3396541164996014/4957079253";
         /// <summary>
         /// id nhon chat telegram thong bao
         /// </summary>

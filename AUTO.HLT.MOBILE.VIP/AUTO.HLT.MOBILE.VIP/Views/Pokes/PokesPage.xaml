@@ -53,9 +53,6 @@
                 Grid.Row="3"
                 Margin="10"
                 ItemsSource="{Binding PokesData}">
-                <CollectionView.Footer>
-                    <BoxView BackgroundColor="Transparent" HeightRequest="{Binding Source={x:Reference AdmodViewgg}, Path=HeightRequest}" />
-                </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -109,10 +106,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <ContentView
-                x:Name="AdmodViewgg"
-                Grid.Row="4"
-                Content="{Binding AdModView}" />
             <controls1:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="3"

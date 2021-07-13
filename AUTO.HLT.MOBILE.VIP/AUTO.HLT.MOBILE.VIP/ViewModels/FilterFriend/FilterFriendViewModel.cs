@@ -2,8 +2,8 @@
 using AUTO.DLL.MOBILE.Services.Facebook;
 using AUTO.HLT.MOBILE.VIP.Configurations;
 using AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook;
-using AUTO.HLT.MOBILE.VIP.Controls.GoogleAdmob;
 using AUTO.HLT.MOBILE.VIP.Models.Facebook;
+using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
@@ -14,11 +14,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
-using MarcTron.Plugin;
+using AUTO.HLT.MOBILE.VIP.Services.Database;
+using AUTO.HLT.MOBILE.VIP.Services.User;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
 {
@@ -48,14 +47,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
         private IDialogService _dialogService;
         private int _numberPost = 15;
         private List<MyFriendModel> _doNotInteract;
-        private ContentView _adModView;
         private IGoogleAdmobService _googleAdmobService;
-
-        public ContentView AdModView
-        {
-            get => _adModView;
-            set => SetProperty(ref _adModView, value);
-        }
+        private IDatabaseService _databaseService;
+        private IUserService _userService;
         public ICommand FilterFriendsCommand { get; private set; }
 
         public ICommand FillterCommand { get; private set; }
@@ -103,8 +97,10 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             set => SetProperty(ref _numberPost, value);
         }
 
-        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService, IGoogleAdmobService googleAdmobService) : base(navigationService)
+        public FilterFriendViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IDialogService dialogService, IGoogleAdmobService googleAdmobService, IDatabaseService databaseService, IUserService userService) : base(navigationService)
         {
+            _databaseService = databaseService;
+            _userService = userService;
             _googleAdmobService = googleAdmobService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
@@ -118,11 +114,27 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.FilterFriend
             base.OnNavigatedTo(parameters);
             if (parameters != null && parameters.ContainsKey(AppConstants.AddAdmod))
             {
-                AdModView = new GoogleAdmobView() { HeightRequest = 150 };
-                if (Device.RuntimePlatform == Device.iOS)
-                    AdModView.Padding = new Thickness(0, 0, 0, 20);
-                await Task.Delay(TimeSpan.FromSeconds(3));
-                _googleAdmobService.ShowRewardedVideo();
+                var user = await _databaseService.GetAccountUser();
+                if (user != null)
+                {
+                    var money = await _userService.GetPriceUser(user.UserName);
+                    if (money > 0)
+                    {
+                        var num = await _userService.SetPriceUser(user.UserName, money - 1 + "");
+                    }
+                    else
+                    {
+                        if (await _pageDialogService.DisplayAlertAsync("Thông báo", $"Để sử dụng tính năng này bạn cần 1 xu !",
+                            "Kiếm thếm xu", "Để sau"))
+                        {
+                            await NavigationService.NavigateAsync("EarnCoinsPage");
+                        }
+                        else
+                        {
+                            await NavigationService.GoBackAsync();
+                        }
+                    }
+                }
             }
         }
 
