@@ -9,9 +9,13 @@ namespace AUTO.HLT.MOBILE.VIP.Configurations
         /// </summary>
         public const string AddAdmod = "GoogleAdmod";
         /// <summary>
+        /// Quảng cáo Rewarded Test
+        /// </summary>
+        public static string RewardedAdmodTestId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-3940256099942544/1712485313";
+        /// <summary>
         /// Quảng cáo Rewarded
         /// </summary>
-        public static string RewardedAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-3396541164996014/4218712657" : "ca-app-pub-3396541164996014/4957079253";
+        public static string RewardedAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/8723215246" : "ca-app-pub-9881695093256851/5330765141";
         /// <summary>
         /// id nhon chat telegram thong bao
         /// </summary>

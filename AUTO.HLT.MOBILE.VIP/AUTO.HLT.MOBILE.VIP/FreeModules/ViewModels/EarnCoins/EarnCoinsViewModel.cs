@@ -13,18 +13,22 @@ using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
+using MarcTron.Plugin.CustomEventArgs;
+using System.Diagnostics;
+using Prism.Services;
+using System.Threading;
 
 namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
 {
     public class EarnCoinsViewModel : ViewModelBase
     {
         private bool _isLoading;
-        private bool _isRunSeenAdmod;
         private IUserService _userService;
         private IDatabaseService _databaseService;
         private string _userName;
         private int _tmpPrice;
-        private IGoogleAdmobService _googleAdmobService;
+        private IPageDialogService _dialogService;
+        private bool _isShowRewardedVideoLoaded;
 
         public bool IsLoading
         {
@@ -34,136 +38,229 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
 
         public ICommand SeenAdmodCommand { get; private set; }
         private int _myPrice;
+        private bool _isRunAdmod = true;
+
         public int MyPrice
         {
             get => _myPrice;
             set => SetProperty(ref _myPrice, value);
         }
 
-        public ICommand StopSeenAdmodCommand { get; private set; }
-        public EarnCoinsViewModel(INavigationService navigationService, IUserService userService, IDatabaseService databaseService, IGoogleAdmobService googleAdmobService) : base(navigationService)
+        public bool IsRunAdmod { get => _isRunAdmod; set => SetProperty(ref _isRunAdmod, value); }
+
+        public EarnCoinsViewModel(INavigationService navigationService, IUserService userService, IDatabaseService databaseService, IPageDialogService
+            dialogService) : base(navigationService)
         {
-            _googleAdmobService = googleAdmobService;
+            _dialogService = dialogService;
             _databaseService = databaseService;
             _userService = userService;
-            StopSeenAdmodCommand = new AsyncCommand(async () =>
-            {
-                _isRunSeenAdmod = false;
-                Title = "Tạm dừng kiếm xu";
-                if (_tmpPrice > 0)
-                {
-                    await _userService.SetPriceUser(_userName,
-                        (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
-                    _tmpPrice = 0;
-                }
-                Title = "Bắt đầu kiếm xu";
-            });
             SeenAdmodCommand = new AsyncCommand(async () =>
             {
-                if (_isRunSeenAdmod) return;
-                _isRunSeenAdmod = true;
-                await SeenAdmod();
+                if (IsLoading) return;
+                IsLoading = true;
+                if (IsRunAdmod)
+                {
+                    if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
+                    {
+                        IsLoading = false;
+                        CrossMTAdmob.Current.ShowRewardedVideo();
+                    }
+                    else
+                    {
+                        LoadAdMod();
+                    }
+                }
+
+                IsRunAdmod = !IsRunAdmod;
             });
-            Title = "Bắt đầu kiếm xu";
-            _googleAdmobService.IsRewarded = true;
-            _googleAdmobService.SubscribeRewardedVideo(RewardedVideoAdCompleted);
+
+        }
+        private bool _isRewardedVideo;
+        private void LoadAdMod()
+        {
+            var id = _userName == "lygia95" ? AppConstants.RewardedAdmodTestId : AppConstants.RewardedAdmodId;
+            CrossMTAdmob.Current.LoadRewardedVideo(id);
+        }
+        private async void RewardedVideoAdCompleted(object sender, EventArgs e)
+        {
+            Debug.WriteLine("RewardedVideoAdCompleted");
+            Xamarin.Essentials.Preferences.Set("RewardedVideo", Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) + 4);
+            _isRewardedVideo = true;
+            _isShowRewardedVideoLoaded = true;
+            LoadAdMod();
+            if (Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) > 100)
+            {
+                var update = await _userService.SetPriceUser(_userName, await _userService.GetPriceUser(_userName) + Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) + "");
+                if (update > 0) Xamarin.Essentials.Preferences.Set("RewardedVideo", 0);
+            }
         }
 
-        private async void RewardedVideoAdCompleted()
+        private void RewardedVideoStarted(object sender, EventArgs e)
         {
-            ShowToast("Bạn đã được thưởng 4 xu !");
-            _tmpPrice += 4;
-            MyPrice += 4;
-            Title = "Bắt đầu kiếm xu";
-            if (_isRunSeenAdmod)
-                await SeenAdmod();
+            Debug.WriteLine("RewardedVideoStarted");
+        }
+
+        private void RewardedVideoAdOpened(object sender, EventArgs e)
+        {
+            Debug.WriteLine("RewardedVideoAdOpened");
+        }
+
+        private void RewardedVideoAdLoaded(object sender, EventArgs e)
+        {
+            Debug.WriteLine("RewardedVideoAdLoaded");
+            IsLoading = false;
+            if (!_isShowRewardedVideoLoaded)
+            {
+                if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
+                {
+                    CrossMTAdmob.Current.ShowRewardedVideo();
+                }
+            }
+            _isShowRewardedVideoLoaded = false;
+        }
+
+        private void RewardedVideoAdLeftApplication(object sender, EventArgs e)
+        {
+            Debug.WriteLine("RewardedVideoAdLeftApplication");
+        }
+
+        private async void RewardedVideoAdFailedToLoad(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine("RewardedVideoAdFailedToLoad");
+
+            IsLoading = false;
+
+            if (await _dialogService.DisplayAlertAsync("Thông báo", "Quá trình tải quảng cáo xẩy ra lỗi! Bạn có muốn tiếp tục kiếm xu ?", "Tiếp tục kiếm xu", "Để sau"))
+            {
+                if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
+                {
+                    CrossMTAdmob.Current.ShowRewardedVideo();
+                }
+                else
+                {
+                    LoadAdMod();
+                }
+            }
+            else
+            {
+                IsRunAdmod = true;
+                _isShowRewardedVideoLoaded = true;
+                LoadAdMod();
+            }
+        }
+
+        private async void RewardedVideoAdClosed(object sender, EventArgs e)
+        {
+            Debug.WriteLine("RewardedVideoAdClosed");
+            if (_isRewardedVideo)
+            {
+                _isRewardedVideo = false;
+                ShowToast("Bạn được thưởng 4 xu !");
+            }
+            if (await _dialogService.DisplayAlertAsync("Thông báo", "Bạn có muốn tiếp tục kiếm xu ?", "Tiếp tục kiếm xu", "Để sau"))
+            {
+                if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
+                {
+                    CrossMTAdmob.Current.ShowRewardedVideo();
+                }
+                else
+                {
+                    LoadAdMod();
+                }
+            }
+            else
+            {
+                IsRunAdmod = true;
+                _isShowRewardedVideoLoaded = true;
+                // Load quang cao
+                LoadAdMod();
+            }
+        }
+
+        private void Rewarded(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine("Rewarded");
         }
 
         private void ShowToast(string message, int time = 5)
         {
-            try
+            new Thread(() =>
             {
-                UserDialogs.Instance.Toast(new ToastConfig(message)
+                try
                 {
-                    Position = ToastPosition.Top,
-                    Message = message,
-                    BackgroundColor = Color.Black,
-                    Duration = TimeSpan.FromSeconds(time),
-                    MessageTextColor = Color.WhiteSmoke,
-                });
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        UserDialogs.Instance.Toast(new ToastConfig(message)
+                        {
+                            Position = ToastPosition.Top,
+                            Message = message,
+                            BackgroundColor = Color.Black,
+                            Duration = TimeSpan.FromSeconds(time),
+                            MessageTextColor = Color.WhiteSmoke,
+                        });
+                    });
+                }
+                catch (Exception e)
+                {
+                    Crashes.TrackError(e);
+                }
+            }).Start();
         }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsLoading = true;
             try
             {
                 _userName = (await _databaseService.GetAccountUser()).UserName;
-                MyPrice = await _userService.GetPriceUser(_userName);
+                MyPrice = await _userService.GetPriceUser(_userName) + Xamarin.Essentials.Preferences.Get("RewardedVideo", 0);
             }
             catch (Exception e)
             {
                 Crashes.TrackError(e);
             }
-        }
+            #region Rewarded video
 
-        public override void OnResume()
-        {
-            base.OnResume();
-            _isRunSeenAdmod = true;
-        }
+            CrossMTAdmob.Current.UserPersonalizedAds = false;
 
-        public override async void OnSleep()
-        {
-            base.OnSleep();
-            _isRunSeenAdmod = false;
-            await _userService.SetPriceUser(_userName, (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
-            _tmpPrice = 0;
+            CrossMTAdmob.Current.OnRewarded += Rewarded;
+            CrossMTAdmob.Current.OnRewardedVideoAdClosed += RewardedVideoAdClosed;
+            CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad += RewardedVideoAdFailedToLoad;
+            CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication += RewardedVideoAdLeftApplication;
+            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += RewardedVideoAdLoaded;
+            CrossMTAdmob.Current.OnRewardedVideoAdOpened += RewardedVideoAdOpened;
+            CrossMTAdmob.Current.OnRewardedVideoStarted += RewardedVideoStarted;
+            CrossMTAdmob.Current.OnRewardedVideoAdCompleted += RewardedVideoAdCompleted;
+
+            _isShowRewardedVideoLoaded = true;
+            // Load quang cao
+            LoadAdMod();
+
+            #endregion
+            IsLoading = false;
         }
 
         public override async void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
-            await _userService.SetPriceUser(_userName, (await _userService.GetPriceUser(_userName)) + _tmpPrice + "");
-            _tmpPrice = 0;
-            _googleAdmobService.IsRewarded = false;
-            _googleAdmobService.UnSubscribeRewardedVideo(RewardedVideoAdCompleted);
-            _isRunSeenAdmod = false;
-        }
-
-        private async Task SeenAdmod()
-        {
-            if (!_isRunSeenAdmod)
+            if (Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) > 4)
             {
-                Title = "Bắt đầu kiếm xu";
-                return;
+                var update = await _userService.SetPriceUser(_userName, await _userService.GetPriceUser(_userName) + Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) + "");
+                if (update > 0) Xamarin.Essentials.Preferences.Set("RewardedVideo", 0);
             }
-            Title = "Quảng cáo sẽ có sau 3s";
-            await Task.Delay(TimeSpan.FromSeconds(1));
-            var num = 1;
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                Title = num + "";
-                if (num == 3)
-                {
-                    if (_isRunSeenAdmod)
-                        _googleAdmobService.ShowRewardedVideo();
-                    else
-                    {
-                        _isRunSeenAdmod = false;
-                        Title = "Bắt đầu kiếm xu";
-                    }
 
-                    return false;
-                }
-                num++;
-                return true;
-            });
+            #region Remove Rewarded video 
 
+            CrossMTAdmob.Current.OnRewarded -= Rewarded;
+            CrossMTAdmob.Current.OnRewardedVideoAdClosed -= RewardedVideoAdClosed;
+            CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad -= RewardedVideoAdFailedToLoad;
+            CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication -= RewardedVideoAdLeftApplication;
+            CrossMTAdmob.Current.OnRewardedVideoAdLoaded -= RewardedVideoAdLoaded;
+            CrossMTAdmob.Current.OnRewardedVideoAdOpened -= RewardedVideoAdOpened;
+            CrossMTAdmob.Current.OnRewardedVideoStarted -= RewardedVideoStarted;
+            CrossMTAdmob.Current.OnRewardedVideoAdCompleted -= RewardedVideoAdCompleted;
+
+            #endregion
         }
     }
 }
