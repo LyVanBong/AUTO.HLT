@@ -72,6 +72,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
 
         private void LoadAdMod()
         {
+            IsLoading = true;
             if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
             {
                 IsLoading = false;
@@ -86,6 +87,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         private async void RewardedVideoAdCompleted(object sender, EventArgs e)
         {
             Debug.WriteLine("RewardedVideoAdCompleted");
+            MyPrice += 4;
             Xamarin.Essentials.Preferences.Set("RewardedVideo", Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) + 4);
             _isRewardedVideo = true;
 
