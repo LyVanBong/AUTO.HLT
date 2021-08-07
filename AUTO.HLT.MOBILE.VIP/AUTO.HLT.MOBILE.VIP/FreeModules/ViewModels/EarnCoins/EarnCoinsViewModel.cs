@@ -60,34 +60,35 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 IsLoading = true;
                 if (IsRunAdmod)
                 {
-                    if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
-                    {
-                        IsLoading = false;
-                        CrossMTAdmob.Current.ShowRewardedVideo();
-                    }
-                    else
-                    {
-                        LoadAdMod();
-                    }
+                    LoadAdMod();
                 }
-
+                else IsLoading = false;
                 IsRunAdmod = !IsRunAdmod;
             });
 
         }
+        // bien hien thi thong bao cong xu
         private bool _isRewardedVideo;
+
         private void LoadAdMod()
         {
-            var id = _userName == "lygia95" ? AppConstants.RewardedAdmodTestId : AppConstants.RewardedAdmodId;
-            CrossMTAdmob.Current.LoadRewardedVideo(id);
+            if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
+            {
+                IsLoading = false;
+                CrossMTAdmob.Current.ShowRewardedVideo();
+            }
+            else
+            {
+                var id = _userName == "lygia95" ? AppConstants.RewardedAdmodTestId : AppConstants.RewardedAdmodId;
+                CrossMTAdmob.Current.LoadRewardedVideo(id);
+            }
         }
         private async void RewardedVideoAdCompleted(object sender, EventArgs e)
         {
             Debug.WriteLine("RewardedVideoAdCompleted");
             Xamarin.Essentials.Preferences.Set("RewardedVideo", Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) + 4);
             _isRewardedVideo = true;
-            _isShowRewardedVideoLoaded = true;
-            LoadAdMod();
+
             if (Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) > 100)
             {
                 var update = await _userService.SetPriceUser(_userName, await _userService.GetPriceUser(_userName) + Xamarin.Essentials.Preferences.Get("RewardedVideo", 0) + "");
@@ -109,14 +110,10 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         {
             Debug.WriteLine("RewardedVideoAdLoaded");
             IsLoading = false;
-            if (!_isShowRewardedVideoLoaded)
+            if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
             {
-                if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
-                {
-                    CrossMTAdmob.Current.ShowRewardedVideo();
-                }
+                CrossMTAdmob.Current.ShowRewardedVideo();
             }
-            _isShowRewardedVideoLoaded = false;
         }
 
         private void RewardedVideoAdLeftApplication(object sender, EventArgs e)
@@ -132,20 +129,11 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
 
             if (await _dialogService.DisplayAlertAsync("Thông báo", "Quá trình tải quảng cáo xẩy ra lỗi! Bạn có muốn tiếp tục kiếm xu ?", "Tiếp tục kiếm xu", "Để sau"))
             {
-                if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
-                {
-                    CrossMTAdmob.Current.ShowRewardedVideo();
-                }
-                else
-                {
-                    LoadAdMod();
-                }
+                LoadAdMod();
             }
             else
             {
                 IsRunAdmod = true;
-                _isShowRewardedVideoLoaded = true;
-                LoadAdMod();
             }
         }
 
@@ -159,21 +147,11 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             }
             if (await _dialogService.DisplayAlertAsync("Thông báo", "Bạn có muốn tiếp tục kiếm xu ?", "Tiếp tục kiếm xu", "Để sau"))
             {
-                if (CrossMTAdmob.Current.IsRewardedVideoLoaded())
-                {
-                    CrossMTAdmob.Current.ShowRewardedVideo();
-                }
-                else
-                {
-                    LoadAdMod();
-                }
+                LoadAdMod();
             }
             else
             {
                 IsRunAdmod = true;
-                _isShowRewardedVideoLoaded = true;
-                // Load quang cao
-                LoadAdMod();
             }
         }
 
@@ -231,10 +209,6 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             CrossMTAdmob.Current.OnRewardedVideoAdOpened += RewardedVideoAdOpened;
             CrossMTAdmob.Current.OnRewardedVideoStarted += RewardedVideoStarted;
             CrossMTAdmob.Current.OnRewardedVideoAdCompleted += RewardedVideoAdCompleted;
-
-            _isShowRewardedVideoLoaded = true;
-            // Load quang cao
-            LoadAdMod();
 
             #endregion
             IsLoading = false;
