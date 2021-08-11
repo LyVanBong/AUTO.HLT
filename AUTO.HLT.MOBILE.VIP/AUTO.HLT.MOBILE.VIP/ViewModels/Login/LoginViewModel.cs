@@ -18,6 +18,7 @@ using Prism.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using MarcTron.Plugin;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
 {
@@ -107,11 +108,38 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             IsSavePasswd = true;
         }
 
+        private void OnInterstitialOpened(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnInterstitialLoaded(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void OnInterstitialClosed(object sender, EventArgs e)
+        {
+            IsLoading = true;
+            NavigationPage();
+        }
+
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             try
             {
+                #region
+
+                CrossMTAdmob.Current.UserPersonalizedAds = false;
+                CrossMTAdmob.Current.OnInterstitialClosed += OnInterstitialClosed;
+                CrossMTAdmob.Current.OnInterstitialLoaded += OnInterstitialLoaded;
+                CrossMTAdmob.Current.OnInterstitialOpened += OnInterstitialOpened;
+                // tai qc
+                var id = _userName == "lygia95" ? AppConstants.InterstitialUnitIDTest : AppConstants.InterstitialUnitID;
+                CrossMTAdmob.Current.LoadInterstitial(id);
+
+                #endregion
                 IsLoading = true;
                 if (Preferences.Get(nameof(IsSavePasswd), false))
                 {
@@ -132,7 +160,17 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 IsLoading = false;
             }
         }
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            #region
 
+            CrossMTAdmob.Current.OnInterstitialClosed -= OnInterstitialClosed;
+            CrossMTAdmob.Current.OnInterstitialLoaded -= OnInterstitialLoaded;
+            CrossMTAdmob.Current.OnInterstitialOpened -= OnInterstitialOpened;
+
+            #endregion
+        }
         private async Task FunctionExecute(string key)
         {
             IsLoading = true;
@@ -332,7 +370,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 UserName = Passwd = PhoneNumber = FullName = "";
             }
         }
-
+        private LoginModel _loginModel;
         private async Task DoLogin(string user, string pwd)
         {
             try
@@ -340,8 +378,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 var login = await _loginService.Login(user, pwd);
                 if (login != null && login.Code > 0 & login.Data != null)
                 {
-                    var dataLogin = login.Data;
-                    App.UserLogin = dataLogin;
+                    _loginModel = login.Data;
+                    App.UserLogin = _loginModel;
                     if (IsSavePasswd)
                     {
                         Preferences.Set(nameof(IsSavePasswd), true);
@@ -350,23 +388,24 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     {
                         Preferences.Set(nameof(IsSavePasswd), false);
                     }
-                    await _databaseService.SetAccountUser(dataLogin);
-                    Preferences.Set(AppConstants.Authorization, dataLogin.Jwt);
+                    await _databaseService.SetAccountUser(_loginModel);
+                    Preferences.Set(AppConstants.Authorization, _loginModel.Jwt);
                     if (UserName.ToUpper() == "KHACHHANG")
                     {
                         await NavigationService.NavigateAsync("/FMainPage", null, false, true);
                     }
                     else
                     {
-                        var licenseKey = await _licenseKeyService.CheckLicenseForUser();
-                        if ((licenseKey != null && licenseKey.CountEndDate > -1) || dataLogin.Role == 0 || dataLogin.Role == 3)
+                        if (CrossMTAdmob.Current.IsInterstitialLoaded())
                         {
-                            await NavigationService.NavigateAsync("/HomePage", null, false, true);
+                            IsLoading = false;
+                            CrossMTAdmob.Current.ShowInterstitial();
                         }
                         else
                         {
-                            await NavigationService.NavigateAsync("/FreeHomePage", null, false, true);
+                            NavigationPage();
                         }
+
                     }
                 }
                 else
@@ -381,6 +420,22 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                 await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh trong quá trình xử lý vui long thử lại",
                     "OK");
             }
+        }
+        private void NavigationPage()
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+           {
+               var role = _loginModel.Role;
+               var licenseKey = await _licenseKeyService.CheckLicenseForUser();
+               if ((licenseKey != null && licenseKey.CountEndDate > -1) || role == 0 || role == 3)
+               {
+                   await NavigationService.NavigateAsync("/HomePage", null, false, true);
+               }
+               else
+               {
+                   await NavigationService.NavigateAsync("/FreeHomePage", null, false, true);
+               }
+           });
         }
     }
 }

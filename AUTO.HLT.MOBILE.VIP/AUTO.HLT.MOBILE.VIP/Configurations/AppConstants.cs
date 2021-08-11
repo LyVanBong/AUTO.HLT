@@ -5,6 +5,14 @@ namespace AUTO.HLT.MOBILE.VIP.Configurations
     public static class AppConstants
     {
         /// <summary>
+        /// qc xen ke Test
+        /// </summary>
+        public static string InterstitialUnitIDTest = Device.RuntimePlatform == Device.Android ? "ca-app-pub-3940256099942544/1033173712" : "ca-app-pub-3940256099942544/4411468910";
+        /// <summary>
+        /// qc xen ke
+        /// </summary>
+        public static string InterstitialUnitID = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/3916792882" : "ca-app-pub-9881695093256851/4000553363";
+        /// <summary>
         /// hiển thị quảng cáo
         /// </summary>
         public const string AddAdmod = "GoogleAdmod";
