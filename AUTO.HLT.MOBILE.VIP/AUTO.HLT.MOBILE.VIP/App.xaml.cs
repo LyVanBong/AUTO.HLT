@@ -18,11 +18,9 @@ using AUTO.HLT.MOBILE.VIP.FakeModules.Views.MyBooking;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Notification;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.Profile;
 using AUTO.HLT.MOBILE.VIP.FakeModules.Views.TermsCondition;
-using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins;
 using AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home;
-using AUTO.HLT.MOBILE.VIP.FreeModules.Views;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins;
 using AUTO.HLT.MOBILE.VIP.FreeModules.Views.Home;
@@ -59,6 +57,7 @@ using AUTO.HLT.MOBILE.VIP.Views.Manage;
 using AUTO.HLT.MOBILE.VIP.Views.Pokes;
 using AUTO.HLT.MOBILE.VIP.Views.SuportCustumer;
 using AUTOHLT.MOBILE.Services.RestSharp;
+using MarcTron.Plugin;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -84,7 +83,12 @@ namespace AUTO.HLT.MOBILE.VIP
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(AppSettings.LICENSE_KEY_SYNCFUSION);
 
             InitializeComponent();
-
+            // tai qc
+            if (!CrossMTAdmob.Current.IsInterstitialLoaded())
+            {
+                CrossMTAdmob.Current.UserPersonalizedAds = false;
+                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitID);
+            }
             await NavigationService.NavigateAsync("/LoginPage");
         }
 

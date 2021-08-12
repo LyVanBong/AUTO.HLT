@@ -128,12 +128,15 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             base.Initialize(parameters);
             #region
 
-            CrossMTAdmob.Current.UserPersonalizedAds = false;
             CrossMTAdmob.Current.OnInterstitialClosed += OnInterstitialClosed;
             CrossMTAdmob.Current.OnInterstitialLoaded += OnInterstitialLoaded;
             CrossMTAdmob.Current.OnInterstitialOpened += OnInterstitialOpened;
             // tai qc
-            CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitID);
+            if (!CrossMTAdmob.Current.IsInterstitialLoaded())
+            {
+                CrossMTAdmob.Current.UserPersonalizedAds = false;
+                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitID);
+            }
 
             #endregion
         }
