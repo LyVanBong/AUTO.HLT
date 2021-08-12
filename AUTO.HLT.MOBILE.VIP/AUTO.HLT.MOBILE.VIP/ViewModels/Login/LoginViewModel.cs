@@ -123,23 +123,25 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             IsLoading = true;
             NavigationPage();
         }
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+            #region
 
+            CrossMTAdmob.Current.UserPersonalizedAds = false;
+            CrossMTAdmob.Current.OnInterstitialClosed += OnInterstitialClosed;
+            CrossMTAdmob.Current.OnInterstitialLoaded += OnInterstitialLoaded;
+            CrossMTAdmob.Current.OnInterstitialOpened += OnInterstitialOpened;
+            // tai qc
+            CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitID);
+
+            #endregion
+        }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             try
             {
-                #region
-
-                CrossMTAdmob.Current.UserPersonalizedAds = false;
-                CrossMTAdmob.Current.OnInterstitialClosed += OnInterstitialClosed;
-                CrossMTAdmob.Current.OnInterstitialLoaded += OnInterstitialLoaded;
-                CrossMTAdmob.Current.OnInterstitialOpened += OnInterstitialOpened;
-                // tai qc
-                var id = _userName == "lygia95" ? AppConstants.InterstitialUnitIDTest : AppConstants.InterstitialUnitID;
-                CrossMTAdmob.Current.LoadInterstitial(id);
-
-                #endregion
                 IsLoading = true;
                 if (Preferences.Get(nameof(IsSavePasswd), false))
                 {
