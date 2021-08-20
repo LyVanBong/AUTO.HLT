@@ -3,7 +3,8 @@ using AUTOHLT.MOBILE.iOS.CustomRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly:ExportRenderer(typeof(CustomCollectionViewRenderer),typeof(CollectionViewiOsRenderer))]
+[assembly: ExportRenderer(typeof(CustomCollectionViewRenderer), typeof(CollectionViewiOsRenderer))]
+
 namespace AUTOHLT.MOBILE.iOS.CustomRenderer
 {
     public class CollectionViewiOsRenderer : CollectionViewRenderer

@@ -6,10 +6,12 @@ namespace AUTOHLT.MOBILE.Configurations
     {
         public static string InterstitialId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/2887853102" : "ca-app-pub-9881695093256851/1957914813";
         public static string RewardedId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/9660063449" : "ca-app-pub-9881695093256851/4790880141";
+
         /// <summary>
         /// lấy token xong
         /// </summary>
         public const string GetTokenDone = "GetTokenDone";
+
         public const string HdNapTien = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         public const string HdChuyenTien = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         public const string HdTangLike = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
@@ -25,6 +27,7 @@ namespace AUTOHLT.MOBILE.Configurations
         public const string HdLocBanBe = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         public const string HdHoTro = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
         public const string HdDangKyDayLy = "https://www.youtube.com/watch?v=C-r0NwLjHVY";
+
         /// <summary>
         /// id user
         /// </summary>
@@ -69,6 +72,7 @@ namespace AUTOHLT.MOBILE.Configurations
         /// Uri đăng nhập facebook
         /// </summary>
         public const string UriLoginFacebook = "https://m.facebook.com/";
+
         public const string UriLoginFacebook2 = "https://m.facebook.com/";
 
         /// <summary>

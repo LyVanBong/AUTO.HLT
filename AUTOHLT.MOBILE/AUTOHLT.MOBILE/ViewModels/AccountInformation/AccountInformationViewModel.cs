@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Models.User;
+﻿using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
@@ -33,6 +33,7 @@ namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
         }
 
         public ICommand UpdateInfoAccountCommand { get; private set; }
+
         public bool IsEnabledButton
         {
             get => _isEnabledButton;
@@ -64,6 +65,7 @@ namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
         }
 
         public ICommand UnfocusedCommand { get; private set; }
+
         public string UserName
         {
             get => _userName;
@@ -136,7 +138,6 @@ namespace AUTOHLT.MOBILE.ViewModels.AccountInformation
 
         private void Unfocused(string key)
         {
-
             if (Name != null && PhoneNumber != null && Age != null && Email != null)
                 IsEnabledButton = true;
             else

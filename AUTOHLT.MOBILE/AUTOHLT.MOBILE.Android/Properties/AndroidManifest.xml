@@ -6,7 +6,7 @@
 	<application android:label="AUTOHLT" android:icon="@mipmap/icon">
     <!-- AdMob App ID-->
     <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-               android:value="ca-app-pub-9881695093256851~9934237096"/>
+               android:value="ca-app-pub-9881695093256851~9934237096" />
   </application>
 	<queries>
 		<intent>

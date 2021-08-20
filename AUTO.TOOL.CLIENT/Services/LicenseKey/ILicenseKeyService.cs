@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.LicenseKey;
+﻿using AUTO.TOOL.CLIENT.Models.LicenseKey;
 using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.LicenseKey
 {
@@ -14,12 +14,14 @@ namespace AUTO.TOOL.CLIENT.Services.LicenseKey
         /// <param name="amountKey"></param>
         /// <param name="numDateUseKey"></param>
         /// <returns></returns>
-        Task<ResponseModel<string>> CreateLicense(string idUser,string amountKey,string numDateUseKey);
+        Task<ResponseModel<string>> CreateLicense(string idUser, string amountKey, string numDateUseKey);
+
         /// <summary>
         /// lấy dánh sách key bản quyền do đại lý đã mua
         /// </summary>
         /// <returns></returns>
         Task<ResponseModel<List<AgecyLicenseModel>>> GetLicenseForAgecy();
+
         /// <summary>
         /// cap nhat lich su dung dich vu
         /// </summary>
@@ -27,12 +29,14 @@ namespace AUTO.TOOL.CLIENT.Services.LicenseKey
         /// <param name="content"></param>
         /// <returns></returns>
         Task<ResponseModel<string>> UpdateHistory(string key, string content);
+
         /// <summary>
         /// nâng cấp tài khoản
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         Task<bool> ActiveLiceseKey(string key);
+
         /// <summary>
         /// kiem tra xem user da nang cap tai khoan chua
         /// </summary>

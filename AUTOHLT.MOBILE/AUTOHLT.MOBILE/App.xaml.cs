@@ -60,8 +60,8 @@ namespace AUTOHLT.MOBILE
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
             containerRegistry.RegisterSingleton<IGoogleAdmobService, GoogleAdmobService>();
+
             #region App fake
 
             containerRegistry.RegisterForNavigation<FDetailProductPage, FDetailProductViewModel>();
@@ -71,12 +71,13 @@ namespace AUTOHLT.MOBILE
             containerRegistry.RegisterForNavigation<FHomePage, FHomeViewModel>();
             containerRegistry.RegisterForNavigation<FProfilePage, FProfileViewModel>();
 
-            #endregion
+            #endregion App fake
+
             #region Registering the Dialog service
 
             containerRegistry.RegisterDialog<ConnectFacebookDialog, ConnectFacebookDialogViewModel>();
 
-            #endregion
+            #endregion Registering the Dialog service
 
             #region Register Service
 
@@ -92,13 +93,13 @@ namespace AUTOHLT.MOBILE
             containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IRequestProvider, RequestProvider>();
 
-            #endregion
+            #endregion Register Service
 
             #region Register Singleton
 
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
-            #endregion
+            #endregion Register Singleton
 
             #region Register For Navigation
 
@@ -113,7 +114,7 @@ namespace AUTOHLT.MOBILE
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
-            #endregion
+            #endregion Register For Navigation
         }
 
         protected override void OnStart()

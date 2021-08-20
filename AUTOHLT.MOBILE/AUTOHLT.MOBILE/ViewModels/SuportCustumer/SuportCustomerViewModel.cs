@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Models.Telegram;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
@@ -9,9 +7,10 @@ using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Color = System.Drawing.Color;
 
 namespace AUTOHLT.MOBILE.ViewModels.SuportCustumer
 {
@@ -25,6 +24,7 @@ namespace AUTOHLT.MOBILE.ViewModels.SuportCustumer
         private IPageDialogService _pageDialogService;
 
         public ICommand SuportCustomerCommand { get; private set; }
+
         public bool IsEnabledButton
         {
             get => _isEnabledButton;
@@ -32,6 +32,7 @@ namespace AUTOHLT.MOBILE.ViewModels.SuportCustumer
         }
 
         public ICommand UnfocusedCommand { get; private set; }
+
         public string Content
         {
             get => _content;
@@ -39,13 +40,14 @@ namespace AUTOHLT.MOBILE.ViewModels.SuportCustumer
         }
 
         public ICommand CallAdminCommand { get; private set; }
+
         public bool IsLoading
         {
             get => _isLoading;
             set => SetProperty(ref _isLoading, value);
         }
 
-        public SuportCustomerViewModel(INavigationService navigationService, IDatabaseService databaseService, ITelegramService telegramService,IPageDialogService pageDialogService) : base(navigationService)
+        public SuportCustomerViewModel(INavigationService navigationService, IDatabaseService databaseService, ITelegramService telegramService, IPageDialogService pageDialogService) : base(navigationService)
         {
             _pageDialogService = pageDialogService;
             _databaseService = databaseService;
@@ -71,7 +73,7 @@ namespace AUTOHLT.MOBILE.ViewModels.SuportCustumer
                             Id_Nguoi_Dung = user?.ID,
                             Noi_Dung_Thong_Bao = new
                             {
-                                Noi_Dung=Content,
+                                Noi_Dung = Content,
                             },
                             Ghi_Chu = new
                             {

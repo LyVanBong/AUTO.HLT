@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Services.Facebook;
@@ -11,6 +6,11 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 

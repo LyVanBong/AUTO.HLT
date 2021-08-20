@@ -1,8 +1,3 @@
-using System;
-using System.Net.Http;
-using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using System.Threading.Tasks;
 using AUTO.TOOL.CLIENT.Services.Database;
 using AUTO.TOOL.CLIENT.Services.Facebook;
 using AUTO.TOOL.CLIENT.Services.LicenseKey;
@@ -11,8 +6,13 @@ using AUTO.TOOL.CLIENT.Services.RequestProvider;
 using AUTO.TOOL.CLIENT.Services.RestSharp;
 using AUTO.TOOL.CLIENT.Services.Telegram;
 using AUTO.TOOL.CLIENT.Services.User;
+using Blazored.LocalStorage;
 using Blazored.Toast;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT
 {

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
 
 namespace AUTO.TOOL.CLIENT.Services.RestSharp
 {

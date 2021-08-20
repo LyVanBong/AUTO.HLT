@@ -12,6 +12,7 @@ namespace AUTOHLT.MOBILE.Views.HappyBirthday
         {
             InitializeComponent();
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

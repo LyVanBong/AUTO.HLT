@@ -28,6 +28,7 @@ namespace AUTO.ALL.IN.APP.Views
             Thread.Sleep(TimeSpan.FromMinutes(1));
             Debug.WriteLine($"[{DateTime.Now}]: Dừng chương trình");
         }
+
         /// <summary>
         /// notification
         /// </summary>

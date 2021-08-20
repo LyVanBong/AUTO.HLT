@@ -24,6 +24,7 @@ namespace AUTO.ALL.IN.APP.Models
         private DataFacebookModel _dataFacebook = new DataFacebookModel();
         private int _status;
         public BackgroundWorker Worker { get; set; }
+
         public DataFacebookModel DataFacebook
         {
             get => _dataFacebook;
@@ -86,6 +87,7 @@ namespace AUTO.ALL.IN.APP.Models
         public string NameFacebook => DataFacebook.name;
 
         public string IdFacebook => DataFacebook.id;
+
         public string NumberPhoneFacebook
         {
             get => _numberPhoneFacebook;
@@ -143,6 +145,7 @@ namespace AUTO.ALL.IN.APP.Models
             get => _oPtionFriendsSuggestions;
             set => SetProperty(ref _oPtionFriendsSuggestions, value);
         }
+
         /// <summary>
         /// 0 là lài khoản mới được thêm hoặc mới được cập nhật lại
         /// 1 đang chạy
@@ -154,6 +157,7 @@ namespace AUTO.ALL.IN.APP.Models
             get => _status;
             set => SetProperty(ref _status, value);
         }
+
         public int TotalFriends => DataFacebook.friends.data.Length;
     }
 }

@@ -4,11 +4,12 @@ using Prism.Navigation;
 
 namespace AUTOHLT.MOBILE.ViewModels
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible,IApplicationLifecycleAware
+    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible, IApplicationLifecycleAware
     {
         protected INavigationService NavigationService { get; private set; }
 
         private string _title;
+
         public string Title
         {
             get { return _title; }
@@ -22,27 +23,22 @@ namespace AUTOHLT.MOBILE.ViewModels
 
         public virtual void Initialize(INavigationParameters parameters)
         {
-
         }
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
-
         }
 
         public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
-
         }
 
         public virtual void Destroy()
         {
-
         }
 
         public virtual void OnResume()
         {
-            
         }
 
         public virtual void OnSleep()

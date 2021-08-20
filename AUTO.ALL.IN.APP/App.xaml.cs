@@ -1,6 +1,5 @@
 ﻿using AUTO.ALL.IN.APP.Views;
 using Prism.Ioc;
-using Prism.Modularity;
 using System.Windows;
 
 namespace AUTO.ALL.IN.APP
@@ -18,7 +17,6 @@ namespace AUTO.ALL.IN.APP
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
         }
     }
 }

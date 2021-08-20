@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.Telegram;
+﻿using AUTO.TOOL.CLIENT.Models.Telegram;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.Telegram
 {

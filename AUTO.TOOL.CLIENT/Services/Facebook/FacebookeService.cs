@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Configurations;
+﻿using AUTO.TOOL.CLIENT.Configurations;
 using AUTO.TOOL.CLIENT.Models.Facebook;
 using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
 using AUTO.TOOL.CLIENT.Services.RequestProvider;
 using AUTO.TOOL.CLIENT.Services.RestSharp;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.Facebook
 {
@@ -295,6 +295,7 @@ namespace AUTO.TOOL.CLIENT.Services.Facebook
             }
             return default;
         }
+
         public async Task<string> GetFriendsDoNotInteract(string fbDtsg, string q)
         {
             try

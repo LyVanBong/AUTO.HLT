@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Crashes;
+using System;
 using System.Collections.Generic;
-using Microsoft.AppCenter.Crashes;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
@@ -13,6 +13,7 @@ namespace AUTOHLT.MOBILE.Views.Home
     public partial class HomePage : ContentPage
     {
         private bool _starTimer;
+
         public HomePage()
         {
             InitializeComponent();

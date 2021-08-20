@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -30,7 +29,7 @@ namespace AUTOHLT.MOBILE.Helpers
         {
             try
             {
-                var myApp =Application.Current as App;
+                var myApp = Application.Current as App;
                 if (myApp != null)
                 {
                     var facebook = myApp.Container.Resolve<IFacebookService>();

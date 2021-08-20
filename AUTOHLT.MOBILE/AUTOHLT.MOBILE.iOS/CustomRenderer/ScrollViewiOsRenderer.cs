@@ -9,7 +9,6 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
             base.OnElementChanged(e);
             if (e.NewElement != null)
             {
-               
             }
         }
     }

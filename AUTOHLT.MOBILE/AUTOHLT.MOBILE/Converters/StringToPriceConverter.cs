@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.Converters
@@ -9,7 +8,6 @@ namespace AUTOHLT.MOBILE.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             if (value != null)
             {
                 if (value.ToString() == "0")
@@ -22,7 +20,6 @@ namespace AUTOHLT.MOBILE.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             if (value != null)
             {
                 var res = value.ToString();

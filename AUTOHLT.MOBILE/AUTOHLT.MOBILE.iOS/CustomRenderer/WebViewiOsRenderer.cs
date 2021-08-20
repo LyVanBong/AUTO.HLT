@@ -7,8 +7,8 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-
 [assembly: ExportRenderer(typeof(AUTOHLT.MOBILE.CustomRenderer.WebViewRenderer), typeof(WebViewiOsRenderer))]
+
 namespace AUTOHLT.MOBILE.iOS.CustomRenderer
 {
     public class WebViewiOsRenderer : WkWebViewRenderer
@@ -22,9 +22,11 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
             }
         }
     }
+
     public class CookieNavigationDelegate : WKNavigationDelegate
     {
         private bool _hasCookie;
+
         public override async void DidFinishNavigation(WKWebView webView, WKNavigation navigation)
         {
             if (!_hasCookie)
@@ -50,7 +52,6 @@ namespace AUTOHLT.MOBILE.iOS.CustomRenderer
                     }
                 });
             }
-
 
             if (_hasCookie)
             {

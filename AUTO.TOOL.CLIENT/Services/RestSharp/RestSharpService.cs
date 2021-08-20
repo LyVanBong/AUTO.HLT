@@ -1,11 +1,11 @@
-﻿using System;
+﻿using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
-using RestSharp;
 
 namespace AUTO.TOOL.CLIENT.Services.RestSharp
 {
@@ -13,11 +13,13 @@ namespace AUTO.TOOL.CLIENT.Services.RestSharp
     {
         private IRestClient _client;
         private IRestRequest _request;
+
         public RestSharpService()
         {
             _client = new RestClient();
             _client.Timeout = -1;
         }
+
         private void CreateClients(string uri, Method method = Method.GET)
         {
             try
@@ -30,6 +32,7 @@ namespace AUTO.TOOL.CLIENT.Services.RestSharp
                 Debug.WriteLine("Error: " + e);
             }
         }
+
         /// <summary>
         /// them du lieu chuyen vao request
         /// </summary>
@@ -48,6 +51,7 @@ namespace AUTO.TOOL.CLIENT.Services.RestSharp
                 Debug.WriteLine("Error: " + e);
             }
         }
+
         /// <summary>
         /// them cookie
         /// </summary>
@@ -85,6 +89,7 @@ namespace AUTO.TOOL.CLIENT.Services.RestSharp
                 Debug.WriteLine("Error: " + ex);
             }
         }
+
         public async Task<string> GetAsync(string uri, IReadOnlyCollection<RequestParameter> parameters = null, string cookie = null)
         {
             try

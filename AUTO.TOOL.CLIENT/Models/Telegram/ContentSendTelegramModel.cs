@@ -11,6 +11,5 @@ namespace AUTO.TOOL.CLIENT.Models.Telegram
         public object Ghi_Chu { get; set; }
         public DateTime Thoi_Gian_Thong_Bao => DateTime.UtcNow;
         public string App => "AUTOVIP-WEB";
-
     }
 }

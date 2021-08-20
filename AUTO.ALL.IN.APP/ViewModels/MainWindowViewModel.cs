@@ -37,11 +37,13 @@ namespace AUTO.ALL.IN.APP.ViewModels
             get => _isRunningTool;
             set => SetProperty(ref _isRunningTool, value);
         }
+
         public string Notification
         {
             get => _notification;
             set => SetProperty(ref _notification, value);
         }
+
         public AccountStatisticsModel AccountStatistics
         {
             get => _accountStatistics;
@@ -104,6 +106,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 await ShowMessageError(e, nameof(UpdateDatabase));
             }
         }
+
         #region Logger
 
         public ObservableCollection<LoggerModel> DataLogger
@@ -112,7 +115,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
             set => SetProperty(ref _dataLogger, value);
         }
 
-        #endregion
+        #endregion Logger
+
         #region Service
 
         private async Task StartService()
@@ -201,15 +205,14 @@ namespace AUTO.ALL.IN.APP.ViewModels
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
         }
 
         private long _stt = 1;
+
         private async Task AddLogger(LoggerModel logger)
         {
             //try
@@ -326,6 +329,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 ShowMessageError(ex, nameof(Worker_DoWork)).Await();
             }
         }
+
         /// <summary>
         /// tương tác với ảnh đại diện của bạn bè
         /// </summary>
@@ -368,7 +372,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
             }
 
             Thread.Sleep(TimeSpan.FromMinutes(random.Next(delay - 2, delay + 2)));
-
         }
 
         private void SeenStoryFacebook(UserFacebookModel user, Datum friend, Random random, BackgroundWorker worker, DoWorkEventArgs ev)
@@ -447,7 +450,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 if (string.IsNullOrEmpty(messager)) return;
                 var mess = messager.Split('\n');
 
-
                 var send = FacebookService.SendMessage(string.Format(mess[random.Next(0, mess.Length - 1)], friend.name), friend.id,
                     user.Cookie).Result;
 
@@ -510,7 +512,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
             }
         }
 
-        #endregion
+        #endregion Service
+
         #region Home
 
         public ObservableCollection<UserFacebookModel> DataTool
@@ -524,6 +527,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
         public ICommand PauseUserCommand { get; private set; }
         public ICommand DeleteUserCommand { get; private set; }
         public ICommand ContinueUserCommand { get; private set; }
+
         private void HomeTool()
         {
             UpdateUserCommand = new DelegateCommand<UserFacebookModel>(async (user) => await UpdateUser(user));
@@ -630,7 +634,8 @@ namespace AUTO.ALL.IN.APP.ViewModels
             }
         }
 
-        #endregion
+        #endregion Home
+
         #region Thêm tài khoản
 
         /// <summary>
@@ -641,10 +646,12 @@ namespace AUTO.ALL.IN.APP.ViewModels
             get => _dataJson;
             set => SetProperty(ref _dataJson, value);
         }
+
         /// <summary>
         /// Lấy thông tin từ json nhập vào
         /// </summary>
         public ICommand GetInfoFacebookCommand { get; private set; }
+
         /// <summary>
         /// User facebook
         /// </summary>
@@ -868,7 +875,6 @@ namespace AUTO.ALL.IN.APP.ViewModels
                 }
                 else
                 {
-
                     var data = JsonConvert.DeserializeObject<JsonInfoModel>(DataJson);
                     if (data != null)
                     {
@@ -891,7 +897,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
             }
         }
 
-        #endregion
+        #endregion Thêm tài khoản
 
         /// <summary>
         /// Hiển thị thông báo
@@ -902,6 +908,7 @@ namespace AUTO.ALL.IN.APP.ViewModels
             MessageBox.Show(message, "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             return Task.FromResult(0);
         }
+
         /// <summary>
         /// hien thi khi co exception
         /// </summary>

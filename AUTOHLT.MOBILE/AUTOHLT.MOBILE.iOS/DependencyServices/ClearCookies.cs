@@ -6,6 +6,7 @@ using System;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(ClearCookies))]
+
 namespace AUTOHLT.MOBILE.iOS.DependencyServices
 {
     public class ClearCookies : IClearCookies

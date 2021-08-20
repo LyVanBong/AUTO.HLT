@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+﻿using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
 using AUTO.TOOL.CLIENT.Models.User;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.User
 {
@@ -14,17 +14,20 @@ namespace AUTO.TOOL.CLIENT.Services.User
         /// <param name="price"></param>
         /// <returns></returns>
         Task<int> SetPriceUser(string userName, string price);
+
         /// <summary>
         /// lấy số tiền hiên tại của user
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         Task<int> GetPriceUser(string userName);
+
         /// <summary>
         /// Lấy danh sách tất cả user
         /// </summary>
         /// <returns></returns>
         Task<ResponseModel<List<UserModel>>> GetAllUser();
+
         /// <summary>
         /// Cập nhật lại user
         /// </summary>

@@ -1,16 +1,17 @@
-﻿using System;
+﻿using AUTO.TOOL.CLIENT.Models.Login;
+using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using AUTO.TOOL.CLIENT.Services.RequestProvider;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.Login;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
-using AUTO.TOOL.CLIENT.Services.RequestProvider;
 
 namespace AUTO.TOOL.CLIENT.Services.Login
 {
     public class LoginService : ILoginService
     {
         private IRequestProvider _requestProvider;
+
         public LoginService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;
@@ -126,7 +127,6 @@ namespace AUTO.TOOL.CLIENT.Services.Login
             }
             catch (Exception e)
             {
-
                 Debug.WriteLine("Error: " + e);
                 return null;
             }

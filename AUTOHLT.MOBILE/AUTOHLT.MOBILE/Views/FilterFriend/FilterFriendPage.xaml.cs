@@ -12,6 +12,7 @@ namespace AUTOHLT.MOBILE.Views.FilterFriend
         {
             InitializeComponent();
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

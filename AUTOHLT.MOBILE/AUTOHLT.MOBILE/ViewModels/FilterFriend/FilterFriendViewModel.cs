@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTO.DLL.MOBILE.Models.Facebook;
+﻿using AUTO.DLL.MOBILE.Models.Facebook;
 using AUTO.DLL.MOBILE.Services.Facebook;
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
@@ -13,6 +7,12 @@ using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -48,6 +48,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
         public ICommand FilterFriendsCommand { get; private set; }
 
         public ICommand FillterCommand { get; private set; }
+
         public List<FillterFriendModel> FillterFriendModels
         {
             get => _fillterFriendModels;
@@ -100,6 +101,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             ConnectFacebookCommand = new Command(ConnectFacebook);
             FillterCommand = new Command<FillterFriendModel>(Fillter);
         }
+
         private async void FilterFriends()
         {
             try
@@ -254,6 +256,7 @@ namespace AUTOHLT.MOBILE.ViewModels.FilterFriend
             }
             finally { IsLoading = false; }
         }
+
         private async Task CheckFriendsReaction(string cookie, string token, string limit)
         {
             try

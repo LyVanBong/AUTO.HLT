@@ -37,6 +37,7 @@ namespace AUTO.ALL.IN.APP.Services
             }
             return default;
         }
+
         public static async Task<bool> Post<T>(string path, T data)
         {
             try
@@ -51,6 +52,7 @@ namespace AUTO.ALL.IN.APP.Services
 
             return false;
         }
+
         public static async Task<T> Get<T>(string path)
         {
             try

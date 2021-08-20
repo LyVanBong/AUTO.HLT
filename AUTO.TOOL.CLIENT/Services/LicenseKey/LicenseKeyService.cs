@@ -1,16 +1,17 @@
-﻿using System;
+﻿using AUTO.TOOL.CLIENT.Models.LicenseKey;
+using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using AUTO.TOOL.CLIENT.Services.RequestProvider;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.LicenseKey;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
-using AUTO.TOOL.CLIENT.Services.RequestProvider;
 
 namespace AUTO.TOOL.CLIENT.Services.LicenseKey
 {
     public class LicenseKeyService : ILicenseKeyService
     {
         private IRequestProvider _requestProvider;
+
         public LicenseKeyService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;

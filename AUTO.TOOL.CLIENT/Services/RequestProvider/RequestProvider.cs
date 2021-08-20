@@ -1,13 +1,13 @@
-﻿using System;
+﻿using AUTO.TOOL.CLIENT.Configurations;
+using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Configurations;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
-using Newtonsoft.Json;
-using RestSharp;
 
 namespace AUTO.TOOL.CLIENT.Services.RequestProvider
 {

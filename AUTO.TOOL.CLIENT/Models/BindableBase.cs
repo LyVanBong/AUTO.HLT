@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AUTO.TOOL.CLIENT.Annotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using AUTO.TOOL.CLIENT.Annotations;
 
 namespace AUTO.TOOL.CLIENT.Models
 {
@@ -15,6 +15,7 @@ namespace AUTO.TOOL.CLIENT.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(storage, value)) return false;

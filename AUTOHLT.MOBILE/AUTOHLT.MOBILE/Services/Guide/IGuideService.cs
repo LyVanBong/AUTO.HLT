@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.Guide;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
+﻿using AUTOHLT.MOBILE.Models.Guide;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.Guide
 {

@@ -1,17 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Prism.Navigation;
-using Xamarin.CommunityToolkit.ObjectModel;
-using AUTO.DLL.MOBILE.Models.Facebook;
+﻿using AUTO.DLL.MOBILE.Models.Facebook;
 using AUTO.DLL.MOBILE.Services.Facebook;
 using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
 using AUTOHLT.MOBILE.Resources.Languages;
 using Microsoft.AppCenter.Crashes;
+using Prism.Navigation;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
 namespace AUTOHLT.MOBILE.ViewModels.Pokes

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using AUTOHLT.MOBILE.Configurations;
+using AUTOHLT.MOBILE.Models.RequestProviderModel;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Configurations;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
-using Newtonsoft.Json;
-using RestSharp;
 
 namespace AUTOHLT.MOBILE.Services.RequestProvider
 {

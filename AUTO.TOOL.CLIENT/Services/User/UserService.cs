@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+﻿using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
 using AUTO.TOOL.CLIENT.Models.User;
 using AUTO.TOOL.CLIENT.Services.RequestProvider;
 using AUTO.TOOL.CLIENT.Services.RestSharp;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.User
 {
@@ -14,6 +14,7 @@ namespace AUTO.TOOL.CLIENT.Services.User
     {
         private IRequestProvider _requestProvider;
         private IRestSharpService _restSharpService;
+
         public UserService(IRequestProvider requestProvider, IRestSharpService restSharpService)
         {
             _restSharpService = restSharpService;

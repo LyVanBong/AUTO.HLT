@@ -80,6 +80,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         public ICommand SignUpCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
+
         public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
         {
             _databaseService = databaseService;

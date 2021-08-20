@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
+﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Models.VersionApp;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.VersionAppService
 {
     public class VersionAppService : IVersionAppService
     {
         private IRequestProvider _requestProvider;
+
         public VersionAppService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;
         }
+
         public async Task<ResponseModel<VersionModel>> CheckVersionApp()
         {
             try

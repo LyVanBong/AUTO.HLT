@@ -20,7 +20,7 @@ namespace AUTOHLT.MOBILE.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }
-        
+
         private void OtherLibraries()
         {
             MobileAds.Initialize(ApplicationContext);
@@ -42,4 +42,3 @@ namespace AUTOHLT.MOBILE.Droid
         }
     }
 }
-

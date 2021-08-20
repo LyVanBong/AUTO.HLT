@@ -1,10 +1,9 @@
-﻿using System;
+﻿using AUTOHLT.MOBILE.Models.Guide;
+using AUTOHLT.MOBILE.Services.RequestProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.Guide;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
-using AUTOHLT.MOBILE.Services.RequestProvider;
 
 namespace AUTOHLT.MOBILE.Services.Guide
 {
@@ -12,6 +11,7 @@ namespace AUTOHLT.MOBILE.Services.Guide
     {
         private IRequestProvider _requestProvider;
         private static List<GuideModel> _lsGuideModels;
+
         public GuideService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;
@@ -21,10 +21,10 @@ namespace AUTOHLT.MOBILE.Services.Guide
         {
             try
             {
-                if (_lsGuideModels==null)
+                if (_lsGuideModels == null)
                 {
-                    var data =await _requestProvider.GetAsync<List<GuideModel>>("HDSD/Get");
-                    if (data?.Code>0&&data?.Data!=null && data.Data.Any())
+                    var data = await _requestProvider.GetAsync<List<GuideModel>>("HDSD/Get");
+                    if (data?.Code > 0 && data?.Data != null && data.Data.Any())
                     {
                         _lsGuideModels = new List<GuideModel>(data.Data);
                     }
@@ -38,7 +38,7 @@ namespace AUTOHLT.MOBILE.Services.Guide
                     return _lsGuideModels.FirstOrDefault(x => x.ID == id);
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return null;
             }

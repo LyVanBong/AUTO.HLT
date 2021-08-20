@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
-using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Configurations;
+﻿using AUTO.TOOL.CLIENT.Configurations;
 using AUTO.TOOL.CLIENT.Models.Telegram;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
+using System.Diagnostics;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.Telegram
 {

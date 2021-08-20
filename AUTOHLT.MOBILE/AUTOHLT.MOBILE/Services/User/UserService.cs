@@ -9,6 +9,7 @@ namespace AUTOHLT.MOBILE.Services.User
     public class UserService : IUserService
     {
         private IRequestProvider _requestProvider;
+
         public UserService(IRequestProvider requestProvider)
         {
             _requestProvider = requestProvider;

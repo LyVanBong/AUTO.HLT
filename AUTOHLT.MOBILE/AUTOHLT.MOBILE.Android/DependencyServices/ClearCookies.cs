@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Android.Webkit;
+﻿using Android.Webkit;
 using AUTOHLT.MOBILE.DependencyServices;
 using AUTOHLT.MOBILE.Droid.DependencyServices;
 using Microsoft.AppCenter.Crashes;
+using System;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(ClearCookies))]
+
 namespace AUTOHLT.MOBILE.Droid.DependencyServices
 {
     public class ClearCookies : IClearCookies

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AUTO.ALL.IN.APP.Models
+﻿namespace AUTO.ALL.IN.APP.Models
 {
     public class JsonInfoModel
     {
@@ -36,5 +34,4 @@ namespace AUTO.ALL.IN.APP.Models
         public string Ngay_Het_Han { get; set; }
         public int So_Ngay_Con_Lai { get; set; }
     }
-
 }

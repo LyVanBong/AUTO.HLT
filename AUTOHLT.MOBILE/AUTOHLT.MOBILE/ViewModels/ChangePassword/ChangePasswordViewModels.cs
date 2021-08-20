@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Helpers;
+﻿using AUTOHLT.MOBILE.Helpers;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
@@ -8,6 +6,8 @@ using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -45,6 +45,7 @@ namespace AUTOHLT.MOBILE.ViewModels.ChangePassword
 
         public ICommand UnfocusedCommand { get; private set; }
         public ICommand ChangePassworkCommand { get; private set; }
+
         public bool IsEnabledButton
         {
             get => _isEnabledButton;
@@ -96,6 +97,7 @@ namespace AUTOHLT.MOBILE.ViewModels.ChangePassword
                             }
 
                             break;
+
                         case "1":
                             if (!string.IsNullOrWhiteSpace(NewPassword) && !string.IsNullOrWhiteSpace(ReNewPassword))
                             {
@@ -103,6 +105,7 @@ namespace AUTOHLT.MOBILE.ViewModels.ChangePassword
                                     ReNewPassword = "";
                             }
                             break;
+
                         case "2":
                             if (!string.IsNullOrWhiteSpace(NewPassword) && !string.IsNullOrWhiteSpace(ReNewPassword))
                             {
@@ -110,6 +113,7 @@ namespace AUTOHLT.MOBILE.ViewModels.ChangePassword
                                     ReNewPassword = "";
                             }
                             break;
+
                         default:
                             break;
                     }
@@ -175,7 +179,6 @@ namespace AUTOHLT.MOBILE.ViewModels.ChangePassword
                         await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000036, "OK");
                     }
                 }
-
             }
             catch (Exception e)
             {

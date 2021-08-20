@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using AUTOHLT.MOBILE.Models.RequestProviderModel;
+﻿using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Models.VersionApp;
+using System.Threading.Tasks;
 
 namespace AUTOHLT.MOBILE.Services.VersionAppService
 {

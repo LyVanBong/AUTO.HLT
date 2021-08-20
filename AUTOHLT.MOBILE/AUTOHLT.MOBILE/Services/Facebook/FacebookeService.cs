@@ -3,12 +3,12 @@ using AUTOHLT.MOBILE.Models.Facebook;
 using AUTOHLT.MOBILE.Models.RequestProviderModel;
 using AUTOHLT.MOBILE.Services.RequestProvider;
 using AUTOHLT.MOBILE.Services.RestSharp;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AppCenter.Crashes;
 using Xamarin.Essentials;
 
 namespace AUTOHLT.MOBILE.Services.Facebook
@@ -23,6 +23,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             _requestProvider = requestProvider;
             _restSharpService = restSharpService;
         }
+
         public async Task<bool> CheckCookieAndToken()
         {
             try
@@ -63,6 +64,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
                 return false;
             }
         }
+
         public async Task<NamePictureUserModel> GetInfoUser(string fields = "name,picture")
         {
             try
@@ -90,6 +92,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
             }
             return null;
         }
+
         public async Task<string> SendMessageFacebook(string body, string ids)
         {
             try
@@ -113,6 +116,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
 
             return null;
         }
+
         public async Task<string> PostNewsOnFacebookFriend(string target, string message)
         {
             try
@@ -136,6 +140,7 @@ namespace AUTOHLT.MOBILE.Services.Facebook
 
             return null;
         }
+
         public async Task<(string Jazoest, string Fbdtsg)> GeJazoestAndFbdtsg(string cookie)
         {
             try

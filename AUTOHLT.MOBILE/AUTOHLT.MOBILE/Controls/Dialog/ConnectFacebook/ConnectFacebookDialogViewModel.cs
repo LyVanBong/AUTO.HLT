@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AUTOHLT.MOBILE.Configurations;
+﻿using AUTOHLT.MOBILE.Configurations;
 using AUTOHLT.MOBILE.Services.Database;
 using AUTOHLT.MOBILE.Services.Facebook;
 using Prism.Mvvm;
 using Prism.Services;
 using Prism.Services.Dialogs;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -17,7 +17,9 @@ namespace AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook
     {
         private bool _isVisibleConnect;
         private string _urlFacebook;
+
         public event Action<IDialogParameters> RequestClose;
+
         private IPageDialogService _pageDialogService;
         private bool _isLoading;
         private IFacebookService _facebookService;

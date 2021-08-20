@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AUTO.TOOL.CLIENT.Models.Facebook;
+﻿using AUTO.TOOL.CLIENT.Models.Facebook;
 using AUTO.TOOL.CLIENT.Models.RequestProviderModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AUTO.TOOL.CLIENT.Services.Facebook
 {
@@ -14,6 +14,7 @@ namespace AUTO.TOOL.CLIENT.Services.Facebook
         /// <param name="message"></param>
         /// <returns></returns>
         Task<string> PostNewsOnFacebookFriend(string target, string message);
+
         /// <summary>
         /// api gui tin nhan facebook
         /// </summary>
@@ -21,12 +22,14 @@ namespace AUTO.TOOL.CLIENT.Services.Facebook
         /// <param name="ids"></param>
         /// <returns></returns>
         Task<string> SendMessageFacebook(string body, string ids);
+
         /// <summary>
         /// lấy jazoest và fbdtsg
         /// </summary>
         /// <param name="cookie"></param>
         /// <returns></returns>
         Task<(string Jazoest, string Fbdtsg)> GeJazoestAndFbdtsg(string cookie);
+
         /// <summary>
         /// service gửi lời mời like page
         /// </summary>

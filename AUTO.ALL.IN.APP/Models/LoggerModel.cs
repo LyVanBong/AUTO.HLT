@@ -1,5 +1,5 @@
-﻿using System;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
+using System;
 
 namespace AUTO.ALL.IN.APP.Models
 {
@@ -29,6 +29,7 @@ namespace AUTO.ALL.IN.APP.Models
             get => _uidFriend;
             set => SetProperty(ref _uidFriend, value);
         }
+
         /// <summary>
         /// 0. post
         /// 1. avatar
@@ -57,6 +58,7 @@ namespace AUTO.ALL.IN.APP.Models
         }
 
         public DateTime DateTime => DateTime.Now;
+
         public LoggerModel(string uid, string uidFriend, int typeLogger, string loggerContent, string note)
         {
             _uid = uid;

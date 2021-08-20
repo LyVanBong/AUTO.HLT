@@ -10,6 +10,7 @@ using Xamarin.Forms.Platform.Android;
 using WebView = Android.Webkit.WebView;
 
 [assembly: ExportRenderer(typeof(AUTOHLT.MOBILE.CustomRenderer.WebViewRenderer), typeof(WebViewAndroidRenderer))]
+
 namespace AUTOHLT.MOBILE.Droid.CustomRenderer
 {
     public class WebViewAndroidRenderer : WebViewRenderer
@@ -31,6 +32,7 @@ namespace AUTOHLT.MOBILE.Droid.CustomRenderer
     public class CookieWebview : WebViewClient
     {
         private bool _hasCookie;
+
         public override void OnPageFinished(WebView view, string url)
         {
             base.OnPageFinished(view, url);
@@ -65,6 +67,7 @@ namespace AUTOHLT.MOBILE.Droid.CustomRenderer
             }
         }
     }
+
     internal class JavascriptCallback : Java.Lang.Object, IValueCallback
     {
         public JavascriptCallback(Action<string> callback)
@@ -73,6 +76,7 @@ namespace AUTOHLT.MOBILE.Droid.CustomRenderer
         }
 
         private Action<string> _callback;
+
         public void OnReceiveValue(Java.Lang.Object value)
         {
             _callback?.Invoke(Convert.ToString(value));

@@ -22,7 +22,7 @@ namespace AUTOHLT.MOBILE.Services.GoogleAdmob
             CrossMTAdmob.Current.OnInterstitialLoaded += InterstitialLoaded;
             CrossMTAdmob.Current.OnInterstitialOpened += InterstitialOpened;
 
-            #endregion
+            #endregion Interstitial
 
             #region Rewarded video
 
@@ -35,7 +35,7 @@ namespace AUTOHLT.MOBILE.Services.GoogleAdmob
             CrossMTAdmob.Current.OnRewardedVideoStarted += RewardedVideoStarted;
             CrossMTAdmob.Current.OnRewardedVideoAdCompleted += RewardedVideoAdCompleted;
 
-            #endregion
+            #endregion Rewarded video
         }
 
         private void RewardedVideoAdCompleted(object sender, EventArgs e)

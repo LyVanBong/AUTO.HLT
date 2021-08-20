@@ -12,6 +12,7 @@ namespace AUTOHLT.MOBILE.FakeModules.Views
         {
             InitializeComponent();
         }
+
         private void Button_OnClicked(object sender, EventArgs e)
         {
             var vm = BindingContext as FMainViewModel;

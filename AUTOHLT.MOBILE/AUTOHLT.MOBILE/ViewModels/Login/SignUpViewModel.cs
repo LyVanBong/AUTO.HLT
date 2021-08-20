@@ -1,16 +1,16 @@
-﻿using AUTOHLT.MOBILE.Resources.Languages;
+﻿using AUTOHLT.MOBILE.Models.Telegram;
+using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Login;
+using AUTOHLT.MOBILE.Services.Telegram;
 using AUTOHLT.MOBILE.Services.User;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Models.Telegram;
-using AUTOHLT.MOBILE.Services.Telegram;
-using Newtonsoft.Json;
-using Prism.Services.Dialogs;
 using Xamarin.Forms;
 
 namespace AUTOHLT.MOBILE.ViewModels.Login
@@ -62,6 +62,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
         }
 
         public ICommand UnfocusedCommand { get; private set; }
+
         public bool IsEnableSignUp
         {
             get => _isEnableSignUp;
@@ -118,6 +119,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         public ICommand SignUpCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
+
         public bool IsLoading
         {
             get => _isLoading;
@@ -168,6 +170,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             }
                         }
                         break;
+
                     case 1:
                         if (!string.IsNullOrWhiteSpace(Password))
                         {
@@ -179,9 +182,9 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             {
                                 HasErrorPass = false;
                             }
-
                         }
                         break;
+
                     case 2:
                         if (!string.IsNullOrWhiteSpace(ConfirmPassword) && Password.Equals(ConfirmPassword))
                         {
@@ -192,6 +195,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             HasErrorConfirmPass = true;
                         }
                         break;
+
                     case 3:
                         if (PhoneNumber != null)
                         {
@@ -213,7 +217,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                                         var checkPhone = await _userService.CheckExistNumberPhone(PhoneNumber);
                                         if (checkPhone != null && checkPhone.Code > 0)
                                         {
-
                                         }
                                         else
                                         {
@@ -236,6 +239,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                             }
                         }
                         break;
+
                     case 4:
                         if (!string.IsNullOrWhiteSpace(NguoiGioiThieu))
                         {
@@ -246,7 +250,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                                 if (data != null && data.Code > 0)
                                 {
                                     NguoiGioiThieu = "";
-
                                 }
                             }
                             else
@@ -277,6 +280,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                 IsEnableSignUp = false;
             }
         }
+
         private void LoginAccount()
         {
             if (IsLoading) return;
@@ -322,7 +326,6 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
                     await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
                     Password = ConfirmPassword = null;
                 }
-
             }
             catch (Exception e)
             {

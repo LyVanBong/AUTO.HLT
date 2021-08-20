@@ -1,8 +1,11 @@
-﻿using AUTOHLT.MOBILE.Models.Home;
+﻿using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
+using AUTOHLT.MOBILE.Models.Home;
 using AUTOHLT.MOBILE.Models.User;
 using AUTOHLT.MOBILE.Resources.Languages;
 using AUTOHLT.MOBILE.Services.Database;
+using AUTOHLT.MOBILE.Services.GoogleAdmob;
 using AUTOHLT.MOBILE.Services.User;
+using AUTOHLT.MOBILE.Services.VersionAppService;
 using AUTOHLT.MOBILE.Views.AccountInformation;
 using AUTOHLT.MOBILE.Views.ChangePassword;
 using AUTOHLT.MOBILE.Views.FilterFriend;
@@ -20,10 +23,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Input;
-using AUTOHLT.MOBILE.Controls.Dialog.ConnectFacebook;
-using AUTOHLT.MOBILE.Services.GoogleAdmob;
-using AUTOHLT.MOBILE.Services.VersionAppService;
-using MarcTron.Plugin;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -39,6 +38,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         private ObservableCollection<ServiceModel> _serviceData;
         private bool _isUpdate;
         private IVersionAppService _versionAppService;
+
         private List<ServiceModel> _dataHome = new List<ServiceModel>
                 {
                     new ServiceModel
@@ -104,6 +104,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         };
 
         private IGoogleAdmobService _googleAdmobService;
+
         public ObservableCollection<ServiceModel> ServiceData
         {
             get => _serviceData;
@@ -125,6 +126,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
         }
 
         public ICommand LogoutCommand { get; private set; }
+
         public HomeViewModel(INavigationService navigationService, IDatabaseService databaseService, IUserService userService, IPageDialogService pageDialogService, IDialogService dialogService, IVersionAppService versionAppService, IGoogleAdmobService googleAdmobService) : base(navigationService)
         {
             _googleAdmobService = googleAdmobService;
@@ -135,11 +137,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
             LogoutCommand = new Command(LogoutAccount);
             NavigationCommand = new Command<Object>(NavigationPageService);
         }
+
         public override void OnResume()
         {
             base.OnResume();
             new Thread(CheckVerionApplication).Start();
         }
+
         private async void CheckVerionApplication()
         {
             try
@@ -178,6 +182,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Home
                 Crashes.TrackError(e);
             }
         }
+
         private async void NavigationPageService(Object obj)
         {
             try
