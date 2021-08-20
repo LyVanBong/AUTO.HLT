@@ -17,6 +17,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         private string _notification;
         private bool _isExcuteCommand;
         private string _bannerId;
+        private bool _isLoadingButton;
         public event Action<IDialogParameters> RequestClose;
 
         public string BannerId
@@ -50,6 +51,12 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         {
             get => _isExcuteCommand;
             set => SetProperty(ref _isExcuteCommand, value);
+        }
+
+        public bool IsLoadingButton
+        {
+            get => _isLoadingButton;
+            set => SetProperty(ref _isLoadingButton, value);
         }
 
         public NotificationHasAdsViewModel()
@@ -105,6 +112,11 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 Approve = parameters.ContainsKey(AppConstants.Approve)
                     ? parameters.GetValue<string>(AppConstants.Approve)
                     : "OK";
+                Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+                {
+                    IsLoadingButton = true;
+                    return false;
+                });
             }
         }
     }

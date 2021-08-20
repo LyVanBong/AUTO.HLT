@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace AUTO.HLT.MOBILE.VIP.ViewModels.SuportCustumer
 {

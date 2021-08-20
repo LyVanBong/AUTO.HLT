@@ -14,6 +14,8 @@ using Prism.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins;
+using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
@@ -33,6 +35,8 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
         private IUserService _userService;
         private string _userName;
         private IGuideService _guideService;
+        private IDialogService _dialogService;
+        private string _bannerId;
 
         public ICommand RunFeatureCommand { get; set; }
 
@@ -60,14 +64,22 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
             set => SetProperty(ref _isLoading, value);
         }
 
-        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService) : base(navigationService)
+        public string BannerId
         {
+            get => _bannerId;
+            set => SetProperty(ref _bannerId, value);
+        }
+
+        public BuffAPostViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ITelegramService telegramService, IDatabaseService databaseService, IUserService userService, IGuideService guideService, IDialogService dialogService) : base(navigationService)
+        {
+            _dialogService = dialogService;
             _guideService = guideService;
             _userService = userService;
             _databaseService = databaseService;
             _telegramService = telegramService;
             _pageDialogService = pageDialogService;
             RunFeatureCommand = new AsyncCommand<string>(RunFeature);
+            BannerId = AppConstants.BannerAdmodId;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -130,15 +142,21 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.BuffAPost
                             }
                             else
                             {
-                                if (await _pageDialogService.DisplayAlertAsync("Thông báo", $"Số xu hiện tại của bạn nhỏ 100 nên không thể thực hiện chức năng này vui lòng kiếm thêm xu để sử dụng tính năng này !",
-                                    "Kiếm thếm xu", "Để sau"))
+                                var para = new DialogParameters();
+                                para.Add(AppConstants.Notification, "Số xu hiện tại của bạn nhỏ 100 nên không thể thực hiện chức năng này vui lòng kiếm thêm xu để sử dụng tính năng này !");
+                                para.Add(AppConstants.Cancel, "Để sau");
+                                para.Add(AppConstants.Approve, "Kiếm thếm xu");
+                                _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
                                 {
-                                    await NavigationService.NavigateAsync("EarnCoinsPage");
-                                }
-                                else
-                                {
-                                    await NavigationService.GoBackAsync();
-                                }
+                                    if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                                    {
+                                        await NavigationService.NavigateAsync("EarnCoinsPage");
+                                    }
+                                    else
+                                    {
+                                        await NavigationService.GoBackAsync();
+                                    }
+                                });
                             }
                         }
 

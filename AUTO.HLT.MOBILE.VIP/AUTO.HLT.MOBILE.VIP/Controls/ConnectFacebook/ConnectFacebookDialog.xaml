@@ -46,8 +46,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="0"
-            AdsId="{OnPlatform Android='ca-app-pub-3940256099942544/6300978111',
-                               iOS='ca-app-pub-3940256099942544/2934735716'}"
+            AdsId="{Binding BannerId}"
             BackgroundColor="Transparent"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />

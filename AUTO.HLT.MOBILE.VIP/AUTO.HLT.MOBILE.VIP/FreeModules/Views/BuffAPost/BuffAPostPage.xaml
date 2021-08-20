@@ -3,6 +3,7 @@
     x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.BuffAPost.BuffAPostPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
     xmlns:icon="clr-namespace:AUTO.HLT.MOBILE.VIP.Resources.Fonts;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
@@ -109,6 +110,15 @@
                 CommandParameter="2"
                 Text="Hưỡng dẫn kiếm xu đổi like"
                 TextColor="{StaticResource AppBackgroud}" />
+            <controls:MTAdView
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                AdsId="{Binding BannerId}"
+                BackgroundColor="Transparent"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
             <loading:LoadingView
                 Grid.Row="1"
                 Grid.RowSpan="5"

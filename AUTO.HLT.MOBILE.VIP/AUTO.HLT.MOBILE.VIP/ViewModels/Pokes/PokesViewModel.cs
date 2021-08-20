@@ -28,7 +28,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
         private IPageDialogService _pageDialogService;
         private IDialogService _dialogService;
         private ObservableCollection<PokesFriendsModel> _pokesData;
-        private IGoogleAdmobService _googleAdmobService;
         private IDatabaseService _databaseService;
         private IUserService _userService;
         public ICommand SelectAllFriendsCommand { get; private set; }
@@ -45,9 +44,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Pokes
             set => SetProperty(ref _isLoading, value);
         }
 
-        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService, IGoogleAdmobService googleAdmobService, IUserService userService) : base(navigationService)
+        public PokesViewModel(INavigationService navigationService, IFacebookService facebookService, IPageDialogService pageDialogService, IDatabaseService databaseService, IDialogService dialogService, IUserService userService) : base(navigationService)
         {
-            _googleAdmobService = googleAdmobService;
             _dialogService = dialogService;
             _pageDialogService = pageDialogService;
             _facebookService = facebookService;
