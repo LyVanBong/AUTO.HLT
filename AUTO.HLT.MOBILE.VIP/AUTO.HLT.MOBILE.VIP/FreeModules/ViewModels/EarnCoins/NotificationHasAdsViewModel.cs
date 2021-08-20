@@ -112,7 +112,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 Approve = parameters.ContainsKey(AppConstants.Approve)
                     ? parameters.GetValue<string>(AppConstants.Approve)
                     : "OK";
-                Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+                Device.StartTimer(TimeSpan.FromSeconds(3), () =>
                 {
                     IsLoadingButton = true;
                     return false;
