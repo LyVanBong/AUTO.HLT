@@ -129,7 +129,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             IsLoading = true;
 
             var para = new DialogParameters();
-            para.Add(AppConstants.Notification, "Quá trình tải quảng cáo xẩy ra lỗi! Bạn có muốn tiếp tục kiếm xu ?");
+            para.Add(AppConstants.Notification, "Quá trình tải quảng cáo xảy ra lỗi! Bạn có muốn tiếp tục kiếm xu ?");
             para.Add(AppConstants.Cancel, "Để sau");
             para.Add(AppConstants.Approve, "Tiếp tục kiếm xu");
 

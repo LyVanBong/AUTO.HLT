@@ -29,6 +29,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -126,19 +127,23 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                         _isUpdate = true;
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                "Đã có phiên bản mới, vui lòng cập nhật để sử dụng tính năng ổn định nhất",
-                                "Cập nhật ngay");
-                            if (DeviceInfo.Platform == DevicePlatform.Android)
+                            var para = new DialogParameters();
+                            para.Add(AppConstants.Notification, "Đã có phiên bản mới, vui lòng cập nhật để sử dụng tính năng ổn định nhất !");
+                            para.Add(AppConstants.Cancel, "Xem các tính năng mới");
+                            para.Add(AppConstants.Approve, "Cập nhật ngay");
+                            _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
                             {
-                                await Browser.OpenAsync(sotreUri[0], BrowserLaunchMode.SystemPreferred);
-                                _isUpdate = false;
-                            }
-                            else if (DeviceInfo.Platform == DevicePlatform.iOS)
-                            {
-                                await Browser.OpenAsync(sotreUri[1], BrowserLaunchMode.SystemPreferred);
-                                _isUpdate = false;
-                            }
+                                if (DeviceInfo.Platform == DevicePlatform.Android)
+                                {
+                                    await Browser.OpenAsync(sotreUri[0], BrowserLaunchMode.SystemPreferred);
+                                    _isUpdate = false;
+                                }
+                                else if (DeviceInfo.Platform == DevicePlatform.iOS)
+                                {
+                                    await Browser.OpenAsync(sotreUri[1], BrowserLaunchMode.SystemPreferred);
+                                    _isUpdate = false;
+                                }
+                            });
                         });
                     }
                 }
@@ -207,142 +212,13 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                     await _facebookService.GetInfoUser();
                 if (infoFace != null && infoFace.name != null)
                 {
-                    if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        $"Bạn muốn cài đặt xem story cho tài khoản facebook {infoFace?.name}", "Cài ngay",
-                        "Thôi"))
+                    var para = new DialogParameters();
+                    para.Add(AppConstants.Notification, $"Bạn muốn cài đặt xem story cho tài khoản facebook {infoFace?.name} !");
+                    para.Add(AppConstants.Cancel, "Thôi");
+                    para.Add(AppConstants.Approve, "Cài ngay");
+                    _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
                     {
-                        var user = await _databaseService.GetAccountUser();
-                        var content = new ContentSendTelegramModel()
-                        {
-                            Ten_Thong_Bao = item?.TitleItem,
-                            So_Luong = 1,
-                            Id_Nguoi_Dung = user?.ID,
-                            Ghi_Chu = new
-                            {
-                                Ten = user?.Name,
-                                Tai_Khoan = user?.UserName,
-                                So_dien_thoai = user?.NumberPhone,
-                                Id_facebook = infoFace?.id,
-                                Ten_facebook = infoFace?.name,
-                                Avatar_facebook = infoFace?.picture?.data?.url,
-                                Ngay_Het_Han = _licenseKey.EndDate,
-                                So_Ngay_Con_Lai = _licenseKey.CountEndDate
-                            },
-                            Noi_Dung_Thong_Bao = new
-                            {
-                                Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
-                                Token = Preferences.Get(AppConstants.TokenFaceook, ""),
-                            }
-                        };
-                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                            JsonConvert.SerializeObject(content, Formatting.Indented));
-                        if (send != null && send.ok)
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
-                        }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
-                        }
-                    }
-                }
-                else
-                {
-                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
-                    {
-                        await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
-                        await SeeStoryFacebook(item);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-        }
-
-        private async Task AddFriendsSuggestion(ItemMenuModel item)
-        {
-            try
-            {
-                var infoFace =
-                    await _facebookService.GetInfoUser();
-                if (infoFace != null && infoFace.name != null)
-                {
-                    if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                        $"Bạn muốn kết bạn theo gợi ý cho tài khoản facebook {infoFace?.name}", "Cài ngay",
-                        "Thôi"))
-                    {
-                        var user = await _databaseService.GetAccountUser();
-                        var content = new ContentSendTelegramModel()
-                        {
-                            Ten_Thong_Bao = item?.TitleItem,
-                            So_Luong = 1,
-                            Id_Nguoi_Dung = user?.ID,
-                            Ghi_Chu = new
-                            {
-                                Ten = user?.Name,
-                                Tai_Khoan = user?.UserName,
-                                So_dien_thoai = user?.NumberPhone,
-                                Id_facebook = infoFace?.id,
-                                Ten_facebook = infoFace?.name,
-                                Avatar_facebook = infoFace?.picture?.data?.url,
-                                Ngay_Het_Han = _licenseKey.EndDate,
-                                So_Ngay_Con_Lai = _licenseKey.CountEndDate
-                            },
-                            Noi_Dung_Thong_Bao = new
-                            {
-                                Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
-                                Token = Preferences.Get(AppConstants.TokenFaceook, ""),
-                            }
-                        };
-                        var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                            JsonConvert.SerializeObject(content, Formatting.Indented));
-                        if (send != null && send.ok)
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
-                        }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Thông báo",
-                                "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
-                        }
-                    }
-                }
-                else
-                {
-                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
-                    {
-                        await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
-                        await AddFriendsSuggestion(item);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-        }
-
-        /// <summary>
-        /// Tu dong tha tim avatar ban be
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        private async Task SetupAuto(ItemMenuModel item)
-        {
-            try
-            {
-                if (await _facebookService.CheckCookieAndToken())
-                {
-                    var infoFace =
-                        await _facebookService.GetInfoUser();
-                    if (infoFace != null && infoFace.name != null)
-                    {
-                        if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                            $"Bạn muốn cài tự động cho tài khoản facebook {infoFace?.name}", "Cài ngay",
-                            "Thôi"))
+                        if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
                         {
                             var user = await _databaseService.GetAccountUser();
                             var content = new ContentSendTelegramModel()
@@ -368,26 +244,191 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
                                 }
                             };
                             var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
-                                    JsonConvert.SerializeObject(content, Formatting.Indented));
+                                JsonConvert.SerializeObject(content, Formatting.Indented));
                             if (send != null && send.ok)
                             {
                                 await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
                             }
                             else
                             {
-                                await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
                             }
                         }
 
+                    });
+                }
+                else
+                {
+                    var para = new DialogParameters();
+                    para.Add(AppConstants.Notification, "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình !");
+                    para.Add(AppConstants.Cancel, "Thôi");
+                    para.Add(AppConstants.Approve, "Kết nối ngay");
+                    _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
+                    {
+                        if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                        {
+                            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                            await SeeStoryFacebook(item);
+                        }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+
+        private async Task AddFriendsSuggestion(ItemMenuModel item)
+        {
+            try
+            {
+                var infoFace =
+                    await _facebookService.GetInfoUser();
+                if (infoFace != null && infoFace.name != null)
+                {
+                    var para = new DialogParameters();
+                    para.Add(AppConstants.Notification, $"Bạn muốn kết bạn theo gợi ý cho tài khoản facebook {infoFace?.name}");
+                    para.Add(AppConstants.Cancel, "Thôi");
+                    para.Add(AppConstants.Approve, "Cài ngay");
+                    _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
+                    {
+                        if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                        {
+                            var user = await _databaseService.GetAccountUser();
+                            var content = new ContentSendTelegramModel()
+                            {
+                                Ten_Thong_Bao = item?.TitleItem,
+                                So_Luong = 1,
+                                Id_Nguoi_Dung = user?.ID,
+                                Ghi_Chu = new
+                                {
+                                    Ten = user?.Name,
+                                    Tai_Khoan = user?.UserName,
+                                    So_dien_thoai = user?.NumberPhone,
+                                    Id_facebook = infoFace?.id,
+                                    Ten_facebook = infoFace?.name,
+                                    Avatar_facebook = infoFace?.picture?.data?.url,
+                                    Ngay_Het_Han = _licenseKey.EndDate,
+                                    So_Ngay_Con_Lai = _licenseKey.CountEndDate
+                                },
+                                Noi_Dung_Thong_Bao = new
+                                {
+                                    Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
+                                    Token = Preferences.Get(AppConstants.TokenFaceook, ""),
+                                }
+                            };
+                            var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                JsonConvert.SerializeObject(content, Formatting.Indented));
+                            if (send != null && send.ok)
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Thông báo",
+                                    "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    var para = new DialogParameters();
+                    para.Add(AppConstants.Notification, "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình !");
+                    para.Add(AppConstants.Cancel, "Thôi");
+                    para.Add(AppConstants.Approve, "Kết nối ngay");
+                    _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
+                    {
+                        if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                        {
+                            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                            await AddFriendsSuggestion(item);
+                        }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
+        }
+
+        /// <summary>
+        /// Tu dong tha tim avatar ban be
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private async Task SetupAuto(ItemMenuModel item)
+        {
+            try
+            {
+                if (await _facebookService.CheckCookieAndToken())
+                {
+                    var infoFace =
+                        await _facebookService.GetInfoUser();
+                    if (infoFace != null && infoFace.name != null)
+                    {
+                        var para = new DialogParameters();
+                        para.Add(AppConstants.Notification, $"Bạn muốn cài tự động cho tài khoản facebook {infoFace?.name} !");
+                        para.Add(AppConstants.Cancel, "Thôi");
+                        para.Add(AppConstants.Approve, "Cài ngay");
+                        _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
+                        {
+                            if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                            {
+                                var user = await _databaseService.GetAccountUser();
+                                var content = new ContentSendTelegramModel()
+                                {
+                                    Ten_Thong_Bao = item?.TitleItem,
+                                    So_Luong = 1,
+                                    Id_Nguoi_Dung = user?.ID,
+                                    Ghi_Chu = new
+                                    {
+                                        Ten = user?.Name,
+                                        Tai_Khoan = user?.UserName,
+                                        So_dien_thoai = user?.NumberPhone,
+                                        Id_facebook = infoFace?.id,
+                                        Ten_facebook = infoFace?.name,
+                                        Avatar_facebook = infoFace?.picture?.data?.url,
+                                        Ngay_Het_Han = _licenseKey.EndDate,
+                                        So_Ngay_Con_Lai = _licenseKey.CountEndDate
+                                    },
+                                    Noi_Dung_Thong_Bao = new
+                                    {
+                                        Cookie = Preferences.Get(AppConstants.CookieFacebook, ""),
+                                        Token = Preferences.Get(AppConstants.TokenFaceook, ""),
+                                    }
+                                };
+                                var send = await _telegramService.SendMessageToTelegram(AppConstants.IdChatWork,
+                                        JsonConvert.SerializeObject(content, Formatting.Indented));
+                                if (send != null && send.ok)
+                                {
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Cài đặt thành công", "OK");
+                                }
+                                else
+                                {
+                                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Lỗi phát sinh bạn vui lòng cài lại hoặc liên hệ admin để được hỗ trợ", "OK");
+                                }
+                            }
+                        });
                     }
                 }
                 else
                 {
-                    if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình", "Kết nối ngay", "Thôi"))
+                    var para = new DialogParameters();
+                    para.Add(AppConstants.Notification, "Để sử dụng tính năng này bạn cần kết nối với tài khoản facebook của mình !");
+                    para.Add(AppConstants.Cancel, "Thôi");
+                    para.Add(AppConstants.Approve, "Kết nối ngay");
+                    _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
                     {
-                        await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
-                        await SetupAuto(item);
-                    }
+                        if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                        {
+                            await _dialogService.ShowDialogAsync(nameof(ConnectFacebookDialog));
+                            await SetupAuto(item);
+                        }
+                    });
                 }
             }
             catch (Exception e)
@@ -464,11 +505,19 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
 
                         break;
                     case "2":
-                        if (await _pageDialogService.DisplayAlertAsync("Thông báo",
-                            "Bạn muỗn nâng cấp tài khoản sau !", "Để sau", "Nâng cấp luôn"))
+                        var para = new DialogParameters();
+                        para.Add(AppConstants.Notification, "Bạn muỗn nâng cấp tài khoản sau !");
+                        para.Add(AppConstants.Cancel, "Nâng cấp luôn");
+                        para.Add(AppConstants.Approve, "Để sau");
+                        _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
                         {
-                            await NavigationService.NavigateAsync("/FreeHomePage", null, false, true);
-                        }
+                            if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                            {
+                                await NavigationService.NavigateAsync("/FreeHomePage", null, false, true);
+                            }
+
+                            IsLoading = true;
+                        });
                         break;
                     default:
                         break;
@@ -480,44 +529,55 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
             }
         }
 
+        private bool _isNavigationFrom;
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            IsLoading = true;
-            await CheckLicenseKey();
-            InfoUser = await _databaseService.GetAccountUser();
-
-            ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
-            if (InfoUser.Role != 2)
+            if (!_isNavigationFrom)
             {
-                ListItemMenus.Add(new ItemMenuModel
-                {
-                    BgColor = Color.FromHex("#6930c3"),
-                    Id = 9,
-                    Role = 98,
-                    Icon = "icon_manager.png",
-                    TitleItem = "Quản lý",
-                });
-                if (InfoUser.Role == 0)
+                _isNavigationFrom = true;
+                IsLoading = true;
+                await CheckLicenseKey();
+                InfoUser = await _databaseService.GetAccountUser();
+
+                ListItemMenus = new ObservableCollection<ItemMenuModel>(GetItemMenu());
+                if (InfoUser.Role != 2)
                 {
                     ListItemMenus.Add(new ItemMenuModel
                     {
-                        BgColor = Color.FromHex("#9fd8df"),
-                        Id = 10,
-                        Role = 97,
-                        Icon = "icon_key_generation.png",
-                        TitleItem = "Cài đặt",
+                        BgColor = Color.FromHex("#6930c3"),
+                        Id = 9,
+                        Role = 98,
+                        Icon = "icon_manager.png",
+                        TitleItem = "Quản lý",
                     });
+                    if (InfoUser.Role == 0)
+                    {
+                        ListItemMenus.Add(new ItemMenuModel
+                        {
+                            BgColor = Color.FromHex("#9fd8df"),
+                            Id = 10,
+                            Role = 97,
+                            Icon = "icon_key_generation.png",
+                            TitleItem = "Cài đặt",
+                        });
+                    }
                 }
-            }
 
-            if (parameters != null && parameters.ContainsKey("UpgradeAccount"))
-            {
-                LicenseView = new AddLicenseKeyView();
+                if (parameters != null && parameters.ContainsKey("UpgradeAccount"))
+                {
+                    LicenseView = new AddLicenseKeyView();
+                }
+                else
+                    IsLoading = false;
+                new Thread(CheckVerionApplication).Start();
             }
-            else
-                IsLoading = false;
-            new Thread(CheckVerionApplication).Start();
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            _isNavigationFrom = false;
         }
 
         private async Task CheckLicenseKey()
@@ -539,15 +599,21 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Home
         {
             if (IsLoading) return;
             IsLoading = true;
-            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Bạn muốn đăng xuất tài khoản",
-                "Ok", "Cancel"))
-            {
-                await _databaseService.DeleteAccontUser();
-                Preferences.Clear(AppConstants.SavePasswd);
-                await NavigationService.NavigateAsync("/LoginPage", null, false, true);
-            }
 
-            IsLoading = false;
+            var para = new DialogParameters();
+            para.Add(AppConstants.Notification, "Bạn muốn đăng xuất tài khoản !");
+            para.Add(AppConstants.Cancel, "Cancel");
+            para.Add(AppConstants.Approve, "OK");
+            _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
+            {
+                if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                {
+                    await _databaseService.DeleteAccontUser();
+                    Preferences.Clear(AppConstants.SavePasswd);
+                    await NavigationService.NavigateAsync("/LoginPage", null, false, true);
+                }
+                IsLoading = false;
+            });
         }
 
         private List<ItemMenuModel> GetItemMenu()

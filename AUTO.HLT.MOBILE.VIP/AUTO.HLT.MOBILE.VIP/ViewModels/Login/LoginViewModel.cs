@@ -105,7 +105,6 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             _loginService = loginService;
             ContentLoginPage = new LoginView();
             FunctionExecuteCommand = new AsyncCommand<string>(async (key) => await FunctionExecute(key));
-            IsSavePasswd = true;
         }
 
         private void OnInterstitialOpened(object sender, EventArgs e)
@@ -118,7 +117,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
 
         }
 
-        private async void OnInterstitialClosed(object sender, EventArgs e)
+        private void OnInterstitialClosed(object sender, EventArgs e)
         {
             IsLoading = true;
             NavigationPage();
@@ -146,7 +145,8 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             try
             {
                 IsLoading = true;
-                if (Preferences.Get(nameof(IsSavePasswd), false))
+                IsSavePasswd = Preferences.Get(nameof(IsSavePasswd), false);
+                if (IsSavePasswd)
                 {
                     var dataUser = await _databaseService.GetAccountUser();
                     if (dataUser?.UserName != null)

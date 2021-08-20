@@ -241,15 +241,20 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.Home
         {
             if (IsLoading) return;
             IsLoading = true;
-            if (await _pageDialogService.DisplayAlertAsync("Thông báo", "Bạn muốn đăng xuất tài khoản",
-                "Ok", "Cancel"))
+            var para = new DialogParameters();
+            para.Add(AppConstants.Notification, "Bạn muốn đăng xuất tài khoản !");
+            para.Add(AppConstants.Cancel, "Cancel");
+            para.Add(AppConstants.Approve, "OK");
+            _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, async (result) =>
             {
-                await _databaseService.DeleteAccontUser();
-                Preferences.Clear();
-                await NavigationService.NavigateAsync("/LoginPage", null, false, true);
-            }
-
-            IsLoading = false;
+                if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
+                {
+                    await _databaseService.DeleteAccontUser();
+                    Preferences.Clear();
+                    await NavigationService.NavigateAsync("/LoginPage", null, false, true);
+                }
+                IsLoading = false;
+            });
         }
 
         private List<ItemMenuModel> GetItemMenu()
