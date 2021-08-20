@@ -135,7 +135,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             if (!CrossMTAdmob.Current.IsInterstitialLoaded())
             {
                 CrossMTAdmob.Current.UserPersonalizedAds = false;
-                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitID);
+                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitId);
             }
 
             #endregion

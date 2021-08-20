@@ -6,12 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\GoogleAdmob\**" />
     <Compile Remove="FreeModules\Models\**" />
     <Compile Remove="Resources\Languages\**" />
     <Compile Remove="Resources\Svg\**" />
+    <EmbeddedResource Remove="Controls\GoogleAdmob\**" />
     <EmbeddedResource Remove="FreeModules\Models\**" />
     <EmbeddedResource Remove="Resources\Languages\**" />
     <EmbeddedResource Remove="Resources\Svg\**" />
+    <None Remove="Controls\GoogleAdmob\**" />
     <None Remove="FreeModules\Models\**" />
     <None Remove="Resources\Languages\**" />
     <None Remove="Resources\Svg\**" />
@@ -134,7 +137,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\GoogleAdmob\" />
     <Folder Include="FakeModules\Models\" />
     <Folder Include="FakeModules\ViewModels\Main\" />
     <Folder Include="FakeModules\ViewModels\Home\" />
@@ -146,7 +148,6 @@
     <Folder Include="FakeModules\ViewModels\Notification\" />
     <Folder Include="FakeModules\ViewModels\TermsCondition\" />
     <Folder Include="FreeModules\ViewModels\BuffAPost\" />
-    <Folder Include="FreeModules\ViewModels\EarnCoins\" />
     <Folder Include="Models\VersionApp\" />
     <Folder Include="ViewModels\HappyBirthday\" />
     <Folder Include="ViewModels\Manage\" />
@@ -216,6 +217,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FreeModules\Views\EarnCoins\EarnCoinsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FreeModules\Views\EarnCoins\NotificationHasAdsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="FreeModules\Views\Home\FreeHomePage.xaml">

@@ -5,21 +5,33 @@ namespace AUTO.HLT.MOBILE.VIP.Configurations
     public static class AppConstants
     {
         /// <summary>
-        /// qc xen ke Test
+        /// nội dung thông báo của popup có quảng cáo
         /// </summary>
-        public static string InterstitialUnitIDTest = Device.RuntimePlatform == Device.Android ? "ca-app-pub-3940256099942544/1033173712" : "ca-app-pub-3940256099942544/4411468910";
+        public const string Notification = "Notification";
+        /// <summary>
+        /// nội dung nút Approve popup có qc
+        /// </summary>
+        public const string Approve = "Approve";
+        /// <summary>
+        /// nội dung nút cancel popup có qc
+        /// </summary>
+        public const string Cancel = "Cancel";
+        /// <summary>
+        /// kết quả của popup có qc
+        /// </summary>
+        public const string ResultOfAds = "ResultOfAds";
+        /// <summary>
+        /// id qc banner
+        /// </summary>
+        public static string BannerAdmodId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/7002663797" : "ca-app-pub-9881695093256851/4284522181";
         /// <summary>
         /// qc xen ke
         /// </summary>
-        public static string InterstitialUnitID = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/3916792882" : "ca-app-pub-9881695093256851/4000553363";
+        public static string InterstitialUnitId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-9881695093256851/3916792882" : "ca-app-pub-9881695093256851/4000553363";
         /// <summary>
         /// hiển thị quảng cáo
         /// </summary>
         public const string AddAdmod = "GoogleAdmod";
-        /// <summary>
-        /// Quảng cáo Rewarded Test
-        /// </summary>
-        public static string RewardedAdmodTestId = Device.RuntimePlatform == Device.Android ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-3940256099942544/1712485313";
         /// <summary>
         /// Quảng cáo Rewarded
         /// </summary>

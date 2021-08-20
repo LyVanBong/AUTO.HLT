@@ -4,19 +4,19 @@ using AUTO.HLT.MOBILE.VIP.Services.Database;
 using AUTO.HLT.MOBILE.VIP.Services.User;
 using AUTO.HLT.MOBILE.VIP.ViewModels;
 using MarcTron.Plugin;
+using MarcTron.Plugin.CustomEventArgs;
 using Microsoft.AppCenter.Crashes;
 using Prism.Navigation;
+using Prism.Services;
 using System;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows.Input;
-using AUTO.HLT.MOBILE.VIP.Services.GoogleAdmob;
+using AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins;
+using Prism.Services.Dialogs;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 using Color = System.Drawing.Color;
-using MarcTron.Plugin.CustomEventArgs;
-using System.Diagnostics;
-using Prism.Services;
-using System.Threading;
 
 namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
 {
@@ -26,10 +26,9 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         private IUserService _userService;
         private IDatabaseService _databaseService;
         private string _userName;
-        private int _tmpPrice;
-        private IPageDialogService _dialogService;
-        private bool _isShowRewardedVideoLoaded;
-
+        private IPageDialogService _pageDialogService;
+        private IDialogService _dialogService;
+        private bool _isRegisterAdmod;
         public bool IsLoading
         {
             get => _isLoading;
@@ -49,9 +48,10 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
         public bool IsRunAdmod { get => _isRunAdmod; set => SetProperty(ref _isRunAdmod, value); }
 
         public EarnCoinsViewModel(INavigationService navigationService, IUserService userService, IDatabaseService databaseService, IPageDialogService
-            dialogService) : base(navigationService)
+            pageDialogService, IDialogService dialogService) : base(navigationService)
         {
             _dialogService = dialogService;
+            _pageDialogService = pageDialogService;
             _databaseService = databaseService;
             _userService = userService;
             SeenAdmodCommand = new AsyncCommand(async () =>
@@ -80,8 +80,7 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             }
             else
             {
-                var id = _userName == "lygia95" ? AppConstants.RewardedAdmodTestId : AppConstants.RewardedAdmodId;
-                CrossMTAdmob.Current.LoadRewardedVideo(id);
+                CrossMTAdmob.Current.LoadRewardedVideo(AppConstants.RewardedAdmodId);
             }
         }
         private async void RewardedVideoAdCompleted(object sender, EventArgs e)
@@ -123,38 +122,51 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             Debug.WriteLine("RewardedVideoAdLeftApplication");
         }
 
-        private async void RewardedVideoAdFailedToLoad(object sender, MTEventArgs e)
+        private void RewardedVideoAdFailedToLoad(object sender, MTEventArgs e)
         {
             Debug.WriteLine("RewardedVideoAdFailedToLoad");
 
-            IsLoading = false;
+            IsLoading = true;
 
-            if (await _dialogService.DisplayAlertAsync("Thông báo", "Quá trình tải quảng cáo xẩy ra lỗi! Bạn có muốn tiếp tục kiếm xu ?", "Tiếp tục kiếm xu", "Để sau"))
+            var para = new DialogParameters();
+            para.Add(AppConstants.Notification, "Quá trình tải quảng cáo xẩy ra lỗi! Bạn có muốn tiếp tục kiếm xu ?");
+            para.Add(AppConstants.Cancel, "Để sau");
+            para.Add(AppConstants.Approve, "Tiếp tục kiếm xu");
+
+            _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, result => LoadAdmodAfter(result));
+        }
+        /// <summary>
+        /// kiểm tra để hiện thị qc
+        /// </summary>
+        /// <param name="result"></param>
+        private void LoadAdmodAfter(IDialogResult result)
+        {
+            if (result.Parameters.GetValue<bool>(AppConstants.ResultOfAds))
             {
                 LoadAdMod();
             }
             else
             {
+                IsLoading = false;
                 IsRunAdmod = true;
             }
         }
 
-        private async void RewardedVideoAdClosed(object sender, EventArgs e)
+        private void RewardedVideoAdClosed(object sender, EventArgs e)
         {
             Debug.WriteLine("RewardedVideoAdClosed");
+            IsLoading = true;
             if (_isRewardedVideo)
             {
                 _isRewardedVideo = false;
                 ShowToast("Bạn được thưởng 4 xu !");
             }
-            if (await _dialogService.DisplayAlertAsync("Thông báo", "Bạn có muốn tiếp tục kiếm xu ?", "Tiếp tục kiếm xu", "Để sau"))
-            {
-                LoadAdMod();
-            }
-            else
-            {
-                IsRunAdmod = true;
-            }
+            var para = new DialogParameters();
+            para.Add(AppConstants.Notification, "Bạn có muốn tiếp tục kiếm xu ?");
+            para.Add(AppConstants.Cancel, "Để sau");
+            para.Add(AppConstants.Approve, "Tiếp tục kiếm xu");
+
+            _dialogService.ShowDialog(nameof(NotificationHasAdsView), para, result => LoadAdmodAfter(result));
         }
 
         private void Rewarded(object sender, MTEventArgs e)
@@ -199,21 +211,29 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             {
                 Crashes.TrackError(e);
             }
+            SubscribeAds();
+            IsLoading = false;
+        }
+
+        private void SubscribeAds()
+        {
             #region Rewarded video
+            if (!_isRegisterAdmod)
+            {
+                CrossMTAdmob.Current.UserPersonalizedAds = false;
 
-            CrossMTAdmob.Current.UserPersonalizedAds = false;
-
-            CrossMTAdmob.Current.OnRewarded += Rewarded;
-            CrossMTAdmob.Current.OnRewardedVideoAdClosed += RewardedVideoAdClosed;
-            CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad += RewardedVideoAdFailedToLoad;
-            CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication += RewardedVideoAdLeftApplication;
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded += RewardedVideoAdLoaded;
-            CrossMTAdmob.Current.OnRewardedVideoAdOpened += RewardedVideoAdOpened;
-            CrossMTAdmob.Current.OnRewardedVideoStarted += RewardedVideoStarted;
-            CrossMTAdmob.Current.OnRewardedVideoAdCompleted += RewardedVideoAdCompleted;
+                CrossMTAdmob.Current.OnRewarded += Rewarded;
+                CrossMTAdmob.Current.OnRewardedVideoAdClosed += RewardedVideoAdClosed;
+                CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad += RewardedVideoAdFailedToLoad;
+                CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication += RewardedVideoAdLeftApplication;
+                CrossMTAdmob.Current.OnRewardedVideoAdLoaded += RewardedVideoAdLoaded;
+                CrossMTAdmob.Current.OnRewardedVideoAdOpened += RewardedVideoAdOpened;
+                CrossMTAdmob.Current.OnRewardedVideoStarted += RewardedVideoStarted;
+                CrossMTAdmob.Current.OnRewardedVideoAdCompleted += RewardedVideoAdCompleted;
+                _isRegisterAdmod = true;
+            }
 
             #endregion
-            IsLoading = false;
         }
 
         public override async void OnNavigatedFrom(INavigationParameters parameters)
@@ -225,7 +245,12 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
                 if (update > 0) Xamarin.Essentials.Preferences.Set("RewardedVideo", 0);
             }
 
-            #region Remove Rewarded video 
+            UnSubscribeAds();
+        }
+
+        private void UnSubscribeAds()
+        {
+            #region Remove Rewarded video
 
             CrossMTAdmob.Current.OnRewarded -= Rewarded;
             CrossMTAdmob.Current.OnRewardedVideoAdClosed -= RewardedVideoAdClosed;
@@ -235,6 +260,8 @@ namespace AUTO.HLT.MOBILE.VIP.FreeModules.ViewModels.EarnCoins
             CrossMTAdmob.Current.OnRewardedVideoAdOpened -= RewardedVideoAdOpened;
             CrossMTAdmob.Current.OnRewardedVideoStarted -= RewardedVideoStarted;
             CrossMTAdmob.Current.OnRewardedVideoAdCompleted -= RewardedVideoAdCompleted;
+
+            _isRegisterAdmod = false;
 
             #endregion
         }

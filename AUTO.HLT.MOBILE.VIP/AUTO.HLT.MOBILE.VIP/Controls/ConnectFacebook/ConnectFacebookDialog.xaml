@@ -3,6 +3,7 @@
     x:Class="AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook.ConnectFacebookDialog"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
     xmlns:customRenderer="clr-namespace:AUTO.HLT.MOBILE.VIP.CustomRenderer;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:loading="clr-namespace:AUTO.HLT.MOBILE.VIP.Controls.Loading;assembly=AUTO.HLT.MOBILE.VIP"
     xmlns:prism="http://prismlibrary.com"
@@ -40,6 +41,16 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Source="{Binding UrlFacebook}" />
+        <controls:MTAdView
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0"
+            AdsId="{OnPlatform Android='ca-app-pub-3940256099942544/6300978111',
+                               iOS='ca-app-pub-3940256099942544/2934735716'}"
+            BackgroundColor="Transparent"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
         <Button
             x:Name="ConnectFacebook"
             Grid.Row="3"

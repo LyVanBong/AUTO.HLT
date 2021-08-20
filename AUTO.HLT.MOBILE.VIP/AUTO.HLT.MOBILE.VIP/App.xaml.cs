@@ -87,7 +87,7 @@ namespace AUTO.HLT.MOBILE.VIP
             if (!CrossMTAdmob.Current.IsInterstitialLoaded())
             {
                 CrossMTAdmob.Current.UserPersonalizedAds = false;
-                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitID);
+                CrossMTAdmob.Current.LoadInterstitial(AppConstants.InterstitialUnitId);
             }
             await NavigationService.NavigateAsync("/LoginPage");
         }
@@ -102,6 +102,8 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterForNavigation<EarnCoinsPage, EarnCoinsViewModel>();
             containerRegistry.RegisterForNavigation<BuffAPostPage, BuffAPostViewModel>();
             containerRegistry.RegisterForNavigation<FreeHomePage, FreeHomeViewModel>();
+
+            containerRegistry.RegisterDialog<NotificationHasAdsView, NotificationHasAdsViewModel>();
 
             #endregion
 

@@ -22,7 +22,12 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
         private bool _isLoading;
         private IFacebookService _facebookService;
         private IDatabaseService _databaseService;
-  
+        private string _bannerId;
+        public string BannerId
+        {
+            get => _bannerId;
+            set => SetProperty(ref _bannerId, value);
+        }
         public ICommand FuntionCommand { get; private set; }
 
         public string UrlFacebook
@@ -45,6 +50,7 @@ namespace AUTO.HLT.MOBILE.VIP.Controls.ConnectFacebook
 
         public ConnectFacebookDialogViewModel(IPageDialogService pageDialogService, IFacebookService facebookService, IDatabaseService databaseService)
         {
+            BannerId = AppConstants.BannerAdmodId;
             _databaseService = databaseService;
             _facebookService = facebookService;
             _pageDialogService = pageDialogService;

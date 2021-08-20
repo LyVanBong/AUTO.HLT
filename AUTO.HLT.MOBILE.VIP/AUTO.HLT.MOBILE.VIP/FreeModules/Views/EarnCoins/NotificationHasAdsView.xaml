@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid
+    x:Class="AUTO.HLT.MOBILE.VIP.FreeModules.Views.EarnCoins.NotificationHasAdsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
+    xmlns:prism="http://prismlibrary.com"
+    prism:DialogLayout.CloseOnBackgroundTapped="False"
+    prism:DialogLayout.RelativeHeightRequest="0.8"
+    prism:DialogLayout.RelativeWidthRequest="0.95"
+    BackgroundColor="Transparent">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="10" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <controls:MTAdView
+        Grid.Row="0"
+        Margin="0"
+        AdsId="{OnPlatform Android='ca-app-pub-3940256099942544/6300978111',
+                           iOS='ca-app-pub-3940256099942544/2934735716'}"
+        BackgroundColor="Transparent"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand" />
+    <Frame
+        Grid.Row="2"
+        Padding="30,20,30,30"
+        BackgroundColor="#fff"
+        BorderColor="{StaticResource AppBackgroud}"
+        CornerRadius="20"
+        HasShadow="True">
+        <StackLayout
+            Margin="0"
+            Padding="0"
+            BackgroundColor="#fff"
+            Orientation="Vertical"
+            Spacing="25">
+            <Label
+                FontAttributes="Bold"
+                FontSize="25"
+                HorizontalOptions="CenterAndExpand"
+                Text="Thông báo"
+                TextColor="#000"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Notification}"
+                TextColor="#000"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="{StaticResource AppBackgroud}"
+                BorderWidth="1"
+                Command="{Binding ApproveCommand}"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                FontSize="18"
+                Text="{Binding Approve}"
+                TextColor="{StaticResource AppBackgroud}" />
+            <Button
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="{StaticResource PrimaryColor}"
+                BorderWidth="1"
+                Command="{Binding CancelCommand}"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                FontSize="18"
+                Text="{Binding Cancel}"
+                TextColor="{StaticResource PrimaryColor}" />
+        </StackLayout>
+    </Frame>
+</Grid>
