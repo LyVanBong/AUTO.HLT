@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.15" package="com.bsoftgroup.auto.vip" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="123" android:versionName="1.2.3" package="com.bsoftgroup.auto.vip" android:installLocation="preferExternal">
 	<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="30" />
 	<application android:label="@string/app_name" android:icon="@mipmap/icon">
-    <!-- AdMob App ID-->
-    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-               android:value="ca-app-pub-9881695093256851~5764701411"/>
-  </application>
+		<!-- AdMob App ID-->
+		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-9881695093256851~5764701411" />
+	</application>
 	<queries>
 		<intent>
 			<action android:name="android.intent.action.DIAL" />
