@@ -149,6 +149,7 @@ namespace AUTO.HLT.MOBILE.VIP
             containerRegistry.RegisterForNavigation<FeaturePage, FeatureViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
+            containerRegistry.RegisterForNavigation<LoginWithFacebookPage, LoginWithFacebookPageViewModel>();
         }
 
         protected override void OnStart()

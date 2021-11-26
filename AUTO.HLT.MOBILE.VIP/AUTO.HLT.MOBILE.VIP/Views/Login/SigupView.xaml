@@ -16,7 +16,7 @@
                 Margin="20,0"
                 ContainerType="Outlined"
                 FocusedColor="#fff"
-                Hint="Tên đăng nhập"
+                Hint="UserName"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -38,7 +38,7 @@
                 Margin="20,0"
                 ContainerType="Outlined"
                 FocusedColor="#fff"
-                Hint="Tên"
+                Hint="Name"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -52,7 +52,7 @@
                 ContainerType="Outlined"
                 EnablePasswordVisibilityToggle="True"
                 FocusedColor="#fff"
-                Hint="Mật khẩu"
+                Hint="Password"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -66,7 +66,7 @@
                 Margin="20,0"
                 ContainerType="Outlined"
                 FocusedColor="#fff"
-                Hint="Số điện thoại"
+                Hint="NumberPhone"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -88,7 +88,7 @@
                 Margin="20,0"
                 ContainerType="Outlined"
                 FocusedColor="#fff"
-                Hint="Tài khoản người giới thiệu (nếu có)"
+                Hint="Presenter"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -112,13 +112,13 @@
                 Command="{Binding FunctionExecuteCommand}"
                 CommandParameter="2"
                 CornerRadius="10"
-                Text="Tạo tài khoản"
+                Text="Create Account"
                 TextColor="#fff" />
             <Label
                 Grid.Row="7"
                 FontSize="14"
                 HorizontalOptions="CenterAndExpand"
-                Text="Đã có tài khoản"
+                Text="Already have an account"
                 TextColor="#fff" />
             <Button
                 Grid.Row="8"
@@ -129,7 +129,7 @@
                 Command="{Binding FunctionExecuteCommand}"
                 CommandParameter="3"
                 CornerRadius="10"
-                Text="Đăng nhập"
+                Text="Login"
                 TextColor="#fff" />
         </Grid>
     </ContentView.Content>

@@ -8,13 +8,13 @@
         <Grid
             Margin="0"
             Padding="0"
-            RowDefinitions="50,80,80,40,60,30,60,50">
+            RowDefinitions="50,80,80,40,60,60,60,50">
             <textInputLayout:SfTextInputLayout
                 Grid.Row="1"
                 Margin="20,0"
                 ContainerType="Outlined"
                 FocusedColor="#fff"
-                Hint="Tên đăng nhập"
+                Hint="UserName"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -30,7 +30,7 @@
                 ContainerType="Outlined"
                 EnablePasswordVisibilityToggle="True"
                 FocusedColor="#fff"
-                Hint="Mật khẩu"
+                Hint="Password"
                 OutlineCornerRadius="8"
                 UnfocusedColor="#fff">
                 <Entry
@@ -52,7 +52,7 @@
                 <CheckBox IsChecked="{Binding IsSavePasswd}" Color="#fff" />
                 <Label
                     FontSize="16"
-                    Text="Nhớ mật khẩu"
+                    Text="Remember password"
                     TextColor="#fff"
                     VerticalOptions="CenterAndExpand" />
             </StackLayout>
@@ -65,14 +65,20 @@
                 Command="{Binding FunctionExecuteCommand}"
                 CommandParameter="0"
                 CornerRadius="10"
-                Text="Đăng nhập"
+                Text="Log in"
                 TextColor="#fff" />
-            <Label
+            <Button
                 Grid.Row="5"
-                FontSize="14"
-                HorizontalOptions="CenterAndExpand"
-                Text="Chưa có tài khoản"
+                Margin="20,5"
+                BackgroundColor="Transparent"
+                BorderColor="#fff"
+                BorderWidth="1"
+                Command="{Binding FunctionExecuteCommand}"
+                CommandParameter="7"
+                CornerRadius="10"
+                Text="Login with facebook"
                 TextColor="#fff" />
+          
             <Button
                 Grid.Row="6"
                 Margin="20,5"
@@ -82,7 +88,7 @@
                 Command="{Binding FunctionExecuteCommand}"
                 CommandParameter="1"
                 CornerRadius="10"
-                Text="Tạo tài khoản"
+                Text="Register an account"
                 TextColor="#fff" />
         </Grid>
     </ContentView.Content>

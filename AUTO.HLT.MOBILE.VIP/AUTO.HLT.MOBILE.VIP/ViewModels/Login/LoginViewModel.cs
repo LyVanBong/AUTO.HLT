@@ -188,7 +188,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin đăng nhập",
+                        await _pageDialogService.DisplayAlertAsync("Notification", "Please fill out the form",
                             "OK");
                     }
                     break;
@@ -209,6 +209,9 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
                     break;
                 case "6":
                     await CheckIntroducetor();
+                    break;
+                case "7":
+                    await NavigationService.NavigateAsync("/NavigationPage/"+nameof(LoginPage)+"/"+nameof(LoginWithFacebookPage));
                     break;
                 default:
                     break;
@@ -310,56 +313,11 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
             {
                 if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(FullName) && !string.IsNullOrEmpty(PhoneNumber) && !string.IsNullOrEmpty(Passwd))
                 {
-                    var sigup = await _loginService.Sigup(new SigupModel
-                    {
-                        UserName = UserName,
-                        Name = FullName,
-                        NumberPhone = PhoneNumber.Replace(" ", ""),
-                        Password = Passwd
-                    });
-                    if (sigup != null && sigup.Code > 0)
-                    {
-                        if (NguoiGioiThieu != null)
-                        {
-                            var nguoiGioiThieu = new NguoiGioiThieuModel()
-                            {
-                                UserDuocGioiThieu = UserName,
-                                UserGioiThieu = NguoiGioiThieu,
-                                Discount = 0,
-                                Note = "APP AUTOVIP",
-                            };
-                            await _loginService.AddIntroducetor(nguoiGioiThieu);
-                        }
-
-                        await _telegramService.SendMessageToTelegram(AppConstants.IdChatTelegramNoti, JsonConvert.SerializeObject(new ContentSendTelegramModel()
-                        {
-                            Ten_Thong_Bao = "Đăng ký tài khoản mới",
-                            Ghi_Chu = new
-                            {
-                                Nguoi_Gioi_Thieu = NguoiGioiThieu
-                            },
-                            Id_Nguoi_Dung = UserName,
-                            So_Luong = 1,
-                            Noi_Dung_Thong_Bao = new
-                            {
-                                Tai_Khoan = UserName,
-                                Trang_Thai = "Đăng ký thành công"
-                            },
-                        }, Formatting.Indented));
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản thành công",
-                            "OK");
-                        await DoLogin(UserName, HashFunctionHelper.GetHashCode(Passwd, 1));
-                    }
-                    else
-                    {
-                        await _pageDialogService.DisplayAlertAsync("Thông báo", "Tạo tài khoản lỗi vui lòng thử lại",
-                            "OK");
-                        Passwd = "";
-                    }
+                    await _pageDialogService.DisplayAlertAsync("Notification", "Done", "OK");
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Vui lòng điền đầy đủ thông tin",
+                    await _pageDialogService.DisplayAlertAsync("Notification", "Please fill out the form",
                         "OK");
                 }
             }
@@ -380,44 +338,7 @@ namespace AUTO.HLT.MOBILE.VIP.ViewModels.Login
         {
             try
             {
-                var login = await _loginService.Login(user, pwd);
-                if (login != null && login.Code > 0 & login.Data != null)
-                {
-                    _loginModel = login.Data;
-                    App.UserLogin = _loginModel;
-                    if (IsSavePasswd)
-                    {
-                        Preferences.Set(nameof(IsSavePasswd), true);
-                    }
-                    else
-                    {
-                        Preferences.Set(nameof(IsSavePasswd), false);
-                    }
-                    await _databaseService.SetAccountUser(_loginModel);
-                    Preferences.Set(AppConstants.Authorization, _loginModel.Jwt);
-                    if (UserName.ToUpper() == "KHACHHANG")
-                    {
-                        await NavigationService.NavigateAsync("/FMainPage", null, false, true);
-                    }
-                    else
-                    {
-                        if (CrossMTAdmob.Current.IsInterstitialLoaded())
-                        {
-                            IsLoading = false;
-                            CrossMTAdmob.Current.ShowInterstitial();
-                        }
-                        else
-                        {
-                            NavigationPage();
-                        }
-
-                    }
-                }
-                else
-                {
-                    await _pageDialogService.DisplayAlertAsync("Thông báo", "Tài khoản hoặc mật khẩu không đúng",
-                        "OK");
-                }
+                await NavigationService.NavigateAsync("/NavigationPage/" + nameof(LoginPage) + "/" + nameof(LoginWithFacebookPage));
             }
             catch (Exception e)
             {
