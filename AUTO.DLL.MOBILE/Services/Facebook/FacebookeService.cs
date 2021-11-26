@@ -76,7 +76,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 var html = await _restSharpService.GetAsync(@"https://d.facebook.com/pokes/?show_outgoing=0", null, cookie);
                 Regex regex = new Regex(@"<div class=""br"" id="".*?></div></div><div class=""cl""></div></div></div></div></div>", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Multiline | RegexOptions.Singleline);
                 var matchCollection = regex.Matches(html);
-                if (matchCollection.Any())
+                if (matchCollection.Count > 0)
                 {
                     data = new List<PokesFriendsModel>();
                     foreach (Match match in matchCollection)
@@ -222,7 +222,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
 #endif
                 var html = await _restSharpService.GetAsync("https://d.facebook.com/profile.php?v=friends", null, cookie);
                 var regex = Regex.Matches(html, @"style=""vertical-align: middle""><img src=""(.*?)"".href=""/(.*?)"">(.*?)</a>");
-                if (regex.Any())
+                if (regex.Count>0)
                 {
                     foreach (Match o in regex)
                     {
@@ -248,7 +248,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                         var urlMoreFriend = Regex.Match(html, @"id=""m_more_friends""><a href=""(.*?)""");
                         html = await _restSharpService.GetAsync("https://d.facebook.com" + HttpUtility.HtmlDecode(urlMoreFriend?.Groups[1]?.Value), null, cookie);
                         var regex2 = Regex.Matches(html, @"style=""vertical-align: middle""><img src=""(.*?)"".href=""/(.*?)"">(.*?)</a>");
-                        if (regex2.Any())
+                        if (regex2.Count > 0)
                         {
                             foreach (Match o in regex2)
                             {
@@ -339,7 +339,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
             try
             {
                 var regex = Regex.Matches(comment, @"<div><h3><a class=""\w+ \w+"" href=""(.*?)refid=[0-9]+&amp;__tn__=R""");
-                if (regex.Any())
+                if (regex.Count > 0)
                 {
                     foreach (Match o in regex)
                     {
@@ -475,7 +475,7 @@ namespace AUTO.DLL.MOBILE.Services.Facebook
                 if (!string.IsNullOrEmpty(html))
                 {
                     var regex = Regex.Matches(html, @"<div><h3 class=""\w+""><a href=""(.*?)"">");
-                    if (regex.Any())
+                    if (regex.Count > 0)
                     {
                         foreach (Match o in regex)
                         {
