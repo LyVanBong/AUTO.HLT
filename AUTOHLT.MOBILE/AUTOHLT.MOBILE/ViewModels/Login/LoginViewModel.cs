@@ -80,6 +80,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
 
         public ICommand SignUpCommand { get; private set; }
         public ICommand LoginCommand { get; private set; }
+        public ICommand LoginWithFaceCommand { get; private set; }
         public LoginViewModel(INavigationService navigationService, ILoginService loginService, IPageDialogService pageDialogService, IDatabaseService databaseService) : base(navigationService)
         {
             _databaseService = databaseService;
@@ -87,7 +88,13 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             _loginService = loginService;
             SignUpCommand = new Command(SignUpAccount);
             LoginCommand = new Command(LoginAccount);
+            LoginWithFaceCommand = new Command(LoginWithFace);
             IsLoading = true;
+        }
+
+        private async void LoginWithFace()
+        {
+            await NavigationService.NavigateAsync("/NavigationPage/" + nameof(LoginPage) + "/" + nameof(LoginWithFacebookPage));
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -136,9 +143,10 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (!string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password))
                 {
-                    var pass = HashFunctionHelper.GetHashCode(Password, 1);
-                    await DoLogin(pass);
+                    await NavigationService.NavigateAsync("/NavigationPage/" + nameof(LoginPage) + "/" + nameof(LoginWithFacebookPage));
                 }
+                else
+                    await _pageDialogService.DisplayAlertAsync("Navigation", "Insufficient information entered", "OK");
             }
             catch (Exception e)
             {

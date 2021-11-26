@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:customRenderer="clr-namespace:AUTOHLT.MOBILE.CustomRenderer"
+             Title="Login with facebook"
+             x:Class="AUTOHLT.MOBILE.Views.Login.LoginWithFacebookPage">
+    <ContentPage.Content>
+        <customRenderer:WebViewRenderer
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            BackgroundColor="#fff"
+            Source="https://m.facebook.com/" />
+    </ContentPage.Content>
+</ContentPage>

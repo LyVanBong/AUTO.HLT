@@ -10,13 +10,14 @@
     xmlns:markupExtensions="clr-namespace:AUTOHLT.MOBILE.MarkupExtensions;assembly=AUTOHLT.MOBILE"
     xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
     BackgroundColor="#fff"
+    NavigationPage.HasNavigationBar="False"
     iOsSpecific:Page.UseSafeArea="true">
     <ContentPage.Content>
         <ScrollView
             Margin="0"
             Padding="0"
             VerticalScrollBarVisibility="Never">
-            <Grid RowDefinitions="{OnPlatform Android='10,350,70,70,50,50,20,50', iOS='10,350,60,60,50,50,20,50'}" RowSpacing="0">
+            <Grid RowDefinitions="10,200,70,70,50,50,20,50,20,50" RowSpacing="0">
                 <Grid.Resources>
                     <Style TargetType="textInputLayout:SfTextInputLayout">
                         <Setter Property="ContainerType" Value="Outlined" />
@@ -31,7 +32,7 @@
                 <textInputLayout:SfTextInputLayout
                     Grid.Row="2"
                     FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000005}"
+                    Hint="Account"
                     LeadingViewPosition="Inside">
                     <Entry
                         ClearButtonVisibility="WhileEditing"
@@ -49,7 +50,7 @@
                     Grid.Row="3"
                     EnablePasswordVisibilityToggle="True"
                     FocusedColor="{StaticResource BtLogin}"
-                    Hint="{markupExtensions:Translate 1000006}"
+                    Hint="Password"
                     LeadingViewPosition="Inside">
                     <Entry
                         ClearButtonVisibility="WhileEditing"
@@ -72,7 +73,7 @@
                     CheckedColor="{StaticResource BtLogin}"
                     FontSize="16"
                     IsChecked="{Binding IsCheckSavePassword}"
-                    Text="{markupExtensions:Translate 1000007}" />
+                    Text="Remember password" />
                 <Button
                     Grid.Row="5"
                     Margin="20,0"
@@ -83,17 +84,27 @@
                     Command="{Binding LoginCommand}"
                     CornerRadius="10"
                     FontSize="18"
-                    IsEnabled="{Binding IsEnabledLogin}"
-                    Text="{markupExtensions:Translate 1000000}" />
-                <Label
+                    Text="Login" />
+                <Button
                     Grid.Row="7"
+                    Margin="20,0"
+                    Padding="0"
+                    BackgroundColor="{StaticResource Gray-White}"
+                    BorderColor="Red"
+                    BorderWidth="1"
+                    Command="{Binding LoginWithFaceCommand}"
+                    CornerRadius="10"
+                    FontSize="18"
+                    Text="Login with facebook" />
+                <Label
+                    Grid.Row="9"
                     Margin="20,0"
                     Padding="0">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{markupExtensions:Translate 1000007}" />
+                            <Span Text="Do not have an account" />
                             <Span Text=" " />
-                            <Span Text="{markupExtensions:Translate 1000002}" TextColor="{StaticResource HyperLink}">
+                            <Span Text="Register" TextColor="{StaticResource HyperLink}">
                                 <Span.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SignUpCommand}" />
                                 </Span.GestureRecognizers>

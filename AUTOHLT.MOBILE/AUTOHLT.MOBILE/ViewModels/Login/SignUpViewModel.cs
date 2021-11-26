@@ -293,35 +293,7 @@ namespace AUTOHLT.MOBILE.ViewModels.Login
             {
                 if (IsLoading) return;
                 IsLoading = true;
-                var data = await _loginService.SignUp(UserName, Name, Password, PhoneNumber, $"{UserName}@autohlt.com", Age, IsMale);
-                if (data != null && data.Code > 0)
-                {
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000040, "OK");
-                    var content = JsonConvert.SerializeObject(new MessageNotificationTelegramModel
-                    {
-                        Ten_Thong_Bao = "Đăng ký tài khoản mới",
-                        Ghi_Chu = new
-                        {
-                            Nguoi_Gioi_Thieu = NguoiGioiThieu
-                        },
-                        Id_Nguoi_Dung = UserName,
-                        So_Luong = 1,
-                        Noi_Dung_Thong_Bao = new
-                        {
-                            Tai_Khoan = UserName,
-                            Trang_Thai = "Đăng ký thành công"
-                        },
-                    }, Formatting.Indented);
-                    await _telegramService.SendMessageToTelegram("-453517974", content);
-                    if (NguoiGioiThieu != null)
-                        await _userService.ThemGioiThieu(NguoiGioiThieu, UserName, 0, "khi dang ky tai khoan moi");
-                    Password = ConfirmPassword = Age = Email = PhoneNumber = "";
-                }
-                else
-                {
-                    await _pageDialogService.DisplayAlertAsync(Resource._1000035, Resource._1000041, "OK");
-                    Password = ConfirmPassword = null;
-                }
+                await _pageDialogService.DisplayAlertAsync("Notification", "Done", "OK");
 
             }
             catch (Exception e)

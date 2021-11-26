@@ -102,6 +102,7 @@ namespace AUTOHLT.MOBILE
 
             #region Register For Navigation
 
+            containerRegistry.RegisterForNavigation<LoginWithFacebookPage, LoginWithFacebookPageViewModel>();
             containerRegistry.RegisterForNavigation<HappyBirthdayPage, HappyBirthdayViewModel>();
             containerRegistry.RegisterForNavigation<PokesPage, PokesViewModel>();
             containerRegistry.RegisterForNavigation<SuportCustumerPage, SuportCustomerViewModel>();
